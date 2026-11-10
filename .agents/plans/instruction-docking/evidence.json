@@ -1,34 +1,258 @@
 {
   "date": "2026-11-10",
-  "runtime_source_commit": "ca7f2226daf9b845132c4be182acbb21c97abf11",
+  "runtime_source_commit": "b81e3cc55613bc95dea1186820fcb3a9b8f3b6cf",
+  "built_tree_commit": "31de4cb59e26806b37bb6642d237108c6d71cdca",
   "commands": [
+    "npm run build",
     "npm run test:instruction-docking",
     "PLAYWRIGHT_BROWSER=webkit npm run test:instruction-docking"
   ],
   "local_browsers": "Native Chrome and installed WebKit; normal pinned CI remains required.",
   "actual_states_per_engine": 103,
   "sources": {
-    "tests/site/assembly/test-instruction-docking.mjs": "6c0868ff9b240929ef5fb1dac17ba938d75f27cc927d601320fa4df920d47157",
-    "software/site/designer/assembly/workspace.js": "1bd81e7eb24abd4697aa033af09853ecdf36ccc62cd99a1d52ddb18010594370",
-    "software/site/designer/assembly/guide.css": "5bbf514891377cd7f5847bddde07e5e2397b20e4c85d9ea114c32380cf5e3586"
+    "tests/site/assembly/test-instruction-docking.mjs": "6abc02e554bd5b7abd9fab058daf01a8dd228bd24f38addd758fc5df46ef5e4b",
+    "software/site/designer/assembly/workspace.js": "8173071e26952181599aa33e37dd086ae15654c9cc294a884ff4b24ed6d8e976",
+    "software/site/designer/assembly/guide.css": "9453a00d903d374ea0583239f34acbb615d540ee4dd03aa1a1ff0d29a9ce636f"
+  },
+  "landscape_metrics": {
+    "chromium": [
+      {
+        "label": "native 844 instructions",
+        "mode": "native",
+        "sheet": {
+          "x": 481.53125,
+          "y": 144,
+          "w": 354.46875,
+          "h": 238,
+          "right": 836,
+          "bottom": 382
+        },
+        "insets": {
+          "left": 16,
+          "right": 374.46875,
+          "top": 144,
+          "bottom": 16
+        },
+        "modelBox": {
+          "left": 174.02827939893956,
+          "right": 319.53055504267405,
+          "top": 182.51090763879367,
+          "bottom": 360.36067940558,
+          "w": 145.5022756437345,
+          "h": 177.84977176678635
+        }
+      },
+      {
+        "label": "native 844 expanded mobile instructions",
+        "mode": "native",
+        "sheet": {
+          "x": 406,
+          "y": 144,
+          "w": 430,
+          "h": 238,
+          "right": 836,
+          "bottom": 382
+        },
+        "insets": {
+          "left": 16,
+          "right": 450,
+          "top": 144,
+          "bottom": 16
+        },
+        "modelBox": {
+          "left": 136.26265439893956,
+          "right": 281.764930042674,
+          "top": 182.51090763879367,
+          "bottom": 360.36067940558,
+          "w": 145.50227564373444,
+          "h": 177.84977176678635
+        }
+      },
+      {
+        "label": "native 720 instructions",
+        "mode": "native",
+        "sheet": {
+          "x": 392,
+          "y": 144,
+          "w": 320,
+          "h": 238,
+          "right": 712,
+          "bottom": 382
+        },
+        "insets": {
+          "left": 16,
+          "right": 340,
+          "top": 144,
+          "bottom": 16
+        },
+        "modelBox": {
+          "left": 129.2626543989396,
+          "right": 274.76493004267405,
+          "top": 182.51090763879367,
+          "bottom": 360.36067940558,
+          "w": 145.50227564373446,
+          "h": 177.84977176678635
+        }
+      },
+      {
+        "label": "native 720 expanded mobile instructions",
+        "mode": "native",
+        "sheet": {
+          "x": 337.609375,
+          "y": 144,
+          "w": 374.390625,
+          "h": 238,
+          "right": 712,
+          "bottom": 382
+        },
+        "insets": {
+          "left": 16,
+          "right": 394.390625,
+          "top": 144,
+          "bottom": 16
+        },
+        "modelBox": {
+          "left": 102.06734189893956,
+          "right": 247.569617542674,
+          "top": 182.51090763879367,
+          "bottom": 360.36067940558,
+          "w": 145.50227564373444,
+          "h": 177.84977176678635
+        }
+      }
+    ],
+    "webkit": [
+      {
+        "label": "native 844 instructions",
+        "mode": "expanded",
+        "sheet": {
+          "x": 481.515625,
+          "y": 144,
+          "w": 354.46875,
+          "h": 238,
+          "right": 835.984375,
+          "bottom": 382
+        },
+        "insets": {
+          "left": 16,
+          "right": 374.46875,
+          "top": 144,
+          "bottom": 16
+        },
+        "modelBox": {
+          "left": 174.02505760762958,
+          "right": 319.524639562908,
+          "top": 182.51090763879367,
+          "bottom": 360.36067940558,
+          "w": 145.49958195527844,
+          "h": 177.84977176678635
+        }
+      },
+      {
+        "label": "native 844 expanded mobile instructions",
+        "mode": "expanded",
+        "sheet": {
+          "x": 405.984375,
+          "y": 144,
+          "w": 430,
+          "h": 238,
+          "right": 835.984375,
+          "bottom": 382
+        },
+        "insets": {
+          "left": 16,
+          "right": 450,
+          "top": 144,
+          "bottom": 16
+        },
+        "modelBox": {
+          "left": 136.2601317638981,
+          "right": 281.7597137191765,
+          "top": 182.51090763879367,
+          "bottom": 360.36067940558,
+          "w": 145.4995819552784,
+          "h": 177.84977176678635
+        }
+      },
+      {
+        "label": "native 720 instructions",
+        "mode": "expanded",
+        "sheet": {
+          "x": 392,
+          "y": 144,
+          "w": 320,
+          "h": 238,
+          "right": 712,
+          "bottom": 382
+        },
+        "insets": {
+          "left": 16,
+          "right": 340,
+          "top": 144,
+          "bottom": 16
+        },
+        "modelBox": {
+          "left": 129.2626543989396,
+          "right": 274.76493004267405,
+          "top": 182.51090763879367,
+          "bottom": 360.36067940558,
+          "w": 145.50227564373446,
+          "h": 177.84977176678635
+        }
+      },
+      {
+        "label": "native 720 expanded mobile instructions",
+        "mode": "expanded",
+        "sheet": {
+          "x": 337.609375,
+          "y": 144,
+          "w": 374.390625,
+          "h": 238,
+          "right": 712,
+          "bottom": 382
+        },
+        "insets": {
+          "left": 16,
+          "right": 394.390625,
+          "top": 144,
+          "bottom": 16
+        },
+        "modelBox": {
+          "left": 102.06734189893956,
+          "right": 247.569617542674,
+          "top": 182.51090763879367,
+          "bottom": 360.36067940558,
+          "w": 145.50227564373444,
+          "h": 177.84977176678635
+        }
+      }
+    ]
+  },
+  "historical_sources": {
+    "before.json": "e976aebe5ba3ec37339da9a6c3d588ef07cd9716",
+    "before-1280-native.png": "e976aebe5ba3ec37339da9a6c3d588ef07cd9716",
+    "phone-landscape-before.json": "82aa0e611c53bb449e526f2115bb0ce6544aef16",
+    "before-landscape-model-space.png": "ca7f2226daf9b845132c4be182acbb21c97abf11"
   },
   "files": {
-    "after-1024-native.png": "f7569b5d33e9529c55a1f3ffa86556143b09b185fa185d6972c0eafd5b8847a9",
-    "after-1440-native.png": "b08915ecd4208164942db7c773530bae0905a1aaa2c88dab79b3a9a2fef2dfea",
-    "after-1440-windowed.png": "f1c7c89d48666b82fc29c4cea014c5a0b41516cbb521537757e3b8d5bf219fc6",
-    "after-390-native.png": "37a2a778b31f4a130475cd61dcdc09742d2b216fc5b8884287b399e698314939",
+    "after-1024-native.png": "93e863bd0d9fcce3ee1b86b05df2032c62fa579fb38c03ae9110ff1256b091ef",
+    "after-1440-native.png": "6b217274c9f839c7f78b57c30acfd859c1b0353ee5e510ec1e745f76f280a9b7",
+    "after-1440-windowed.png": "64952cb10ffa0c137102c01ffb288460a6ff80019683291a75c60ce8fa91afc1",
+    "after-390-native.png": "02695031d79efcfa16e7caaf5e8eff46104415a24f4cba82655d3f79911f4297",
     "after-844-fine-native.png": "3b245106a2db6a17dcc108bacb9a29ef2150ef9289ffe937908a1b5d9fb9d377",
-    "after-844-phone-native.png": "dff47e39e77950c17ea2227da862025aa9710dfff43467172a5663a3d82896d3",
+    "after-844-phone-native.png": "da61b99ab341a2688818c26dcd7eb3c693e145ea0a60c9e1afac475d7dc2ba3f",
     "before-1280-native.png": "4e593658b82ba64621e0d2ada51d2392903cfc20a3712ab19566ec5c9c7a74be",
+    "before-landscape-model-space.png": "dff47e39e77950c17ea2227da862025aa9710dfff43467172a5663a3d82896d3",
     "before.json": "3396708905e46c5def453ad4f5126004e62599e2c5497bc658fc5abe5daab1d1",
-    "chromium.json": "7e761d7c283d13f0b505e200680ee4f00933e81a49ad6a3c1f77c4d4c814ff66",
+    "chromium.json": "5ac00978abdbcdee2829f1fd8764b96842bd5dffb0a1470a574f1feddb695e16",
     "phone-landscape-before.json": "c87c1f0b0667986d09cde40ac9d757c77bb27447e1c5787bc52e1503bcf4e15d",
-    "webkit.json": "b4fb6ef826d62b3cdb776c59ad59851bf342d5f2083f9e0fa3373b877e57d7f1"
+    "webkit.json": "6877f6ddf81d785c3a99d09b01abf54068d7069c278fffb12bd5379bc3eed3f8"
   },
   "limits": [
     "The pre-fix probe reproduced desktop bottom-sheet placement, not disappearance of Parts/Tools tabs.",
-    "Ordinary short windows scroll; each narrow tab was brought into view before its actual hit test. Fullscreen controls must fit the viewport.",
-    "The screenshots and browser bounds establish presentation, not physical qualification.",
-    "Open bottom-sheet instructions in short coarse landscape leave a small model area; the actual screenshot is retained for independent visual review."
+    "Ordinary short windows scroll; each narrow tab was brought into view before its actual hit test. Fullscreen controls fit the viewport.",
+    "Chromium requires native fullscreen; this WebKit run uses the intentional expanded fallback.",
+    "Historical ca7f bottom-sheet proof passed non-overlap checks but left a tiny model; that actual image is retained separately.",
+    "The screenshots and browser bounds establish presentation, not physical qualification."
   ]
 }

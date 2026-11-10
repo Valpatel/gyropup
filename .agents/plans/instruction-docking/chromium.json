@@ -3,20 +3,52 @@
   "engine": "chromium",
   "browser": "151.0.7922.71",
   "version": {
-    "revision": "ca7f2226daf9b845132c4be182acbb21c97abf11",
-    "assets": "9c45ccd501d9e53679ce",
+    "revision": "31de4cb59e26806b37bb6642d237108c6d71cdca",
+    "assets": "eb9fd9bfc7afe5c340de",
     "history": true,
-    "built": "2026-11-10T17:04:39.720Z"
+    "built": "2026-11-10T17:15:51.533Z"
   },
   "sources": {
-    "tests/site/assembly/test-instruction-docking.mjs": "6c0868ff9b240929ef5fb1dac17ba938d75f27cc927d601320fa4df920d47157",
-    "software/site/designer/assembly/workspace.js": "1bd81e7eb24abd4697aa033af09853ecdf36ccc62cd99a1d52ddb18010594370",
-    "software/site/designer/assembly/guide.css": "5bbf514891377cd7f5847bddde07e5e2397b20e4c85d9ea114c32380cf5e3586"
+    "tests/site/assembly/test-instruction-docking.mjs": "6abc02e554bd5b7abd9fab058daf01a8dd228bd24f38addd758fc5df46ef5e4b",
+    "software/site/designer/assembly/workspace.js": "8173071e26952181599aa33e37dd086ae15654c9cc294a884ff4b24ed6d8e976",
+    "software/site/designer/assembly/guide.css": "9453a00d903d374ea0583239f34acbb615d540ee4dd03aa1a1ff0d29a9ce636f"
   },
   "observations": [
     {
       "label": "windowed 1440 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 385.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 184.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 356.4841128442178,
+        "right": 727.2956876209533,
+        "top": 339.13685959614656,
+        "bottom": 799.1805393342497,
+        "w": 370.81157477673554,
+        "h": 460.04367973810315
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
@@ -188,6 +220,38 @@
     {
       "label": "windowed 1440 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 675.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 329.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 211.4841128442177,
+        "right": 582.2956876209532,
+        "top": 339.13685959614656,
+        "bottom": 799.1805393342497,
+        "w": 370.81157477673554,
+        "h": 460.04367973810315
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
@@ -367,6 +431,38 @@
     {
       "label": "windowed 1440 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 385.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 39.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 501.4841128442178,
+        "right": 872.2956876209532,
+        "top": 339.13685959614656,
+        "bottom": 799.1805393342497,
+        "w": 370.8115747767354,
+        "h": 460.04367973810315
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
@@ -546,6 +642,38 @@
     {
       "label": "windowed 1440 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 675.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 184.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 407.0690193955022,
+        "right": 679.9331368711345,
+        "top": 389.3657537727675,
+        "bottom": 721.8214562396959,
+        "w": 272.86411747563227,
+        "h": 332.45570246692836
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
@@ -733,6 +861,38 @@
     {
       "label": "windowed 1440 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 385.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 184.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 356.4841128442178,
+        "right": 727.2956876209533,
+        "top": 339.13685959614656,
+        "bottom": 799.1805393342497,
+        "w": 370.81157477673554,
+        "h": 460.04367973810315
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -904,6 +1064,38 @@
     {
       "label": "windowed 1440 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 675.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 329.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 211.4841128442177,
+        "right": 582.2956876209532,
+        "top": 339.13685959614656,
+        "bottom": 799.1805393342497,
+        "w": 370.81157477673554,
+        "h": 460.04367973810315
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -1083,6 +1275,38 @@
     {
       "label": "windowed 1440 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 385.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 39.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 501.4841128442178,
+        "right": 872.2956876209532,
+        "top": 339.13685959614656,
+        "bottom": 799.1805393342497,
+        "w": 370.8115747767354,
+        "h": 460.04367973810315
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -1262,6 +1486,38 @@
     {
       "label": "windowed 1440 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 675.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 184.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 407.0690193955022,
+        "right": 679.9331368711345,
+        "top": 389.3657537727675,
+        "bottom": 721.8214562396959,
+        "w": 272.86411747563227,
+        "h": 332.45570246692836
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -1449,6 +1705,38 @@
     {
       "label": "windowed 1024 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 277.078125,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 958,
+        "fullHeight": 778,
+        "offsetX": 130.5390625,
+        "offsetY": -71,
+        "width": 958,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 202.56223784421778,
+        "right": 573.3738126209532,
+        "top": 339.13685959614656,
+        "bottom": 799.1805393342497,
+        "w": 370.8115747767355,
+        "h": 460.04367973810315
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
@@ -1620,6 +1908,38 @@
     {
       "label": "windowed 1024 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 445.53125,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 958,
+        "fullHeight": 778,
+        "offsetX": 214.765625,
+        "offsetY": -71,
+        "width": 958,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 128.18930209257877,
+        "right": 480.2793692277831,
+        "top": 348.668382555043,
+        "bottom": 783.9777467438903,
+        "w": 352.0900671352043,
+        "h": 435.30936418884727
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
@@ -1799,6 +2119,38 @@
     {
       "label": "windowed 1024 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 184.453125,
+        "right": 277.078125,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 958,
+        "fullHeight": 778,
+        "offsetX": 46.3125,
+        "offsetY": -71,
+        "width": 958,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 296.64242709257877,
+        "right": 648.7324942277831,
+        "top": 348.668382555043,
+        "bottom": 783.9777467438903,
+        "w": 352.0900671352044,
+        "h": 435.30936418884727
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
@@ -1978,6 +2330,38 @@
     {
       "label": "windowed 1024 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 184.453125,
+        "right": 445.53125,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 958,
+        "fullHeight": 778,
+        "offsetX": 130.5390625,
+        "offsetY": -71,
+        "width": 958,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 276.94569402879546,
+        "right": 502.04602801717584,
+        "top": 414.15919647794504,
+        "bottom": 686.0081531612307,
+        "w": 225.10033398838038,
+        "h": 271.8489566832856
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "normal",
@@ -2165,6 +2549,38 @@
     {
       "label": "windowed 1024 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 277.078125,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 958,
+        "fullHeight": 778,
+        "offsetX": 130.5390625,
+        "offsetY": -71,
+        "width": 958,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 202.56223784421778,
+        "right": 573.3738126209532,
+        "top": 339.13685959614656,
+        "bottom": 799.1805393342497,
+        "w": 370.8115747767355,
+        "h": 460.04367973810315
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -2336,6 +2752,38 @@
     {
       "label": "windowed 1024 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 445.53125,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 958,
+        "fullHeight": 778,
+        "offsetX": 214.765625,
+        "offsetY": -71,
+        "width": 958,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 128.18930209257877,
+        "right": 480.2793692277831,
+        "top": 348.668382555043,
+        "bottom": 783.9777467438903,
+        "w": 352.0900671352043,
+        "h": 435.30936418884727
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -2515,6 +2963,38 @@
     {
       "label": "windowed 1024 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 184.453125,
+        "right": 277.078125,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 958,
+        "fullHeight": 778,
+        "offsetX": 46.3125,
+        "offsetY": -71,
+        "width": 958,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 296.64242709257877,
+        "right": 648.7324942277831,
+        "top": 348.668382555043,
+        "bottom": 783.9777467438903,
+        "w": 352.0900671352044,
+        "h": 435.30936418884727
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -2694,6 +3174,38 @@
     {
       "label": "windowed 1024 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 184.453125,
+        "right": 445.53125,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 958,
+        "fullHeight": 778,
+        "offsetX": 130.5390625,
+        "offsetY": -71,
+        "width": 958,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 276.94569402879546,
+        "right": 502.04602801717584,
+        "top": 414.15919647794504,
+        "bottom": 686.0081531612307,
+        "w": 225.10033398838038,
+        "h": 271.8489566832856
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -2881,6 +3393,38 @@
     {
       "label": "windowed resize 1280x900",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 279.171875,
+        "right": 606.796875,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1214,
+        "fullHeight": 688,
+        "offsetX": 163.8125,
+        "offsetY": -71,
+        "width": 1214,
+        "height": 688
+      },
+      "modelBox": {
+        "left": 369.92838047833493,
+        "right": 596.8679113492101,
+        "top": 368.4136387259428,
+        "bottom": 644.0863913522663,
+        "w": 226.93953087087516,
+        "h": 275.67275262632353
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -3068,6 +3612,38 @@
     {
       "label": "windowed 844 instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 478.8125,
+        "y": 218.71875,
+        "w": 340.1875,
+        "h": 284,
+        "right": 819,
+        "bottom": 502.71875
+      },
+      "insets": {
+        "left": 16,
+        "right": 360.1875,
+        "top": 146,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 810,
+        "fullHeight": 438,
+        "offsetX": 172.09375,
+        "offsetY": -65,
+        "width": 810,
+        "height": 438
+      },
+      "modelBox": {
+        "left": 167.58196243598306,
+        "right": 341.02940744923916,
+        "top": 265.6473444915588,
+        "bottom": 478.3545157404332,
+        "w": 173.4474450132561,
+        "h": 212.70717124887443
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -3089,10 +3665,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 26,
-          "y": 343.71875,
-          "w": 792,
-          "h": 158,
+          "x": 479.8125,
+          "y": 263.71875,
+          "w": 338.1875,
+          "h": 238,
           "right": 818,
           "bottom": 501.71875
         }
@@ -3221,56 +3797,56 @@
         },
         {
           "label": "Instructions",
-          "x": 30,
-          "y": 299.71875,
-          "w": 228,
+          "x": 483.8125,
+          "y": 219.71875,
+          "w": 76.71875,
           "h": 44,
-          "right": 258,
-          "bottom": 343.71875,
+          "right": 560.53125,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 261,
-          "y": 299.71875,
-          "w": 228,
+          "x": 563.53125,
+          "y": 219.71875,
+          "w": 76.734375,
           "h": 44,
-          "right": 489,
-          "bottom": 343.71875,
+          "right": 640.265625,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 492,
-          "y": 299.71875,
-          "w": 228,
+          "x": 643.265625,
+          "y": 219.71875,
+          "w": 76.71875,
           "h": 44,
-          "right": 720,
-          "bottom": 343.71875,
+          "right": 719.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 723,
-          "y": 299.71875,
+          "x": 722.984375,
+          "y": 219.71875,
           "w": 44,
           "h": 44,
-          "right": 767,
-          "bottom": 343.71875,
+          "right": 766.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 770,
-          "y": 299.71875,
+          "x": 769.984375,
+          "y": 219.71875,
           "w": 44,
           "h": 44,
-          "right": 814,
-          "bottom": 343.71875,
+          "right": 813.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         }
@@ -3283,6 +3859,38 @@
     {
       "label": "windowed 844 parts",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 478.8125,
+        "y": 218.71875,
+        "w": 340.1875,
+        "h": 284,
+        "right": 819,
+        "bottom": 502.71875
+      },
+      "insets": {
+        "left": 16,
+        "right": 360.1875,
+        "top": 146,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 810,
+        "fullHeight": 438,
+        "offsetX": 172.09375,
+        "offsetY": -65,
+        "width": 810,
+        "height": 438
+      },
+      "modelBox": {
+        "left": 167.58196243598306,
+        "right": 341.02940744923916,
+        "top": 265.6473444915588,
+        "bottom": 478.3545157404332,
+        "w": 173.4474450132561,
+        "h": 212.70717124887443
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -3304,10 +3912,10 @@
       },
       "panels": {
         "assembly-explorer": {
-          "x": 26,
-          "y": 343.71875,
-          "w": 792,
-          "h": 158,
+          "x": 479.8125,
+          "y": 263.71875,
+          "w": 338.1875,
+          "h": 238,
           "right": 818,
           "bottom": 501.71875
         }
@@ -3436,56 +4044,56 @@
         },
         {
           "label": "Instructions",
-          "x": 30,
-          "y": 299.71875,
-          "w": 228,
+          "x": 483.8125,
+          "y": 219.71875,
+          "w": 76.71875,
           "h": 44,
-          "right": 258,
-          "bottom": 343.71875,
+          "right": 560.53125,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 261,
-          "y": 299.71875,
-          "w": 228,
+          "x": 563.53125,
+          "y": 219.71875,
+          "w": 76.734375,
           "h": 44,
-          "right": 489,
-          "bottom": 343.71875,
+          "right": 640.265625,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 492,
-          "y": 299.71875,
-          "w": 228,
+          "x": 643.265625,
+          "y": 219.71875,
+          "w": 76.71875,
           "h": 44,
-          "right": 720,
-          "bottom": 343.71875,
+          "right": 719.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 723,
-          "y": 299.71875,
+          "x": 722.984375,
+          "y": 219.71875,
           "w": 44,
           "h": 44,
-          "right": 767,
-          "bottom": 343.71875,
+          "right": 766.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 770,
-          "y": 299.71875,
+          "x": 769.984375,
+          "y": 219.71875,
           "w": 44,
           "h": 44,
-          "right": 814,
-          "bottom": 343.71875,
+          "right": 813.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         }
@@ -3498,6 +4106,38 @@
     {
       "label": "windowed 844 tools",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 478.8125,
+        "y": 218.71875,
+        "w": 340.1875,
+        "h": 284,
+        "right": 819,
+        "bottom": 502.71875
+      },
+      "insets": {
+        "left": 16,
+        "right": 360.1875,
+        "top": 146,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 810,
+        "fullHeight": 438,
+        "offsetX": 172.09375,
+        "offsetY": -65,
+        "width": 810,
+        "height": 438
+      },
+      "modelBox": {
+        "left": 167.58196243598306,
+        "right": 341.02940744923916,
+        "top": 265.6473444915588,
+        "bottom": 478.3545157404332,
+        "w": 173.4474450132561,
+        "h": 212.70717124887443
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -3519,10 +4159,10 @@
       },
       "panels": {
         "assembly-tools": {
-          "x": 26,
-          "y": 343.71875,
-          "w": 792,
-          "h": 158,
+          "x": 479.8125,
+          "y": 263.71875,
+          "w": 338.1875,
+          "h": 238,
           "right": 818,
           "bottom": 501.71875
         }
@@ -3651,56 +4291,56 @@
         },
         {
           "label": "Instructions",
-          "x": 30,
-          "y": 299.71875,
-          "w": 228,
+          "x": 483.8125,
+          "y": 219.71875,
+          "w": 76.71875,
           "h": 44,
-          "right": 258,
-          "bottom": 343.71875,
+          "right": 560.53125,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 261,
-          "y": 299.71875,
-          "w": 228,
+          "x": 563.53125,
+          "y": 219.71875,
+          "w": 76.734375,
           "h": 44,
-          "right": 489,
-          "bottom": 343.71875,
+          "right": 640.265625,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 492,
-          "y": 299.71875,
-          "w": 228,
+          "x": 643.265625,
+          "y": 219.71875,
+          "w": 76.71875,
           "h": 44,
-          "right": 720,
-          "bottom": 343.71875,
+          "right": 719.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 723,
-          "y": 299.71875,
+          "x": 722.984375,
+          "y": 219.71875,
           "w": 44,
           "h": 44,
-          "right": 767,
-          "bottom": 343.71875,
+          "right": 766.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 770,
-          "y": 299.71875,
+          "x": 769.984375,
+          "y": 219.71875,
           "w": 44,
           "h": 44,
-          "right": 814,
-          "bottom": 343.71875,
+          "right": 813.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         }
@@ -3713,6 +4353,38 @@
     {
       "label": "windowed 844 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 397.8125,
+        "y": 218.71875,
+        "w": 421.1875,
+        "h": 284,
+        "right": 819,
+        "bottom": 502.71875
+      },
+      "insets": {
+        "left": 16,
+        "right": 441.1875,
+        "top": 146,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 810,
+        "fullHeight": 438,
+        "offsetX": 212.59375,
+        "offsetY": -65,
+        "width": 810,
+        "height": 438
+      },
+      "modelBox": {
+        "left": 127.08196243598303,
+        "right": 300.5294074492391,
+        "top": 265.6473444915588,
+        "bottom": 478.3545157404332,
+        "w": 173.44744501325607,
+        "h": 212.70717124887443
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -3734,10 +4406,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 26,
-          "y": 343.71875,
-          "w": 792,
-          "h": 158,
+          "x": 398.8125,
+          "y": 263.71875,
+          "w": 419.1875,
+          "h": 238,
           "right": 818,
           "bottom": 501.71875
         }
@@ -3866,56 +4538,56 @@
         },
         {
           "label": "Instructions",
-          "x": 30,
-          "y": 299.71875,
-          "w": 228,
+          "x": 402.8125,
+          "y": 219.71875,
+          "w": 103.71875,
           "h": 44,
-          "right": 258,
-          "bottom": 343.71875,
+          "right": 506.53125,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 261,
-          "y": 299.71875,
-          "w": 228,
+          "x": 509.53125,
+          "y": 219.71875,
+          "w": 103.734375,
           "h": 44,
-          "right": 489,
-          "bottom": 343.71875,
+          "right": 613.265625,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 492,
-          "y": 299.71875,
-          "w": 228,
+          "x": 616.265625,
+          "y": 219.71875,
+          "w": 103.71875,
           "h": 44,
-          "right": 720,
-          "bottom": 343.71875,
+          "right": 719.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
-          "x": 723,
-          "y": 299.71875,
+          "x": 722.984375,
+          "y": 219.71875,
           "w": 44,
           "h": 44,
-          "right": 767,
-          "bottom": 343.71875,
+          "right": 766.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 770,
-          "y": 299.71875,
+          "x": 769.984375,
+          "y": 219.71875,
           "w": 44,
           "h": 44,
-          "right": 814,
-          "bottom": 343.71875,
+          "right": 813.984375,
+          "bottom": 263.71875,
           "hit": true,
           "inViewport": true
         }
@@ -3928,6 +4600,38 @@
     {
       "label": "windowed 720 instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 375,
+        "y": 210.71875,
+        "w": 320,
+        "h": 284,
+        "right": 695,
+        "bottom": 494.71875
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 146,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 686,
+        "fullHeight": 438,
+        "offsetX": 162,
+        "offsetY": -65,
+        "width": 686,
+        "height": 438
+      },
+      "modelBox": {
+        "left": 115.6757124359831,
+        "right": 289.12315744923916,
+        "top": 257.6473444915588,
+        "bottom": 470.3545157404332,
+        "w": 173.44744501325607,
+        "h": 212.70717124887443
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -3949,10 +4653,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 26,
-          "y": 335.71875,
-          "w": 668,
-          "h": 158,
+          "x": 376,
+          "y": 255.71875,
+          "w": 318,
+          "h": 238,
           "right": 694,
           "bottom": 493.71875
         }
@@ -4081,56 +4785,56 @@
         },
         {
           "label": "Instructions",
-          "x": 30,
-          "y": 291.71875,
-          "w": 186.65625,
+          "x": 380,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
-          "right": 216.65625,
-          "bottom": 335.71875,
+          "right": 450,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 219.65625,
-          "y": 291.71875,
-          "w": 186.671875,
+          "x": 453,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
-          "right": 406.328125,
-          "bottom": 335.71875,
+          "right": 523,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 409.328125,
-          "y": 291.71875,
-          "w": 186.671875,
+          "x": 526,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
           "right": 596,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 599,
-          "y": 291.71875,
+          "y": 211.71875,
           "w": 44,
           "h": 44,
           "right": 643,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 646,
-          "y": 291.71875,
+          "y": 211.71875,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         }
@@ -4143,6 +4847,38 @@
     {
       "label": "windowed 720 parts",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 375,
+        "y": 210.71875,
+        "w": 320,
+        "h": 284,
+        "right": 695,
+        "bottom": 494.71875
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 146,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 686,
+        "fullHeight": 438,
+        "offsetX": 162,
+        "offsetY": -65,
+        "width": 686,
+        "height": 438
+      },
+      "modelBox": {
+        "left": 115.6757124359831,
+        "right": 289.12315744923916,
+        "top": 257.6473444915588,
+        "bottom": 470.3545157404332,
+        "w": 173.44744501325607,
+        "h": 212.70717124887443
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -4164,10 +4900,10 @@
       },
       "panels": {
         "assembly-explorer": {
-          "x": 26,
-          "y": 335.71875,
-          "w": 668,
-          "h": 158,
+          "x": 376,
+          "y": 255.71875,
+          "w": 318,
+          "h": 238,
           "right": 694,
           "bottom": 493.71875
         }
@@ -4296,56 +5032,56 @@
         },
         {
           "label": "Instructions",
-          "x": 30,
-          "y": 291.71875,
-          "w": 186.65625,
+          "x": 380,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
-          "right": 216.65625,
-          "bottom": 335.71875,
+          "right": 450,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 219.65625,
-          "y": 291.71875,
-          "w": 186.671875,
+          "x": 453,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
-          "right": 406.328125,
-          "bottom": 335.71875,
+          "right": 523,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 409.328125,
-          "y": 291.71875,
-          "w": 186.671875,
+          "x": 526,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
           "right": 596,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 599,
-          "y": 291.71875,
+          "y": 211.71875,
           "w": 44,
           "h": 44,
           "right": 643,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 646,
-          "y": 291.71875,
+          "y": 211.71875,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         }
@@ -4358,6 +5094,38 @@
     {
       "label": "windowed 720 tools",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 375,
+        "y": 210.71875,
+        "w": 320,
+        "h": 284,
+        "right": 695,
+        "bottom": 494.71875
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 146,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 686,
+        "fullHeight": 438,
+        "offsetX": 162,
+        "offsetY": -65,
+        "width": 686,
+        "height": 438
+      },
+      "modelBox": {
+        "left": 115.6757124359831,
+        "right": 289.12315744923916,
+        "top": 257.6473444915588,
+        "bottom": 470.3545157404332,
+        "w": 173.44744501325607,
+        "h": 212.70717124887443
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -4379,10 +5147,10 @@
       },
       "panels": {
         "assembly-tools": {
-          "x": 26,
-          "y": 335.71875,
-          "w": 668,
-          "h": 158,
+          "x": 376,
+          "y": 255.71875,
+          "w": 318,
+          "h": 238,
           "right": 694,
           "bottom": 493.71875
         }
@@ -4511,56 +5279,56 @@
         },
         {
           "label": "Instructions",
-          "x": 30,
-          "y": 291.71875,
-          "w": 186.65625,
+          "x": 380,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
-          "right": 216.65625,
-          "bottom": 335.71875,
+          "right": 450,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 219.65625,
-          "y": 291.71875,
-          "w": 186.671875,
+          "x": 453,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
-          "right": 406.328125,
-          "bottom": 335.71875,
+          "right": 523,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 409.328125,
-          "y": 291.71875,
-          "w": 186.671875,
+          "x": 526,
+          "y": 211.71875,
+          "w": 70,
           "h": 44,
           "right": 596,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 599,
-          "y": 291.71875,
+          "y": 211.71875,
           "w": 44,
           "h": 44,
           "right": 643,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 646,
-          "y": 291.71875,
+          "y": 211.71875,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         }
@@ -4573,6 +5341,38 @@
     {
       "label": "windowed 720 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 338.28125,
+        "y": 210.71875,
+        "w": 356.71875,
+        "h": 284,
+        "right": 695,
+        "bottom": 494.71875
+      },
+      "insets": {
+        "left": 16,
+        "right": 376.71875,
+        "top": 146,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 686,
+        "fullHeight": 438,
+        "offsetX": 180.359375,
+        "offsetY": -65,
+        "width": 686,
+        "height": 438
+      },
+      "modelBox": {
+        "left": 97.31633743598304,
+        "right": 270.7637824492391,
+        "top": 257.6473444915588,
+        "bottom": 470.3545157404332,
+        "w": 173.44744501325607,
+        "h": 212.70717124887443
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -4594,10 +5394,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 26,
-          "y": 335.71875,
-          "w": 668,
-          "h": 158,
+          "x": 339.28125,
+          "y": 255.71875,
+          "w": 354.71875,
+          "h": 238,
           "right": 694,
           "bottom": 493.71875
         }
@@ -4726,56 +5526,56 @@
         },
         {
           "label": "Instructions",
-          "x": 30,
-          "y": 291.71875,
-          "w": 186.65625,
+          "x": 343.28125,
+          "y": 211.71875,
+          "w": 82.234375,
           "h": 44,
-          "right": 216.65625,
-          "bottom": 335.71875,
+          "right": 425.515625,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 219.65625,
-          "y": 291.71875,
-          "w": 186.671875,
+          "x": 428.515625,
+          "y": 211.71875,
+          "w": 82.234375,
           "h": 44,
-          "right": 406.328125,
-          "bottom": 335.71875,
+          "right": 510.75,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 409.328125,
-          "y": 291.71875,
-          "w": 186.671875,
+          "x": 513.75,
+          "y": 211.71875,
+          "w": 82.25,
           "h": 44,
           "right": 596,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 599,
-          "y": 291.71875,
+          "y": 211.71875,
           "w": 44,
           "h": 44,
           "right": 643,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 646,
-          "y": 291.71875,
+          "y": 211.71875,
           "w": 44,
           "h": 44,
           "right": 690,
-          "bottom": 335.71875,
+          "bottom": 255.71875,
           "hit": true,
           "inViewport": true
         }
@@ -4788,6 +5588,38 @@
     {
       "label": "windowed 390 instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 21,
+        "y": 542.5625,
+        "w": 348,
+        "h": 210,
+        "right": 369,
+        "bottom": 752.5625
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 194,
+        "bottom": 231
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 364,
+        "fullHeight": 696,
+        "offsetX": 0,
+        "offsetY": 18.5,
+        "width": 364,
+        "height": 696
+      },
+      "modelBox": {
+        "left": 113.21841274926496,
+        "right": 290.62765248081564,
+        "top": 300.28353244990825,
+        "bottom": 513.4774533615144,
+        "w": 177.40923973155068,
+        "h": 213.1939209116062
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -5003,6 +5835,38 @@
     {
       "label": "windowed 390 parts",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 21,
+        "y": 542.5625,
+        "w": 348,
+        "h": 210,
+        "right": 369,
+        "bottom": 752.5625
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 194,
+        "bottom": 231
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 364,
+        "fullHeight": 696,
+        "offsetX": 0,
+        "offsetY": 18.5,
+        "width": 364,
+        "height": 696
+      },
+      "modelBox": {
+        "left": 113.21841274926496,
+        "right": 290.62765248081564,
+        "top": 300.28353244990825,
+        "bottom": 513.4774533615144,
+        "w": 177.40923973155068,
+        "h": 213.1939209116062
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -5218,6 +6082,38 @@
     {
       "label": "windowed 390 tools",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 21,
+        "y": 542.5625,
+        "w": 348,
+        "h": 210,
+        "right": 369,
+        "bottom": 752.5625
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 194,
+        "bottom": 231
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 364,
+        "fullHeight": 696,
+        "offsetX": 0,
+        "offsetY": 18.5,
+        "width": 364,
+        "height": 696
+      },
+      "modelBox": {
+        "left": 113.21841274926496,
+        "right": 290.62765248081564,
+        "top": 300.28353244990825,
+        "bottom": 513.4774533615144,
+        "w": 177.40923973155068,
+        "h": 213.1939209116062
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -5433,6 +6329,38 @@
     {
       "label": "windowed 390 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 21,
+        "y": 338.5625,
+        "w": 348,
+        "h": 414,
+        "right": 369,
+        "bottom": 752.5625
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 194,
+        "bottom": 435
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 364,
+        "fullHeight": 696,
+        "offsetX": 0,
+        "offsetY": 120.5,
+        "width": 364,
+        "height": 696
+      },
+      "modelBox": {
+        "left": 174.4878715680217,
+        "right": 220.80325280702837,
+        "top": 267.4152002912275,
+        "bottom": 321.5805592596525,
+        "w": 46.31538123900668,
+        "h": 54.16535896842498
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -5648,6 +6576,38 @@
     {
       "label": "windowed 320 instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 21,
+        "y": 399.25,
+        "w": 278,
+        "h": 210,
+        "right": 299,
+        "bottom": 609.25
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 194,
+        "bottom": 231
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 294,
+        "fullHeight": 552,
+        "offsetX": 0,
+        "offsetY": 18.5,
+        "width": 294,
+        "height": 552
+      },
+      "modelBox": {
+        "left": 121.37438840147514,
+        "right": 206.95146173067184,
+        "top": 277.33785910600875,
+        "bottom": 378.70663714052733,
+        "w": 85.5770733291967,
+        "h": 101.36877803451858
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -5863,6 +6823,38 @@
     {
       "label": "windowed 320 parts",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 21,
+        "y": 399.25,
+        "w": 278,
+        "h": 210,
+        "right": 299,
+        "bottom": 609.25
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 194,
+        "bottom": 231
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 294,
+        "fullHeight": 552,
+        "offsetX": 0,
+        "offsetY": 18.5,
+        "width": 294,
+        "height": 552
+      },
+      "modelBox": {
+        "left": 121.37438840147514,
+        "right": 206.95146173067184,
+        "top": 277.33785910600875,
+        "bottom": 378.70663714052733,
+        "w": 85.5770733291967,
+        "h": 101.36877803451858
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -6078,6 +7070,38 @@
     {
       "label": "windowed 320 tools",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 21,
+        "y": 399.25,
+        "w": 278,
+        "h": 210,
+        "right": 299,
+        "bottom": 609.25
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 194,
+        "bottom": 231
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 294,
+        "fullHeight": 552,
+        "offsetX": 0,
+        "offsetY": 18.5,
+        "width": 294,
+        "height": 552
+      },
+      "modelBox": {
+        "left": 121.37438840147514,
+        "right": 206.95146173067184,
+        "top": 277.33785910600875,
+        "bottom": 378.70663714052733,
+        "w": 85.5770733291967,
+        "h": 101.36877803451858
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -6293,6 +7317,38 @@
     {
       "label": "windowed 320 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 21,
+        "y": 339.25,
+        "w": 278,
+        "h": 270,
+        "right": 299,
+        "bottom": 609.25
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 194,
+        "bottom": 291
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 294,
+        "fullHeight": 552,
+        "offsetX": 0,
+        "offsetY": 48.5,
+        "width": 294,
+        "height": 552
+      },
+      "modelBox": {
+        "left": 139.51331301256465,
+        "right": 185.6027507686985,
+        "top": 268.2351531898419,
+        "bottom": 322.2685042807818,
+        "w": 46.08943775613386,
+        "h": 54.0333510909399
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -6508,6 +7564,38 @@
     {
       "label": "windowed desktop restored after resize",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 675.234375,
+        "top": 158,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1374,
+        "fullHeight": 778,
+        "offsetX": 184.6171875,
+        "offsetY": -71,
+        "width": 1374,
+        "height": 778
+      },
+      "modelBox": {
+        "left": 407.0690193955022,
+        "right": 679.9331368711345,
+        "top": 389.3657537727675,
+        "bottom": 721.8214562396959,
+        "w": 272.86411747563227,
+        "h": 332.45570246692836
+      },
       "pointerCoarse": true,
       "mode": "none",
       "expanded": "expanded",
@@ -6695,6 +7783,38 @@
     {
       "label": "native 1440 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 388,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 289.3592925681066,
+        "right": 793.635627754608,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865014,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "normal",
@@ -6866,6 +7986,38 @@
     {
       "label": "native 1440 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 331,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 144.35929256810655,
+        "right": 648.6356277546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.27633518650134,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "normal",
@@ -7045,6 +8197,38 @@
     {
       "label": "native 1440 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 388,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 41,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 434.35929256810664,
+        "right": 938.6356277546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865012,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "normal",
@@ -7224,6 +8408,38 @@
     {
       "label": "native 1440 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 387.208162850542,
+        "right": 701.7122827113774,
+        "top": 404.1941133779092,
+        "bottom": 785.3924608039883,
+        "w": 314.5041198608354,
+        "h": 381.1983474260791
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "normal",
@@ -7411,6 +8627,38 @@
     {
       "label": "native 1440 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 388,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 289.3592925681066,
+        "right": 793.635627754608,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865014,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -7582,6 +8830,38 @@
     {
       "label": "native 1440 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 331,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 144.35929256810655,
+        "right": 648.6356277546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.27633518650134,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -7761,6 +9041,38 @@
     {
       "label": "native 1440 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 388,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 41,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 434.35929256810664,
+        "right": 938.6356277546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865012,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -7940,6 +9252,38 @@
     {
       "label": "native 1440 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 387.208162850542,
+        "right": 701.7122827113774,
+        "top": 404.1941133779092,
+        "bottom": 785.3924608039883,
+        "w": 314.5041198608354,
+        "h": 381.1983474260791
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -8127,6 +9471,38 @@
     {
       "label": "native 1024 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 294.234375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 139.1171875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 128.24210506810664,
+        "right": 632.5184402546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865012,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "normal",
@@ -8298,6 +9674,38 @@
     {
       "label": "native 1024 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 487.109375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 235.5546875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 105.43930538168672,
+        "right": 468.1911875697717,
+        "top": 379.20520785724136,
+        "bottom": 821.9445467728875,
+        "w": 362.751882188085,
+        "h": 442.73933891564616
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "normal",
@@ -8477,6 +9885,38 @@
     {
       "label": "native 1024 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 208.875,
+        "right": 294.234375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 42.6796875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 298.3143053816866,
+        "right": 661.0661875697716,
+        "top": 379.20520785724136,
+        "bottom": 821.9445467728875,
+        "w": 362.751882188085,
+        "h": 442.73933891564616
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "normal",
@@ -8656,6 +10096,38 @@
     {
       "label": "native 1024 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 208.875,
+        "right": 487.109375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 139.1171875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 271.19059946686934,
+        "right": 493.31625886679393,
+        "top": 452.42480031890835,
+        "bottom": 718.0975649509802,
+        "w": 222.1256593999246,
+        "h": 265.67276463207185
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "normal",
@@ -8843,6 +10315,38 @@
     {
       "label": "native 1024 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 294.234375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 139.1171875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 128.24210506810664,
+        "right": 632.5184402546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865012,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -9014,6 +10518,38 @@
     {
       "label": "native 1024 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 487.109375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 235.5546875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 105.43930538168672,
+        "right": 468.1911875697717,
+        "top": 379.20520785724136,
+        "bottom": 821.9445467728875,
+        "w": 362.751882188085,
+        "h": 442.73933891564616
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -9193,6 +10729,38 @@
     {
       "label": "native 1024 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 208.875,
+        "right": 294.234375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 42.6796875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 298.3143053816866,
+        "right": 661.0661875697716,
+        "top": 379.20520785724136,
+        "bottom": 821.9445467728875,
+        "w": 362.751882188085,
+        "h": 442.73933891564616
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -9372,6 +10940,38 @@
     {
       "label": "native 1024 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 208.875,
+        "right": 487.109375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 139.1171875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 271.19059946686934,
+        "right": 493.31625886679393,
+        "top": 452.42480031890835,
+        "bottom": 718.0975649509802,
+        "w": 222.1256593999246,
+        "h": 265.67276463207185
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -9559,6 +11159,38 @@
     {
       "label": "native resize 1280x900",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 303.59375,
+        "right": 648.390625,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1280,
+        "fullHeight": 900,
+        "offsetX": 172.3984375,
+        "offsetY": -70,
+        "width": 1280,
+        "height": 900
+      },
+      "modelBox": {
+        "left": 364.828414162707,
+        "right": 588.0940121341077,
+        "top": 401.9472175402696,
+        "bottom": 669.9834389943529,
+        "w": 223.26559797140072,
+        "h": 268.0362214540833
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -9746,6 +11378,38 @@
     {
       "label": "native 844 instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 481.53125,
+        "y": 144,
+        "w": 354.46875,
+        "h": 238,
+        "right": 836,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 374.46875,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 179.234375,
+        "offsetY": -64,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 174.02827939893956,
+        "right": 319.53055504267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.5022756437345,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -9767,10 +11431,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 9,
-          "y": 269,
-          "w": 826,
-          "h": 112,
+          "x": 482.53125,
+          "y": 189,
+          "w": 352.46875,
+          "h": 192,
           "right": 835,
           "bottom": 381
         }
@@ -9899,56 +11563,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 239.328125,
+          "x": 486.53125,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 252.328125,
-          "bottom": 269,
+          "right": 568.015625,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 255.328125,
-          "y": 225,
-          "w": 239.328125,
+          "x": 571.015625,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 494.65625,
-          "bottom": 269,
+          "right": 652.5,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 497.65625,
-          "y": 225,
-          "w": 239.328125,
+          "x": 655.5,
+          "y": 145,
+          "w": 81.5,
           "h": 44,
-          "right": 736.984375,
-          "bottom": 269,
+          "right": 737,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 739.984375,
-          "y": 225,
+          "x": 740,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 783.984375,
-          "bottom": 269,
+          "right": 784,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 786.984375,
-          "y": 225,
+          "x": 787,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 830.984375,
-          "bottom": 269,
+          "right": 831,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -9961,6 +11625,38 @@
     {
       "label": "native 844 parts",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 481.53125,
+        "y": 144,
+        "w": 354.46875,
+        "h": 238,
+        "right": 836,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 374.46875,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 179.234375,
+        "offsetY": -64,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 174.02827939893956,
+        "right": 319.53055504267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.5022756437345,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -9982,10 +11678,10 @@
       },
       "panels": {
         "assembly-explorer": {
-          "x": 9,
-          "y": 269,
-          "w": 826,
-          "h": 112,
+          "x": 482.53125,
+          "y": 189,
+          "w": 352.46875,
+          "h": 192,
           "right": 835,
           "bottom": 381
         }
@@ -10114,56 +11810,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 239.328125,
+          "x": 486.53125,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 252.328125,
-          "bottom": 269,
+          "right": 568.015625,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 255.328125,
-          "y": 225,
-          "w": 239.328125,
+          "x": 571.015625,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 494.65625,
-          "bottom": 269,
+          "right": 652.5,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 497.65625,
-          "y": 225,
-          "w": 239.328125,
+          "x": 655.5,
+          "y": 145,
+          "w": 81.5,
           "h": 44,
-          "right": 736.984375,
-          "bottom": 269,
+          "right": 737,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 739.984375,
-          "y": 225,
+          "x": 740,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 783.984375,
-          "bottom": 269,
+          "right": 784,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 786.984375,
-          "y": 225,
+          "x": 787,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 830.984375,
-          "bottom": 269,
+          "right": 831,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -10176,6 +11872,38 @@
     {
       "label": "native 844 tools",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 481.53125,
+        "y": 144,
+        "w": 354.46875,
+        "h": 238,
+        "right": 836,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 374.46875,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 179.234375,
+        "offsetY": -64,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 174.02827939893956,
+        "right": 319.53055504267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.5022756437345,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -10197,10 +11925,10 @@
       },
       "panels": {
         "assembly-tools": {
-          "x": 9,
-          "y": 269,
-          "w": 826,
-          "h": 112,
+          "x": 482.53125,
+          "y": 189,
+          "w": 352.46875,
+          "h": 192,
           "right": 835,
           "bottom": 381
         }
@@ -10329,56 +12057,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 239.328125,
+          "x": 486.53125,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 252.328125,
-          "bottom": 269,
+          "right": 568.015625,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 255.328125,
-          "y": 225,
-          "w": 239.328125,
+          "x": 571.015625,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 494.65625,
-          "bottom": 269,
+          "right": 652.5,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 497.65625,
-          "y": 225,
-          "w": 239.328125,
+          "x": 655.5,
+          "y": 145,
+          "w": 81.5,
           "h": 44,
-          "right": 736.984375,
-          "bottom": 269,
+          "right": 737,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 739.984375,
-          "y": 225,
+          "x": 740,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 783.984375,
-          "bottom": 269,
+          "right": 784,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 786.984375,
-          "y": 225,
+          "x": 787,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 830.984375,
-          "bottom": 269,
+          "right": 831,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -10391,6 +12119,38 @@
     {
       "label": "native 844 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 406,
+        "y": 144,
+        "w": 430,
+        "h": 238,
+        "right": 836,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 450,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 217,
+        "offsetY": -64,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 136.26265439893956,
+        "right": 281.764930042674,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373444,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -10412,10 +12172,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 9,
-          "y": 269,
-          "w": 826,
-          "h": 112,
+          "x": 407,
+          "y": 189,
+          "w": 428,
+          "h": 192,
           "right": 835,
           "bottom": 381
         }
@@ -10544,56 +12304,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 239.328125,
+          "x": 411,
+          "y": 145,
+          "w": 106.65625,
           "h": 44,
-          "right": 252.328125,
-          "bottom": 269,
+          "right": 517.65625,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 255.328125,
-          "y": 225,
-          "w": 239.328125,
+          "x": 520.65625,
+          "y": 145,
+          "w": 106.671875,
           "h": 44,
-          "right": 494.65625,
-          "bottom": 269,
+          "right": 627.328125,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 497.65625,
-          "y": 225,
-          "w": 239.328125,
+          "x": 630.328125,
+          "y": 145,
+          "w": 106.65625,
           "h": 44,
           "right": 736.984375,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 739.984375,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 783.984375,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 786.984375,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 830.984375,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -10606,6 +12366,38 @@
     {
       "label": "native 720 instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 392,
+        "y": 144,
+        "w": 320,
+        "h": 238,
+        "right": 712,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 720,
+        "fullHeight": 390,
+        "offsetX": 162,
+        "offsetY": -64,
+        "width": 720,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 129.2626543989396,
+        "right": 274.76493004267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373446,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -10627,10 +12419,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 9,
-          "y": 269,
-          "w": 702,
-          "h": 112,
+          "x": 393,
+          "y": 189,
+          "w": 318,
+          "h": 192,
           "right": 711,
           "bottom": 381
         }
@@ -10759,56 +12551,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 198,
+          "x": 397,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 211,
-          "bottom": 269,
+          "right": 467,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 214,
-          "y": 225,
-          "w": 198,
+          "x": 470,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 412,
-          "bottom": 269,
+          "right": 540,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 415,
-          "y": 225,
-          "w": 198,
+          "x": 543,
+          "y": 145,
+          "w": 70,
           "h": 44,
           "right": 613,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -10821,6 +12613,38 @@
     {
       "label": "native 720 parts",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 392,
+        "y": 144,
+        "w": 320,
+        "h": 238,
+        "right": 712,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 720,
+        "fullHeight": 390,
+        "offsetX": 162,
+        "offsetY": -64,
+        "width": 720,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 129.2626543989396,
+        "right": 274.76493004267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373446,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -10842,10 +12666,10 @@
       },
       "panels": {
         "assembly-explorer": {
-          "x": 9,
-          "y": 269,
-          "w": 702,
-          "h": 112,
+          "x": 393,
+          "y": 189,
+          "w": 318,
+          "h": 192,
           "right": 711,
           "bottom": 381
         }
@@ -10974,56 +12798,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 198,
+          "x": 397,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 211,
-          "bottom": 269,
+          "right": 467,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 214,
-          "y": 225,
-          "w": 198,
+          "x": 470,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 412,
-          "bottom": 269,
+          "right": 540,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 415,
-          "y": 225,
-          "w": 198,
+          "x": 543,
+          "y": 145,
+          "w": 70,
           "h": 44,
           "right": 613,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -11036,6 +12860,38 @@
     {
       "label": "native 720 tools",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 392,
+        "y": 144,
+        "w": 320,
+        "h": 238,
+        "right": 712,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 720,
+        "fullHeight": 390,
+        "offsetX": 162,
+        "offsetY": -64,
+        "width": 720,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 129.2626543989396,
+        "right": 274.76493004267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373446,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -11057,10 +12913,10 @@
       },
       "panels": {
         "assembly-tools": {
-          "x": 9,
-          "y": 269,
-          "w": 702,
-          "h": 112,
+          "x": 393,
+          "y": 189,
+          "w": 318,
+          "h": 192,
           "right": 711,
           "bottom": 381
         }
@@ -11189,56 +13045,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 198,
+          "x": 397,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 211,
-          "bottom": 269,
+          "right": 467,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 214,
-          "y": 225,
-          "w": 198,
+          "x": 470,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 412,
-          "bottom": 269,
+          "right": 540,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 415,
-          "y": 225,
-          "w": 198,
+          "x": 543,
+          "y": 145,
+          "w": 70,
           "h": 44,
           "right": 613,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -11251,6 +13107,38 @@
     {
       "label": "native 720 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 337.609375,
+        "y": 144,
+        "w": 374.390625,
+        "h": 238,
+        "right": 712,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 394.390625,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 720,
+        "fullHeight": 390,
+        "offsetX": 189.1953125,
+        "offsetY": -64,
+        "width": 720,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 102.06734189893956,
+        "right": 247.569617542674,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373444,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -11272,10 +13160,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 9,
-          "y": 269,
-          "w": 702,
-          "h": 112,
+          "x": 338.609375,
+          "y": 189,
+          "w": 372.390625,
+          "h": 192,
           "right": 711,
           "bottom": 381
         }
@@ -11404,56 +13292,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 198,
+          "x": 342.609375,
+          "y": 145,
+          "w": 88.125,
           "h": 44,
-          "right": 211,
-          "bottom": 269,
+          "right": 430.734375,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 214,
-          "y": 225,
-          "w": 198,
+          "x": 433.734375,
+          "y": 145,
+          "w": 88.125,
           "h": 44,
-          "right": 412,
-          "bottom": 269,
+          "right": 521.859375,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 415,
-          "y": 225,
-          "w": 198,
+          "x": 524.859375,
+          "y": 145,
+          "w": 88.140625,
           "h": 44,
           "right": 613,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 616,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -11466,6 +13354,38 @@
     {
       "label": "native 390 instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 626,
+        "w": 374,
+        "h": 210,
+        "right": 382,
+        "bottom": 836
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 390,
+        "fullHeight": 844,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 390,
+        "height": 844
+      },
+      "modelBox": {
+        "left": 80.84430533765473,
+        "right": 326.61247198231445,
+        "top": 273.2926997653438,
+        "bottom": 570.1813372062924,
+        "w": 245.76816664465971,
+        "h": 296.88863744094857
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -11681,6 +13601,38 @@
     {
       "label": "native 390 parts",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 626,
+        "w": 374,
+        "h": 210,
+        "right": 382,
+        "bottom": 836
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 390,
+        "fullHeight": 844,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 390,
+        "height": 844
+      },
+      "modelBox": {
+        "left": 80.84430533765473,
+        "right": 326.61247198231445,
+        "top": 273.2926997653438,
+        "bottom": 570.1813372062924,
+        "w": 245.76816664465971,
+        "h": 296.88863744094857
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -11896,6 +13848,38 @@
     {
       "label": "native 390 tools",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 626,
+        "w": 374,
+        "h": 210,
+        "right": 382,
+        "bottom": 836
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 390,
+        "fullHeight": 844,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 390,
+        "height": 844
+      },
+      "modelBox": {
+        "left": 80.84430533765473,
+        "right": 326.61247198231445,
+        "top": 273.2926997653438,
+        "bottom": 570.1813372062924,
+        "w": 245.76816664465971,
+        "h": 296.88863744094857
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -12111,6 +14095,38 @@
     {
       "label": "native 390 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 406,
+        "w": 374,
+        "h": 430,
+        "right": 382,
+        "bottom": 836
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 450
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 390,
+        "fullHeight": 844,
+        "offsetX": 0,
+        "offsetY": 129,
+        "width": 390,
+        "height": 844
+      },
+      "modelBox": {
+        "left": 133.59193530231965,
+        "right": 269.47217303533995,
+        "top": 220.90933336883555,
+        "bottom": 382.00239031727216,
+        "w": 135.8802377330203,
+        "h": 161.0930569484366
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -12326,6 +14342,38 @@
     {
       "label": "native 320 instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 482,
+        "w": 304,
+        "h": 210,
+        "right": 312,
+        "bottom": 692
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 320,
+        "fullHeight": 700,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 320,
+        "height": 700
+      },
+      "modelBox": {
+        "left": 76.13775665682981,
+        "right": 257.88029129667933,
+        "top": 234.9498397001459,
+        "bottom": 453.5000443173123,
+        "w": 181.7425346398495,
+        "h": 218.5502046171664
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -12541,6 +14589,38 @@
     {
       "label": "native 320 parts",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 482,
+        "w": 304,
+        "h": 210,
+        "right": 312,
+        "bottom": 692
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 320,
+        "fullHeight": 700,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 320,
+        "height": 700
+      },
+      "modelBox": {
+        "left": 76.13775665682981,
+        "right": 257.88029129667933,
+        "top": 234.9498397001459,
+        "bottom": 453.5000443173123,
+        "w": 181.7425346398495,
+        "h": 218.5502046171664
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -12756,6 +14836,38 @@
     {
       "label": "native 320 tools",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 482,
+        "w": 304,
+        "h": 210,
+        "right": 312,
+        "bottom": 692
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 320,
+        "fullHeight": 700,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 320,
+        "height": 700
+      },
+      "modelBox": {
+        "left": 76.13775665682981,
+        "right": 257.88029129667933,
+        "top": 234.9498397001459,
+        "bottom": 453.5000443173123,
+        "w": 181.7425346398495,
+        "h": 218.5502046171664
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -12971,6 +15083,38 @@
     {
       "label": "native 320 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 272,
+        "w": 304,
+        "h": 420,
+        "right": 312,
+        "bottom": 692
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 440
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 320,
+        "fullHeight": 700,
+        "offsetX": 0,
+        "offsetY": 124,
+        "width": 320,
+        "height": 700
+      },
+      "modelBox": {
+        "left": 139.18262476456738,
+        "right": 186.18120350106355,
+        "top": 200.9895573189414,
+        "bottom": 255.9586431044305,
+        "w": 46.99857873649617,
+        "h": 54.96908578548911
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -13186,6 +15330,38 @@
     {
       "label": "native desktop restored after resize",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 387.208162850542,
+        "right": 701.7122827113774,
+        "top": 404.1941133779092,
+        "bottom": 785.3924608039883,
+        "w": 314.5041198608354,
+        "h": 381.1983474260791
+      },
       "pointerCoarse": true,
       "mode": "native",
       "expanded": "expanded",
@@ -13373,6 +15549,38 @@
     {
       "label": "denied 1440 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 388,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 289.3592925681066,
+        "right": 793.635627754608,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865014,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
@@ -13544,6 +15752,38 @@
     {
       "label": "denied 1440 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 331,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 144.35929256810655,
+        "right": 648.6356277546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.27633518650134,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
@@ -13723,6 +15963,38 @@
     {
       "label": "denied 1440 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 388,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 41,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 434.35929256810664,
+        "right": 938.6356277546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865012,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
@@ -13902,6 +16174,38 @@
     {
       "label": "denied 1440 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 387.208162850542,
+        "right": 701.7122827113774,
+        "top": 404.1941133779092,
+        "bottom": 785.3924608039883,
+        "w": 314.5041198608354,
+        "h": 381.1983474260791
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
@@ -14089,6 +16393,38 @@
     {
       "label": "denied 1440 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 388,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 289.3592925681066,
+        "right": 793.635627754608,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865014,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -14260,6 +16596,38 @@
     {
       "label": "denied 1440 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 331,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 144.35929256810655,
+        "right": 648.6356277546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.27633518650134,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -14439,6 +16807,38 @@
     {
       "label": "denied 1440 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 388,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 41,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 434.35929256810664,
+        "right": 938.6356277546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865012,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -14618,6 +17018,38 @@
     {
       "label": "denied 1440 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 387.208162850542,
+        "right": 701.7122827113774,
+        "top": 404.1941133779092,
+        "bottom": 785.3924608039883,
+        "w": 314.5041198608354,
+        "h": 381.1983474260791
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -14805,6 +17237,38 @@
     {
       "label": "denied 1024 expanded=false Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 294.234375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 139.1171875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 128.24210506810664,
+        "right": 632.5184402546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865012,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
@@ -14976,6 +17440,38 @@
     {
       "label": "denied 1024 expanded=false Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 487.109375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 235.5546875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 105.43930538168672,
+        "right": 468.1911875697717,
+        "top": 379.20520785724136,
+        "bottom": 821.9445467728875,
+        "w": 362.751882188085,
+        "h": 442.73933891564616
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
@@ -15155,6 +17651,38 @@
     {
       "label": "denied 1024 expanded=false Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 208.875,
+        "right": 294.234375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 42.6796875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 298.3143053816866,
+        "right": 661.0661875697716,
+        "top": 379.20520785724136,
+        "bottom": 821.9445467728875,
+        "w": 362.751882188085,
+        "h": 442.73933891564616
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
@@ -15334,6 +17862,38 @@
     {
       "label": "denied 1024 expanded=false Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 208.875,
+        "right": 487.109375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 139.1171875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 271.19059946686934,
+        "right": 493.31625886679393,
+        "top": 452.42480031890835,
+        "bottom": 718.0975649509802,
+        "w": 222.1256593999246,
+        "h": 265.67276463207185
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "normal",
@@ -15521,6 +18081,38 @@
     {
       "label": "denied 1024 expanded=true Parts=false Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 294.234375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 139.1171875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 128.24210506810664,
+        "right": 632.5184402546079,
+        "top": 306.8346051381641,
+        "bottom": 934.950661118687,
+        "w": 504.2763351865012,
+        "h": 628.1160559805229
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -15692,6 +18284,38 @@
     {
       "label": "denied 1024 expanded=true Parts=false Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 16,
+        "right": 487.109375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 235.5546875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 105.43930538168672,
+        "right": 468.1911875697717,
+        "top": 379.20520785724136,
+        "bottom": 821.9445467728875,
+        "w": 362.751882188085,
+        "h": 442.73933891564616
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -15871,6 +18495,38 @@
     {
       "label": "denied 1024 expanded=true Parts=true Tools=false",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 208.875,
+        "right": 294.234375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 42.6796875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 298.3143053816866,
+        "right": 661.0661875697716,
+        "top": 379.20520785724136,
+        "bottom": 821.9445467728875,
+        "w": 362.751882188085,
+        "h": 442.73933891564616
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -16050,6 +18706,38 @@
     {
       "label": "denied 1024 expanded=true Parts=true Tools=true",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 208.875,
+        "right": 487.109375,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1024,
+        "fullHeight": 1000,
+        "offsetX": 139.1171875,
+        "offsetY": -70,
+        "width": 1024,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 271.19059946686934,
+        "right": 493.31625886679393,
+        "top": 452.42480031890835,
+        "bottom": 718.0975649509802,
+        "w": 222.1256593999246,
+        "h": 265.67276463207185
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -16237,6 +18925,38 @@
     {
       "label": "denied resize 1280x900",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 303.59375,
+        "right": 648.390625,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1280,
+        "fullHeight": 900,
+        "offsetX": 172.3984375,
+        "offsetY": -70,
+        "width": 1280,
+        "height": 900
+      },
+      "modelBox": {
+        "left": 364.828414162707,
+        "right": 588.0940121341077,
+        "top": 401.9472175402696,
+        "bottom": 669.9834389943529,
+        "w": 223.26559797140072,
+        "h": 268.0362214540833
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -16424,6 +19144,38 @@
     {
       "label": "denied 844 instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 481.53125,
+        "y": 144,
+        "w": 354.46875,
+        "h": 238,
+        "right": 836,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 374.46875,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 179.234375,
+        "offsetY": -64,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 174.02827939893956,
+        "right": 319.53055504267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.5022756437345,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -16445,10 +19197,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 9,
-          "y": 269,
-          "w": 826,
-          "h": 112,
+          "x": 482.53125,
+          "y": 189,
+          "w": 352.46875,
+          "h": 192,
           "right": 835,
           "bottom": 381
         }
@@ -16577,56 +19329,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 239.328125,
+          "x": 486.53125,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 252.328125,
-          "bottom": 269,
+          "right": 568.015625,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 255.328125,
-          "y": 225,
-          "w": 239.328125,
+          "x": 571.015625,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 494.65625,
-          "bottom": 269,
+          "right": 652.5,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 497.65625,
-          "y": 225,
-          "w": 239.328125,
+          "x": 655.5,
+          "y": 145,
+          "w": 81.5,
           "h": 44,
-          "right": 736.984375,
-          "bottom": 269,
+          "right": 737,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 739.984375,
-          "y": 225,
+          "x": 740,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 783.984375,
-          "bottom": 269,
+          "right": 784,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 786.984375,
-          "y": 225,
+          "x": 787,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 830.984375,
-          "bottom": 269,
+          "right": 831,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -16639,6 +19391,38 @@
     {
       "label": "denied 844 parts",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 481.53125,
+        "y": 144,
+        "w": 354.46875,
+        "h": 238,
+        "right": 836,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 374.46875,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 179.234375,
+        "offsetY": -64,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 174.02827939893956,
+        "right": 319.53055504267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.5022756437345,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -16660,10 +19444,10 @@
       },
       "panels": {
         "assembly-explorer": {
-          "x": 9,
-          "y": 269,
-          "w": 826,
-          "h": 112,
+          "x": 482.53125,
+          "y": 189,
+          "w": 352.46875,
+          "h": 192,
           "right": 835,
           "bottom": 381
         }
@@ -16792,56 +19576,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 239.328125,
+          "x": 486.53125,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 252.328125,
-          "bottom": 269,
+          "right": 568.015625,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 255.328125,
-          "y": 225,
-          "w": 239.328125,
+          "x": 571.015625,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 494.65625,
-          "bottom": 269,
+          "right": 652.5,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 497.65625,
-          "y": 225,
-          "w": 239.328125,
+          "x": 655.5,
+          "y": 145,
+          "w": 81.5,
           "h": 44,
-          "right": 736.984375,
-          "bottom": 269,
+          "right": 737,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 739.984375,
-          "y": 225,
+          "x": 740,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 783.984375,
-          "bottom": 269,
+          "right": 784,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 786.984375,
-          "y": 225,
+          "x": 787,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 830.984375,
-          "bottom": 269,
+          "right": 831,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -16854,6 +19638,38 @@
     {
       "label": "denied 844 tools",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 481.53125,
+        "y": 144,
+        "w": 354.46875,
+        "h": 238,
+        "right": 836,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 374.46875,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 179.234375,
+        "offsetY": -64,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 174.02827939893956,
+        "right": 319.53055504267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.5022756437345,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -16875,10 +19691,10 @@
       },
       "panels": {
         "assembly-tools": {
-          "x": 9,
-          "y": 269,
-          "w": 826,
-          "h": 112,
+          "x": 482.53125,
+          "y": 189,
+          "w": 352.46875,
+          "h": 192,
           "right": 835,
           "bottom": 381
         }
@@ -17007,56 +19823,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 239.328125,
+          "x": 486.53125,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 252.328125,
-          "bottom": 269,
+          "right": 568.015625,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 255.328125,
-          "y": 225,
-          "w": 239.328125,
+          "x": 571.015625,
+          "y": 145,
+          "w": 81.484375,
           "h": 44,
-          "right": 494.65625,
-          "bottom": 269,
+          "right": 652.5,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 497.65625,
-          "y": 225,
-          "w": 239.328125,
+          "x": 655.5,
+          "y": 145,
+          "w": 81.5,
           "h": 44,
-          "right": 736.984375,
-          "bottom": 269,
+          "right": 737,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
-          "x": 739.984375,
-          "y": 225,
+          "x": 740,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 783.984375,
-          "bottom": 269,
+          "right": 784,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
-          "x": 786.984375,
-          "y": 225,
+          "x": 787,
+          "y": 145,
           "w": 44,
           "h": 44,
-          "right": 830.984375,
-          "bottom": 269,
+          "right": 831,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -17069,6 +19885,38 @@
     {
       "label": "denied 844 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 406,
+        "y": 144,
+        "w": 430,
+        "h": 238,
+        "right": 836,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 450,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 217,
+        "offsetY": -64,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 136.26265439893956,
+        "right": 281.764930042674,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373444,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -17090,10 +19938,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 9,
-          "y": 269,
-          "w": 826,
-          "h": 112,
+          "x": 407,
+          "y": 189,
+          "w": 428,
+          "h": 192,
           "right": 835,
           "bottom": 381
         }
@@ -17222,56 +20070,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 239.328125,
+          "x": 411,
+          "y": 145,
+          "w": 106.65625,
           "h": 44,
-          "right": 252.328125,
-          "bottom": 269,
+          "right": 517.65625,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 255.328125,
-          "y": 225,
-          "w": 239.328125,
+          "x": 520.65625,
+          "y": 145,
+          "w": 106.671875,
           "h": 44,
-          "right": 494.65625,
-          "bottom": 269,
+          "right": 627.328125,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 497.65625,
-          "y": 225,
-          "w": 239.328125,
+          "x": 630.328125,
+          "y": 145,
+          "w": 106.65625,
           "h": 44,
           "right": 736.984375,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 739.984375,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 783.984375,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 786.984375,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 830.984375,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -17284,6 +20132,38 @@
     {
       "label": "denied 720 instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 392,
+        "y": 144,
+        "w": 320,
+        "h": 238,
+        "right": 712,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 720,
+        "fullHeight": 390,
+        "offsetX": 162,
+        "offsetY": -64,
+        "width": 720,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 129.2626543989396,
+        "right": 274.76493004267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373446,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -17305,10 +20185,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 9,
-          "y": 269,
-          "w": 702,
-          "h": 112,
+          "x": 393,
+          "y": 189,
+          "w": 318,
+          "h": 192,
           "right": 711,
           "bottom": 381
         }
@@ -17437,56 +20317,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 198,
+          "x": 397,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 211,
-          "bottom": 269,
+          "right": 467,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 214,
-          "y": 225,
-          "w": 198,
+          "x": 470,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 412,
-          "bottom": 269,
+          "right": 540,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 415,
-          "y": 225,
-          "w": 198,
+          "x": 543,
+          "y": 145,
+          "w": 70,
           "h": 44,
           "right": 613,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -17499,6 +20379,38 @@
     {
       "label": "denied 720 parts",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 392,
+        "y": 144,
+        "w": 320,
+        "h": 238,
+        "right": 712,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 720,
+        "fullHeight": 390,
+        "offsetX": 162,
+        "offsetY": -64,
+        "width": 720,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 129.2626543989396,
+        "right": 274.76493004267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373446,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -17520,10 +20432,10 @@
       },
       "panels": {
         "assembly-explorer": {
-          "x": 9,
-          "y": 269,
-          "w": 702,
-          "h": 112,
+          "x": 393,
+          "y": 189,
+          "w": 318,
+          "h": 192,
           "right": 711,
           "bottom": 381
         }
@@ -17652,56 +20564,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 198,
+          "x": 397,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 211,
-          "bottom": 269,
+          "right": 467,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 214,
-          "y": 225,
-          "w": 198,
+          "x": 470,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 412,
-          "bottom": 269,
+          "right": 540,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 415,
-          "y": 225,
-          "w": 198,
+          "x": 543,
+          "y": 145,
+          "w": 70,
           "h": 44,
           "right": 613,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -17714,6 +20626,38 @@
     {
       "label": "denied 720 tools",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 392,
+        "y": 144,
+        "w": 320,
+        "h": 238,
+        "right": 712,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 340,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 720,
+        "fullHeight": 390,
+        "offsetX": 162,
+        "offsetY": -64,
+        "width": 720,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 129.2626543989396,
+        "right": 274.76493004267405,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373446,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -17735,10 +20679,10 @@
       },
       "panels": {
         "assembly-tools": {
-          "x": 9,
-          "y": 269,
-          "w": 702,
-          "h": 112,
+          "x": 393,
+          "y": 189,
+          "w": 318,
+          "h": 192,
           "right": 711,
           "bottom": 381
         }
@@ -17867,56 +20811,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 198,
+          "x": 397,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 211,
-          "bottom": 269,
+          "right": 467,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 214,
-          "y": 225,
-          "w": 198,
+          "x": 470,
+          "y": 145,
+          "w": 70,
           "h": 44,
-          "right": 412,
-          "bottom": 269,
+          "right": 540,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 415,
-          "y": 225,
-          "w": 198,
+          "x": 543,
+          "y": 145,
+          "w": 70,
           "h": 44,
           "right": 613,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Expand panel",
           "x": 616,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -17929,6 +20873,38 @@
     {
       "label": "denied 720 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "side",
+      "sheet": {
+        "x": 337.609375,
+        "y": 144,
+        "w": 374.390625,
+        "h": 238,
+        "right": 712,
+        "bottom": 382
+      },
+      "insets": {
+        "left": 16,
+        "right": 394.390625,
+        "top": 144,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 720,
+        "fullHeight": 390,
+        "offsetX": 189.1953125,
+        "offsetY": -64,
+        "width": 720,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 102.06734189893956,
+        "right": 247.569617542674,
+        "top": 182.51090763879367,
+        "bottom": 360.36067940558,
+        "w": 145.50227564373444,
+        "h": 177.84977176678635
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -17950,10 +20926,10 @@
       },
       "panels": {
         "instructions": {
-          "x": 9,
-          "y": 269,
-          "w": 702,
-          "h": 112,
+          "x": 338.609375,
+          "y": 189,
+          "w": 372.390625,
+          "h": 192,
           "right": 711,
           "bottom": 381
         }
@@ -18082,56 +21058,56 @@
         },
         {
           "label": "Instructions",
-          "x": 13,
-          "y": 225,
-          "w": 198,
+          "x": 342.609375,
+          "y": 145,
+          "w": 88.125,
           "h": 44,
-          "right": 211,
-          "bottom": 269,
+          "right": 430.734375,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Parts",
-          "x": 214,
-          "y": 225,
-          "w": 198,
+          "x": 433.734375,
+          "y": 145,
+          "w": 88.125,
           "h": 44,
-          "right": 412,
-          "bottom": 269,
+          "right": 521.859375,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Tools",
-          "x": 415,
-          "y": 225,
-          "w": 198,
+          "x": 524.859375,
+          "y": 145,
+          "w": 88.140625,
           "h": 44,
           "right": 613,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Reduce panel",
           "x": 616,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 660,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         },
         {
           "label": "Collapse panel",
           "x": 663,
-          "y": 225,
+          "y": 145,
           "w": 44,
           "h": 44,
           "right": 707,
-          "bottom": 269,
+          "bottom": 189,
           "hit": true,
           "inViewport": true
         }
@@ -18144,6 +21120,38 @@
     {
       "label": "denied 390 instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 626,
+        "w": 374,
+        "h": 210,
+        "right": 382,
+        "bottom": 836
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 390,
+        "fullHeight": 844,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 390,
+        "height": 844
+      },
+      "modelBox": {
+        "left": 80.84430533765473,
+        "right": 326.61247198231445,
+        "top": 273.2926997653438,
+        "bottom": 570.1813372062924,
+        "w": 245.76816664465971,
+        "h": 296.88863744094857
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -18359,6 +21367,38 @@
     {
       "label": "denied 390 parts",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 626,
+        "w": 374,
+        "h": 210,
+        "right": 382,
+        "bottom": 836
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 390,
+        "fullHeight": 844,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 390,
+        "height": 844
+      },
+      "modelBox": {
+        "left": 80.84430533765473,
+        "right": 326.61247198231445,
+        "top": 273.2926997653438,
+        "bottom": 570.1813372062924,
+        "w": 245.76816664465971,
+        "h": 296.88863744094857
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -18574,6 +21614,38 @@
     {
       "label": "denied 390 tools",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 626,
+        "w": 374,
+        "h": 210,
+        "right": 382,
+        "bottom": 836
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 390,
+        "fullHeight": 844,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 390,
+        "height": 844
+      },
+      "modelBox": {
+        "left": 80.84430533765473,
+        "right": 326.61247198231445,
+        "top": 273.2926997653438,
+        "bottom": 570.1813372062924,
+        "w": 245.76816664465971,
+        "h": 296.88863744094857
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -18789,6 +21861,38 @@
     {
       "label": "denied 390 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 406,
+        "w": 374,
+        "h": 430,
+        "right": 382,
+        "bottom": 836
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 450
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 390,
+        "fullHeight": 844,
+        "offsetX": 0,
+        "offsetY": 129,
+        "width": 390,
+        "height": 844
+      },
+      "modelBox": {
+        "left": 133.59193530231965,
+        "right": 269.47217303533995,
+        "top": 220.90933336883555,
+        "bottom": 382.00239031727216,
+        "w": 135.8802377330203,
+        "h": 161.0930569484366
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -19004,6 +22108,38 @@
     {
       "label": "denied 320 instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 482,
+        "w": 304,
+        "h": 210,
+        "right": 312,
+        "bottom": 692
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 320,
+        "fullHeight": 700,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 320,
+        "height": 700
+      },
+      "modelBox": {
+        "left": 76.13775665682981,
+        "right": 257.88029129667933,
+        "top": 234.9498397001459,
+        "bottom": 453.5000443173123,
+        "w": 181.7425346398495,
+        "h": 218.5502046171664
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -19219,6 +22355,38 @@
     {
       "label": "denied 320 parts",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 482,
+        "w": 304,
+        "h": 210,
+        "right": 312,
+        "bottom": 692
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 320,
+        "fullHeight": 700,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 320,
+        "height": 700
+      },
+      "modelBox": {
+        "left": 76.13775665682952,
+        "right": 257.880291296679,
+        "top": 234.94983970014604,
+        "bottom": 453.5000443173124,
+        "w": 181.74253463984945,
+        "h": 218.55020461716637
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -19434,6 +22602,38 @@
     {
       "label": "denied 320 tools",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 482,
+        "w": 304,
+        "h": 210,
+        "right": 312,
+        "bottom": 692
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 230
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 320,
+        "fullHeight": 700,
+        "offsetX": 0,
+        "offsetY": 19,
+        "width": 320,
+        "height": 700
+      },
+      "modelBox": {
+        "left": 76.13775665682981,
+        "right": 257.88029129667933,
+        "top": 234.9498397001459,
+        "bottom": 453.5000443173123,
+        "w": 181.7425346398495,
+        "h": 218.5502046171664
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -19649,6 +22849,38 @@
     {
       "label": "denied 320 expanded mobile instructions",
       "mobile": "true",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 8,
+        "y": 272,
+        "w": 304,
+        "h": 420,
+        "right": 312,
+        "bottom": 692
+      },
+      "insets": {
+        "left": 16,
+        "right": 16,
+        "top": 192,
+        "bottom": 440
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 320,
+        "fullHeight": 700,
+        "offsetX": 0,
+        "offsetY": 124,
+        "width": 320,
+        "height": 700
+      },
+      "modelBox": {
+        "left": 139.18262476456738,
+        "right": 186.18120350106355,
+        "top": 200.9895573189414,
+        "bottom": 255.9586431044305,
+        "w": 46.99857873649617,
+        "h": 54.96908578548911
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -19864,6 +23096,38 @@
     {
       "label": "denied desktop restored after resize",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 306,
+        "right": 678,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 1440,
+        "fullHeight": 1000,
+        "offsetX": 186,
+        "offsetY": -70,
+        "width": 1440,
+        "height": 1000
+      },
+      "modelBox": {
+        "left": 387.208162850542,
+        "right": 701.7122827113774,
+        "top": 404.1941133779092,
+        "bottom": 785.3924608039883,
+        "w": 314.5041198608354,
+        "h": 381.1983474260791
+      },
       "pointerCoarse": true,
       "mode": "expanded",
       "expanded": "expanded",
@@ -20051,6 +23315,38 @@
     {
       "label": "fine-pointer 844x390 native desktop control",
       "mobile": "false",
+      "sheetLayout": "bottom",
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "insets": {
+        "left": 178,
+        "right": 430,
+        "top": 156,
+        "bottom": 16
+      },
+      "projectionOffset": {
+        "enabled": true,
+        "fullWidth": 844,
+        "fullHeight": 390,
+        "offsetX": 126,
+        "offsetY": -70,
+        "width": 844,
+        "height": 390
+      },
+      "modelBox": {
+        "left": 230.75203509362623,
+        "right": 369.36992042213564,
+        "top": 192.06515506176285,
+        "bottom": 361.070520996455,
+        "w": 138.6178853285094,
+        "h": 169.00536593469215
+      },
       "pointerCoarse": false,
       "mode": "native",
       "expanded": "expanded",

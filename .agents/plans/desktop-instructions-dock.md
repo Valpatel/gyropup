@@ -11,7 +11,7 @@ Issue #285; PR #286; branch `fix/build-instructions-dock`.
 - 60 generated guide outputs and 19 pure tests pass.
 
 **Next**
-- Build the final assembled tree, check privacy and retain final-tree browser receipts.
-- Independent PR review, complete normal CI and root integration through dev/main.
+- [x] Final assembled tree 31de4cb5 built; 11 privacy checks pass; both browsers pass 103 final-tree states with matching source hashes.
+- [ ] Independent PR review, complete normal CI and root integration through dev/main.
 
 **Resume:** all browser/capture tests own temporary listeners and close them. Shared preview is untouched. No CAD/battery/manufacturing scope.
