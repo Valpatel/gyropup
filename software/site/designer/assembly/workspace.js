@@ -53,7 +53,7 @@ export function createWorkspace(host,getActive,paint,report){
  }
  function scheduleFrame(){if(framePending||disposed)return;framePending=true;requestAnimationFrame(()=>{framePending=false;if(!disposed)frame();});}
  function present(){
-  const active=getActive();if(!active)return;layout.dataset.overview=String(!!active.overview);required('[data-context-provenance]').hidden=!active.overview;renderPanels();if(active.overview)active.playback?.pause();active.playback?.refresh();
+  const active=getActive();if(!active)return;if(active.overview){partsOpen=false;if(pane==='parts')pane='instructions';}const explore=required('button[data-explorer-toggle]');explore.disabled=!!active.overview;explore.title=active.overview?'Part hierarchy is unavailable for this interim reference':'Assembly explorer';required('button[data-sheet-tab=parts]').disabled=!!active.overview;required('[data-guide-chapters]').hidden=!!active.overview;layout.dataset.overview=String(!!active.overview);required('[data-context-provenance]').hidden=!active.overview;renderPanels();if(active.overview)active.playback?.pause();active.playback?.refresh();
   for(const button of host.querySelectorAll('button[data-assembly]'))button.setAttribute('aria-pressed',String(button.dataset.assembly===(active.overview?active.assembly:active.guideAssembly||'turret')));
   required('[data-context-tools]').hidden=!!active.viewer&&!active.overview;required('[data-step-tools]').hidden=!!active.overview||!active.viewer;required('button[data-guide-fit]').disabled=!active.viewer;
   if(!active.viewer)required('[data-context-tools]').textContent='Interactive 3D tools are unavailable. The bound instructions and available diagrams remain accessible.';
