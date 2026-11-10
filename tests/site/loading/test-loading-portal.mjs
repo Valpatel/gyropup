@@ -158,12 +158,18 @@ try{
   }
   const bodyManifest=await json('/exports/sim/v2/rig/manifest.json');
   const faults=[m=>delete m.fivebar.l1_mm,m=>m.fivebar.ref.phi1=null,m=>m.fivebar.h_range_mm.reverse(),m=>m.mounts.eyes=[0],m=>m.wheel_r_mm=0,m=>m.track_mm='wide',m=>m.height_mm=null,m=>m.turret.muzzle_mm=[]];
-  let manifestAttempts=0,earlyMeshes=0;
+  let archiveAuthorityRequests=0,manifestAttempts=0,earlyMeshes=0;
   const malformedRobot=await pageFor('/designer/character/talk-demo.html',async page=>{
     page.on('request',request=>{if(/\.stl(?:\?|$)/.test(request.url()))earlyMeshes++;});
+    // These fields belong to the archived rig. Only this page opts into its loader.
+    await page.route(url=>url.pathname==='/designer/robot_current_source.js',route=>{
+      archiveAuthorityRequests++;
+      return route.fulfill({contentType:'text/javascript',body:'export const CURRENT_ROBOT_SOURCE = null;'});
+    });
     await page.route('**/exports/sim/v2/rig/manifest.json*',route=>{const data=structuredClone(bodyManifest);faults[manifestAttempts++]?.(data);return route.fulfill({json:data});});
   });
   await state(malformedRobot,'talk-load-status','error');
+  assert.equal(archiveAuthorityRequests,1);
   await malformedRobot.evaluate(()=>window.firstCanvas=document.querySelector('#app canvas'));
   for(let attempt=1;attempt<=faults.length;attempt++){
     await state(malformedRobot,'talk-load-status','error');assert.equal(manifestAttempts,attempt);assert.equal(earlyMeshes,0,'Invalid kinematic data is rejected before mesh requests');
@@ -174,11 +180,31 @@ try{
   await ready(malformedRobot);assert.equal(manifestAttempts,faults.length+1);
   assert.equal(await malformedRobot.evaluate(()=>{const robot=window.__talkDemo.robot;robot.group.updateMatrixWorld(true);let bad=0;robot.group.traverse(o=>{if(!o.matrixWorld.elements.every(Number.isFinite))bad++;});return bad;}),0);
   assert.equal(await malformedRobot.locator('.gp-dock').count(),1);assert.equal(await malformedRobot.locator('#app canvas').count(),1);
-  record('Robot kinematic manifest failures and finite same-stage recovery');await malformedRobot.close();
-  const talk=await pageFor('/designer/character/talk-demo.html',page=>page.route('**'+partURL+'*',route=>route.fulfill({contentType:'text/html',body:'<html>Not the robot part</html>'})));
-  await state(talk,'talk-load-status','error');await errorLayout(talk,'talk-load-status','talk-error');assert.ok(await talk.locator('#detect').isDisabled());
+  record('Archived robot kinematic manifest failures and finite same-stage recovery');await malformedRobot.close();
+
+  const nativeSource='3a40891962b0b0a04625e070700f1d130bea3c7b';
+  const collectionSha256='7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67';
+  const currentManifest=await json('/web/robot-current/manifest.json');
+  assert.equal(currentManifest.native_source,nativeSource);
+  assert.equal(currentManifest.collection_sha256,collectionSha256);
+  const battery=currentManifest.parts.filter(part=>part.name==='item.battery_front');
+  assert.equal(battery.length,1);
+  assert.equal(battery[0].file,'meshes/item__battery_front.stl');
+  assert.equal(battery[0].sha256,'fff8ba9d6ef22c1a562590c602c9bb381c25257d718e7c2c48ed6760f727bdba');
+  const currentMesh=url=>url.pathname==='/web/robot-current/'+battery[0].file;
+  let faultedMeshes=0;
+  const talk=await pageFor('/designer/character/talk-demo.html',page=>page.route(currentMesh,route=>{
+    faultedMeshes++;
+    return route.fulfill({contentType:'text/html',body:'<html>Not the robot part</html>'});
+  }));
+  await state(talk,'talk-load-status','error');
+  assert.equal(faultedMeshes,1,'Default Talk must request the adopted mesh');
+  assert.equal(await talk.evaluate(()=>!!window.__talkDemo),false);
+  await errorLayout(talk,'talk-load-status','talk-error');assert.ok(await talk.locator('#detect').isDisabled());
   await talk.evaluate(()=>window.originalCanvas=document.querySelector('#app canvas'));
-  await talk.unroute('**'+partURL+'*');await retry(talk,'talk-load-status');await ready(talk);
+  await talk.unroute(currentMesh);await retry(talk,'talk-load-status');await ready(talk);
+  const recovered=await talk.evaluate(()=>window.__talkDemo.robot.presentation);
+  assert.equal(recovered.mode,'current');assert.equal(recovered.nativeSource,nativeSource);assert.equal(recovered.collectionSha256,collectionSha256);
   assert.ok(await talk.evaluate(()=>window.originalCanvas===document.querySelector('#app canvas')),'Robot retry preserves the stage canvas');
   assert.equal(await talk.locator('#app canvas').count(),1);assert.equal(await talk.locator('.gp-dock').count(),1);assert.equal(await talk.locator('#events button').count(),9);
   await talk.getByRole('button',{name:'SHOW PANEL',exact:true}).click();
@@ -186,7 +212,7 @@ try{
   await talk.locator('#detect').click();await state(talk,'service-load-status','loading');assert.ok(await talk.locator('#detect').isDisabled());
   await talk.evaluate(()=>window.releaseServices({tts:{ok:false,name:'Browser voice'},stt:{ok:false,name:'Unavailable'},llm:{ok:false}}));
   await state(talk,'service-load-status','ready');assert.ok(await talk.locator('#detect').isEnabled());assert.ok(await talk.evaluate(()=>window.savedTalk===window.__talk));
-  assert.match(await talk.locator('#svc').innerText(),/scripted/);record('Talk same-stage retry and service pending state');
+  assert.match(await talk.locator('#svc').innerText(),/scripted/);record('Current Talk same-stage mesh retry and service pending state');
   // The legacy procedural fallback is explicit availability, never an HTTP500
   // or malformed required CAD file disguised as a successful model switch.
   const legacy='/exports/links/manifest.json',design='designs/default.json';
