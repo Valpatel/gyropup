@@ -42,7 +42,7 @@ async function start(){
    try{nextViewer=await createViewer({app:canvas,panel,guideBound:true,manifest:loaded.manifest,manifestUrl:loaded.manifestUrl,signal:abort.signal,
      onSelect:name=>{if(applying||active?.viewer!==nextViewer)return;selection(name);}});}
    catch(error){if(abort.signal.aborted)throw error;renderError=error;}
-   if(renderError&&active)throw renderError;
+   if(renderError&&active?.viewer)throw renderError;
    if(own!==request){nextViewer?.dispose();for(const value of posterURLs.values())URL.revokeObjectURL(value);return;}
    const previous=active;
    const key=progressKey(guide,row.sha256),done=tabProgress.has(key)?new Set(tabProgress.get(key)):readProgress(storage(),guide,row.sha256);
@@ -50,7 +50,7 @@ async function start(){
    const model=host.querySelector('[data-guide-model]');model.replaceChildren(canvas);previous?.viewer?.dispose();for(const value of previous?.posterURLs?.values()||[])URL.revokeObjectURL(value);
    host.querySelector('[data-guide-visual]').hidden=!!renderError;host.querySelector('.assembly-layout').dataset.static=String(!!renderError);
    select.value=id;paint(step.id);
-   if(renderError)report('Interactive 3D is unavailable. The same snapshot’s text and poster remain below.',true);
+   if(renderError)report('Interactive 3D is unavailable. '+(guide.steps.some(step=>step.poster)?'The same snapshot’s text and diagrams remain below.':'The same snapshot’s text remains below.'),true);
    else report(guide.snapshot.status==='wip'?'Source-bound WIP guide loaded. No physical build release.':'Versioned guide loaded. Its publication status is separate from physical qualification.');
    window.__buildGuide={get active(){return active;},load,apply:id=>paint(id),dispose(){pending?.abort();active?.viewer?.dispose();for(const value of active?.posterURLs?.values()||[])URL.revokeObjectURL(value);active=null;}};
    if(pending===abort)pending=null;
@@ -84,7 +84,7 @@ function paint(id){
  host.querySelector('[data-guide-count]').textContent=`${chapter.title} · ${index+1} / ${g.steps.length}`;
  host.querySelector('[data-guide-text]').textContent=s.text;
  const poster=host.querySelector('[data-guide-poster]');poster.hidden=!s.poster||!a.renderError;
- if(s.poster){poster.src=a.posterURLs.get(s.id);poster.alt=`Step ${index+1}: ${s.title}`;}
+ if(s.poster){poster.src=a.posterURLs.get(s.id);poster.alt=`Step ${index+1}: ${s.title}`;}else{poster.removeAttribute('src');poster.alt='';}
  host.querySelector('[data-guide-chapters]').innerHTML=g.subassemblies.map(c=>`<button type="button" data-chapter="${esc(c.id)}" aria-current="${c.id===s.subassembly?'step':'false'}">${esc(c.title)}</button>`).join('');
  host.querySelectorAll('[data-chapter]').forEach(b=>b.onclick=()=>paint(stepFor(g,{chapter:b.dataset.chapter}).id));
  const stepSelect=host.querySelector('[data-guide-step]');stepSelect.innerHTML=g.steps.map((x,i)=>`<option value="${esc(x.id)}">${i+1}. ${esc(x.title)}</option>`).join('');stepSelect.value=s.id;stepSelect.onchange=()=>paint(stepSelect.value);
