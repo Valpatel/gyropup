@@ -1,14 +1,16 @@
-Desktop Build instructions should stay docked at the right in ordinary, expanded-workspace, and native fullscreen layouts. Expanding instructions must keep Parts and Tools controls accessible. Narrow mobile layouts retain their compact bottom sheet. Requested 2026-11-10.
+Desktop Build instructions stay at the right in ordinary, expanded-workspace and native fullscreen layouts, immediately left of open Tools. Expanded instructions preserve independent Parts/Tools controls. Narrow layouts retain the compact bottom sheet.
+
+Issue #285; PR #286; branch `fix/build-instructions-dock`.
 
 **Done**
-- [x] Isolated source branch from dev and read overlay/preview guidance.
+- Reproduced previous1280px bottom sheet in actual native Chromium; Parts/Tools disappearance was not reproduced.
+- Unified desktop right docking and camera insets; reserved the model lane across simultaneous panels.
+- Corrected intermediate1280px allocation after an actual274.375px lane failure.
+- Chromium and WebKit each passed93 docking/control states, including real fullscreen, denied-fullscreen, resize and mobile touch.
+-19 pure assembly tests and11 privacy tests passed.
 
 **Next**
-- [ ] Reproduce actual fullscreen expansion and record pre-fix geometry.
-- [ ] Keep desktop right docking and panel controls consistent across modes.
-- [ ] Verify real hit targets, panel state combinations, mobile, and independent review.
+- Capture and attach twelve fresh source-bound posters from the committed final source, regenerate their consumers, build and check privacy.
+- Record final-source receipts and independent review; root integrates through dev/main.
 
-**Running**
-- None. Tests will own temporary listeners and close them.
-
-**Resume:** branch `fix/build-instructions-dock`; no CAD or battery changes.
+**Resume:** use the isolated branch. Tests own temporary listeners and close them. Shared preview remains untouched. No CAD/battery/manufacturing scope.

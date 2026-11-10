@@ -15,3 +15,6 @@ For small preparation pages, keep primary model-inspection actions in the initia
 Do not call `scrollIntoView` before an initial-horizontal-visibility assertion: it can scroll nested ancestors to hide the defect. Scroll vertically only, check clipping-ancestor bounds and unchanged horizontal offsets, and test a real nested overflow corruption.
 
 Clipping fixtures around decorated model links must preserve the original-download/preview sibling pair. Wrap their common paragraph; moving only the preview legitimately triggers the live decorator to create a replacement and makes the test exercise a different behavior.
+
+
+Desktop assembly instructions (>760px) stay at the right edge when Tools is closed and immediately to its left when open. Expanding instructions changes reading height, preserving the independent Parts/Tools controls. Native fullscreen and denied-fullscreen expansion use the same docking CSS and actual-box camera insets. Side-panel widths share the remaining workspace budget with the instruction card and a 320px model lane where desktop width allows it. `npm run test:instruction-docking` owns and closes its temporary listener and exercises all panel states, real hit targets, fullscreen completion, resize and narrow touch sheets in Chromium/WebKit. Short ordinary windows remain scrolling documents; fullscreen must keep controls in its viewport.

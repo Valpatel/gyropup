@@ -5,7 +5,7 @@ export function createWorkspace(host,getActive,paint,report){
  const required=selector=>{const node=host.querySelector(selector);if(!node)throw new Error('Missing workspace element: '+selector);return node;};
  const layout=required('.assembly-layout'),tree=required('#assembly-explorer'),tools=required('#assembly-tools'),instructions=required('.assembly-step'),sheet=required('[data-workspace-sheet]');
  const toolbar=required('.assembly-topbar'),nav=required('.assembly-nav'),full=required('button[data-guide-fullscreen]'),instructionToggle=required('button[data-instructions-toggle]');
- const mobile=matchMedia('(max-width:1280px)'),events=new AbortController();
+ const mobile=matchMedia('(max-width:760px)'),events=new AbortController();
  let disposed=false,generation=0,assemblyLoader=null,previousOverflow='',expandedInstructions=false,partsOpen=false,toolsOpen=false,pane='instructions',sheetCollapsed=false,sheetExpanded=false,framePending=false;
  const useSheet=()=>mobile.matches||!!getActive()&&!getActive().viewer;
  function renderPanels(){
@@ -43,10 +43,10 @@ export function createWorkspace(host,getActive,paint,report){
   const insets={top:navigation.bottom-bounds.top+12,bottom:16,left:16,right:16};
   if(mobile.matches){const occupied=sheet.getBoundingClientRect();insets.bottom=Math.max(16,bounds.bottom-occupied.top+12);layout.style.setProperty('--assembly-sheet-height',`${occupied.height}px`);}
   else{
-   layout.style.setProperty('--assembly-left-dock',partsOpen?'278px':'0px');layout.style.setProperty('--assembly-right-dock',toolsOpen?'278px':'0px');
+   layout.style.setProperty('--assembly-right-dock',toolsOpen?`${tools.getBoundingClientRect().width+12}px`:'0px');
    if(partsOpen)insets.left=tree.getBoundingClientRect().right-bounds.left+12;
    if(toolsOpen)insets.right=bounds.right-tools.getBoundingClientRect().left+12;
-   const instructionBounds=instructions.getBoundingClientRect();if(expandedInstructions)insets.right=Math.max(insets.right,bounds.right-instructionBounds.left+12);else insets.bottom=Math.max(16,bounds.bottom-instructionBounds.top+12);
+   const instructionBounds=instructions.getBoundingClientRect();insets.right=Math.max(insets.right,bounds.right-instructionBounds.left+12);
   }
   viewer.stage.setInsets(insets);
   if(active.overview&&active.robot){active.robot.group.updateMatrixWorld(true);const box=new THREE.Box3();active.robot.group.traverseVisible(object=>{if(object.isMesh)box.union(new THREE.Box3().setFromObject(object));});viewer.stage.fitView(box,{direction:new THREE.Vector3(1,.45,1.5),margin:1.12});}

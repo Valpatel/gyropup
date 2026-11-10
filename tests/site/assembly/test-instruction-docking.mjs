@@ -1,0 +1,84 @@
+/** Real desktop/right-dock and narrow sheet controls across native and denied fullscreen. */
+import assert from 'node:assert/strict';
+import {once} from 'node:events';
+import {mkdir,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {chromium,webkit} from '@playwright/test';
+import {createSiteServer} from '../../../tools/site/serve-site.mjs';
+const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
+const out=process.env.TEST_OUTPUT||'/tmp/gyropup-instruction-docking-'+engine.name();
+await mkdir(out,{recursive:true});
+const server=createSiteServer(path.resolve(import.meta.dirname,'../../../dist'));
+server.listen(0,'127.0.0.1');await once(server,'listening');
+const base='http://127.0.0.1:'+server.address().port,observations=[],errors=[];
+console.log('Owned docking listener',base);
+let browser,page;
+const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+async function clickState(selector,attribute,value){if(await page.locator(selector).getAttribute(attribute)!==String(value))await page.locator(selector).click();}
+async function inspect(label){
+ // Ordinary short windows scroll through the page; native/fallback fullscreen must fit as one viewport.
+ await page.evaluate(()=>{const layout=document.querySelector('.assembly-layout');if(!document.fullscreenElement&&layout.dataset.expanded!=='true'){const nav=document.querySelector('.appnav')?.getBoundingClientRect();window.scrollTo({top:layout.getBoundingClientRect().top+scrollY-(nav?.height||64)-8,behavior:'instant'});}});
+ await settle();
+ const data=await page.evaluate(()=>{
+  const layout=document.querySelector('.assembly-layout'),rect=e=>{const r=e.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,right:r.right,bottom:r.bottom};};
+  const visible=s=>[...document.querySelectorAll(s)].filter(e=>!e.hidden&&e.getClientRects().length);
+  const controls=visible('.assembly-topbar button,.assembly-nav button,.assembly-nav select,.assembly-progress,.assembly-sheet-tabs button,.assembly-instruction-heading button').filter(e=>!e.disabled).map(e=>{const r=rect(e),hit=document.elementFromPoint(r.x+r.w/2,r.y+r.h/2);return{label:e.getAttribute('aria-label')||e.textContent.trim(),...r,hit:e===hit||e.contains(hit),inViewport:r.y>=0&&r.bottom<=innerHeight};});
+  const panels=Object.fromEntries(visible('.assembly-step,#assembly-tools,#assembly-explorer').map(e=>[e.classList.contains('assembly-step')?'instructions':e.id,rect(e)]));
+  const v=window.__buildGuide.active.viewer,c=v.stage.renderer.domElement,r=rect(c),overlays=visible('.assembly-topbar,.assembly-nav,.assembly-step,#assembly-tools,#assembly-explorer').map(rect);let vertices=0,unoccluded=true;
+  v.stage.root.updateMatrixWorld(true);v.stage.camera.updateMatrixWorld(true);
+  for(const part of v.parts.filter(p=>p.mesh.visible)){const positions=part.mesh.geometry.attributes.position;for(let i=0;i<positions.count;i+=Math.max(1,Math.floor(positions.count/60))){const q=part.mesh.position.clone().fromBufferAttribute(positions,i).applyMatrix4(part.mesh.matrixWorld).project(v.stage.camera),x=r.x+(q.x+1)*r.w/2,y=r.y+(1-q.y)*r.h/2;vertices++;if(![x,y,q.z].every(Number.isFinite)||x<r.x||x>r.right||y<r.y||y>r.bottom||Math.abs(q.z)>1||overlays.some(o=>x>o.x&&x<o.right&&y>o.y&&y<o.bottom))unoccluded=false;}}
+  return{mobile:layout.dataset.mobile,mode:layout.dataset.fullscreen||'none',expanded:layout.dataset.instructions,workspace:rect(layout),navigation:rect(document.querySelector('.assembly-nav')),panels,controls,vertices,unoccluded,shortWindow:!document.fullscreenElement&&layout.dataset.expanded!=='true'&&innerHeight<500,horizontalOverflow:document.documentElement.scrollWidth>innerWidth+1};
+ });
+ observations.push({label,...data});assert.ok(data.controls.every(c=>c.w>=44&&c.h>=44&&(c.hit||data.mobile==='true'&&data.shortWindow&&!c.inViewport)),JSON.stringify({label,controls:data.controls}));assert.equal(data.horizontalOverflow,false,label);assert.ok(data.vertices>0&&data.unoccluded,JSON.stringify({label,vertices:data.vertices,unoccluded:data.unoccluded}));
+ if(data.mobile==='false'){
+  const i=data.panels.instructions,t=data.panels['assembly-tools'],p=data.panels['assembly-explorer'];
+  assert.ok(i,label+' keeps instructions visible');assert.ok(Math.abs(i.y-data.navigation.bottom-12)<2,label+' starts below navigation');assert.ok(Math.abs(i.right-(t?t.x-12:data.workspace.right-16))<2,label+' docks beside Tools or at right edge');
+  assert.ok(i.w>=240&&i.h>=44,label+' readable instruction panel');
+  if(p){assert.ok(p.right<=i.x,label+' Parts do not overlap instructions');if(data.workspace.w>=950)assert.ok(i.x-p.right-24>=320,label+' retains useful model width');}
+  for(const panel of Object.values(data.panels))assert.ok(panel.y>=data.navigation.bottom+10,label+' panel cannot cover toolbar/navigation');
+ }else assert.equal(Object.keys(data.panels).length,data.controls.some(c=>c.label==='Expand panel')&&await page.locator('.assembly-layout').getAttribute('data-sheet-size')==='collapsed'?0:1,label+' one compact mobile pane');
+ return data;
+}
+async function mobilePane(pane){
+ const tab=page.locator(`[data-sheet-tab=${pane}]`);await tab.scrollIntoViewIfNeeded();
+ assert.equal(await tab.evaluate(e=>{const r=e.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return e===hit||e.contains(hit);}),true,'Actual mobile '+pane+' tab hit target');await tab.click();
+}
+async function fullscreen(mode){
+ if(mode==='denied')await page.evaluate(()=>document.querySelector('.assembly-layout').requestFullscreen=()=>Promise.reject(new DOMException('Intentional denial','NotAllowedError')));
+ await page.locator('[data-guide-fullscreen]').click();
+ await page.waitForFunction(({mode,nativeRequired})=>{const l=document.querySelector('.assembly-layout');return mode==='denied'?l.dataset.fullscreen==='expanded':nativeRequired?document.fullscreenElement===l&&l.dataset.fullscreen==='native':['native','expanded'].includes(l.dataset.fullscreen);},{mode,nativeRequired:engine===chromium});
+}
+try{
+ browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
+ const context=await browser.newContext({viewport:{width:1440,height:1000},hasTouch:true,reducedMotion:'reduce'});
+ await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
+ page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+ const version=await(await context.request.get(base+'/version.json')).json();
+ await page.goto(base+'/designer/build.html?assembly=turret&step=step-02#assembly',{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>window.__buildGuide?.active?.viewer?.parts.some(p=>p.mesh.visible)&&document.querySelector('#assembly').dataset.ready==='1');await page.evaluate(()=>document.fonts.ready);
+ for(const mode of ['windowed','native','denied']){
+  console.log('PHASE docking-'+mode);if(mode!=='windowed')await fullscreen(mode);
+  for(const width of [1440,1024]){
+   await page.setViewportSize({width,height:1000});
+   for(const expanded of [false,true])for(const parts of [false,true])for(const tools of [false,true]){
+    await clickState('[data-instructions-toggle]','aria-expanded',expanded);await clickState('[data-explorer-toggle]','aria-expanded',parts);await clickState('[data-tools-toggle]','aria-expanded',tools);
+    await inspect(`${mode} ${width} expanded=${expanded} Parts=${parts} Tools=${tools}`);
+   }
+   await page.screenshot({path:`${out}/${mode}-${width}-expanded-panels.png`,timeout:15000});
+  }
+  // Resize the same active fullscreen document across the real desktop/mobile boundary.
+  for(const viewport of [{width:1280,height:900},{width:844,height:390},{width:720,height:390},{width:390,height:844},{width:320,height:700}]){
+   await page.setViewportSize(viewport);await settle();
+   if(viewport.width>760){await inspect(`${mode} resize ${viewport.width}x${viewport.height}`);}
+   else{
+    for(const pane of ['instructions','parts','tools']){await mobilePane(pane);await inspect(`${mode} ${viewport.width} ${pane}`);}
+    await page.locator('[data-sheet-tab=instructions]').click();await page.locator('[data-sheet-resize]').click();await inspect(`${mode} ${viewport.width} expanded mobile instructions`);await page.locator('[data-sheet-resize]').click();
+    await page.screenshot({path:`${out}/${mode}-${viewport.width}-mobile.png`,timeout:15000});
+   }
+  }
+  await page.setViewportSize({width:1440,height:1000});await inspect(mode+' desktop restored after resize');
+  if(mode!=='windowed'){await page.locator('[data-guide-fullscreen]').click();await page.waitForFunction(()=>document.querySelector('[data-guide-fullscreen]').getAttribute('aria-pressed')==='false');}
+ }
+ assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
+}catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
+finally{await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));console.log('Owned docking listener closed');}
