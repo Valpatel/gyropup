@@ -9,3 +9,15 @@ The user wants a bright, friendly robot brand with the depth of the approved pro
 - Verify contrast in normal and interactive states, wrapping, phone controls, loading composition and actual screenshots, then separately judge the design against the user's stated aesthetic reference. Functional checks cannot establish that the user likes a visual style.
 
 See the [recorded style correction](../inbox/2026-10-29-motto-needs-the-approved-surface-language.md). These are Gyropup-specific preferences, not universal design rules.
+
+## Mobile motto cadence (2026-11-10)
+
+The owner requested “Strike first, strike fast,” together on the first mobile
+line, followed by “strike last” alone in a distinct emphasis style. Keep those
+first two clauses grouped; do not rely on balanced wrapping to choose the break.
+The final phrase uses warm amber, heavier italic type and more size on phones,
+while the surrounding marketing copy retains the existing readable treatment.
+
+A font-ready browser check of source `1720961b` covered 320, 360, 390, 430, 760,
+1024 and 1440 px in both themes: all fourteen layouts kept the first group intact,
+mobile final line separate, and the page/card free of horizontal clipping.

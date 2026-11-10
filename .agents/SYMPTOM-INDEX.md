@@ -4,6 +4,7 @@
 | --- | --- |
 | A CLI writes a failed gate report but its shell exit is zero | [Propagate failure returns through the actual process entry point](inbox/2026-11-10-cli-failure-returns-must-reach-the-process.md) |
 | A build part passes through installed geometry despite a clean final pose, or flipping its direction hits a different obstruction | [Bind arrival paths to installed dependencies](inbox/2026-11-10-clean-final-assembly-pose-does-not-validate-arrivals.md) |
+| A build viewer looks blank during mesh downloads, or a progress bar counts the pending part as complete | [Count validated loader completions](inbox/2026-11-10-loader-progress-must-count-completed-parts.md) |
 | A robot is tiny despite a large canvas, stable guide rectangles hide controls, or narrow screenshots use desktop height | [Fit visible geometry and test actual overlay hit targets](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md) |
 | A named, hashed manufacturing original is offered as matching a newly collected assembly part | [Keep file identity separate from accepted geometry correspondence](inbox/2026-11-10-manufacturing-links-need-geometry-correspondence.md) |
 | A native identity guard rejects a known package file after resolving it outside the venv | [Bind the predeclared file link and exact target identity](inbox/2026-11-07-native-origins-must-bind-declared-symlinks.md) |
@@ -189,3 +190,4 @@
 - A retained input fails full inventory comparison with unchanged bytes after a fleet job ends: [check the documented post-job permission freeze](inbox/2026-11-10-retained-artifact-modes-follow-the-fleet-freeze.md).
 
 - A native study is killed at its cap with no final unchecked IDs or CLI exit receipt: [derive coverage from the full plan and retained completed prefix](inbox/2026-11-10-capped-native-studies-need-observed-prefixes.md).
+- A supplier-photo fallback times out while the screenshot shows a loaded image: [arm and witness the actual request failure before navigation](inbox/2026-11-10-photo-failure-tests-must-intercept-the-request.md).

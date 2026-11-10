@@ -154,7 +154,7 @@
     <div class="assembly-heading"><div><span class="eyebrow">THE WORKSHOP / BUILD</span><h2 id="assembly-title">Build Gyropup</h2></div><span class="tag warn">DESIGN WIP</span></div>
     <p class="assembly-intro">Choose an assembly, explore its model, then follow the authored steps.</p>
     <div class="assembly-layout" data-overview="true">
-      <div data-guide-visual><div data-guide-model class="assembly-model" aria-label="Interactive assembly model"></div></div>
+      <div data-guide-visual><div data-guide-model class="assembly-model" aria-busy="true" aria-label="Interactive assembly model"></div></div><div class="assembly-loading" data-guide-loading><strong data-loading-phase role="status" aria-live="polite">Opening the assembly workshop…</strong><progress aria-label="Model parts loaded" max="1"></progress><span data-loading-count>Checking the selected build files…</span></div>
       <div class="assembly-topbar">
         <button type="button" data-explorer-toggle aria-expanded="false" aria-controls="assembly-explorer" title="Assembly explorer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/></svg><span>Explore</span></button>
         <div class="assembly-choice" role="group" aria-label="Choose assembly"><button type="button" data-assembly="robot" aria-pressed="false">Robot</button><button type="button" data-assembly="turret" aria-pressed="false">Turret</button><button type="button" data-assembly="combined" aria-pressed="true">Combined</button></div>
@@ -207,7 +207,7 @@
   const details=document.getElementById('build-details');
   function openTarget(){const id=location.hash.slice(1);const target=document.getElementById(id);if(target&&details.contains(target)){details.open=true;const panel=target.closest('[data-build-panel]');if(panel)window.selectBuildPanel?.(panel.dataset.buildPanel);requestAnimationFrame(()=>target.scrollIntoView());}}
   addEventListener('hashchange',openTarget);openTarget();
-  import('./assembly/build-guide.js').catch(error=>{document.querySelector('[data-guide-status]').textContent='Interactive guide unavailable. Use the plain HTML instructions below.';console.warn('Build guide:',error.message);});
+  import('./assembly/build-guide.js').catch(error=>{document.querySelector('[data-guide-loading]').hidden=true;document.querySelector('[data-guide-model]').setAttribute('aria-busy','false');document.querySelector('[data-guide-status]').textContent='Interactive guide unavailable. Use the plain HTML instructions below.';console.warn('Build guide:',error.message);});
 </script>
 <script type="module">
   import('./assembly/print-selection.js').then(m=>m.mountPrintSelection(document.getElementById('print-selection'))).catch(error=>console.warn('Print selection:',error.message));
