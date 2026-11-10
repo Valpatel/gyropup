@@ -1,0 +1,36 @@
+{
+  "schema": "gyropup.current-hip-correspondence-acceptance/1",
+  "measurement_sha256": "a293b1a24614012b894137e7edb6570316f49d279078bb1f1e40f9e9a5302f0b",
+  "collection_sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+  "review_url": "https://github.com/Valpatel/gyropup/issues/193#issuecomment-6776726093",
+  "collection_review_url": "https://github.com/Valpatel/gyropup/issues/193#issuecomment-6775564625",
+  "instances": [
+    "L.hip_frame",
+    "R.hip_frame"
+  ],
+  "physical_qualification": false,
+  "raw_measurement_unchanged": true,
+  "bindings": {
+    "collection_sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+    "input_inventory_sha256": "885545309f1087e267a75cdd89920ec559ef4a6af603d941698b4e82eea80a43",
+    "original_sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de",
+    "sampler_sha256": "917b5324611657b50118ac2fd125d9fb58d735d0260c3e578f93929d64fa7b1f",
+    "producer_sha256": "a1f7220346e0d24fe87ed94358c34f6eddfea999d48dc45e39ef9944d5c963b7",
+    "historical_validator_sha256": "47b05f0211f49aadd244f4670157df8f2b01288968d2a6f0dd0eee4791e69709",
+    "historical": {
+      "matching_input_snapshot": "f77fcde00880d4cedf8ca1a7edabd993714deaca",
+      "recorded_slice_producer": "017e1e03eacdfaec7eda891a14143a2f9254581a",
+      "archive_sha256": "cca45e96a203729279449f9089eb938b2b0adf5d1a7d9472d735a60753971515",
+      "manifest_sha256": "2158d0e0b216069d3a5ac0b7bffa63e82943efcbadf96118330c070da35d1f18",
+      "receipt_sha256": "613e9ff07406145c3e7821a75f964dd8b569764385e840ff448d06c2b62dcfc4",
+      "job_sha256": "b94cfb11d2da264069c4d0e7c9fb784ee44f6620032fa3030bf4461865a18605",
+      "engineering_pass": false,
+      "engineering_counts": {
+        "pass": 322,
+        "warn": 40,
+        "fail": 8
+      }
+    }
+  },
+  "scope": "Current sampled tessellation-to-original correspondence; historical engineering evidence remains 322 pass / 40 warn / 8 fail. Geometry-only WIP preparation; generic bed, unsliced, no physical fit, support, strength or print release."
+}
