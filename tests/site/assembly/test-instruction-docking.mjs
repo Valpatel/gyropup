@@ -12,7 +12,7 @@ await mkdir(out,{recursive:true});
 const server=createSiteServer(path.resolve(import.meta.dirname,'../../../dist'));
 server.listen(0,'127.0.0.1');await once(server,'listening');
 const base='http://127.0.0.1:'+server.address().port,observations=[],errors=[];
-const sources=Object.fromEntries(await Promise.all(['tests/site/assembly/test-instruction-docking.mjs','software/site/designer/assembly/workspace.js','software/site/designer/assembly/guide.css'].map(async file=>[file,createHash('sha256').update(await readFile(path.resolve(import.meta.dirname,'../../..',file))).digest('hex')])));
+const sources=Object.fromEntries(await Promise.all(['tests/site/assembly/test-instruction-docking.mjs','software/site/designer/assembly/workspace.js','software/site/designer/assembly/guide.css','software/site/designer/build.html'].map(async file=>[file,createHash('sha256').update(await readFile(path.resolve(import.meta.dirname,'../../..',file))).digest('hex')])));
 console.log('Owned docking listener',base);
 let browser,page;
 const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
@@ -47,6 +47,46 @@ async function mobilePane(pane){
  const tab=page.locator(`[data-sheet-tab=${pane}]`);await tab.scrollIntoViewIfNeeded();
  assert.equal(await tab.evaluate(e=>{const r=e.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return e===hit||e.contains(hit);}),true,'Actual mobile '+pane+' tab hit target');await tab.click();
 }
+async function selectServo(){
+ const part=page.locator('[data-part=pan_servo]');for(const ancestor of await part.locator('xpath=ancestor::details').all())if(!await ancestor.evaluate(e=>e.open))await ancestor.locator(':scope > summary').click();await part.click();
+}
+async function desktopSelection(label){
+ await selectServo();await page.locator('[data-guide-isolate]').click();assert.equal(await page.evaluate(()=>window.__buildGuide.active.viewer.parts.filter(p=>p.mesh.visible).length),1,'Native isolate action leaves exactly one part');
+ const dock=await page.evaluate(()=>{const rect=s=>{const r=document.querySelector(s).getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom};};return{popup:rect('[data-part-popup]'),parts:rect('#assembly-explorer')};});
+ assert.ok(dock.popup.left>=dock.parts.left-1&&dock.popup.right<=dock.parts.right+1,JSON.stringify({label,dock}));
+ await inspect(label+' isolated selection');
+ const hit=await page.evaluate(()=>{const a=window.__buildGuide.active,part=a.viewer.parts.find(p=>p.name===a.selected),point=part.mesh.position.clone().set(0,0,0),positions=part.mesh.geometry.attributes.position;for(let i=0;i<3;i++)point.add(part.mesh.position.clone().fromBufferAttribute(positions,i));point.divideScalar(3);part.mesh.updateWorldMatrix(true,false);point.applyMatrix4(part.mesh.matrixWorld);a.viewer.stage.camera.updateMatrixWorld(true);point.project(a.viewer.stage.camera);const canvas=a.viewer.stage.renderer.domElement,r=canvas.getBoundingClientRect(),x=r.x+(point.x+1)*r.width/2,y=r.y+(1-point.y)*r.height/2;return{x,y,name:a.selected,canvas:document.elementFromPoint(x,y)===canvas};});
+ assert.equal(hit.canvas,true,JSON.stringify({label,hit,dock}));await page.mouse.click(hit.x,hit.y);assert.equal(await page.evaluate(()=>window.__buildGuide.active.selected),hit.name);assert.equal(await page.locator('[data-part-popup]').isVisible(),true);assert.equal(await page.locator('[data-explorer-toggle]').getAttribute('aria-expanded'),'true');
+ await page.screenshot({path:out+'/'+label.replaceAll(' ','-')+'-isolated-popup.png',timeout:15000});await page.locator('[data-guide-isolate]').click();assert.equal(await page.evaluate(()=>window.__buildGuide.active.isolate),false,'Native isolate action restores assembly');await page.locator('[data-part-close]').click();
+}
+async function trustedTap(selector,label){
+ const button=page.locator(selector),before=await button.boundingBox();assert.ok(before&&before.width>=44&&before.height>=44,label+' touch target');
+ await page.evaluate(selector=>{window.actionTrace=[];window.actionTraceController=new AbortController();for(const type of ['pointerdown','pointerup','click'])document.addEventListener(type,event=>{const button=document.querySelector(selector),r=button.getBoundingClientRect();window.actionTrace.push({type,target:event.target===button,trusted:event.isTrusted,pointerType:event.pointerType||null,box:[r.x,r.y,r.width,r.height]});},{capture:true,signal:window.actionTraceController.signal});},selector);
+ await button.tap();const trace=await page.evaluate(()=>{window.actionTraceController.abort();return window.actionTrace;});
+ assert.ok(['pointerdown','pointerup','click'].every(type=>trace.some(event=>event.type===type&&event.target&&event.trusted)),JSON.stringify({label,trace}));assert.ok(trace.filter(event=>event.type!=='click').every(event=>event.pointerType==='touch'),JSON.stringify({label,trace}));
+ for(const event of trace)for(const [index,key]of ['x','y','width','height'].entries())assert.ok(Math.abs(event.box[index]-before[key])<1,JSON.stringify({label,before,trace}));observations.push({label,trace,before});
+}
+async function selectNamedPart(name){
+ await mobilePane('parts');const part=page.locator('[data-part='+JSON.stringify(name)+']');for(const ancestor of await part.locator('xpath=ancestor::details').all())if(!await ancestor.evaluate(e=>e.open))await ancestor.locator(':scope > summary').click();await part.tap();await page.locator('[data-part-popup]').waitFor({state:'visible'});
+}
+async function phoneFooterCases(){
+ const phone=await browser.newContext({viewport:{width:320,height:700},hasTouch:true,isMobile:true,reducedMotion:'reduce'});await phone.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));page=await phone.newPage();page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/designer/build.html?assembly=robot#assembly',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.__buildGuide?.active?.guideAssembly==='robot'&&window.__buildGuide.active.viewer?.parts.length===171&&document.querySelector('#assembly').dataset.ready==='1',null,{timeout:60000});await page.evaluate(()=>document.fonts.ready);await fullscreen('native');
+ for(const viewport of [{width:320,height:700},{width:844,height:390}]){
+  await page.setViewportSize(viewport);await mobilePane('tools');const section=page.locator('[data-guide-section]');await section.focus();await page.keyboard.press('Home');await page.keyboard.press('ArrowRight');await page.keyboard.press('Tab');assert.equal(await page.locator('[data-guide-reset]').evaluate(e=>document.activeElement===e),true,'Tab reaches fixed Reset');await page.keyboard.press('Enter');assert.equal(await section.inputValue(),'1','Keyboard Reset restores section');
+  await section.focus();await page.keyboard.press('Home');await page.keyboard.press('ArrowRight');await trustedTap('[data-guide-reset]',viewport.width+' actual touch Reset');assert.equal(await section.inputValue(),'1');
+  await selectNamedPart('L.hip_frame');assert.equal(await page.locator('[data-part-print]').isVisible(),true,'Real source-matched hip exposes both standard actions');assert.ok(await page.locator('[data-part-downloads] button').count()>0,'Source original download remains in readable content');
+  // Explicit UI-only long-label stress; real part identity and manufacturing metadata stay unchanged.
+  const stress='[UI TEST] Very long selected-part name with an intentionally unbroken suffix '+ 'long_label_'.repeat(10);await page.locator('[data-part-details]>b').evaluate((e,text)=>e.textContent=text,stress);
+  const footer=await page.locator('.assembly-part-actions').boundingBox();const body=await page.locator('.assembly-part-content').evaluate(e=>({height:e.clientHeight,width:e.clientWidth,scrollWidth:e.scrollWidth,scrollHeight:e.scrollHeight}));assert.ok(body.height>=44&&body.scrollHeight>body.height&&body.scrollWidth<=body.width,JSON.stringify({viewport,body}));
+  await page.locator('[data-guide-part-mode]').focus();await page.keyboard.press('Tab');assert.equal(await page.locator('[data-guide-isolate]').evaluate(e=>document.activeElement===e),true,'Tab reaches Isolate');await page.keyboard.press('Tab');assert.equal(await page.locator('[data-part-print]').evaluate(e=>document.activeElement===e),true,'Tab reaches Prepare print');
+  await page.locator('[data-part-details]>b').scrollIntoViewIfNeeded();assert.deepEqual(await page.locator('.assembly-part-actions').boundingBox(),footer,'Content scrolling preserves footer position');await page.screenshot({path:out+'/phone-actions-'+viewport.width+'.png',timeout:15000});
+  await page.keyboard.press('Shift+Tab');await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>window.__buildGuide.active.isolate),true,'Keyboard Isolate activates');await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>window.__buildGuide.active.isolate),false,'Keyboard Isolate restores assembly');
+  await trustedTap('[data-guide-isolate]',viewport.width+' actual touch Isolate');assert.equal(await page.evaluate(()=>window.__buildGuide.active.isolate),true);await trustedTap('[data-guide-isolate]',viewport.width+' actual touch restore');assert.equal(await page.evaluate(()=>window.__buildGuide.active.isolate),false);await trustedTap('[data-part-close]',viewport.width+' actual touch close');assert.equal(await page.locator('[data-part-popup]').isVisible(),false);
+  observations.push({label:viewport.width+' long-label multi-action footer and keyboard navigation',syntheticLabelOnly:true,realPart:'L.hip_frame',body,footer});
+ }
+ await phone.close();
+}
 async function fullscreen(mode){
  if(mode==='denied')await page.evaluate(()=>document.querySelector('.assembly-layout').requestFullscreen=()=>Promise.reject(new DOMException('Intentional denial','NotAllowedError')));
  await page.locator('[data-guide-fullscreen]').click();
@@ -70,7 +110,7 @@ try{
     assert.equal(Boolean(state.panels['assembly-explorer']),parts,'Parts visibility follows its own control');assert.equal(Boolean(state.panels['assembly-tools']),tools,'Tools visibility follows its own control');
     const instruction=state.panels.instructions,key=parts+':'+tools;if(!expanded)compactDocks.set(key,instruction);else{const compact=compactDocks.get(key);assert.equal(instruction.x,compact.x,'Expanding preserves horizontal dock');assert.equal(instruction.w,compact.w,'Expanding preserves dock width');assert.ok(instruction.h>=compact.h,'Expansion adds vertical reading space');}
    }
-   await page.screenshot({path:`${out}/${mode}-${width}-expanded-panels.png`,timeout:15000});
+   await page.screenshot({path:`${out}/${mode}-${width}-expanded-panels.png`,timeout:15000});await desktopSelection(mode+' '+width);
   }
   // Resize the same active fullscreen document across the real desktop/mobile boundary.
   for(const viewport of [{width:1280,height:900},{width:844,height:390},{width:720,height:390},{width:390,height:844},{width:320,height:700}]){
@@ -80,7 +120,7 @@ try{
    else{
     assert.equal(await page.evaluate(()=>matchMedia('(pointer:coarse)').matches),true,'Actual coarse pointer mobile context');
     for(const pane of ['instructions','parts','tools']){await mobilePane(pane);await inspect(`${mode} ${viewport.width} ${pane}`);}
-    if(viewport.width>=600){await mobilePane('parts');const part=page.locator('[data-part=pan_servo]');for(const ancestor of await part.locator('xpath=ancestor::details').all())if(!await ancestor.evaluate(e=>e.open))await ancestor.locator(':scope > summary').click();await part.click();const popup=page.locator('[data-part-popup]');await popup.waitFor({state:'visible'});assert.equal(await popup.evaluate(e=>{const r=e.getBoundingClientRect(),tabs=document.querySelector('.assembly-sheet-tabs').getBoundingClientRect(),sheet=document.querySelector('.assembly-panels').getBoundingClientRect();return Math.abs(r.left-sheet.left)<2&&Math.abs(r.right-sheet.right)<2&&r.top>=tabs.bottom&&r.bottom<=sheet.bottom;}),true,'Selected part stays beside model below compact tabs');await page.locator('[data-part-close]').click();}
+    if(viewport.width>=600){await mobilePane('parts');const part=page.locator('[data-part=pan_servo]');for(const ancestor of await part.locator('xpath=ancestor::details').all())if(!await ancestor.evaluate(e=>e.open))await ancestor.locator(':scope > summary').click();await part.click();const popup=page.locator('[data-part-popup]');await popup.waitFor({state:'visible'});assert.equal(await popup.evaluate(e=>{const r=e.getBoundingClientRect(),tabs=document.querySelector('.assembly-sheet-tabs').getBoundingClientRect(),sheet=document.querySelector('.assembly-panels').getBoundingClientRect();return Math.abs(r.left-sheet.left)<2&&Math.abs(r.right-sheet.right)<2&&r.top>=tabs.bottom&&r.bottom<=sheet.bottom;}),true,'Selected part stays beside model below compact tabs');await page.locator('[data-guide-isolate]').tap();assert.equal(await page.evaluate(()=>window.__buildGuide.active.isolate),true,'Actual touch isolates selected part');await page.locator('[data-guide-isolate]').tap();assert.equal(await page.evaluate(()=>window.__buildGuide.active.isolate),false,'Actual touch restores assembly');await page.locator('[data-part-close]').tap();}
     await page.locator('[data-sheet-tab=instructions]').click();await page.locator('[data-sheet-resize]').click();await inspect(`${mode} ${viewport.width} expanded mobile instructions`);await page.locator('[data-sheet-resize]').click();
     await page.screenshot({path:`${out}/${mode}-${viewport.width}-mobile.png`,timeout:15000});
    }
@@ -91,6 +131,6 @@ try{
  await context.close();
  const fine=await browser.newContext({viewport:{width:844,height:390},hasTouch:false,isMobile:false,reducedMotion:'reduce'});await fine.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));page=await fine.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base+'/designer/build.html?assembly=turret&step=step-02#assembly',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.__buildGuide?.active?.viewer?.parts.some(p=>p.mesh.visible)&&document.querySelector('#assembly').dataset.ready==='1');await page.evaluate(()=>document.fonts.ready);await fullscreen('native');
  await clickState('[data-instructions-toggle]','aria-expanded',true);await clickState('[data-explorer-toggle]','aria-expanded',true);await clickState('[data-tools-toggle]','aria-expanded',true);const desktop=await inspect('fine-pointer 844x390 native desktop control');assert.equal(desktop.pointerCoarse,false);assert.equal(desktop.mobile,'false');assert.equal(Object.keys(desktop.panels).length,3);await page.screenshot({path:out+'/fine-pointer-844-desktop.png',timeout:15000});await fine.close();
- assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
+ await phoneFooterCases();assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
 }catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',sources,observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
 finally{await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));console.log('Owned docking listener closed');}

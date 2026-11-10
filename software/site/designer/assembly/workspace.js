@@ -35,7 +35,7 @@ export function createWorkspace(host,getActive,paint,report){
  document.addEventListener('fullscreenchange',fullState,{signal:events.signal});
  window.addEventListener('gyropup:exit-workspace-fullscreen',()=>{if(layout.dataset.expanded==='true')collapseFullscreen();},{signal:events.signal});
  host.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(layout.dataset.expanded==='true')collapseFullscreen();if(document.fullscreenElement===layout)document.exitFullscreen().catch(()=>{});if(useSheet()){if(getActive()?.viewer)sheetCollapsed=true;else{pane='instructions';sheetCollapsed=false;}}else{partsOpen=false;toolsOpen=false;}renderPanels();frame();},{signal:events.signal});
- host.addEventListener('gyropup:part-selected',()=>{if(mobile.matches){pane='parts';sheetCollapsed=false;renderPanels();frame();}},{signal:events.signal});
+ host.addEventListener('gyropup:part-selected',()=>{if(useSheet()){pane='parts';sheetCollapsed=false;}else partsOpen=true;renderPanels();frame();},{signal:events.signal});
  function frame(){
   const active=getActive(),viewer=active?.viewer;
   const bounds=layout.getBoundingClientRect(),top=toolbar.getBoundingClientRect();layout.style.setProperty('--assembly-toolbar-bottom',`${top.bottom-bounds.top}px`);
@@ -57,7 +57,7 @@ export function createWorkspace(host,getActive,paint,report){
  function present(){
   const active=getActive();if(!active)return;if(active.overview){partsOpen=false;if(pane==='parts')pane='instructions';}const explore=required('button[data-explorer-toggle]');explore.disabled=!!active.overview;explore.title=active.overview?'Part hierarchy is unavailable for this interim reference':'Assembly explorer';required('button[data-sheet-tab=parts]').disabled=!!active.overview;required('[data-guide-chapters]').hidden=!!active.overview;layout.dataset.overview=String(!!active.overview);required('[data-context-provenance]').hidden=!active.overview;renderPanels();if(active.overview)active.playback?.pause();active.playback?.refresh();
   for(const button of host.querySelectorAll('button[data-assembly]'))button.setAttribute('aria-pressed',String(button.dataset.assembly===(active.overview?active.assembly:active.guideAssembly||'turret')));
-  required('[data-context-tools]').hidden=!!active.viewer&&!active.overview;required('[data-step-tools]').hidden=!!active.overview||!active.viewer;required('button[data-guide-fit]').disabled=!active.viewer;
+  required('[data-context-tools]').hidden=!!active.viewer&&!active.overview;required('[data-step-tools]').hidden=!!active.overview||!active.viewer;required('[data-step-actions]').hidden=!!active.overview||!active.viewer;required('button[data-guide-fit]').disabled=!active.viewer;
   if(!active.viewer)required('[data-context-tools]').textContent='Interactive 3D tools are unavailable. The bound instructions and available diagrams remain accessible.';
   else required('[data-context-tools]').textContent='Orbit and zoom this interim reference model. Source-bound assembly guides expose the assembly tools.';
   for(const child of active.viewer?.stage.root.children||[])child.visible=child===active.robot?.group?!!active.overview:!active.overview;

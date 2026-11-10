@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-10",
+  "run": 42863757535,
+  "job": 129997763644,
+  "artifact": 13787076556,
+  "head": "e87d12ba16b26b3623266ab61e2785bad3b8a96e",
+  "job_url": "https://github.com/Valpatel/gyropup/actions/runs/42863757535/job/129997763644",
+  "artifact_url": "https://github.com/Valpatel/gyropup/actions/runs/42863757535/artifacts/13787076556",
+  "uploaded_artifact_sha256": "675e6d059d07267d8fe939d4f52bc2bf2bd1c7fe6612bd67952e09a1460305ba",
+  "retrieved_zip_sha256": "675e6d059d07267d8fe939d4f52bc2bf2bd1c7fe6612bd67952e09a1460305ba",
+  "raw_failed_json_sha256": "32f440f8ebb7b99a7edce663337947ae776dfaa2a562b98071eb0ba0814661cb",
+  "raw_log_sha256": "d392592b6e7bbedb1b923a82d0f1b87bb1824d95beb928468f078e3b813ac713",
+  "raw_failure_png_sha256": "6a723c74414e2299ada4934df1609f8db024c427ada5c2022ded21633d9a63bd",
+  "local_raw_focus_trace_sha256": "3a736771b624a0be972879bd8f062601eb9ea3fbf3f0b98b6e46a298351e98b1",
+  "redactions": [
+    "Preview origins only in JSON; original raw digests retained.",
+    "failure-log.txt is the exact assertion excerpt; full original log hash and source URL retained."
+  ],
+  "local_trace_limit": "The local popup-dock draft was present, but no selection had occurred before this Reset boundary. The separate original CI interaction failure remains the primary failed receipt."
+}
