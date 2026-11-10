@@ -1,6 +1,6 @@
 {
   "schema": "gyropup.assembly-posters/1",
-  "visual_sha256": "17bee263854a22dd1cee3b308c7cf4dfc4acefde09a9312f66168e58d0b74839",
+  "visual_sha256": "a388013ea81daf89e6d5d393874bb1b05fa32b5a46e3b60f8ce85c697cfc435a",
   "frames": {
     "step-01": {
       "file": "posters/step-01.png",
