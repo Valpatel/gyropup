@@ -103,6 +103,29 @@ root, the original six baseline exports and the three probe context files.
 The actual default-current call must still reject. The full historical invocation
 passed17 tests with0 skips, preserving the original numerical and fault checks.
 
+Running the whole Python portion of the mechanism matrix on 2026-11-10 exposed
+the same stale CAD closure in the dated carrier interface, connector input,
+connector pose, connector support and insert specimen checks. All five receipts
+independently match the captured94 CAD inputs by hash. Each receipt has its own
+fixed digest. Extra context and exported artifacts must match the receipt before
+they enter the temporary input root. The original validators still reject the
+actual current checkout. The corrected interface and specimen suites ran 29
+tests with zero skips, including their original fault checks.
+
+The insert inventory also failed on the removed `RAIL_W, RAIL_H` source binding.
+The old rails, doors and adapter plates belong to the belly-bay study. The
+historical runner replays its unchanged 22-test suite against the verified
+captured inputs and nine pinned public report/context files. The JSON and
+Markdown reproduce exactly. The default current-source test still detects the
+missing rail binding. Issue193 owns current pack-holder insert and retention
+evidence. [Current insert inventory status](../../docs/research/insert-joints/README.md)
+
+All 17 Python commands in the corrected mechanism matrix exited zero. The
+motion toolkit path now resolves from the checkout inside the CI container.
+The earlier mechanism job stopped at the support receipt before it reached
+motion, so its expanded host-style toolkit path was an observed configuration
+risk rather than a reproduced motion failure.
+
 The accepted five-row candidate used escaped JSON Unicode for the middot in
 titles, while the existing Turret producer checks its literal UTF-8 encoding.
 The original `7e8a51f3` receipt remains immutable; only the public index was

@@ -93,9 +93,8 @@ jobs:
               python3 tests/hardware/interfaces/test-carrier-connector-inputs.py
               python3 tests/hardware/interfaces/test-carrier-connector-pose.py
               python3 tests/hardware/interfaces/test-carrier-connector-support.py
-              python3 docs/research/carrier-insert-fit/verify.py
-              python3 docs/research/carrier-insert-fit/test_guards.py
-              python3 docs/research/insert-joints/test_inventory.py
+              python3 -B tests/hardware/manufacturing/test_retained_carrier_studies.py carrier-insert-fit
+              python3 -B tests/hardware/manufacturing/test_retained_carrier_studies.py insert-inventory
               python3 docs/research/insert-joints/test_phase2.py
               python3 docs/research/snap-fits/test_snaps.py
               python3 docs/research/leg-preprint/test_screen.py

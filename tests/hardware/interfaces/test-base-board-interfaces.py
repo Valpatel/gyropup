@@ -10,13 +10,12 @@ import hashlib
 import json
 from pathlib import Path
 import sys
-import shutil
-import tempfile
 import unittest
 
 ROOT=(Path(__file__).resolve().parents[3])
 sys.path.insert(0,str((ROOT / 'hardware/cad')))
 import hardware.cad.turret.turret_carrier_interfaces as ci
+from tools.evidence.manufacturing.retained_study_inputs import study_inputs
 
 
 class CarrierInterfaces(unittest.TestCase):
@@ -46,11 +45,14 @@ class CarrierInterfaces(unittest.TestCase):
             removed=ci.tail_requirements(kind,'module',module_travel=45.)
             self.assertAlmostEqual(seated['required_geometric_lower_bound_mm'],removed['required_geometric_lower_bound_mm'])
 
-    def test_receipt_is_current_and_does_not_erase_unqualified_coverage(self):
+    def test_dated_receipt_preserves_unqualified_coverage(self):
         receipt=json.loads(((ROOT / 'hardware/exports/turret/base-board-service/interfaces/interfaces.json')).read_text())
-        ci.validate_source_receipt(ROOT,receipt)
-        for path,digest in receipt['source_sha256'].items():
-            self.assertEqual(hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),digest,path)
+        with self.assertRaisesRegex(ValueError,'closure changed'):
+            ci.validate_source_receipt(ROOT,receipt)
+        with study_inputs('carrier-interfaces') as root:
+            ci.validate_source_receipt(root,receipt)
+            for path,digest in receipt['source_sha256'].items():
+                self.assertEqual(hashlib.sha256((root/path).read_bytes()).hexdigest(),digest,path)
         for path,digest in receipt['artifact_sha256'].items():
             self.assertEqual(hashlib.sha256(((ROOT / 'hardware/exports/turret/base-board-service/interfaces')/path).read_bytes()).hexdigest(),digest,path)
         self.assertTrue(receipt['bounded_reservation_checks_pass'])
@@ -83,11 +85,7 @@ class CarrierInterfaces(unittest.TestCase):
 
     def test_changed_deleted_or_new_geometry_dependency_rejects_receipt(self):
         receipt=json.loads(((ROOT / 'hardware/exports/turret/base-board-service/interfaces/interfaces.json')).read_text())
-        with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp)
-            for path in receipt['inputs']['files']:
-                (root/path).parent.mkdir(parents=True,exist_ok=True)
-                shutil.copyfile(ROOT/path,root/path)
+        with study_inputs('carrier-interfaces') as root:
             ci.validate_source_receipt(root,receipt)
             interface=root/'hardware/cad/robot/interfaces.json';original=interface.read_bytes()
             changed=json.loads(original);changed['fasteners']['M5']['clear']+=2
