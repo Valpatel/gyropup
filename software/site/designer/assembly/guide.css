@@ -1,3 +1,4 @@
+.assembly-guide [hidden]{display:none!important}
 .assembly-guide{margin:20px 0 28px;border:1px solid var(--hairline);border-radius:12px;padding:18px;background:var(--gp-card)}
 .assembly-guide h2{margin:0 0 8px;font-size:22px}.assembly-guide label{font-size:14px}.assembly-guide select,.assembly-guide button{font:inherit;min-height:44px;padding:8px;border:1px solid var(--hairline);border-radius:7px;background:var(--surface-2);color:var(--text)}
 .assembly-guide button{cursor:pointer}.assembly-guide button:disabled{opacity:.45;cursor:default}.assembly-guide button[aria-current=step]{border-color:var(--cyan)}
