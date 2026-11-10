@@ -1,11 +1,11 @@
 {
-  "visual_sha256": "a81cebd0e63c5cc2cc9f21ebf6f5f3f45eb1ddacb23d6295f1c8f88589a1c325",
-  "source_commit": "90788070aecb5012a3fdf34f3ad50c8301d8f4cf",
+  "visual_sha256": "c58fbc6820cde063acf6386bf5204db72cec401551a6e9f50be1b6a9a839d921",
+  "source_commit": "6c33830953df25f0899cca8a05e1a740459327ba",
   "version": {
-    "revision": "90788070aecb5012a3fdf34f3ad50c8301d8f4cf",
-    "assets": "eeb0281b36218e8bd335",
+    "revision": "6c33830953df25f0899cca8a05e1a740459327ba",
+    "assets": "32ae0b2a353e92bfa5e1",
     "history": true,
-    "built": "2026-11-10T11:08:37.106Z"
+    "built": "2026-11-10T12:04:51.170Z"
   },
   "browser": "151.0.7922.71",
   "session_notice_acknowledged": true,
@@ -1388,8 +1388,8 @@
         "laser"
       ],
       "camera": [
-        0.3612561327360591,
-        0.4932561327360591,
+        0.36125613273605905,
+        0.49325613273605906,
         0.5687602212267651
       ],
       "target": [
