@@ -143,6 +143,7 @@
 
 - A cold landing reel stays paused without a source while near-viewport history pictures download: [keep history previews out of the hero startup budget](inbox/2026-11-06-recorded-activities-need-the-selected-model-list.md#history-cards-must-not-consume-the-hero-startup-budget).
 - A cold landing reel reaches Play now with the hero still downloading and no movie source: [verify the bounded override and measure the hero transfer budget](inbox/2026-11-10-cold-hero-transfers-need-a-separate-reel-contract.md).
+- A manual reel test remains paused after its supposed Play click while the hero loads successfully: [observe and cancel automatic intent before activating the named Play action](inbox/2026-11-10-cold-hero-transfers-need-a-separate-reel-contract.md#manual-playback-tests-must-observe-the-action-they-activate).
 
 - README scene JSON is unchanged but renderer parity/SVG digest differs: [persisted scene paint order](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#render-the-persisted-scene-representation-before-claiming-parity).
 

@@ -282,19 +282,20 @@ async function run(mode) {
         await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
         await page.locator('.highlight-card').evaluate(el => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
         if (mode === 'manual' || cold) {
-          // Let the viewport observer run. Cancel its automatic intent first,
-          // then deliberately Play using the real, visible control. This keeps
-          // the normal motion preference and does not synthesize an offscreen
-          // click merely to beat the automatic queue.
-          if (cold) await page.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'queued');
-          else await page.waitForTimeout(150);
-          if (/pause|cancel/i.test(await page.locator('.highlight-toggle').getAttribute('aria-label'))) {
-            await page.locator('.highlight-toggle').click();
-            report.cancelledAutoplayBeforeManual = true;
-          }
+          // Observe automatic intent before cancelling it. A fixed delay and a
+          // label read can race the viewport observer: the next generic click
+          // then cancels a newly queued play instead of requesting manual play.
+          // Resolve each action by its actual accessible name and verify the
+          // paused state before starting the manual campaign.
+          await page.getByRole('button', { name: 'Pause highlights', exact: true }).click();
+          report.cancelledAutoplayBeforeManual = true;
+          await page.waitForFunction(() => document.querySelector('.highlight-card').dataset.state === 'paused'
+            && document.querySelector('#highlight-video').paused
+            && document.querySelector('.highlight-toggle').getAttribute('aria-label') === 'Play highlights');
           report.manualBeforeClick = await state(page);
+          assert.equal(report.manualBeforeClick.video.state, 'paused');
           if (cold) assert.equal(report.manualBeforeClick.hero.ready, false, 'Cold manual case reaches the control while the hero is loading');
-          await page.locator('.highlight-toggle').click();
+          await page.getByRole('button', { name: 'Play highlights', exact: true }).click();
           report.manualAfterClick = await state(page);
           if (cold) {
             assert.equal(report.manualAfterClick.video.state, 'queued');
