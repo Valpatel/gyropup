@@ -180,3 +180,5 @@
 - A native checkbox Space assertion fails without focused-element or key-target evidence: [record focus and native event ownership](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#native-keyboard-assertions-need-focus-and-event-ownership-evidence).
 
 - Browser installation consumes most of a CI job, or the presentation command list reaches its time bound: [keep provisioning outside executable test budgets and preserve command unions](inbox/2026-11-05-ci-classification-needs-phase-evidence.md#browser-provisioning-must-leave-time-for-executable-checks).
+
+- A playback observation loses its execution context while a later screenshot still looks coherent: [record document identity and navigation before changing runtime](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md#2026-11-10-context-destruction-needs-document-identity-evidence).

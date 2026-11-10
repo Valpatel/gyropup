@@ -123,6 +123,18 @@
       "scope": "Targeted webkit diagnostic of actual320px Made table:120px sticky identity, full72x44 status labels beside it, both actual center hits and8columns/8headers. Ephemeral targeted probe, not a full procurement-suite pass.",
       "image": ".agents/plans/build-workspace-evidence/phone-bom-webkit-a76.png",
       "image_sha256": "f302df936788f6451b9c2430ccdc8f82410fb741c626748c54cda08df088e4cc"
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/playback-document-identity-chromium-1d0.json",
+      "sha256": "2925a607f13b5435864672f2a675926faecc268dba1aa76c5e7d6b7cf1c24145",
+      "raw_report_sha256": "5b0dcdec96c4f634c11934ac63d0fb6bb0a6e77a07679e91f98bc407b4e31ec9",
+      "redaction": "Only the local preview origin was replaced.",
+      "tested_site_revision": "1d0ad8e57d399154f725b6a0d56da6674d1b0736",
+      "scope": "Native Chrome151.0.7922.71 qualified local playback: one document from initial ready through late-wheel and disposal; all actual pose/camera/1008vertex/loop/progress/lifecycle assertions pass. Pinned bundled-Chromium environment parity and cause of the earlier1d0 CI context loss are not established. totalEvents counts browser event listeners; explicit document observations are additionally retained.",
+      "test_harness_file": "tests/site/assembly/test-build-workspace.mjs",
+      "test_harness_sha256": "479715819fbb779c082932757971ec5635310340610134dbdb5c11c49e30097f",
+      "image": ".agents/plans/build-workspace-evidence/playback-document-identity-chromium-1d0.png",
+      "image_sha256": "7157453fab562cd217a410d0a339e023c1c11ce298067e9c28ad0c862c642c17"
     }
   ],
   "retained_failures": [
@@ -132,7 +144,8 @@
     "bf41 pure mount200-event-loop-turn observer ended while valid project verification was still loading; replaced with actual state completion and held-response counterexample",
     "bf41 denied fullscreen Print Explorer pointer intercepted by site navigation/footer because workspace ancestor stacking context stayed at3; corrected scoped expanded ancestor promotion",
     "a76 local nativeChromium full procurement240s cap; diagnostic rerun proved all24pages/279IDs reached but pagination consumed229s, then cap during next Setup action. No complete-suite pass or infinite-pager claim.",
-    "a76 localWebKit full procurement240s cap after all24pages/279IDs and import/export; actual60s Parts & prints link stability timeout on Progress, failureobserver also incomplete. Cause unclassified; no readiness or pager runtime change inferred."
+    "a76 localWebKit full procurement240s cap after all24pages/279IDs and import/export; actual60s Parts & prints link stability timeout on Progress, failureobserver also incomplete. Cause unclassified; no readiness or pager runtime change inferred.",
+    "1d0 pinned-image Chromium playback job129821148876 lost evaluation context during asynchronous late-wheel observation; document/navigation cause unestablished. NativeChrome qualified positive does not erase this failed run."
   ],
   "checkpoint_harness_sha256": "90c36c5a70fa4bd71694651de77c317ca10ea84abd46b7ea353461c09df17b8a",
   "checkpoint_harness_commit": "1ec82f67222b7b0d8d9522f21b6ea2c649018e91"
