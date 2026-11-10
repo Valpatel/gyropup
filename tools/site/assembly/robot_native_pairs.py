@@ -116,6 +116,26 @@ def safe_file(root,name):
     return path
 
 
+def select_plan(plan,selection):
+    """Select explicit immutable query identities; never invent or alter a path."""
+    if (not isinstance(selection,dict) or selection.get('schema')!='gyropup.native-pair-selection/1'
+        or selection.get('full_plan_sha256')!=digest(encode(plan))):
+        raise ValueError('Selection does not bind the exact full plan')
+    ids=selection.get('query_ids');queries={q['id']:q for q in plan['queries']}
+    if (not isinstance(ids,list) or not ids or any(not isinstance(i,str) for i in ids)
+        or len(ids)!=len(set(ids)) or any(i not in queries for i in ids)):
+        raise ValueError('Selection requires unique known query IDs')
+    cases=selection.get('case_ids')
+    if cases is not None:
+        if (not isinstance(cases,list) or len(cases)!=len(ids)
+            or any(case not in [c.get('case_id') for c in queries[i]['contexts'] if c['kind']=='diagnostic']
+                   for i,case in zip(ids,cases))):
+            raise ValueError('Selection case label does not match its query identity')
+    scope={'full_plan_sha256':selection['full_plan_sha256'],'full_query_count':len(queries),
+           'selected_query_ids':ids[:],'unselected_query_ids':[i for i in queries if i not in ids]}
+    return {**plan,'queries':[queries[i] for i in ids],'selection':scope}
+
+
 def captured_inputs(root,manifest,report_sha,core):
     """Verify retained263 bytes and re-bind original payloads without CAD import."""
     actual=inventory(root);verify_frozen_inventory(actual,manifest,'frame bundle')
@@ -157,6 +177,7 @@ def execute_plan(plan,binding,payloads,frames,core,out,context,options):
     report={'schema':'gyropup.native-pair-study/1','complete':False,'pass':False,'inputs':context,'queries':[],
             'all_assembly_paths_checked':False,'support_stability_verified':False,'physical_assembly_verified':False,
             'limits':'Finite selected pair probes, using unchanged native engine/tolerances. A seat result checks no transient path. No geometry repair or overlap exemptions.'}
+    if 'selection' in plan:report['selection']=plan['selection']
     primary=None;world=None
     try:
         write_json(out/'phase.json',phase);write_json(out/'report.json',report)
@@ -221,8 +242,11 @@ def main(argv=None):
     p.add_argument('--witnesses',type=Path,required=True);p.add_argument('--witnesses-sha',required=True)
     p.add_argument('--baseline-guide',type=Path,required=True);p.add_argument('--toolkit',type=Path,required=True)
     p.add_argument('--toolkit-revision',required=True);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--query-selection',type=Path,help='Explicit SHA-bound query subset; the full plan remains retained')
+    p.add_argument('--query-selection-sha')
     p.add_argument('--execute',action='store_true');p.add_argument('--max-samples',type=int,default=256)
     a=p.parse_args(argv);os.umask(0o077)
+    if bool(a.query_selection)!=bool(a.query_selection_sha):p.error('Selection file and SHA must be supplied together')
     if not 1<=a.max_samples<=5000:p.error('--max-samples must be in 1..5000')
     if not re.fullmatch('[0-9a-f]{40}',a.toolkit_revision):raise ValueError('Immutable reviewed core revision required')
     if git(a.toolkit,'rev-parse','HEAD')!=a.toolkit_revision or git(a.toolkit,'status','--porcelain'):
@@ -241,6 +265,11 @@ def main(argv=None):
     manifest=json.loads(a.frame_manifest.read_text())
     bundle,guide,binding,payloads,frame=captured_inputs(a.frame_bundle,manifest,a.frame_report_sha,core)
     plan=make_plan(guide,frame['frames'],witnesses,json.loads(baseline_raw),playback.playback_operations)
+    query_plan=plan;selection_raw=None
+    if a.query_selection:
+        selection_raw=a.query_selection.read_bytes()
+        if digest(selection_raw)!=a.query_selection_sha:raise ValueError('Changed query selection bytes')
+        query_plan=select_plan(plan,json.loads(selection_raw))
     context={'emitter':'Gyropup selected pair study; results from existing core sweep_pair',
              'frame_manifest_sha256':a.frame_manifest_sha,'frame_report_sha256':a.frame_report_sha,
              'guide_sha256':digest(bundle.files[bundle.path]),'binding_sha256':digest(encode(binding)),
@@ -252,13 +281,18 @@ def main(argv=None):
         target=a.out/'inputs'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(safe_file(a.frame_bundle,name),target)
     (a.out/'witnesses.json').write_bytes(a.witnesses.read_bytes());(a.out/'baseline-guide.json').write_bytes(baseline_raw)
     write_json(a.out/'plan.json',plan);context['plan_sha256']=sha(a.out/'plan.json');write_json(a.out/'source.json',context)
+    if selection_raw is not None:
+        (a.out/'selection.json').write_bytes(selection_raw);write_json(a.out/'query-plan.json',query_plan)
+        context.update(selection_sha256=digest(selection_raw),query_plan_sha256=sha(a.out/'query-plan.json'),
+                       full_plan_query_count=len(plan['queries']),selected_query_ids=query_plan['selection']['selected_query_ids'])
+        write_json(a.out/'source.json',context)
     if not a.execute:
-        print('Prepared '+str(len(plan['queries']))+' finite pair probes; no CAD imported or queried');return 0
+        print('Prepared '+str(len(query_plan['queries']))+' of '+str(len(plan['queries']))+' finite pair probes; no CAD imported or queried');return 0
     from cadagent.review.gates.assembly import AccessOptions,sweep_pair
     from cadagent.review.gates.relations import Tolerances
     core.load_world=playback._load_world;core.sweep_pair=sweep_pair;core.tol=Tolerances()
     if core.tol.touch_mm!=plan['touch_mm']:raise ValueError('Native touch margin differs from the bound exclusion plan')
-    report=execute_plan(plan,binding,payloads,frame['frames'],core,a.out,context,AccessOptions(max_samples=a.max_samples))
+    report=execute_plan(query_plan,binding,payloads,frame['frames'],core,a.out,context,AccessOptions(max_samples=a.max_samples))
     print('Selected pair study '+('complete' if report['complete'] else 'incomplete')+'; '+json.dumps(report['counts'])+'; no assembly qualification')
     return 0 if report['pass'] else 1
 

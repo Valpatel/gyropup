@@ -94,6 +94,33 @@ class PairStudy(unittest.TestCase):
             current=[q for q in plan['queries'] if q['moving']==side+'.motor_front' and any(c['kind']=='candidate' for c in q['contexts'])]
             self.assertTrue(current);self.assertTrue(all(side+'.hip_frame' not in q['installed_set'] for q in current))
 
+    def test_explicit_unperformed_control_selection_preserves_full_plan_and_identity(self):
+        base=ROOT/'.agents/plans/assembly-staging'
+        guide=json.loads((ROOT/'software/site/assets/build-guides/combined-wip-540056ba4e59/guide.json').read_text())
+        frame=json.loads((base/'native-263/frame-report.json').read_text());witness=json.loads((base/'arrival-witnesses.json').read_text())
+        baseline=json.loads((base/'pair-study/baseline-guide.json').read_text())
+        plan=study.make_plan(guide,frame['frames'],witness,baseline,declared_operations)
+        cases={c['case_id']:c['query'] for c in plan['controls']}
+        labels=['motor-through-installed-hip-L','motor-wrong-inward-through-cheek-L']
+        selection={'schema':'gyropup.native-pair-selection/1','full_plan_sha256':digest(encode(plan)),
+                   'query_ids':[cases[c] for c in labels],'case_ids':labels}
+        selected=study.select_plan(plan,selection)
+        self.assertEqual(len(plan['queries']),90);self.assertEqual(len(selected['queries']),2)
+        self.assertEqual(len(selected['selection']['unselected_query_ids']),88)
+        self.assertEqual(selected['predecessor_rows'],plan['predecessor_rows'])
+        observed={q['id'] for q in json.loads((base/'native-264/report.json').read_text())['queries']}
+        self.assertTrue(observed.isdisjoint(selection['query_ids']))
+        original={q['id']:q for q in plan['queries']}
+        self.assertEqual(selected['queries'],[original[i] for i in selection['query_ids']])
+        for fault in ('plan','duplicate','unknown','label','direction'):
+            wrong=copy.deepcopy(selection);value=copy.deepcopy(plan)
+            if fault=='plan':wrong['full_plan_sha256']='0'*64
+            elif fault=='duplicate':wrong['query_ids']=[selection['query_ids'][0]]*2
+            elif fault=='unknown':wrong['query_ids'][0]='0'*64
+            elif fault=='label':wrong['case_ids'][0]='unrelated-case'
+            else:value['queries'][0]['direction'][1]*=-1
+            with self.subTest(fault=fault),self.assertRaises(ValueError):study.select_plan(value,wrong)
+
     def test_failed_progress_stops_and_retains_earlier_result_and_primary_error(self):
         current,frames,witness,baseline=self.fixture();plan=study.make_plan(current,frames,witness,baseline,declared_operations)
         plan['queries'].append({**plan['queries'][-1],'id':'third-query-not-reached'})
@@ -187,6 +214,19 @@ def _load_world(*args):
             saved=json.loads((root/'result/report.json').read_text());self.assertTrue(saved['complete']);self.assertFalse(saved['pass'])
             self.assertEqual(saved['counts'],{'blocked':1});self.assertFalse(saved['queries'][0]['transient_path_complete'])
             self.assertFalse(saved['all_assembly_paths_checked']);self.assertEqual((root/'result/inputs/source-collection.json').read_bytes(),raw)
+            full_plan=json.loads((root/'result/plan.json').read_text())
+            selection={'schema':'gyropup.native-pair-selection/1','full_plan_sha256':digest(encode(full_plan)),
+                       'query_ids':[full_plan['queries'][0]['id']],'case_ids':['hip-after-motor-outward-L']}
+            sp=root/'selection.json';sp.write_bytes(encode(selection));selected=command[:]
+            selected[selected.index('--out')+1]=str(root/'selected')
+            selected+=['--query-selection',str(sp),'--query-selection-sha',digest(sp.read_bytes())]
+            result=subprocess.run(selected,capture_output=True,text=True,timeout=10)
+            self.assertEqual(result.returncode,1,result.stdout+result.stderr)
+            saved=json.loads((root/'selected/report.json').read_text())
+            self.assertEqual(saved['selection']['selected_query_ids'],selection['query_ids'])
+            self.assertEqual(saved['selection']['full_query_count'],1);self.assertTrue(saved['complete']);self.assertFalse(saved['pass'])
+            self.assertEqual((root/'selected/selection.json').read_bytes(),sp.read_bytes())
+            self.assertEqual((root/'selected/plan.json').read_bytes(),(root/'result/plan.json').read_bytes())
             # Fail a real pre-query hash guard through the same entry point.
             wrong=command[:];wrong[wrong.index('--frame-report-sha')+1]='0'*64;wrong[wrong.index('--out')+1]=str(root/'wrong-result')
             result=subprocess.run(wrong,capture_output=True,text=True,timeout=10)
@@ -232,12 +272,21 @@ def _load_world(*args):
         queries=[{'id':'blocked','moving':'moving','fixed':'fixed','direction':[0,-1,0],'travel_mm':60,'contexts':[]},
                  {'id':'wrong-side-clear','moving':'moving','fixed':'fixed','direction':[0,1,0],'travel_mm':60,'contexts':[]},
                  {'id':'terminal-seat','moving':'moving','fixed':'seat','direction':[0,-1,0],'travel_mm':60,'contexts':[]}]
+        for query in queries:query['id']=digest(query['id'].encode())
         core=SimpleNamespace(load_world=_load_world,sweep_pair=sweep_pair,tol=Tolerances())
         with tempfile.TemporaryDirectory() as tmp:
             report=study.execute_plan({'queries':queries},binding,payloads,frames,core,Path(tmp),{'fixture':'actual simple native boxes, never product CAD'},AccessOptions(max_samples=256))
             self.assertTrue(report['complete']);self.assertFalse(report['pass'])
             self.assertEqual([q['result']['state'] for q in report['queries']],['blocked','clear','seat'])
             self.assertTrue(report['queries'][2]['terminal_only']);self.assertFalse(report['queries'][2]['transient_path_complete'])
+        full={'queries':queries};selection={'schema':'gyropup.native-pair-selection/1','full_plan_sha256':digest(encode(full)),
+                                            'query_ids':[q['id'] for q in queries[:2]]}
+        with tempfile.TemporaryDirectory() as tmp:
+            report=study.execute_plan(study.select_plan(full,selection),binding,payloads,frames,core,Path(tmp),
+                                      {'fixture':'actual simple boxes, explicit2-of3 identity selection'},AccessOptions(max_samples=256))
+            self.assertTrue(report['complete']);self.assertFalse(report['pass'])
+            self.assertEqual([q['result']['state'] for q in report['queries']],['blocked','clear'])
+            self.assertEqual(report['selection']['unselected_query_ids'],[queries[2]['id']])
         with tempfile.TemporaryDirectory() as tmp:
             report=study.execute_plan({'queries':queries[:1]},binding,payloads,frames,core,Path(tmp),{'fixture':'actual native sample-cap control'},AccessOptions(max_samples=1))
             self.assertEqual(report['queries'][0]['result']['state'],'unchecked');self.assertFalse(report['pass'])
