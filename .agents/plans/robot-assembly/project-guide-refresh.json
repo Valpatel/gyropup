@@ -1,0 +1,16 @@
+{
+  "scope": "Single pure prepared-project metadata refresh only",
+  "producer_source_commit": "2af7cdfc",
+  "native_source": "540056ba4e59b197859236cb693463e10c9c8901",
+  "changed": {
+    "software/site/assets/build-guides/robot-wip-540056ba4e59/guide.json": {
+      "before": "478be73e2b16202d74539b298b59ad5152a4d38b193157358d33c30e5ed85959",
+      "after": "845f8b442b5e16ca52ad59fd6794b9211a92847f41feac5401b56e240f9f4dd6"
+    },
+    "software/site/assets/build-guides/combined-wip-540056ba4e59/guide.json": {
+      "before": "8a0b9c2fbf1e6f09cf9ce7021be6a729dbac083d8e305c05de31dfde31e04e50",
+      "after": "c150e36f02d5130f395f0f21cb71af6891c8ebd3fecdf6770db0efb684b77183"
+    }
+  },
+  "all_neutral_meshes_and_manufacturing_originals_unchanged": true
+}

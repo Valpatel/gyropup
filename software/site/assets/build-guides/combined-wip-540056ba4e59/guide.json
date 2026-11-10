@@ -136,7 +136,7 @@
       "hardware/exports/leg/bom.json": "77c19e0a4acb896b3fd372f581281954c6aa36efd71bb427390adbf188a06f79",
       "hardware/exports/turret/bench/bom.json": "e12a51b8ed727b287293667d093f032631f2765399bc93340a710f90f4a92bc3"
     },
-    "manufacturing_mapper_sha256": "9264cea6119c11c8134104c402b56dd9d3c7a797f29cc6e08fe214c2cca06c95",
+    "manufacturing_mapper_sha256": "7f285435eb6d65ad54bc7354d301beb8ad41c1547c16d125c18c51853a4ab993",
     "overview_step_id": "overview",
     "step_kinds": {
       "overview": "reference",
@@ -2455,7 +2455,23 @@
           "qty": 1,
           "qty_scope": "per_leg",
           "infill": "100 %"
-        }
+        },
+        "prepared_projects": [
+          {
+            "source_file": "software/site/assets/build-guides/prepared-projects/82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd/hip-frame.geometry.3mf",
+            "public_file": "/web/build-guides/prepared-projects/82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd/hip-frame.geometry.3mf",
+            "sha256": "82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd",
+            "source_original_sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de",
+            "kind": "geometry-only",
+            "immutable": true,
+            "limitations": [
+              "Geometry-only WIP project; not a sliced or print-ready job.",
+              "Generic 256 x 256 mm rectangle, 3 mm margin, no keepouts; not P1S/X1E or any actual printer/profile fit approval.",
+              "Select and verify actual printer, material, orientation, supports and slicing settings manually.",
+              "Eight support failures and physical fit/strength/manufacturing limits remain unresolved; no job starts."
+            ]
+          }
+        ]
       },
       "R.hip_frame": {
         "kind": "print",
@@ -2491,7 +2507,23 @@
           "qty": 1,
           "qty_scope": "per_leg",
           "infill": "100 %"
-        }
+        },
+        "prepared_projects": [
+          {
+            "source_file": "software/site/assets/build-guides/prepared-projects/82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd/hip-frame.geometry.3mf",
+            "public_file": "/web/build-guides/prepared-projects/82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd/hip-frame.geometry.3mf",
+            "sha256": "82398d2679176eedd9420da8938336210a9ed6e9d4feb284390590d9a60310cd",
+            "source_original_sha256": "f15c00497974e3f78d3fdc9ca60ef958ebff4d3537556d98c7c6828e6ec103de",
+            "kind": "geometry-only",
+            "immutable": true,
+            "limitations": [
+              "Geometry-only WIP project; not a sliced or print-ready job.",
+              "Generic 256 x 256 mm rectangle, 3 mm margin, no keepouts; not P1S/X1E or any actual printer/profile fit approval.",
+              "Select and verify actual printer, material, orientation, supports and slicing settings manually.",
+              "Eight support failures and physical fit/strength/manufacturing limits remain unresolved; no job starts."
+            ]
+          }
+        ]
       },
       "L.output_adapter_front": {
         "kind": "machine",

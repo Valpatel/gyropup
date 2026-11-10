@@ -22,3 +22,10 @@ correspondence is pending except the two hip-frame instances, accepted through
 the separate `hip-print-match-acceptance.json` record. Raw sampled measurements
 and the earlier arithmetic timeout remain unchanged. Physical qualification
 and the eight recorded support failures remain unresolved.
+
+`hip-prepared-project.json` binds the separate, content-addressed geometry-only
+3MF to that original STL and the existing toolkit writer/packer. Its read-back
+checks preserve exact topology/rigidly placed vertices and record a generic
+rectangle, not a printer profile. `project-guide-refresh.json` records the one
+pure metadata refresh exposing it to the two accepted hip instances. This is
+not a sliced job, printer/material selection or transport implementation.

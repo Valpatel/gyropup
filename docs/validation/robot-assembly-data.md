@@ -84,8 +84,8 @@ authorized by this document alone.
 | Mounted combined assembly | Actual TM face/pan datum agrees with body CAD and collected assembled turret | Bench-local mesh/assumed mounting height or missing mount relation | Native four-bolt XYZ match passed; actual wrong-XY shift rejected |
 | Genuine stages | Explicit source operation, prerequisites and exact included/highlighted instance sets, both sides | Arbitrary colour-group hiding called an assembly operation; invented fastener/qualification claims | 23 source operations exactly cover 171 robot instances |
 | Coherent immutable snapshots | Robot and Combined use exact model/mesh/recipe/BOM/source bindings; text/static fallback same stages | Cross-version asset substitution, stale prose, incomplete source coverage | Native-generated 242 outputs verified; final product/static pictures pending |
-| Manufacturing originals | Exact existing file/plan identity, kept separate from current geometry correspondence | A named, rehashed stale original must not enable Print | Current mapping explicitly pending; actual stale-file regression passed |
-| Hip geometry-only 3MF | Existing writer/read-back preserves source triangles, finite millimetres, winding and volume after an existing packer's rigid placement | Changed original/project, wrong units/coordinates/faces or out-of-rectangle layout reject | Narrow design below; implementation pending |
+| Manufacturing originals | Exact existing file/plan identity, kept separate from current geometry correspondence | A named, rehashed stale original must not enable Print | Only L/R hip source-match accepted; other mappings pending; stale-file controls passed |
+| Hip geometry-only 3MF | Existing writer/read-back preserves source triangles, finite millimetres, winding and volume after an existing packer's rigid placement | Changed original/project, wrong units/coordinates/faces/build transform reject | Actual single-part project and persistent corruption controls passed |
 | Regression/integration | Existing shared validator/controller and product browser coverage applied to imported new data | Existing turret guide or procurement state changed unintentionally | Planned; UI owner integrates |
 
 Geometry-valid CAD/poses and passing presentation tests do not establish
@@ -120,6 +120,17 @@ Persist the layout and source/tool hashes. Reject altered originals, geometry,
 units and triangle indices; missing or changed proof/project must remove the
 prepared-project offer rather than falling back to a differently bound file.
 The UI owner verifies the same declared project/original hashes at handoff.
+
+The single pure generation completed in under one second using the pinned
+existing toolkit. Read-back preserves 14,794 vertices and 29,676 triangles,
+with maximum coordinate error 0.0000499998 mm and closed consistent edges.
+Signed volume changes from 1,014,809.5856 to 1,014,809.5215 mm³ through decimal
+serialization. Actual generic bounds are `[3.3916, 3.3916, 0]` through
+`[252.6084, 252.6084, 81.3]` mm. A content-addressed project URL includes its
+full SHA256; metadata retains the original STL separately. The derivation record
+is `.agents/plans/robot-assembly/hip-prepared-project.json`. This project has no
+printer/process/material settings, slice or job command. Existing original STL,
+retained 3MF, whole hardware tree and all neutral assembly meshes are unchanged.
 
 </details>
 
@@ -176,7 +187,7 @@ prove fit on a 256 mm printer bed.
 Body/leg planning quantities retain their original scope;
 wheel hub and tyre share one bought-wheel identity.
 
-All 21 kernel-free tests pass. They cover retained named
+All 24 kernel-free tests pass. They cover retained named
 membership, stationary/moving ownership, grouped hardware, frame/unit/mirror
 negatives, strict binary STL, symlink inventory rejection, import safety,
 original-file mapping, snapshot/text integrity and changed-source rejection.
