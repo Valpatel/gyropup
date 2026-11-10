@@ -28,7 +28,44 @@ BODY_FAMILIES={'cheek_left':'cheek','cheek_right':'cheek','bay_side_l':'bay_side
  'bus_bar_1':'bus_bar','bus_bar_2':'bus_bar','bus_insulator_1':'bus_insulator','bus_insulator_2':'bus_insulator'}
 
 
-def mapping(root,names):
+def hip_geometry_match(root,collection,name):
+    """Only the independently reviewed hip correspondence may enable WIP prep."""
+    if collection is None or name not in ('L.hip_frame','R.hip_frame'):return None
+    file='.agents/plans/robot-assembly/hip-print-match.json';root=Path(root)
+    accepted='.agents/plans/robot-assembly/hip-print-match-acceptance.json'
+    if not (root/file).is_file() or not (root/accepted).is_file():return None
+    from robot_print_match import source_guard
+    try:
+        proof=json.loads((root/file).read_text())
+        acceptance=json.loads((root/accepted).read_text())
+        if (not acceptance.get('review_url','').startswith('https://github.com/Valpatel/gyropup/pull/270#')
+            or acceptance.get('measurement_sha256')!=sha(root/file)
+            or acceptance.get('instances')!=['L.hip_frame','R.hip_frame']
+            or acceptance.get('physical_qualification') is not False):return None
+        receipt=source_guard(root,collection)
+        part=next(p for p in collection['parts'] if p['name']==name);side=name[0]
+        if (proof.get('status')!='SOURCE_MATCH_CORROBORATED' or proof['native_source']!=collection['source_commit']
+            or proof['cad_inputs']!=collection['inputs']
+            or proof['receipt_sha256']!=sha(root/'hardware/exports/leg/rs04-mounting-fit/checks.json')
+            or proof['original_sha256']!=sha(root/'hardware/exports/leg/hip_frame.stl')
+            or proof['sampler_sha256']!=sha(root/'tools/site/assembly/robot_print_match.py')
+            or proof['sides'][side]['mesh_sha256']!=part['sha256']
+            or proof['tessellation_allowance_mm']!=.3011
+            or proof['negative_controls'].get('actual_mesh_shift_3mm') is not True
+            or proof['engineering_counts']!=receipt['counts']
+            or any(proof.get(flag) is not False for flag in ('physical_fit_verified','strength_verified','manufacturing_released'))):
+            return None
+        for direction in ('a_to_b','b_to_a'):
+            sample=proof['sides'][side][direction]
+            if sample['samples']<=0 or not 0<=sample['max_distance_mm']<=.3011:return None
+        return {'status':'matched','geometry_source_match':True,'evidence':{'source_file':file,'sha256':sha(root/file)},
+                'acceptance':{'source_file':accepted,'sha256':sha(root/accepted)},
+                'basis':'Same source hip model through a current full producer receipt, exact original bytes and sampled bidirectional tessellation correspondence in the authored print frame.',
+                'qualification':'WIP geometry-file preparation only; physical fit, support failures, printer/filament/slice choices and strength remain unresolved.'}
+    except (ValueError,KeyError,StopIteration,FileNotFoundError,TypeError):return None
+
+
+def mapping(root,names,collection=None):
     root=Path(root)
     def read(file):return json.loads((root/file).read_text())
     def binding(file):return {'source_file':file,'sha256':sha(root/file)}
@@ -64,6 +101,8 @@ def mapping(root,names):
                 plan={**binding(plan_file),'material':value['material'],'qty':value['qty'],
                       'qty_scope':'per_leg' if physical_leg else 'body','infill':value.get('infill')})
             row['geometry_match']['basis']='Identified retained manufacturing original only. File identity and plan membership do not prove a match to the collected CAD instance.'
+            match=hip_geometry_match(root,collection,name)
+            if match:row['geometry_match']=match
             row.pop('reason');continue
         if physical_leg and family in leg.get('made_to_order',{}):
             file='hardware/'+leg['made_to_order'][family]

@@ -127,7 +127,7 @@
       "tools/engineering/robot/readme_design.py": "8c653277d2aee9fbfd08acb07c23c6542cdd04930804180a111352666110499e",
       "tools/engineering/robot/readme-design.json": "283a05fe4f5717929c5f3dfb316bbf35f9d1f38fbd00fcc59bd0441f35cbf4ff"
     },
-    "exporter_sha256": "34276658098bccd677a5fa35c77cba03235cab44f9b74fd99caa4448b2bdf78b",
+    "exporter_sha256": "400a2c262c1b28cd912e010b794f6e9f6be10e643741661f442461f292ce9cbf",
     "hardware_tree": "89ae8db4a748d5b19893293fbef3c1d49eeccc2f",
     "collector_sha256": "e655d2c00c6d8d752ac941d2327d4b6faa673d8941567894f7792c92839ada37",
     "recipe_sha256": "9562d12e1e5cc87b5d6d3af646b65bb190668b71fcf8ce531f8796ef71a5c83c",
@@ -136,7 +136,7 @@
       "hardware/exports/leg/bom.json": "77c19e0a4acb896b3fd372f581281954c6aa36efd71bb427390adbf188a06f79",
       "hardware/exports/turret/bench/bom.json": "e12a51b8ed727b287293667d093f032631f2765399bc93340a710f90f4a92bc3"
     },
-    "manufacturing_mapper_sha256": "6533d0b9fd94d73f43c8b51460da8c8270ce4a133753bae304fde570b59929c0",
+    "manufacturing_mapper_sha256": "9264cea6119c11c8134104c402b56dd9d3c7a797f29cc6e08fe214c2cca06c95",
     "overview_step_id": "overview",
     "step_kinds": {
       "overview": "reference",
