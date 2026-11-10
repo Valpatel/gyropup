@@ -1,0 +1,36 @@
+{
+  "schema": "gyropup.build-workspace-evidence/1",
+  "qualification": "Retained measured checkpoints only. Current-head complete CI and independent review are required before product promotion. No physical qualification.",
+  "reports": [
+    {
+      "file": ".agents/plans/build-workspace-evidence/webkit-interactions.json",
+      "sha256": "c8645f0ff559a2feaff099e7ff0023530d521076a1488cf47b1e23c01fbb55a6",
+      "tested_site_revision": "1544c0cd7cc44e51948c5fbbbbaf9a2f88c0285b",
+      "scope": "Actual Turret interaction checkpoint, native fullscreen3viewports and1200single-sheet; legacy all fields are selector defaults, not all-assembly coverage."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/chromium-interactions.json",
+      "sha256": "638e3cb21498eb75a4c9eb83e82263b2026340697aa0926d4c00880281022622",
+      "tested_site_revision": "1544c0cd7cc44e51948c5fbbbbaf9a2f88c0285b",
+      "scope": "Actual Turret interaction checkpoint; fullscreen controls/framing tested, native document property added to later harness."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/webkit-playback-world.json",
+      "sha256": "d32452a74165c05609f89c55d8543eae4f01c47cb337c1af8f9452e5bd55b694",
+      "tested_site_revision": "d4eadd11516f9ca85bec5cc55e44ccb37739a68b",
+      "scope": "Actual Robot1440 playback with independent mesh-world displacement and late first-arrival framing."
+    },
+    {
+      "file": ".agents/plans/build-workspace-evidence/chromium-playback.json",
+      "sha256": "8f13bd98ef3deb96df2d5b2cebff37c806843aadb9ab23d8d190e815ed5d987c",
+      "tested_site_revision": "0bd2a122ba89a1f3285260728b927eb6b4ef23c9",
+      "scope": "Earlier Robot1440 state interpolation/control checkpoint; world-space comparison added later."
+    }
+  ],
+  "retained_failures": [
+    "Composite180-second Print cap after verified original retry prefix",
+    "Composite180-second320 layout cap after Robot24-step prefix",
+    "Actual1200px three-pane190px free-width failure, corrected by1280single-sheet breakpoint"
+  ],
+  "current_harness_sha256": "90c36c5a70fa4bd71694651de77c317ca10ea84abd46b7ea353461c09df17b8a"
+}
