@@ -1,12 +1,18 @@
 # Preserve original CAD bytes before validating playback
 
-Status on 2026-11-10: optional producer/consumer source prepared; no new native
-robot collection, exact playback run or physical acceptance is claimed. This
-follow-up depends on Gyropup PR279 and the independently reviewed core API in
-[cad-agent PR513](https://github.com/Valpatel/cad-agent/pull/513). The original-byte binder at `011a29b6fe1ddf4a6726fa01f59d710cbf1d6757`
-received independent source review; ordinary core CI/merge remain separate.
-Native producer source review and retained-runtime preflight remain required
-before a long robot run.
+Status on 2026-11-10: genuine collection261 and the one-time pure original-byte
+binding are complete and independently accepted for their stated input/identity
+scope. The canonical [collection and binding checkpoint](native-261/README.md)
+retains both execution identities, archive/member seals, original byte bindings,
+author observations, independent receipts and a portable pure audit. No
+validation BREP read-back/frame/path query or physical acceptance is claimed.
+
+The original-byte binder at `011a29b6fe1ddf4a6726fa01f59d710cbf1d6757`
+received independent source review; its exact tree merged into core dev at
+`d24f4cf7b567278d7d93ed1779ebba6ca087aae6`. Actual binding used the immutable011
+source pin. The separate core progress/frame-preflight follow-up requires its
+own reviewed pin before the next native run. PR279's educational recipe and
+PR280 remain held for that bounded evidence; no native gate pass is assumed.
 
 The existing CAD collector intentionally requires its recorded toolkit
 `e662a1ce79b4f63f7352b9d065c5027f77d53a81` and runtime. Keep that boundary.
@@ -91,3 +97,21 @@ with `ROBOT_PLAYBACK_NATIVE=1` alongside the reviewed core variables above and
 an existing compatible native dependency environment. It must return exit1 with
 its actual failed report preserved. These controls validate failure propagation,
 not Gyropup insertion or physical assembly acceptance.
+
+
+Actual job261 ran the reviewed producer at
+`e5b3089277448e5ae3d546fc36c549a62949856b`: collection130.774s and generation1.222s,
+normal exit0, both child groups gone and all five preservation guards true.
+All233 fresh STL byte hashes exactly equal the retained540 snapshot; the95 CAD
+inputs, hardware tree and both guides' actual operation/state/offset/camera/text
+records also match. This explicit correspondence does not relabel either source
+or automatically grant manufacturing-original approval.
+
+The reviewed pure binding completed once with two171/233-instance bindings,
+233 original BREP files, their original aarch64 platform and all captured mesh
+bytes preserved. It wrote no native reports. The current e5 adapter's
+`--validate` entry is regression-tested, but a potentially long full robot path
+run must wait for separately reviewed native frame preflight and recoverable
+per-pair/per-operation progress. Inspect actual changed-arrival and old-order/
+wrong-side controls; preserve known terminal, knee, circlip and support unknowns
+without inferring acceptable overlaps or requiring a fictitious whole-robot pass.
