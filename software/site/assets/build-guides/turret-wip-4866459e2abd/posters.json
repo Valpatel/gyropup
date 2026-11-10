@@ -1,54 +1,54 @@
 {
   "schema": "gyropup.assembly-posters/1",
-  "visual_sha256": "9a7cd4336088d84d68510778952b516feb7c2311f6ecb9ec99b05f2aca5c0927",
+  "visual_sha256": "8db75adae66247f142d4395adc6e67cb04849ba55a31a323d0dedc9411b40f9a",
   "frames": {
     "step-01": {
       "file": "posters/step-01.png",
-      "sha256": "3a04458538aaa24e9b8c424e3db82e3d65dc159b17e4f22db6ef381c2198db37"
+      "sha256": "f46fcd460ef6db1caadf535a81bda846c88208e1ff04012b3c2cf693dfaa4b4a"
     },
     "step-02": {
       "file": "posters/step-02.png",
-      "sha256": "ebe10588f1c72c5b97cfaa541a82701e3141412b0ac2cd0791379d6a32f5d2f6"
+      "sha256": "e0591ea5bf221f7015bcab00e0751abce7a73139ea89e03cdfb1969ad0686a53"
     },
     "step-03": {
       "file": "posters/step-03.png",
-      "sha256": "59520227a7bda0eb2ed2c97a1628fc6feb8f2f59dff2137d4a10a2d7b31e2fb9"
+      "sha256": "f735a926c5a3cacab35622add7430e5326c81548b9a29b3eff9d2b40a2ab440f"
     },
     "step-04": {
       "file": "posters/step-04.png",
-      "sha256": "11fa28827ea85d25f34d869bcb09395275f207df1ecbd1ee2378e674ed720b0c"
+      "sha256": "f1ec41c11f6327b2731c5e5654d75dd539f01c699b51a1f5a2a008156576e3fd"
     },
     "step-05": {
       "file": "posters/step-05.png",
-      "sha256": "d37f4007aaa8b8386e1fd9f8c364646854874ce0c8037c586c9aee1a165844cb"
+      "sha256": "c7c6640813663f73d96c30a4fa72d6f899cf6a83770497a33e43c00e3d774683"
     },
     "step-06": {
       "file": "posters/step-06.png",
-      "sha256": "b7631c467ab216bf609c1b724d97e71971d300bbbf8d4cf8b01faca9af0df22c"
+      "sha256": "90b458cb4511de33d0bfdd245a98b1d8121c65178796fcd10e08816202428d9b"
     },
     "step-07": {
       "file": "posters/step-07.png",
-      "sha256": "5445ee905a45a31f99110d3a9178548100a7e4970f4dd41b7e67c9b5ffc088b3"
+      "sha256": "a44ca1f7d40821fed00352c08c1adaabc7ea13877dbdfedb9605234c9cee44b8"
     },
     "step-08": {
       "file": "posters/step-08.png",
-      "sha256": "df260e17b67d1430b0813acef0b3612e5788a35a08bc92bac93dd98738640a3f"
+      "sha256": "7b0801ece9fb590471e7d73e2bcf4b86f17e53d5530a52dd8974f4cf1d480748"
     },
     "step-09": {
       "file": "posters/step-09.png",
-      "sha256": "b26167f7a1aa4f281652a9d9153d541b6a17218d84bcc511b8f0f3a747941ee3"
+      "sha256": "29dd6dbc8f80320137c813c00b00a8471ce83f40aff549acd03ae91564fa1471"
     },
     "step-10": {
       "file": "posters/step-10.png",
-      "sha256": "f3646c68cf287b5b53ae609ab95708246538f3ed5684150f50c71ed0843fb0f9"
+      "sha256": "0aa624c9dccd618393589b890e654f19d18e30ae0ec325b2b74549ae93a9eb3a"
     },
     "step-11": {
       "file": "posters/step-11.png",
-      "sha256": "8de946fcbfdf9df5b33896a5bcd44126170ed4334a9558d4f631ab05d8f1fbb7"
+      "sha256": "a0f92bd55c0b419a923adf265fc454eaf8bbda0a2d8b9d8038529ad1e6067d07"
     },
     "step-12": {
       "file": "posters/step-12.png",
-      "sha256": "095b479f8aeff8695f98878b66395d2df6e58bebd8971d323e4c99c89a1cb7e9"
+      "sha256": "01f4400b3c338cab6282703f2ded162b5d90f534db820b3f257b20752d69aebc"
     }
   }
 }

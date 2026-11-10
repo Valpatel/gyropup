@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-10",
+  "runtime_source_commit": "82aa0e61",
+  "commands": [
+    "npm run test:instruction-docking",
+    "PLAYWRIGHT_BROWSER=webkit npm run test:instruction-docking"
+  ],
+  "local_browsers": "Native Chrome and installed WebKit; normal pinned CI remains required.",
+  "actual_states_per_engine": 93,
+  "sources": {
+    "tests/site/assembly/test-instruction-docking.mjs": "d536b22b5f542cf1d829d610aec864637c693ca69f8dc7e64e842b13e81305c3",
+    "software/site/designer/assembly/workspace.js": "e818c71ed4bc87d73107e8f42f4e2969ce3d0bc07f402fb54fa6f86d376d64a8",
+    "software/site/designer/assembly/guide.css": "b4d745dcefd49b05535622170e097918afde33596587f4dde1a0da25fc46f666"
+  },
+  "files": {
+    "after-1024-native.png": "f7569b5d33e9529c55a1f3ffa86556143b09b185fa185d6972c0eafd5b8847a9",
+    "after-1440-native.png": "b08915ecd4208164942db7c773530bae0905a1aaa2c88dab79b3a9a2fef2dfea",
+    "after-1440-windowed.png": "f1c7c89d48666b82fc29c4cea014c5a0b41516cbb521537757e3b8d5bf219fc6",
+    "after-390-native.png": "37a2a778b31f4a130475cd61dcdc09742d2b216fc5b8884287b399e698314939",
+    "before-1280-native.png": "4e593658b82ba64621e0d2ada51d2392903cfc20a3712ab19566ec5c9c7a74be",
+    "before.json": "3396708905e46c5def453ad4f5126004e62599e2c5497bc658fc5abe5daab1d1",
+    "chromium.json": "f82646efd2bf08a564613d45c13b156bc89acbc71a66b67b0f9b3a77e79e6ece",
+    "webkit.json": "5a45d6048fdc3b23ca0a5cb68d374ec8398a9ec5466e026f7f7d88136f30397f"
+  },
+  "limits": [
+    "The pre-fix probe reproduced desktop bottom-sheet placement, not disappearance of Parts/Tools tabs.",
+    "Ordinary short windows scroll; each narrow tab was brought into view before its actual hit test. Fullscreen controls must fit the viewport.",
+    "The screenshots and browser bounds establish presentation, not physical qualification."
+  ]
+}

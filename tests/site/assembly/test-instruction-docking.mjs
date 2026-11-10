@@ -1,7 +1,8 @@
 /** Real desktop/right-dock and narrow sheet controls across native and denied fullscreen. */
 import assert from 'node:assert/strict';
 import {once} from 'node:events';
-import {mkdir,writeFile} from 'node:fs/promises';
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {chromium,webkit} from '@playwright/test';
 import {createSiteServer} from '../../../tools/site/serve-site.mjs';
@@ -11,6 +12,7 @@ await mkdir(out,{recursive:true});
 const server=createSiteServer(path.resolve(import.meta.dirname,'../../../dist'));
 server.listen(0,'127.0.0.1');await once(server,'listening');
 const base='http://127.0.0.1:'+server.address().port,observations=[],errors=[];
+const sources=Object.fromEntries(await Promise.all(['tests/site/assembly/test-instruction-docking.mjs','software/site/designer/assembly/workspace.js','software/site/designer/assembly/guide.css'].map(async file=>[file,createHash('sha256').update(await readFile(path.resolve(import.meta.dirname,'../../..',file))).digest('hex')])));
 console.log('Owned docking listener',base);
 let browser,page;
 const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
@@ -59,10 +61,12 @@ try{
  for(const mode of ['windowed','native','denied']){
   console.log('PHASE docking-'+mode);if(mode!=='windowed')await fullscreen(mode);
   for(const width of [1440,1024]){
-   await page.setViewportSize({width,height:1000});
+   await page.setViewportSize({width,height:1000});const compactDocks=new Map();
    for(const expanded of [false,true])for(const parts of [false,true])for(const tools of [false,true]){
     await clickState('[data-instructions-toggle]','aria-expanded',expanded);await clickState('[data-explorer-toggle]','aria-expanded',parts);await clickState('[data-tools-toggle]','aria-expanded',tools);
-    await inspect(`${mode} ${width} expanded=${expanded} Parts=${parts} Tools=${tools}`);
+    const state=await inspect(`${mode} ${width} expanded=${expanded} Parts=${parts} Tools=${tools}`);
+    assert.equal(Boolean(state.panels['assembly-explorer']),parts,'Parts visibility follows its own control');assert.equal(Boolean(state.panels['assembly-tools']),tools,'Tools visibility follows its own control');
+    const instruction=state.panels.instructions,key=parts+':'+tools;if(!expanded)compactDocks.set(key,instruction);else{const compact=compactDocks.get(key);assert.equal(instruction.x,compact.x,'Expanding preserves horizontal dock');assert.equal(instruction.w,compact.w,'Expanding preserves dock width');assert.ok(instruction.h>=compact.h,'Expansion adds vertical reading space');}
    }
    await page.screenshot({path:`${out}/${mode}-${width}-expanded-panels.png`,timeout:15000});
   }
@@ -79,6 +83,6 @@ try{
   await page.setViewportSize({width:1440,height:1000});await inspect(mode+' desktop restored after resize');
   if(mode!=='windowed'){await page.locator('[data-guide-fullscreen]').click();await page.waitForFunction(()=>document.querySelector('[data-guide-fullscreen]').getAttribute('aria-pressed')==='false');}
  }
- assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
-}catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
+ assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
+}catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',sources,observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
 finally{await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));console.log('Owned docking listener closed');}
