@@ -1,0 +1,77 @@
+{
+  "schema": "gyropup.current-media-action-proposal/1",
+  "state": "DESIGN_ONLY_NOT_EXECUTABLE_OR_APPROVED",
+  "date": "2026-11-10",
+  "source_context": "Poster preparation from composed6dd7944b; final source pin must follow accepted motion, poster source review and separate current authority/data adoption.",
+  "accepted_data": {
+    "native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+    "collection_sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+    "manifest_sha256": "3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3",
+    "public_manifest": "/web/robot-current/manifest.json",
+    "parts": 224,
+    "printed_leg_meshes": 80,
+    "cad_sources": 95,
+    "conversion_sources": 7
+  },
+  "pose_contract": {
+    "poster": "Actual existing hero capturePoster hook: sourcehome300mm, zero explode, source reference camera/light; record native/collection/224names, source home parameter and actual base translation/quaternion.",
+    "video": "Existing authored variable demo poses and actual callbacks; .6 center maps299mm before variation. Preserve behavior and record observed values/limits, do not claim every frame is home300. Existing recorder emits native/part/frame identity and observed setup bounds/center/size; it does not emit per-frame legMM. Do not invent a per-frame scalar-pose receipt from that record.",
+    "historical_inserts": "Unchanged original3s rig jump and3s static E1 frames, captions, source receipts and failed strength limits; they remain historical."
+  },
+  "preconditions": [
+    "Corrected full current model-motion campaign independently accepted; earlier partial/failed geometry/recovery campaigns are not passing evidence",
+    "Final composed source reviewed, actual authority and accepted current data separately committed; no candidate overlay can self-authorize a new current manifest",
+    "New poster source and final capture/encode packet independently reviewed, including exact operator/worker/command/runtime/input seals",
+    "Fresh anonymous source access, clean source, exact existing runtime/dependencies/browser/codec identities and live capacity checks; no installs or images pulled",
+    "Existing whole-source/hardware/data/runtime before/after guards and exact one-use intent; no uncertain retry"
+  ],
+  "phases": [
+    {
+      "id": "build-preflight",
+      "scope": "Build committed source; hash full actual served dist and verify current225browser assets/103local provenance plus protected leg identity.",
+      "bound_seconds": 120
+    },
+    {
+      "id": "poster",
+      "scope": "Owned ephemeral static server; reserve fresh outside-source PNG; run actual hero producer once, record source/version/browser/identity/home/base/image receipt and page failures.",
+      "bound_seconds": 90
+    },
+    {
+      "id": "poster-parity",
+      "scope": "Copy built site into isolated owned candidate webroot and overlay only exact candidate PNG at/web/robot-poster.png; existing hero parity/handoff/fallback tests in both engines, one browser at a time. No source or shared preview rewrite.",
+      "bound_seconds": 600
+    },
+    {
+      "id": "reel-capture",
+      "scope": "Same frozen source/data and owned server; existing four current shots4/3/6/3seconds,480actual PNGs and source/frame receipt; no planner/pose substitute.",
+      "bound_seconds": 1200
+    },
+    {
+      "id": "reel-encode",
+      "scope": "Existing FFmpeg22s edit, both companions and frame30poster, exact historical inserts; write fresh owned candidate output only.",
+      "bound_seconds": 600
+    },
+    {
+      "id": "reel-validate",
+      "scope": "Actual raw-frame/decoded bindings and all existing/new wrong-data/omission/holder/frozen/limit faults; actual clip/images inspection remains a separate acceptance.",
+      "bound_seconds": 300
+    }
+  ],
+  "resource_proposal": {
+    "role": "rendering compute",
+    "cpus": 4,
+    "memory_gib": 8,
+    "note": "Poster/parity adds a separate budget to the earlier45minute reel proposal.55minutes work plus existing600s source-fetch allowance and packaging margin gives a proposed70minute scheduler cap. These are unmeasured caps, not action permission; existing dependencies only.",
+    "disk_gib": 12,
+    "source_fetch_seconds": 600,
+    "scheduler_minutes": 70,
+    "outer_work_minutes": 55
+  },
+  "recovery": "Detach with the established remote-run mechanism; checkpoint assigned job/log/done/collect roles immediately. Preserve every failed/partial output, owned-process result and before/after inventory; fetch only after terminal/quiescent evidence. Never infer success from process completion alone.",
+  "artifact_gate": "Independent inspection of actual poster/reel/endpacks/printedlegs, exact source/data/image/video receipts and all historical limits before any PNG/media/receipt adoption. Final integration/CI/public byte/UI checks remain separate.",
+  "execution_authorized": false,
+  "browser_started": false,
+  "encoding_started": false,
+  "native_construction": false,
+  "public_adoption": false
+}

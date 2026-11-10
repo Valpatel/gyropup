@@ -1,0 +1,50 @@
+
+> test:markdown
+> node --test tests/site/content/test-markdown.mjs
+
+TAP version 13
+# Subtest: every public page and agent counterpart includes the research warning
+ok 1 - every public page and agent counterpart includes the research warning
+  ---
+  duration_ms: 919.478313
+  type: 'test'
+  ...
+# Subtest: every generated HTML page advertises a current Markdown counterpart
+ok 2 - every generated HTML page advertises a current Markdown counterpart
+  ---
+  duration_ms: 3566.676108
+  type: 'test'
+  ...
+# Subtest: public entry guides and directory links resolve while unpublished sources stay excluded
+ok 3 - public entry guides and directory links resolve while unpublished sources stay excluded
+  ---
+  duration_ms: 1130.356455
+  type: 'test'
+  ...
+# Subtest: progress and build expose their data, tables, prices, and original downloads
+ok 4 - progress and build expose their data, tables, prices, and original downloads
+  ---
+  duration_ms: 768.590931
+  type: 'test'
+  ...
+# Subtest: a changed published status changes Markdown; local unpublished data is never read
+ok 5 - a changed published status changes Markdown; local unpublished data is never read
+  ---
+  duration_ms: 122.503185
+  type: 'test'
+  ...
+# Subtest: Markdown routes have the right MIME types and preserve HTML, downloads, HEAD, and real 404s
+ok 6 - Markdown routes have the right MIME types and preserve HTML, downloads, HEAD, and real 404s
+  ---
+  duration_ms: 71.984712
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6881.507478

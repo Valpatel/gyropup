@@ -23,7 +23,7 @@
     "test:file-viewer-theme": "node tests/site/platform/test-file-viewer-theme.mjs",
     "test:audio": "node tests/site/controls/test-audio-settings.mjs",
     "test:voice": "python3 tests/software/audio/test-pronunciation.py && node --test tests/site/content/test-pronunciation.mjs && python3 tools/audio/render-voice.py --check",
-    "test:hero": "node tests/site/media/test-hero-preview.mjs",
+    "test:hero": "node --test tests/evidence/media/test-hero-poster-output.mjs && node tests/site/media/test-hero-preview.mjs",
     "test:demo": "node tests/site/controls/test-live-demo.mjs",
     "test:rs04": "node --test software/site/designer/kit/rs04/rs04.test.mjs && python3 -m unittest tests.control.rig.test_rs04_vectors tests.control.rig.test_rs04_bridge",
     "test:motor-tool": "node tests/site/controls/test-motor-tool.mjs",
