@@ -27,7 +27,7 @@
     "test:demo": "node tests/site/controls/test-live-demo.mjs",
     "test:rs04": "node --test software/site/designer/kit/rs04/rs04.test.mjs && python3 -m unittest tests.control.rig.test_rs04_vectors tests.control.rig.test_rs04_bridge",
     "test:motor-tool": "node tests/site/controls/test-motor-tool.mjs",
-    "test:models": "node --test tests/site/models/test-current-robot-data.mjs tests/site/models/test-current-motion-ready.mjs tests/site/models/test-current-motion-target.mjs && bash tests/site/models/test-current-model.sh && node tests/site/models/test-current-model.mjs",
+    "test:models": "CURRENT_MOTION_CANDIDATE=software/site/assets/robot-current node --test tests/site/models/test-current-robot-data.mjs tests/site/models/test-current-motion-ready.mjs tests/site/models/test-current-motion-target.mjs && bash tests/site/models/test-current-model.sh && node tests/site/models/test-current-model.mjs",
     "test:legs": "python3 tests/hardware/interfaces/test-leg-attachments.py && node tests/site/models/test-leg-attachment-motion.mjs",
     "test:notice": "node tests/site/content/test-prototype-notice.mjs",
     "test:portal-data": "node --test tests/site/loading/test-portal-data.mjs",
