@@ -68,3 +68,17 @@ and action review before the full projection if material compute. Follow the
 existing remote-run procedure; no new installs, silent retry or native rebuild.
 Inspect the resulting actual SVG for both end packs/supports, old-bay absence,
 preserved legs and no checkmark/fit/physics/readiness implication before adoption.
+
+## Source checkpoint,2026-11-10
+
+The adapter and config now implement the collection path. The current shared STL
+decoder is separately bound as a new consumer; the original native producer map
+is retained unchanged. Twelve focused tests pass using tiny synthetic triangles,
+including the real unchanged shared projector/motif. The standard-library-only
+invocation passes9controls with3explicit dependency skips. See
+[source-checkpoint.json](source-checkpoint.json) for exact bytes and retained logs.
+
+No product projection has run. The tracked scene/SVG/receipt are byte-identical to
+the base, and full mandatory renderer parity deliberately rejects that stale
+scene (21of22tests pass). This is a draft source checkpoint awaiting independent
+source/action review and fresh artifact review, not current-artifact acceptance.
