@@ -190,3 +190,28 @@ relaxed, and no retry was used. Review must identify the exact changed dependenc
 and distinguish historical printed-leg fit evidence from changed body/system
 qualification before an acceptance fix is selected. Protected leg source/export
 bytes still match; that fact alone does not settle this failing consumer.
+
+## Consumer corrections awaiting review — 2026-11-10
+
+The three source/caller blockers from the independent `3df450b2` review are
+corrected in their existing owners. Quote `main()` uses `holder_part()` and
+still quotes an unrelated bus bar without evaluating retired bay factories.
+The v2 simulation CLI requires a fresh output root, passes it to the builder,
+and consumes returned relative model/rig paths; scenarios, videos and body
+evidence stay under that candidate. The direct wheel-curb caller has the same
+per-model output contract. The historical pad-depth subprocess caller rejects
+the current pad-less model before file reads or regeneration. Firmware and
+leg-load callers only use existing wheel parameters or read reviewed models;
+they are not direct v2 builders and their control limits remain unchanged.
+
+The actual rig manifest writer derives eyes/camera datums from `body_shell`
+source, separating the electrical board front from the decorative outer-face
+bezel. Overall battery bounds and old fallback `SHELL_ITEMS` heights cannot
+move them. Actual entry-point and writer controls use explicit unrelated
+browser/CAD/solver doubles, changed sensor datums and changed outer extents.
+They do not construct solids or establish optical/physical qualification.
+
+[The strict fresh-fit proposal](fit-refresh-plan.md) preserves the unchanged
+validator, failed original receipt and all printed-leg originals while setting
+out genuine recomputation and separately reviewed packaging/CI ownership.
+No fresh fit, native collection or pipeline has been launched by these fixes.

@@ -2,6 +2,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| Removing a model factory breaks unrelated quotes, a fresh-output guard breaks simulation callers, or pack bounds move sensor effects | [Trace actual caller contracts and canonical sensor datums](inbox/2026-11-10-current-labels-need-the-current-body-model.md#model-api-changes-need-real-consumer-call-paths) |
 | A latest/current robot view retains a belly battery despite a front/rear-pack plan | [Trace actual current body geometry and preserve historical recordings](inbox/2026-11-10-current-labels-need-the-current-body-model.md) |
 | A build viewer looks blank during mesh downloads, or a progress bar counts the pending part as complete | [Count validated loader completions](inbox/2026-11-10-loader-progress-must-count-completed-parts.md) |
 | A robot is tiny despite a large canvas, stable guide rectangles hide controls, or narrow screenshots use desktop height | [Fit visible geometry and test actual overlay hit targets](inbox/2026-11-09-assembly-overlays-need-visible-bounds-and-hit-tests.md) |

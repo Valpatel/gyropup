@@ -1,5 +1,7 @@
 """The battery bay's crush pads against the power-cut falls (issue #19): what lands, how fast, and the pad that keeps the
-body's impact under 3,000 N.
+body's impact under 3,000 N. This is a historical source study: the current
+end-pack entry points reject regeneration because those feet have no bay-pad
+force law. Reproduce the original study from its immutable original checkout.
 
     python -m sim.robot_v2 && python -m sim.bay_pad_study          # -> exports/body/bay-pad-study.json
     python -m sim.bay_pad_study quick                               # the pad as designed only (no sweep)
@@ -139,6 +141,7 @@ def depth():
     under 3,000 N with nothing else failing. The model is rebuilt as designed at the end."""
     import os
     import subprocess
+    require_bay_pad_model()
     out = {'limit_n': LIMIT_N, 'c_ns_per_m': 100.0, 'rows': []}
     for h in DEPTHS:
         env = dict(os.environ, GYROPUP_PAD_H=str(h))
@@ -166,7 +169,15 @@ def depth():
     print(out['verdict'])
 
 
+def require_bay_pad_model():
+    """Historical producer only: current end feet have no old pad force law."""
+    from hardware.cad.body import body_battery
+    if not {'h', 'stroke', 'plateau_n', 'k_n_per_mm', 'c_ns_per_m'} <= body_battery.PAD.keys():
+        raise ValueError('Historical bay-pad study requires its original immutable source/model; current end-pack feet have no bay-pad law. No report was regenerated.')
+
+
 def main():
+    require_bay_pad_model()
     if 'depth' in sys.argv[1:]:
         return depth()
     quick = 'quick' in sys.argv[1:]
