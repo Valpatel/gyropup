@@ -137,5 +137,56 @@
     "patch_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5856857141",
     "patch_scope": "Only default full tablet CI selects one worker and dynamic Home-to-Sim permutation; complete page set, both themes, controls, deadlines and other sizes/explicit selections preserved.",
     "acceptance_remaining": "Normal CI on final pushed adoption head remains required."
+  },
+  "final_7cd_ci": {
+    "source": "7cd242236f9dddad9305a797af4dd55ab7e8f317",
+    "run": 43003806788,
+    "build_portal": {
+      "job": 130466178104,
+      "artifact": 13846938592,
+      "artifact_sha256": "a5dcb0986dd85902dcd8cf88b533440f76462373d74426689f23c106b560eee8",
+      "result": "Failure before browser phase: current index whole-file pin and historical-seal loop reject the genuinely refreshed live turret poster-binding metadata."
+    },
+    "mechanism": {
+      "job": 130466178099,
+      "artifact": 13846963719,
+      "artifact_sha256": "b7d9d006b2729317fb86faf828dfc295200d0cdf9a28ee71fc432fc5490f0a74",
+      "result": "Same whole-index snapshot assertion failed after17current-motion controls passed."
+    },
+    "reproduced_before_repair": "Both actual Python snapshot suites reproduced one failure each at unchanged7cd; original CI logs/artifacts retained.",
+    "repair": "Keep historical final-index and all316seals byte-for-byte. Restore only reviewed live poster visual scalars to their previous value for old byte-seal comparison. Validate actual accepted receipt/current visual contract and index actual-guide digest; compare every remaining index field/row and all remaining turret bytes exactly.",
+    "negative_controls": [
+      "nonposter guide field",
+      "poster frame digest",
+      "wrong guide/poster visual",
+      "receipt source",
+      "mesh bytes",
+      "non-turret index row",
+      "turret row title",
+      "wrong guide digest",
+      "index row omission/duplication"
+    ],
+    "ownership_lesson": ".agents/inbox/2026-11-10-archival-integrity-needs-explicit-input-ownership.md",
+    "tablet": {
+      "job": 130466178200,
+      "result": "SUCCESS",
+      "views": 314,
+      "spatial_findings": 0,
+      "scan_seconds": 355,
+      "artifact": 13848300501,
+      "artifact_sha256": "46fa091b79e1f107e7e63a2a483b14f72e6c00c4316ed55702a4de7e801592cb",
+      "limit": "Normal CI evidence for tablet-only scheduling; does not establish readiness on other partitions."
+    },
+    "phone": {
+      "job": 130466178170,
+      "result": "FAILURE",
+      "views": 314,
+      "spatial_findings": 0,
+      "scan_seconds": 224,
+      "artifact": 13847083775,
+      "artifact_sha256": "74ee5801d35a9d7cf0b8a96da1c1d730d2c8f1eabd734ccd15e3c2fd21786cfd",
+      "failure": "Unchanged30s simulator readiness TimeoutError; retained complete sampled profile dominated by createStage/Three renderer initialization. No proven underlying mechanism or source correction."
+    },
+    "acceptance_remaining": "Overall7cdCI still running when recorded; original failures retained, no cancellation/retry. Normal CI on any reviewed follow-up remains required."
   }
 }
