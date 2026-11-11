@@ -249,3 +249,4 @@
 - A dynamically constructed probe regex passes syntax checking but fails before capture, or collection mistakes a retained worker error for a missing terminal marker: [exercise actual extraction and separate byte verification from worker success](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#compile-the-actual-extractor-and-keep-byte-collection-separate-from-worker-success).
 
 - A shared table adoption loses pagination/filtering despite syntax checks: [compare consumer extensions before replacement](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md).
+- Header/cell alignment passes on a hidden table: [activate the actual panel and require positive box widths](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#compare-real-visible-boxes-not-equal-zero-size-deltas).
