@@ -16,7 +16,7 @@ Cause: the harness compared relative deltas without proving that each target was
 
 ## Staying inside PDF bounds does not establish readable numeric cells
 
-On 2026-11-11 independent review of the real A4 queue PDF found `Hours` split into `Hou` / `rs`, and the hip-frame value `72.56` split into `72.5` / `6`. The prior page-bound audit still passed because every fragment remained inside the page. Character-count width weights and unrestricted word breaking had treated numeric/status columns like free-form descriptions.
+On 2026-11-11 independent review of the real A4 queue PDF found short headers split midword and a numeric value split across lines. The first interpretation attributed a trailing `6` to Hours `72.5`, but subsequent bounding-box/source inspection located it in the preceding Grams column: actual hip-frame mass `1106` was split into `110` / `6`. The initial `72.56` test failed against the actual source and was corrected to exact same-row Grams `1106` and Hours `72.5`. The prior page-bound audit still passed because every fragment remained inside the page. Character-count width weights and unrestricted word breaking had treated numeric/status columns like free-form descriptions.
 
 Corrective rule: preserve semantic numeric/status column types, reserve intrinsic widths and prohibit wrapping for compact data and short headers. Permit wrapping in IDs/descriptions and use landscape for dense lists while retaining the paper choice. Verify compact-cell line ranges at actual printable A4/Letter widths and inspect the actual PDFs for whole numeric/header tokens as well as complete IDs, repeated headers and page bounds. Retain the failed observations; a generic 75-row fixture alone does not prove the real product table readable.
 
