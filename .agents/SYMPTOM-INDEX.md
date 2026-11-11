@@ -230,3 +230,5 @@
 - A current Build browser test expects171/233 parts, waits for the recorded rig manifest, or confuses index order with the bare-page default: [bind current defaults separately from explicit archives](inbox/2026-11-10-browser-harnesses-need-current-and-archive-bindings.md).
 - Highlight-media source validation rejects a newly edited shared test helper: [preserve recorded fixture bytes and narrow the caller fix](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#historical-capture-fixtures-can-require-a-narrower-caller-fix).
 - A poster utility overwrites its public PNG before artifact review, or pure import starts a browser: [reserve fresh candidate output and preserve the actual hero hook](inbox/2026-11-10-poster-captures-need-fresh-candidate-output.md).
+
+- A retired simulator option remains reachable through old queries or restored form state: [gate public availability at the actual loader and preserve historical fixtures](inbox/2026-11-11-public-retirement-needs-loader-enforcement.md).

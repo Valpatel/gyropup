@@ -31,6 +31,13 @@ try {
  await navRequest;
  assert.ok(releaseNav&&navResult.links>=6&&navResult.text.includes('Play'),'Navigation is usable before its configuration arrives');
  releaseNav();await page.unroute('**/site/nav.json');
+ let summaryAttempts=0;
+ await page.route('**/exports/sim/v2/summary.json',async r=>{
+  ++summaryAttempts;
+  if(summaryAttempts===1){await r.fulfill({json:{scenarios:null}});return;}
+  if(summaryAttempts===2){const response=await r.fetch(),summary=await response.json();summary.mass_kg='broken';await r.fulfill({json:summary});return;}
+  await r.continue();
+ });
  // Static startup feedback exists even if the main module cannot load; Retry recovers a fresh bootstrap.
  let moduleAttempts=0;
  await page.route('**/designer/sim.js*',r=>++moduleAttempts===1?r.abort():r.continue());
@@ -52,25 +59,6 @@ try {
  await page.getByLabel('Message to Gyropup').fill('Hello Gyropup');await page.locator('.gp-ask').click();
  await page.waitForFunction(()=>window.__sim.talk.conversation.length===2);
  await page.evaluate(()=>{const s=window.__sim;window.loadingIdentity={scene:s.stage.scene,robot:s.state.robot,talk:s.talk,history:JSON.stringify(s.talk.conversation)};});
- // A stalled model switch times out, preserving live play; Retry loads the chosen model.
- let designAttempts=0;
- await page.route('**/designs/default.json',async r=>{
-  if(++designAttempts===1)await new Promise(resolve=>{releaseDesign=resolve;});
-  await r.continue().catch(()=>{}); // The first request has already been aborted by the reader.
- });
- await page.selectOption('#design-select','designs/default.json');
- await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
- assert.ok(releaseDesign,'A genuinely held response reaches a bounded failure');releaseDesign();
- assert.equal(await identity(),true);assert.equal(await page.evaluate(()=>window.__sim.state.robot===window.loadingIdentity.robot),true);
- await retry.click();await page.waitForFunction(()=>window.__sim.state.modelKey==='designs/default.json');await hidden();assert.equal(await identity(),true);
- let summaryAttempts=0;
- await page.route('**/exports/sim/v2/summary.json',async r=>{
-  ++summaryAttempts;
-  if(summaryAttempts===1){await r.fulfill({json:{scenarios:null}});return;}
-  if(summaryAttempts===2){const response=await r.fetch(),summary=await response.json();summary.mass_kg='broken';await r.fulfill({json:summary});return;}
-  await r.continue();
- });
- await page.selectOption('#design-select','v2');await page.waitForFunction(()=>window.__sim.state.modelKey==='v2');
  await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
  assert.match(await status.textContent(),/recordings could not load/);
  const malformedSummary=page.waitForResponse(r=>r.url().endsWith('/exports/sim/v2/summary.json'));
@@ -118,18 +106,21 @@ try {
  assert.equal(recordingAttempts,5);
  assert.equal(await identity(),true);
  await page.locator('#robot-actions [data-action=reload]').click();assert.equal(await page.evaluate(()=>window.__sim.state.replay),null);
- // Required bench geometry must fail as a whole, then recover without duplicate controls.
+ // A stalled model switch times out, preserving live play; Retry refetches all
+ // required bench geometry. Each malformed/failed response must also fail as a whole.
  let meshAttempts=0;
- await page.route('**/exports/sim/turret_box/barrel.stl*',r=>{
+ await page.route('**/exports/sim/turret_box/barrel.stl*',async r=>{
   meshAttempts++;
-  if(meshAttempts===1)return r.fulfill({status:503,body:'Unavailable'});
-  if(meshAttempts===2)return r.fulfill({body:' '.repeat(80)+'solid invalid\nendsolid invalid\n'});
-  if(meshAttempts===3)return r.fulfill({contentType:'text/html',body:'<html>Not STL</html>'});
-  if(meshAttempts===4)return r.fulfill({body:Buffer.alloc(84)});
+  if(meshAttempts===1){await new Promise(resolve=>{releaseDesign=resolve;});await r.continue().catch(()=>{});return;}
+  if(meshAttempts===2)return r.fulfill({status:503,body:'Unavailable'});
+  if(meshAttempts===3)return r.fulfill({body:' '.repeat(80)+'solid invalid\nendsolid invalid\n'});
+  if(meshAttempts===4)return r.fulfill({contentType:'text/html',body:'<html>Not STL</html>'});
+  if(meshAttempts===5)return r.fulfill({body:Buffer.alloc(84)});
   return r.continue();
  });
  await page.selectOption('#design-select','turret-box');
  await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
+ assert.ok(releaseDesign,'A genuinely held model response reaches the original bounded timeout');releaseDesign();
  assert.equal(await page.evaluate(()=>window.__sim.state.bench||!!window.__sim.bench()),false);
  assert.equal(await identity(),true);
  const layouts=[];
@@ -151,13 +142,13 @@ try {
   assert.ok(layout.x>=0&&layout.right<=width&&layout.y>=0&&layout.bottom<=height&&layout.height>=44&&layout.reachable&&layout.aboveControls&&layout.readable,JSON.stringify({width,height,layout}));
   layouts.push({viewportWidth:width,viewportHeight:height,...layout});await page.screenshot({path:`${out}/${engine.name()}-retry-${width}x${height}.png`});
  }
- for(let attempt=2;attempt<=4;attempt++){
+ for(let attempt=2;attempt<=5;attempt++){
   await retry.click();await page.waitForFunction(()=>document.getElementById('sim-loading').dataset.state==='error');
   assert.equal(meshAttempts,attempt);assert.equal(await page.evaluate(()=>!!window.__sim.bench()),false);
   assert.equal(await identity(),true,'Malformed required geometry keeps the prior scene/conversation');
  }
  await retry.click();await page.waitForFunction(()=>window.__sim.bench()?.active);await hidden();
- assert.equal(meshAttempts,5);
+ assert.equal(meshAttempts,6);
  assert.equal(await page.evaluate(()=>window.__sim.bench().api.mechanism.parts.length===window.__sim.bench().manifest.parts.length),true);
  assert.equal(await page.locator('#tb-actions').count(),1);assert.equal(await identity(),true);
  // Stale completion tokens cannot hide a newer status, including finally-style cleanup.
@@ -165,6 +156,6 @@ try {
  assert.match(tokens.before,/Second/);assert.equal(tokens.hidden,true);
  assert.deepEqual(errors,[]);assert.equal(await page.evaluate(()=>document.body.dataset.stageError),undefined);
  assert.deepEqual(await(await context.request.get(base+'/version.json')).json(),version,'The same build must serve the whole test');
- await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({checkedAt:new Date().toISOString(),base,version,moduleAttempts,designAttempts,summaryAttempts,recordingAttempts,meshAttempts,layouts,errors},null,2));
+ await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({checkedAt:new Date().toISOString(),base,version,moduleAttempts,summaryAttempts,recordingAttempts,meshAttempts,layouts,errors},null,2));
  console.log(`PASS ${engine.name()}: nonblocking navigation, static startup/retry, visible delayed loads, model retry, retained scene/conversation, manual takeover cancellation, strict bench parts/retry, phone actions and stale status tokens`);
 } finally {releaseNav?.();releaseModel?.();releaseRun?.();releaseDesign?.();await browser.close();}

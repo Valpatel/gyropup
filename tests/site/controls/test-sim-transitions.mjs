@@ -107,8 +107,8 @@ try {
   await page.selectOption('#run-select', '');
   await page.waitForFunction(() => !window.__sim.state.replay && !window.__sim.state.transition);
   // Hardware changes reuse previously loaded robot views and keep the same conversation.
-  await page.selectOption('#design-select', 'designs/default.json');
-  await page.waitForFunction(() => window.__sim.state.modelKey === 'designs/default.json');
+  await page.selectOption('#design-select', 'turret-box');
+  await page.waitForFunction(() => window.__sim.state.bench);
   await page.selectOption('#design-select', 'v2');
   await page.waitForFunction(() => window.__sim.state.modelKey === 'v2' && !window.__sim.state.transition);
   assert.ok(await page.evaluate(() => window.__sim.state.robot === window.original.robot && window.__sim.talk === window.original.talk));

@@ -1,7 +1,8 @@
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Real vehicle controls must remain useful while the default demo is playing. */
 import assert from 'node:assert/strict';
-import { mkdir } from 'node:fs/promises';
+import { checkPublicAvailability } from './sim-availability.mjs';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8882').replace(/\/$/, '');
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
@@ -92,10 +93,14 @@ async function playChecks() {
  assert.equal(await action('play').isDisabled(),true,'Live mode does not pretend to pause a recording');
 }
 try {
+ const availability = await checkPublicAvailability({ page, base, out, engine });
+ await writeFile(`${out}/${engine.name()}-availability.json`, JSON.stringify({ availability, errors }, null, 2));
+ if (process.env.ROBOT_CONTROL_CASE !== 'availability') {
+ await page.evaluate(() => { localStorage.removeItem('gyropup-sfx'); localStorage.removeItem('gyropup-design-v1'); });
  await checkFreshLayout();
  await page.goto(base+'/designer/sim.html',{waitUntil:'networkidle'});await ready();
  assert.equal(await page.evaluate(()=>window.__sim.demo.on && window.__sim.sfx.enabled && !window.__sim.state.replay && window.__sim.state.robot.presentation.mode==='current'),true,'Fresh visitors start with current-model live demo and sound enabled');
- for(const value of ['v2','designs/default.json']) {await model(value);await playChecks();}
+ await model('v2');await playChecks();
  // Light sliders affect empty sky, not just the model and yard. Bench restores
  // the robot preference after its fixed, darker target range.
  const daylight=page.locator('.hud-slider').filter({hasText:'Daylight'}).locator('input');
@@ -119,7 +124,7 @@ try {
   await page.screenshot({path:`${out}/${engine.name()}-${width}x${height}.png`});
  }
  await page.setViewportSize({width:390,height:844});
- for(const value of ['v2','designs/default.json']) {await model(value);await playChecks();}
+ await model('v2');await playChecks();
  await page.goto(base+'/designer/sim.html?demo=0&sound=0&run=none',{waitUntil:'networkidle'});await ready();
  assert.equal(await page.evaluate(()=>!window.__sim.demo.on && !window.__sim.sfx.enabled && !window.__sim.state.replay),true,'Explicit opt-outs preserved');
  await page.goto(base+'/designer/sim.html?demo=0',{waitUntil:'networkidle'});await ready();
@@ -127,5 +132,9 @@ try {
  await page.goto(base+'/designer/sim.html?sound=1&demo=1',{waitUntil:'networkidle'});await ready();
  assert.equal(await page.evaluate(()=>window.__sim.sfx.enabled && window.__sim.demo.on),true,'Explicit on overrides saved mute');
  assert.deepEqual(errors,[]);assert.equal(await page.evaluate(()=>document.body.dataset.stageError),undefined);
- console.log(`PASS ${engine.name()}: fresh delayed-CSS startup framing, stable stats overlay, robot v1/v2 desktop+touch play/pause, fire/burst/reload from replay, current-model live demo/pause, stable scene/conversation, daylight sky, defaults/opt-outs and 6 phone/tablet layouts`);
+ }
+ assert.deepEqual(errors, []);
+ console.log(process.env.ROBOT_CONTROL_CASE === 'availability'
+  ? `PASS ${engine.name()}: public v1 disabled; current fallback, unavailable notice, direct URL, restored selection, reload and history`
+  : `PASS ${engine.name()}: public v1 disabled; fresh delayed-CSS startup framing, stable stats overlay, current robot desktop+touch play/pause, fire/burst/reload from replay, current-model live demo/pause, stable scene/conversation, daylight sky, defaults/opt-outs and 6 phone/tablet layouts`);
 } finally {await browser.close();}
