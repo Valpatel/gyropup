@@ -1,5 +1,5 @@
 import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
-/** The design status board (tools/status-board.mjs) against its records, on the landing page and Progress.
+/** The design status board (tools/status-board.mjs) against its records, on Progress, with a small entrance on Home.
  * The evidence tests count each record again here, by their own simple loops, and compare with what the built pages
  * show; a board that drifts from its records fails. Browser tests use SITE_URL, or serve dist/ (run `npm run build`
  * first) on a test-owned listener closed in teardown. */
@@ -11,7 +11,7 @@ import { after, before, test } from 'node:test';
 import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from '../../../tools/site/serve-site.mjs';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../assembly/build-prototype-session.mjs';
 import { WEIGHED, collectStatus, createReader, docPage, measuredColumns, renderBoard, sheetCount, shortDate } from '../../../tools/site/status-board.mjs';
 import { ago } from '../../../software/site/assets/status-board.js';
 
@@ -32,20 +32,13 @@ const meter = (doc, panel, id) => {
 };
 const segmentsAddUp = m => assert.ok(Math.abs(m.widths.reduce((n, [, w]) => n + w, 0) - 100) < 0.01 || m.widths.length === 1, JSON.stringify(m.widths));
 
-test('both pages carry the board at their marker; the landing shows three meters a panel and links to the rest', () => {
-  for (const doc of [landing, progress]) {
-    assert.equal(doc.querySelectorAll('#board').length, 1);
-    assert.deepEqual([...doc.querySelectorAll('.sb-panel')].map(p => p.dataset.subsystem), ['leg', 'turret', 'body', 'wheels', 'rig', 'electronics']);
-  }
-  assert.ok(landing.querySelector('#board').classList.contains('is-compact'));
-  assert.equal(landing.querySelector('#loop').nextElementSibling.querySelector('#board') !== null, true, 'the board follows the cad-agent loop');
-  for (const panel of landing.querySelectorAll('.sb-panel')) {
-    const full = progress.querySelectorAll(`.sb-panel[data-subsystem="${panel.dataset.subsystem}"] .sb-meter`).length;
-    if (full > 3) assert.equal(panel.querySelector('.sb-more').getAttribute('href'), `/designer/progress.html#board-${panel.dataset.subsystem}`);
-    assert.ok(progress.querySelector(`#board-${panel.dataset.subsystem}`), 'the "more" link lands on its panel');
-  }
+test('Progress owns the complete status board; Home offers a direct entrance instead of meters', () => {
+  assert.equal(progress.querySelectorAll('#board').length, 1);
+  assert.deepEqual([...progress.querySelectorAll('.sb-panel')].map(p => p.dataset.subsystem), ['leg', 'turret', 'body', 'wheels', 'rig', 'electronics']);
+  assert.equal(landing.querySelectorAll('.sb-panel,.sb-meter').length, 0);
+  assert.equal(landing.querySelector('a#board').getAttribute('href'), '/designer/progress.html#board');
   assert.ok(progress.querySelector('.portal-jumps a[href="#board"]'));
-  assert.equal(progress.querySelector('#latest').nextElementSibling.id, 'board', 'Progress: the board follows the latest work');
+  assert.equal(progress.querySelector('#latest').nextElementSibling.id, 'board');
   for (const file of ['index.html', 'designer/progress.html']) assert.doesNotMatch(readFileSync(path.join(dist, file), 'utf8'), /<!-- status-board -->/);
 });
 
@@ -319,7 +312,7 @@ after(async () => {
 });
 async function open(route, { width = 1440, height = 1000, reducedMotion = 'no-preference', javaScriptEnabled = true } = {}) {
   const context = await browser.newContext({ viewport: { width, height }, reducedMotion, javaScriptEnabled });
-  await acknowledgePrototypeNotice(context);
+  await acknowledgePrototypeNotice(context, base);
   await context.route('https://cad-agent.gyropup.com/**', r => r.abort());
   const page = await context.newPage();
   const errors = [];
@@ -331,7 +324,7 @@ async function open(route, { width = 1440, height = 1000, reducedMotion = 'no-pr
 const scales = page => page.locator('#board .sb-bar i').evaluateAll(bars => bars.map(b => getComputedStyle(b).transform));
 
 test('no overflow at phone, tablet and desktop widths, on both pages', async () => {
-  for (const route of ['/', '/designer/progress.html']) for (const [width, height] of [[320, 640], [360, 740], [390, 844], [768, 1024], [1440, 1000]]) {
+  for (const route of ['/designer/progress.html']) for (const [width, height] of [[320, 640], [360, 740], [390, 844], [768, 1024], [1440, 1000]]) {
     const { context, page, errors } = await open(route, { width, height });
     const out = await page.evaluate(() => {
       const board = document.querySelector('#board').getBoundingClientRect();
@@ -374,7 +367,7 @@ test('bars fill as the board comes into view; with reduced motion or no script t
 });
 
 test('text on the board has at least 4.5:1 contrast against its background', async () => {
-  for (const route of ['/', '/designer/progress.html']) {
+  for (const route of ['/designer/progress.html']) {
     const { context, page } = await open(route, { reducedMotion: 'reduce' });
     const failures = await page.evaluate(() => {
       const parse = c => { const m = c.match(/[\d.]+/g)?.map(Number) || [0, 0, 0, 0]; return { r: m[0], g: m[1], b: m[2], a: m.length > 3 ? m[3] : 1 }; };
@@ -408,13 +401,15 @@ test('text on the board has at least 4.5:1 contrast against its background', asy
 });
 
 test('Markdown routes keep the board’s readings and drop its drawn bars', async () => {
-  for (const route of ['/index.md', '/designer/progress.md']) {
+  const home = await (await fetch(base + '/index.md')).text();
+  assert.doesNotMatch(home, /FROM THE RECORDS, AT BUILD/);
+  assert.match(home, /Engineering updates[^\n]*designer\/progress\.html#board/);
+  for (const route of ['/designer/progress.md']) {
     const md = await (await fetch(base + route)).text();
     const section = md.slice(md.indexOf('FROM THE RECORDS, AT BUILD'), md.indexOf('a green bar is not physical proof'));
     assert.ok(section.length > 500, route);
     assert.match(section, /Strength studies \*\*\d+ of \d+\*\* meet their own target/);
-    if (route === '/index.md') assert.match(section, /\[4 more on Progress →\]\([^)]*\/designer\/progress\.html#board-leg\)/);
-    else assert.match(section, /Bench coupons \*\*0 of \d+\*\* rows measured\s+not yet measured · No row filled in yet: the RS-04 seat coupon/);
+    assert.match(section, /Bench coupons \*\*0 of \d+\*\* rows measured\s+not yet measured · No row filled in yet: the RS-04 seat coupon/);
     assert.doesNotMatch(section, /Meets its target\n/, 'the colour key is drawn, not read');
   }
 });

@@ -105,6 +105,13 @@ await acknowledgePrototypeNotice(context,base);
    assert.ok(c.meanColorError<8,`Same robot pose/lighting ${width}dpr${dpr}: ${JSON.stringify(c)}`);
    assert.match(c.background,/220, 238, 255/,'Cool blue background contrasts with the yellow robot');
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+   const entrance=await page.evaluate(()=>{
+    const outside=[...document.querySelectorAll('.home-cool,.home-doors,.home-notes,.home-door,.cool-bits li')].filter(el=>{const r=el.getBoundingClientRect();return r.left<-.5||r.right>innerWidth+.5||el.scrollWidth>el.clientWidth+1;}).map(el=>el.className);
+    const doors=[...document.querySelectorAll('.home-door')].map(el=>{const r=el.getBoundingClientRect();return{width:r.width,height:r.height};});
+    return{outside,doors};
+   });
+   assert.deepEqual(entrance.outside,[],`Homepage entrances fit at${width}dpr${dpr}`);
+   assert.equal(entrance.doors.length,3);for(const door of entrance.doors)assert.ok(door.width>=44&&door.height>=44,'Primary route cards are touch targets');
    const controls=await page.locator('.hero-controls').evaluate(e=>[...e.querySelectorAll('button,summary')].map(b=>{const r=b.getBoundingClientRect();return{w:r.width,h:r.height,x:r.x,right:r.right};}));
    for(const b of controls)assert.ok(b.w>=44&&b.h>=44&&b.x>=0&&b.right<=width,`Reachable control ${width}: ${JSON.stringify(b)}`);
    if(width===320||width===844||width===1440)await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-ready-${width}-dpr${dpr}.png`});

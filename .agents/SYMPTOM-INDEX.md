@@ -64,6 +64,7 @@
 | Repeated exact relation queries stall without checkpoints, or a broad-phase bound is presented as measured clearance | [Batch relations with explicit distance bounds](inbox/2026-10-31-batch-relations-with-explicit-distance-bounds.md) |
 | Entry warning loses focus, hides controls, or changes saved audio/scene state | [Prototype notice](domains/prototype-notice.md) |
 | A page shows large blank stretches on a phone, or a full-page screenshot shows empty picture boxes | [Empty space is measured per screen](inbox/2026-11-03-empty-space-is-measured-per-screen.md) |
+| Home repeats stale CAD, mass or study status despite intact source records | [Keep the entrance evergreen and the engineering state on its evidence routes](inbox/2026-11-10-home-should-link-to-engineering-state.md) |
 | Motto or landing graphics feel cheesy despite passing layout checks | [Gyropup visual character](domains/brand-presentation.md) |
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
 | A simulated motion sample wait times out after the applied pose passes | [Retain animation state and frame progress at the failed wait](inbox/2026-11-11-simulated-samples-need-frame-evidence.md) |

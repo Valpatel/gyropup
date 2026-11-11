@@ -9,7 +9,7 @@
     "preview:status": "node tools/site/serve-site.mjs --status",
     "test:preview": "node --test tests/site/platform/test-site-preview.mjs",
     "deploy": "npm run build && wrangler --cwd .github pages deploy ../dist --project-name gyropup --branch main",
-    "test:web": "node tests/site/platform/test-site.mjs",
+    "test:web": "node --test tests/site/content/test-home-content.mjs && node tests/site/platform/test-site.mjs",
     "test:markdown": "node --test tests/site/content/test-markdown.mjs",
     "test:cache": "node --test tests/site/platform/test-site-ranges.mjs && node tests/site/platform/test-cache.mjs",
     "test:sim": "node tests/site/controls/test-sim-transitions.mjs",
