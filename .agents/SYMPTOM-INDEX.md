@@ -4,6 +4,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A first-load failure route sees no request after a model round trip, and the selection never reverts | [Loading fixture cache ownership](domains/loading-readiness.md) |
 | A cached CAD illustration has new source headers but old body membership, or native and projection runtimes are conflated | [Bind original collection and new projection consumer separately](inbox/2026-11-10-cached-projections-need-separate-consumer-provenance.md) |
 | Small mode-switch doubles pass but recorded-only model construction fails or metadata remains on the previous body | [Exercise the real archived constructor and atomic holder](inbox/2026-11-10-atomic-model-switches-need-real-archive-construction.md) |
 | A collection differs from an isolated module default, or sampled bounds suggest a changed nominal radius | [Trace effective overrides and actual bound geometry first](inbox/2026-11-10-collection-geometry-needs-effective-runtime-parameters.md) |
@@ -235,4 +236,5 @@
 - Highlight-media source validation rejects a newly edited shared test helper: [preserve recorded fixture bytes and narrow the caller fix](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#historical-capture-fixtures-can-require-a-narrower-caller-fix).
 - A poster utility overwrites its public PNG before artifact review, or pure import starts a browser: [reserve fresh candidate output and preserve the actual hero hook](inbox/2026-11-10-poster-captures-need-fresh-candidate-output.md).
 
+- A retired simulator option remains reachable through old queries or restored form state: [gate public availability at the actual loader and preserve historical fixtures](inbox/2026-11-11-public-retirement-needs-loader-enforcement.md).
 - A dynamically constructed probe regex passes syntax checking but fails before capture, or collection mistakes a retained worker error for a missing terminal marker: [exercise actual extraction and separate byte verification from worker success](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#compile-the-actual-extractor-and-keep-byte-collection-separate-from-worker-success).

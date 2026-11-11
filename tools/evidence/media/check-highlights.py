@@ -177,7 +177,7 @@ def required_capture_inputs(current=None):
     """Derive geometry closure independently of the capture's optional inputs map."""
     paths = {
         '/designer/' + name for name in (
-            'sim.js', 'robot_v2.js', 'current_turret.js', 'turret_bench.js', 'turret_reload.js',
+            'sim.js', 'sim_designs.js', 'robot_v2.js', 'current_turret.js', 'turret_bench.js', 'turret_reload.js',
             'robot3d.js', 'cadrig.js', 'turret3d.js', 'model.js', 'sfx.js', 'robot_actions.js',
             'current_robot.js', 'robot_current_source.js', 'robot_identity.js', 'robot_kinematics.js',
             'robot_presentations.js', 'robot_sensors.js', 'kit/assembly/guide.js', 'kit/assembly/playback.js',

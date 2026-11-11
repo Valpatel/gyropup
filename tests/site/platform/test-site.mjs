@@ -135,8 +135,8 @@ try {
  if(await turretSection.count() && (await turretSection.getAttribute('open'))===null) await turretSection.locator('summary').click();
  await page.getByRole('button',{name:'FIRE',exact:true}).click();
  await page.locator('#drawer-handle').click();
- await page.selectOption('#design-select','designs/default.json');
- await page.waitForFunction(()=>window.__sim.state.v2===false && window.__sim.state.robot?.info);
+ assert.equal(await page.locator('#design-select option[value="designs/default.json"]').isDisabled(),true,'Legacy v1 is unavailable publicly');
+ assert.equal(await page.evaluate(()=>window.__sim.state.modelKey),'v2');
  await page.selectOption('#design-select','turret-box');
  await page.waitForFunction(()=>window.__sim.state.bench===true);
  await page.screenshot({path:'test-results/turret-phone.png'});
