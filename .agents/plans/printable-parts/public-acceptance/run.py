@@ -11,7 +11,7 @@ assert c['approved_for_execution'] is True, 'Prepared packet is not approved'
 assert 'TODO' not in json.dumps(c) and 'UNBOUND' not in json.dumps(c), 'Unbound future identities'
 seal=json.loads((P/'review-seal.json').read_text()) # deliberately absent until final GPT-6 review
 assert seal['review_url'].startswith('https://github.com/Valpatel/gyropup/pull/')
-for f in ['run.py','public-checklists.mjs','audit-pdfs.py','pdf-id-extractor.py','capture-diagnostics.mjs','clip-geometry.mjs','position-header.mjs','deployment-html.mjs','cleanup-observer.mjs','contract.json','provider-reference.json','release-binding.json','compiled-build.html','served-build.html','deployment-beacon.html']:
+for f in ['run.py','public-checklists.mjs','audit-pdfs.py','pdf-id-extractor.py','capture-diagnostics.mjs','clip-geometry.mjs','position-header.mjs','deployment-html.mjs','cleanup-observer.mjs','panel-selection.mjs','contract.json','provider-reference.json','release-binding.json','compiled-build.html','served-build.html','deployment-beacon.html']:
     assert hashlib.sha256((P/f).read_bytes()).hexdigest()==seal['files_sha256'][f], f+' differs from reviewed bytes'
 unit=c['unit']+'.service'
 assert re.fullmatch(r'gy318-public-acceptance-[a-z0-9-]+\.service',unit)

@@ -162,3 +162,40 @@ V3 used one native instant/center/nearest scroll and two time-separated passive 
 V3 queue capture took 8.293 seconds total, including 8.101 seconds native capture; orders took 15.894 / 15.792 seconds. Preparation, fonts and layout returned separately. The overall run still failed: graceful browser.close did not return within its unchanged 15-second bound. Context/work/response/positioning settlement completed, and the independent collector found the exact owned cgroup empty without errors. That proves terminal emptiness, not graceful-close success. Original screenshot and V2 wrapper timeouts remain unlocalized at their own unobserved boundaries; no further browser was run while authoring the canonical follow-up.
 
 Record passive local-client counts/connection state, close events, and each cleanup phase's start/end/result at the original limits. Preserve the identical operation error, pending state and overall failed result even after a late return/disconnect. Do not retry/extend close, force rendering, or waive failure because the cgroup is empty. The repaired procedure's pure controls cover late completion, unknown snapshots, timeout and error identity. A new full public campaign remains separately bound/reviewed work, including phone, scope/status and twelve actual PDFs; two successful diagnostic PNGs cannot supply it.
+
+
+## Panel selection must verify state instead of repeating a selected action
+
+2026-11-11, full public B, immutable report SHA-256
+38cda6166111781566ad119aee41ab0968cceb843d2f98e3fb003581813132be.
+[The canonical B receipt](../plans/printable-parts/public-observation/attempt-B.json)
+and [independent disposition](https://github.com/Valpatel/gyropup/pull/320#issuecomment-6807901966)
+retain the failed result. All seven identities and actual Combined 224/30 passed;
+queue/orders desktop PNGs returned once with V3-identical bytes. The helper then
+clicked Buy unconditionally for made, although the resolved Buy tab was already
+aria-pressed=true. Native click exceeded the original 15-second action limit
+while waiting for visible/enabled/stable. Orders and made share Buy; queue is Print.
+No made-target visibility or button-motion observation was recorded at failure.
+This identifies a redundant action in source, not its stalled cause or proof a
+zero-click path will complete the full campaign. No app/environment cause follows.
+
+Build's actual panel function only toggles panel hidden and tab aria-pressed state.
+A test helper whose contract is ensure-state may reuse an already selected panel
+only when the actual connected target has positive CSS-rendered bounds, all tab/
+panel identities and selected/hidden states agree, and a second read confirms it.
+CSS-rendered does not mean in the viewport; existing root/nested clipping/hit and
+alignment checks remain mandatory. Missing/hidden/disconnected/disabled/empty/
+inconsistent targets fail, never receive a failed-action waiver. A genuinely
+unselected Print/Buy request still uses one real native click and original target
+visibility wait with post-state proof. Neither programmatic setters nor forced
+input replace those transitions. Keep original errors and bounded passive before/
+after action receipts; a failed diagnostic cannot replace the native failure.
+
+Pure controls reject B's pressed flag without the missing target evidence and
+cover both real transition directions, zero-click valid reuse, failing states,
+failed native actions/collection, document changes and ineffective transitions.
+The complete source/paper/lifetime requirements are unchanged. B cleanup returned
+in 595 ms / 12,726 ms for context/browser with terminal owned cgroup empty and no
+collector errors; overall B is still failed, and V3's failed close remains failed.
+No made/mobile/scope/status/reload/PDF acceptance, new browser or replay is claimed
+while authoring this repair.

@@ -44,3 +44,15 @@ Any later full acceptance needs a separately bound/reviewed concrete packet and
 its own authorization; this PR does not close #281 or excuse historical failures.
 Printed legs, CAD, product assets, rendering, toolkit and application behavior
 remain outside this change.
+
+## B follow-up: ensure panel state before choosing an action
+
+Full B remained failed after two correct desktop images: made's helper repeated
+a Buy click despite a selected Buy flag, then native actionability timed out. No
+made visibility or motion sample was captured. The narrow repair uses coherent
+sole selected-tab/panel plus connected CSS-rendered target proofs before/after
+zero-click reuse; genuine Print/Buy transitions retain one native click and the
+existing visibility wait. Bounded passive receipts keep native errors unchanged.
+This is a helper-contract correction, not an app/environment cause or performance
+fix, and it cannot retroactively turn B into a pass. Failing-state controls and
+independent source review/normal CI precede any separately reviewed future action.

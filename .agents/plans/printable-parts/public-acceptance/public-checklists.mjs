@@ -11,6 +11,7 @@ import {collectGeometry,framing,horizontalOffsets,viewportSupport,gridAlignment}
 import {verifyDeploymentHTML} from './deployment-html.mjs';
 import {positionHeaderOnce,scrollHeaderOnce} from './position-header.mjs';
 import {observeCleanup} from './cleanup-observer.mjs';
+import {inspectPanel,ensurePanelSelected} from './panel-selection.mjs';
 const packet=path.dirname(fileURLToPath(import.meta.url));
 const c=JSON.parse(await readFile(path.join(packet,'contract.json')));
 assert.equal(c.approved_for_execution,true,'Prepared packet is NOT approved for execution');
@@ -51,7 +52,7 @@ assert.equal(p.LoadState,'loaded');assert.ok(['active','activating'].includes(p.
 assert.equal(p.MemoryMax,'3221225472');assert.equal(p.MemorySwapMax,'0');assert.equal(p.TasksMax,'512');assert.equal(p.KillMode,'control-group');
 assert.ok(['2s','2000000us'].includes(p.CPUQuotaPerSecUSec));assert.ok(['8min','480s'].includes(p.RuntimeMaxUSec));assert.ok(['5s','5000000us'].includes(p.TimeoutStopUSec));
 assert.ok(p.ControlGroup.endsWith('/'+c.unit+'.service'));assert.ok(!p.ControlGroup.includes('..'));
-const base='https://gyropup.com',rows=[],captures=[],phaseReports=[],positioningReports=[],positioningTasks=[],pdfs=[],errors=[],failures=[],delivered=[],deliveries=[],captureAttempts={};
+const base='https://gyropup.com',rows=[],captures=[],panelObservations=[],phaseReports=[],positioningReports=[],positioningTasks=[],pdfs=[],errors=[],failures=[],delivered=[],deliveries=[],captureAttempts={};
 let browser,context,page,watcher,protocol,primary=null,failurePhase=null,phase='version',closing=false,work;
 const cleanupPhases=[],cleanupEvents=[];let droppedCleanupEvents=0;
 const cleanupEvent=type=>{if(cleanupEvents.length<64)cleanupEvents.push({type,atMs:performance.now()});else droppedCleanupEvents++;};
@@ -63,7 +64,14 @@ async function ready(){await page.waitForFunction(()=>{const a=window.__buildGui
  const state=await page.evaluate(()=>{const a=window.__buildGuide.active,g=a.guide;return {assembly:a.guideAssembly,snapshot:g.snapshot.id,native:g.snapshot.source_commit,collection:g.source.collection_sha256,model:g.model.sha256,parts:a.modelParts.length,steps:g.steps.length};});assert.deepEqual(state,c.guide);return state;}
 function locate(t){return page.locator(t.selector).nth(t.index);}
 function controls(t){return locate(t).locator('..').locator('xpath=preceding-sibling::*[contains(concat(" ",normalize-space(@class)," ")," cad-table-tools ")][1]');}
-async function panel(t){await page.locator('[data-build-tab='+t.panel+']').click();await locate(t).waitFor({state:'visible'});}
+async function panel(t){
+ return ensurePanelSelected({requested:t.panel,metadata:{table:t.name,callerPhase:phase},
+  inspect:()=>page.evaluate(inspectPanel,{panel:t.panel,selector:t.selector,index:t.index}),
+  click:()=>page.locator('[data-build-tab='+t.panel+']').click({timeout:15000}),
+  waitVisible:()=>locate(t).waitFor({state:'visible',timeout:15000}),
+  record:receipt=>{assert.ok(panelObservations.length<64,'Bound panel observation count');panelObservations.push(receipt);}
+ });
+}
 async function tableState(t){return locate(t).evaluate(table=>({html:table.tBodies[0].innerHTML,rows:[...table.tBodies[0].rows].filter(r=>!r.hasAttribute('data-fixed')).map(r=>({id:r.dataset.partKey,label:r.dataset.partLabel,hidden:r.hidden,text:(()=>{const copy=r.cloneNode(true);copy.querySelectorAll('.cad-status-cell').forEach(cell=>cell.remove());return copy.textContent;})(),checks:[...r.querySelectorAll('input[type=checkbox]')].map(e=>({label:e.ariaLabel,checked:e.checked}))})),scroll:table.parentElement.scrollLeft}));}
 
 async function geometry(t){return bounded(locate(t).evaluate(collectGeometry),2000,'geometry '+t.name);}
@@ -212,6 +220,6 @@ finally{
  await closePhase('deliveries settle',2000,()=>Promise.allSettled(deliveries),()=>{cleanup.deliveriesSettled=true;});
  await closePhase('positioning settle',2000,()=>Promise.allSettled(positioningTasks),()=>{cleanup.positioningSettled=true;});
  const observerErrors=cleanupPhases.flatMap(receipt=>receipt.observerErrors);if(observerErrors.length&&!primary){primary=Error('Cleanup observation incomplete');failurePhase='cleanup observation';}
- const report={pass:!primary&&cleanup.contextClosed&&cleanup.browserClosed&&cleanup.workSettled&&cleanup.deliveriesSettled&&cleanup.positioningSettled,phase:failurePhase??phase,workPhase:phase,error:primary?.stack??null,contract:c,rows,captures,captureAttempts,phaseReports,positioningReports,pdfs,errors,failures,delivered,cleanup,cleanupPhases,cleanupEvents,droppedCleanupEvents,elapsedMs:Date.now()-started};
+ const report={pass:!primary&&cleanup.contextClosed&&cleanup.browserClosed&&cleanup.workSettled&&cleanup.deliveriesSettled&&cleanup.positioningSettled,phase:failurePhase??phase,workPhase:phase,error:primary?.stack??null,contract:c,rows,captures,captureAttempts,panelObservations,phaseReports,positioningReports,pdfs,errors,failures,delivered,cleanup,cleanupPhases,cleanupEvents,droppedCleanupEvents,elapsedMs:Date.now()-started};
  await bounded(writeFile(path.join(c.out,'report.json'),JSON.stringify(report,null,2),{flag:'wx'}),2000,'write final report');if(primary)process.exitCode=1;
 }

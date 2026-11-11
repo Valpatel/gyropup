@@ -261,3 +261,6 @@
 - Compiled HTML differs only after deployment while six JS/CSS hashes match: [bind exact deployment bytes before capture](plans/printable-parts/public-acceptance/README.md#bind-source-and-delivered-identity-separately).
 - Required PNGs return but graceful browser close times out although the owned cgroup is empty: [retain the failed lifetime contract](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md#a-completed-capture-does-not-establish-graceful-shutdown).
 - One parallel worker returning accidentally releases the coordinator's combined issue lease: [checkpoint scope without releasing the shared claim](inbox/2026-11-11-successful-transient-units-can-lose-readback.md#shared-coordination-claims-outlive-one-worker).
+
+- A helper clicks an already selected Build tab and stalls before the intended table is inspected: [verify coherent active state and actual CSS-visible target before reuse](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md#panel-selection-must-verify-state-instead-of-repeating-a-selected-action).
+- A read-only review preflight rejects an actual exact-head Gyropup PASS because it expects another repo's machine marker: [follow the target repository review contract](inbox/2026-11-11-review-preflights-must-follow-the-repository-contract.md).

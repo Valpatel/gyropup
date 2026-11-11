@@ -9,10 +9,12 @@ flowchart LR
 ```
 
 This is a recoverable procedure for #281, not an execution approval or a public
-pass. [Actual A/V2/V3 observations](../public-observation/README.md) remain failed:
+pass. [Actual A/V2/V3/B observations](../public-observation/README.md) remain failed:
 A framed the wrong content and never admitted HTML; V2 failed before capture;
 V3 produced two correct desktop captures but exceeded graceful browser-close's
-15-second bound. Full public/PDF acceptance is still outstanding. Source-fixture
+15-second bound. B returned the same two desktop images, then failed a redundant
+Buy click before made visibility was inspected; its successful cleanup does not
+clear any earlier failed attempt. Full public/PDF acceptance is still outstanding. Source-fixture
 PDFs in [the parent evidence](../README.md) remain separate. No printer or purchase
 is operated by this procedure.
 
@@ -37,7 +39,7 @@ evidence, never the future live binding.
 
 Recover the scripts/modules into a fresh exclusive private packet directory.
 Copy public-checklists.mjs, run.py, audit-pdfs.py, clip-geometry.mjs,
-position-header.mjs, deployment-html.mjs and cleanup-observer.mjs. Copy the canonical
+position-header.mjs, deployment-html.mjs, cleanup-observer.mjs and panel-selection.mjs. Copy the canonical
 `../source-fidelity/pdf-id-extractor.py` beside them unchanged. Copy the canonical
 `tests/site/assembly/capture-diagnostics.mjs` beside them unchanged; bind its exact
 Git source and SHA-256 in helper. Do not duplicate either canonical helper in Git.
@@ -69,7 +71,7 @@ Bind existing Node/Playwright/Chrome bytes and version, plus the same Playwright
 CRConnection implementation used by the passive observer. No install is part of
 recovery. The final concrete packet needs independent GPT-6 review under the repo
 workflow. Only afterwards enable its concrete contract and seal the final reviewed
-bytes. review-seal.json records review_url and files_sha256 for all fifteen runtime
+bytes. review-seal.json records review_url and files_sha256 for all sixteen runtime
 files explicitly listed in run.py, including exact HTML/insertion inputs and both
 canonical copied helpers. It is a byte binding, not an authentication mechanism.
 Any changed input requires renewed review.
@@ -89,7 +91,17 @@ required screenshots remain 30 seconds and PDFs 20 seconds. Live effective limit
 are captured before browser work; terminal owned-cgroup emptiness is independently
 collected afterwards. Collected-unit defaults are not historical limit evidence.
 
-At 1280 and 320 px, select the actual Print/Buy panel. Root clipping uses standards
+At 1280 and 320 px, ensure the actual Print/Buy panel state. Zero-click reuse
+requires a coherent sole selected tab and CSS-rendered panel, plus the correct
+connected, positive CSS-rendered target table, confirmed before and after. CSS
+rendering is not viewport visibility: the full grid clip/hit proof still follows.
+An unselected request retains one genuine native click and the existing target
+visibility wait (15 seconds each), then verifies the selected/target state. Hidden,
+disconnected, disabled, inconsistent, missing, changed-document or failed-transition
+states fail; there is no failed-action skip, force-click or app-state setter.
+Bounded 500 ms passive snapshots and action timings preserve original click/wait
+errors without replacing them when collection fails. Attempt B's logged pressed
+flag alone is insufficient; its made-target state was not captured. Root clipping uses standards
 viewport coordinates; ordinary BODY/planner/table padding clips remain. The
 observed HTML hidden/auto overflow, CSS1Compat, HTML scrollingElement, scale-one
 zero-offset visual viewport profile is explicit; unsupported cases fail.
