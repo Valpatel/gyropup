@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: missing, unknown and non-PNG arguments reject before output or browser
+ok 1 - missing, unknown and non-PNG arguments reject before output or browser
+  ---
+  duration_ms: 7.779934
+  type: 'test'
+  ...
+# Subtest: fresh outside output is exclusive, private and never truncates an original
+ok 2 - fresh outside output is exclusive, private and never truncates an original
+  ---
+  duration_ms: 3.625241
+  type: 'test'
+  ...
+# Subtest: source paths and parent aliases into source reject
+ok 3 - source paths and parent aliases into source reject
+  ---
+  duration_ms: 1.75921
+  type: 'test'
+  ...
+# Subtest: existing file and dangling symlinks cannot become poster output
+ok 4 - existing file and dangling symlinks cannot become poster output
+  ---
+  duration_ms: 3.373949
+  type: 'test'
+  ...
+# Subtest: competing reservations have one winner and preserve its bytes
+ok 5 - competing reservations have one winner and preserve its bytes
+  ---
+  duration_ms: 2.03642
+  type: 'test'
+  ...
+# Subtest: actual CLI rejects missing output and public target without browser dependencies
+ok 6 - actual CLI rejects missing output and public target without browser dependencies
+  ---
+  duration_ms: 73.834955
+  type: 'test'
+  ...
+# Subtest: symlinked actual entry point still rejects missing output instead of a false zero exit
+ok 7 - symlinked actual entry point still rejects missing output instead of a false zero exit
+  ---
+  duration_ms: 37.827209
+  type: 'test'
+  ...
+# Subtest: stdin module import exposes pure guards without running the producer
+ok 8 - stdin module import exposes pure guards without running the producer
+  ---
+  duration_ms: 43.349147
+  type: 'test'
+  ...
+# Subtest: synthetic matching current identity and applied source-home observation passes
+ok 9 - synthetic matching current identity and applied source-home observation passes
+  ---
+  duration_ms: 2.101343
+  type: 'test'
+  ...
+# Subtest: legacy identity, wrong original,1mm home drift and wrong actual pose reject
+ok 10 - legacy identity, wrong original,1mm home drift and wrong actual pose reject
+  ---
+  duration_ms: 6.448888
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 250.803848

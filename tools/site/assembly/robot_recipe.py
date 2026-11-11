@@ -27,12 +27,15 @@ def body_operations():
                   BODY+'::frame_parts / place_cheek',
                   'Locate the two physical cheek faces and their connecting spacer envelopes. '
                   'Their CAD mounting holes establish the left/right hip-module datums.', 'body'),
-        operation('body-trays', 'Floor, belly and battery bay structure',
-                  ['floor_tray', 'belly_plate', 'bay_floor', 'bay_side_l', 'bay_side_r', 'bay_rail_l', 'bay_rail_r',
-                   'adapter_plate_front', 'adapter_plate_rear', *[f'bay_skid_{i}' for i in range(1, 5)]],
-                  BODY+'::frame_parts; hardware/cad/body/body_battery.py::bay_parts',
-                  'The source places the tray and existing underbody bay against the spine. '
-                  'This retains the modeled belly-bay design; it does not move the packs to end mounts.', 'body'),
+        operation('body-trays', 'Floor tray above the spine', ['floor_tray'], BODY+'::frame_parts',
+                  'The floor tray approaches the top of the spine. Its rendering does not qualify the fasteners.', 'body'),
+        operation('body-belly', 'Belly plate below the spine', ['belly_plate'], BODY+'::frame_parts',
+                  'The belly plate approaches from below; the printed leg interfaces remain unchanged.', 'body', offset=(0, 0, -188)),
+        operation('body-end-supports', 'Conditional end-pack holders and rigid sit feet',
+                  ['end_pack_holder_front', 'end_pack_holder_rear', 'end_foot_front', 'end_foot_rear'],
+                  'hardware/cad/body/body_battery.py::end_parts',
+                  'These body-side supports approach from below. Purchased adapter mounting, loads and drop/retention qualification remain unresolved.',
+                  'body', offset=(0, 0, -188)),
         operation('body-platforms', 'Compute and power support platforms',
                   [*[f'post_{i}' for i in range(1, 5)], *[f'isolator_{i}' for i in range(1, 5)],
                    'compute_pallet', *[f'plate_post_{i}' for i in range(1, 5)], 'power_plate', 'dcdc_bracket',
@@ -93,8 +96,10 @@ def leg_operations(side):
             'and circlip remain separate CAD identities. The rigid circlip envelope overlaps its final groove; '
             'its illustrated arrival does not model circlip expansion. This closure does not prove physical fit or free motion.'),
         add('wheel', 'wheel hub, tyre and retained screw groups',
-            names('wheel_hub', 'wheel_tyre', 'washers_wheel', 'screws_wheel'), 'bought_parts / botwheel / screw_groups',
-            'The BotWheel hub and tyre share the authored apex/wheel datum. Keep the wheel-fastener and washer '
+            names('wheel_hub', 'wheel_tyre', 'washers_wheel', 'screws_wheel'), 'bought_parts / screw_groups; hardware/cad/body/body_params.py::_fivebar (D69 override)',
+            'The collected wheel hub and tyre share the authored apex/wheel datum. The D69 body collection uses '
+            'a 254 mm diameter, 64 mm wide tyre-band envelope; its ordered SKU and physical dimensions remain unverified. '
+            'Keep the wheel-fastener and washer '
             'source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in '
             'the source screw stack. Thread engagement, wiring and tightening remain unqualified.',
             offsets={side+'.'+n: [0, -60 if side == 'L' else 60, 0] for n in ('washers_wheel', 'screws_wheel')}),
@@ -115,20 +120,27 @@ def finishing_operations():
                   'hardware/cad/builders/build_body.py::_layout; hardware/cad/body/body_shell.py::shell_parts',
                   'Locate the tracked J501/AGX assembly and the individually named sensor mounts/envelopes. '
                   'The robot model uses the tracked parameter snapshot; supplier dimensions and cable access are separate checks.', 'body'),
-        operation('body-power', 'Power electronics, battery adapters and pack envelopes',
+        operation('body-power', 'Power electronics envelopes',
                   ['item.plate_vesc_r', 'item.plate_vesc_l', 'item.plate_main_switch', 'item.plate_shunt',
-                   'item.power_dcdc', 'item.plate_mrbf_block', 'item.plate_fuses', 'item.plate_mcu_board', 'item.plate_buck_5v',
-                   'item.battery_adapter_front', 'item.battery_adapter_rear', 'item.battery_front', 'item.battery_rear'],
+                   'item.power_dcdc', 'item.plate_mrbf_block', 'item.plate_fuses', 'item.plate_mcu_board', 'item.plate_buck_5v'],
                   'hardware/cad/builders/build_body.py::_layout; hardware/cad/body/body_layout.py::layout',
-                  'These are the source layout envelopes on the power platform and in the retained belly bay. '
+                  'These are source layout envelopes on the power platform and the conditional front/rear drop-in mounts. '
                   'No adapter purchase/fit, series wiring, charging or hot-swap architecture is selected by this view.', 'body'),
+        *[operation(f'body-adapter-{end}', f'{end.title()} Azocek adapter reservation', [f'item.battery_adapter_{end}'],
+                    'hardware/cad/body/body_battery.py::adapter_boxes',
+                    'Conditional unmeasured outline only. Mounting holes, rail, latch, ratings and positive retention remain unresolved.',
+                    'body', offset=(sign*80, 0, 0)) for end, sign in [('front', 1), ('rear', -1)]],
+        operation('body-packs', 'Front/rear vertical drop-in pack envelopes', ['item.battery_front', 'item.battery_rear'],
+                  'hardware/cad/body/body_battery.py::pack_boxes',
+                  'Both packs approach down from the +188 mm reservation and remove upward. This does not establish actual rail or latch travel.',
+                  'body', offset=(0, 0, 188)),
         operation('body-deck', 'Deck, turret plate and lidar mounting datum',
                   ['deck', 'turret_plate', 'turret_plate_nuts', 'riser', 'item.vlp16_window', 'item.vlp16_housing'],
                   BODY+'::frame_parts; '+COLLECTOR+'::lidar_shapes',
                   'Locate the deck, source turret support plate/riser and lidar geometry. '
                   'The TM mounting face and pan-axis X coordinate are recorded from body_params.tm(), not the archived playground.', 'body'),
-        operation('body-covers', 'Bay doors and enclosure reference',
-                  ['bay_door_front', 'bay_door_rear', 'shell_side_l_front', 'shell_side_l_rear', 'shell_side_r_front',
+        operation('body-covers', 'Enclosure reference',
+                  ['shell_side_l_front', 'shell_side_l_rear', 'shell_side_r_front',
                    'shell_side_r_rear', 'shell_front', 'shell_rear', 'shell_door', 'shell_hatch', 'fan_duct'],
                   BODY+'::all_parts; hardware/cad/body/body_shell.py::shell_parts',
                   'The final reference includes the modeled doors and shell panels. Explanatory explosion is not '

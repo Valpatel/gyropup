@@ -18,6 +18,7 @@ import importlib.util
 import json
 import math
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 from types import ModuleType, SimpleNamespace
@@ -35,6 +36,8 @@ LUGS = PROBE.lugs
 DEFAULT_RECEIPT = (ROOT / 'docs/research/rs04-support/results/probe.json')
 RECEIPT = DEFAULT_RECEIPT
 PURE = False
+HISTORICAL = False
+HISTORICAL_RECEIPT_SHA256 = '756b3607d3cdb4a32276be011a028c960b2148f4b561d1a6c46d1f293ed64f2c'
 RINGS = {f'od{od:g}-id{id_:g}-t{thick:g}': (od, id_, thick)
          for od in (118., 120.) for id_ in (80., 94.) for thick in (2.032, 3.175)}
 MOVING = {'leg_output_adapter', 'dyno_hub'}
@@ -605,17 +608,47 @@ class ProducerBatchControls(unittest.TestCase):
 
 
 class CommittedReceipt(unittest.TestCase):
-    def test_current_complete_probe_receipt(self):
+    def test_complete_probe_receipt(self):
         if PURE:
             self.skipTest('Run without --pure after the actual receipt is collected and independently reviewed')
         self.assertEqual(RECEIPT.name, 'probe.json', 'Only the completed final report is accepted')
-        self.assertTrue(validate_receipt(strict_json(RECEIPT), RECEIPT.parent))
+        data = strict_json(RECEIPT)
+        if not HISTORICAL:
+            self.assertTrue(validate_receipt(data, RECEIPT.parent))
+            return
+
+        from tools.evidence.manufacturing.retained_fit_history import captured_inputs
+
+        self.assertEqual(provenance.digest(RECEIPT), HISTORICAL_RECEIPT_SHA256)
+        with self.assertRaisesRegex(ValueError, 'Source/context closure changed'):
+            validate_receipt(data, RECEIPT.parent)
+
+        # The probe binds the same CAD closure as the original lug baseline.
+        # Its extra context and baseline exports are checked by the full probe
+        # validator after copying them into the temporary captured input root.
+        with captured_inputs() as inputs:
+            baseline_path = Path(PROBE.CONTEXT[-1])
+            baseline = strict_json(ROOT / baseline_path)
+            artifacts = [baseline_path.parent / f'{part}.{extension}'
+                         for part, artifact in baseline['artifacts'].items()
+                         for extension in artifact['files']]
+            for relative in (*map(Path, PROBE.CONTEXT), *artifacts):
+                source = ROOT / relative
+                self.assertTrue(source.is_file() and not source.is_symlink(), str(relative))
+                destination = inputs / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                self.assertFalse(destination.exists(), str(relative))
+                shutil.copyfile(source, destination)
+            self.assertTrue(validate_receipt(data, RECEIPT.parent, inputs))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__, add_help=False)
     parser.add_argument('--receipt', type=Path, default=DEFAULT_RECEIPT)
     parser.add_argument('--pure', action='store_true')
+    parser.add_argument('--historical', action='store_true', help='Verify the dated committed report against its captured inputs')
     args, remaining = parser.parse_known_args()
-    RECEIPT, PURE = args.receipt, args.pure
+    if args.historical and (args.pure or args.receipt != DEFAULT_RECEIPT):
+        parser.error('--historical requires the committed receipt and the full validation suite')
+    RECEIPT, PURE, HISTORICAL = args.receipt, args.pure, args.historical
     unittest.main(argv=[sys.argv[0], *remaining])

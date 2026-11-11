@@ -1,0 +1,78 @@
+{
+  "schema": "gyropup.readme-collection-source-checkpoint/1",
+  "date_utc": "2026-11-10T20:25:49.729718+00:00",
+  "scope": "source and synthetic-fixture tests; no full product projection or adoption",
+  "code_sha256": {
+    "tools/engineering/robot/readme_design.py": "31067c2d5a2f0bf2bfafa1ffd230147c72ab344841418b8cd67498db1bcfcb1f",
+    "tools/engineering/robot/readme-design.json": "56d59eba324e244d554d2172a8c769e0c46faef3de65288e9a13ff520d1d877b",
+    "tests/evidence/media/test-readme-design.py": "29e5463bfaf386e8e37f0442e9eee6078f51dd8e61f72413246f10b0b15790e9",
+    "tests/evidence/media/test-readme-collection.py": "5d074f9ea8c5ce92f10b8133eb1177cd4b28c6bf9b0ef5fe6ff867c918a67faf",
+    "tests/evidence/media/fixtures/old-readme-body-membership.json": "15d48d4ade38a35b008e7958bb201ab13a8959fc73be7f0738274e15a639f6c6"
+  },
+  "original_collection": {
+    "sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+    "source_commit": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+    "hardware_tree": "346f5a5623560177390ad8cf207e5b8331ab5bae",
+    "inputs": 95,
+    "parts": 224,
+    "triangles": {
+      "far_leg": 71960,
+      "body": 109910,
+      "turret": 92809,
+      "near_leg": 71960
+    },
+    "protected_leg_meshes": 80,
+    "protected_sources": 5
+  },
+  "profile": {
+    "repository": "mvalancy/mvalancy",
+    "revision": "70c325d0111427647e2e782d6c04b4123d23cebf",
+    "files": {
+      "extract_mesh.py": "789ab36b1dfb19a777f8a312708bab1c2ba83e7a3815425e63cdb36995a5fd57",
+      "heroes.py": "2e153d9a0c67f3bd104bde15b7b94d216cbe2ad26b539abe23a276695b806990"
+    }
+  },
+  "projection_runtime_planned": {
+    "python": "3.12",
+    "numpy": "2.5.4"
+  },
+  "source_tests": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tests/evidence/media/test-readme-collection.py"
+      ],
+      "exit_code": 0,
+      "log": "source-tests-1.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-S",
+        "-B",
+        "tests/evidence/media/test-readme-collection.py"
+      ],
+      "exit_code": 0,
+      "log": "source-tests-2.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tests/evidence/media/test-readme-design.py"
+      ],
+      "exit_code": 1,
+      "log": "source-tests-3.log"
+    }
+  ],
+  "full_suite_limit": "22 tests:21 pass; real tracked-scene renderer parity fails because old scene is deliberately unchanged and stale. Mandatory fresh artifact parity remains pending.",
+  "unchanged_tracked_artifacts_sha256": {
+    "tools/engineering/robot/current-design.scene.json": "5998710c865c02f3bb071a6fbb2dce227f58461e8f29d90b65cd8dc1a019b747",
+    "tools/engineering/robot/current-design.receipt.json": "7b68f7a8999ca09350b44a9b7715002f27dbfd9bd045ed19eae25b5ed740d1ea",
+    "docs/img/hero/current-design.svg": "f582f3aed6b3983bab2b85115ab08afdfc15fc23d5b3e3339b880511fd07160c"
+  },
+  "native_construction": false,
+  "full_projection": false,
+  "adoption": false
+}

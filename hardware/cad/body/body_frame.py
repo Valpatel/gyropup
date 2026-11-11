@@ -751,9 +751,9 @@ def frame_parts(mounts=None) -> dict:
                                                  'from every lug screw to the plate before power')
     out['dcdc_bracket'] = Part('dcdc_bracket', 'printed', dcdc_bracket(), 1, material='pa6-cf', colour=(0.25, 0.27, 0.30),
                                note='PA6-CF; two M4 x 12 down into the power plate\'s flush nuts; the converter on four M3 x 6 into the upright\'s inserts')
-    # ---- the battery bay under the belly plate (D65: two DeWalt packs; cad/body_battery.py)
+    # ---- conditional end-pack holders and rigid sit feet (#193); the leg datums do not move
     import hardware.cad.body.body_battery as bb
-    out.update(bb.bay_parts())
+    out.update(bb.end_parts())
     out['spacers'] = Part('spacers', 'bought', spacers(), len(SPACERS_XZ), colour=(0.8, 0.8, 0.82), note='M4 x 31 hex standoff, 6 mm hex, female-female, aluminium (95947A065)')
     out['spacer_screws'] = Part('spacer_screws', 'bought', spacer_screws(), 2 * len(SPACERS_XZ), colour=(0.15, 0.15, 0.17), note='M4 x 10 ISO 10642 flat head')
     for side in ('left', 'right'):

@@ -1,0 +1,18 @@
+{
+  "schema": "gyropup.readme-job268-checkpoint/1",
+  "date": "2026-11-10",
+  "files": {
+    "adopt-build.log": "b98bb9850cd5c109f984091fc5738b0ffa011f30ce2b261fdefc03eac571a934",
+    "adopt-markdown.log": "dea25254c34fe99ed1ffde9415b213c938a44ae2087b8a384e76d122fd9c50fd",
+    "adopt-parity.log": "f56066fc075df0050299e537b3a59451c8d41d6eae8d4d575bed1dce1bed7448",
+    "adopt-privacy.log": "e772a12e811e807c9c1c153b29675f3b3b8003013d9fac631077c4944d2f6d29",
+    "adopt-tests.log": "55c0f6648f22a3148761215cf6a431fd6fe1b64fbc11d2996c803d96b5cf1c82",
+    "adoption-checks.json": "26b6979592c5afe1f0ca4faed20e8ed0cb747efae5f7de42d1cd6de1a6121de9",
+    "independent-readback.json": "f0b3980e33fe2f1a2778f4cdbc52bfeab6da4f6b728ea676269d17cff025da37",
+    "outcome.json": "7d9dd1d889e0eefe0dbeb56f947f31f82f9c484e52248793205219121209fe9f",
+    "projection-members.json": "a82357a57b659f9d354111209ec59b1370dbaed6cb36df3dc9ce4c750953f7f3",
+    "projection.log": "967d76e081854f2476ae1ed2e7a59f13cd592accb760b04898f9e00a2837d8c2",
+    "renderer-parity.log": "f56066fc075df0050299e537b3a59451c8d41d6eae8d4d575bed1dce1bed7448",
+    "runtime-preflight.log": "ff89f8fbdd25b439ad441e2945094398949b60b2c1716d86a344eb391df6864a"
+  }
+}

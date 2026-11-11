@@ -1,0 +1,57 @@
+{
+  "schema": "gyropup.hero-poster-source-checkpoint/1",
+  "date": "2026-11-10",
+  "base": "6dd7944b895b7161ab6dccadfb879057c6a17a28",
+  "code_sha256": {
+    "tools/site/render-hero-poster.mjs": "59dd2a95a2a0e143aeec7055f629bcad71f253315bc651cf91c57c5cfd7e1ef6",
+    "tests/evidence/media/test-hero-poster-output.mjs": "e5cd3d3592f5fde0133d2d70a978f12b61f83bac1e2332b86a1e99e655b642f5",
+    "package.json": "425dbfe376d8fd37a6bb97d60546af1efa8ca12799603ebdb9497367e2c64e46"
+  },
+  "pure_tests": {
+    "pass": 10,
+    "skip": 0,
+    "actual_cli_missing_public_and_alias_paths": true,
+    "synthetic_metadata_not_geometry": true
+  },
+  "syntax": true,
+  "preserved_originals_sha256": {
+    "software/site/assets/highlights/receipt.json": "c7511868b14e7ae96e4a14453bb125b478263df96b630e7e4494087e0e682090",
+    "software/site/assets/highlights/capture-receipt.json": "348901ff0c388a089ac57791ac28f9e451a239b6e77d8ce46f3e0d97a839186c",
+    "software/site/assets/highlights/capture-frames.json": "defa53a1dcd19af84af1b98db07c66fceb46d996156f274ae390385872a18a9c",
+    "software/site/assets/highlights/gyropup-highlights.mp4": "a335c86a4e059b23c12af56847ffbf704ca64dc2bddb4a613d7aed269dd5ebb8",
+    "software/site/assets/highlights/gyropup-highlights.webm": "cca6cff82f6bf9a821e938a96b54b53f9f1882640986d2d51bfd13811e2beaa1",
+    "software/site/assets/highlights/gyropup-highlights.webp": "7607565957afe5f8d39e65b17b12e85459890e819c11e93155cdce3e9cad241f",
+    "tests/site/content/test-prototype-session.mjs": "997a39297102005095ee42adc9c6397552e3dc550f0f42494ad554eccf4ecefb",
+    "hardware/exports/leg/rig_jump.mp4": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+    "hardware/exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581",
+    "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "2eeeb29e4c635607c1f107e433cac0cb82fe4e7b8d88ced127d9ded116b21f1e",
+    "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": "c0e3a6c73a8d31107dd6e71a420ca40b20734064f2283340b0346edd07bbc684",
+    "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "70f1d67fe40a03eeb181e741e9674d9e2f5bbbee7a431494db382ef9e2ff3d1f",
+    "software/site/assets/robot-poster.png": "44940ed99ae6c992eeac3dd69e057ef09a86f1abf659d00064c39bbd90c8b284"
+  },
+  "reviewed_media_code_unchanged": {
+    "tools/evidence/media/capture-highlights.mjs": "ddf106c39ca35f9d84a669ddc815602a949d5868022acf8fdd5eae88abacadae",
+    "tools/evidence/media/check-highlights.py": "6e117a1278c478d5354900707bd226e88276cb76e87247ef4282d9d9d33dc865",
+    "tools/evidence/media/encode-highlights.py": "0ce8144b69740fe74759e7f320bb3d8d828c679112db2f1508e3d9215df50618",
+    "tests/evidence/media/test-highlight-bindings.py": "f5553513b7d4041fc1db2e376e11ae38f1382600aefaff82f465138d206a9ab4",
+    "tests/evidence/media/test-current-highlight-bindings.py": "6b695fa57d15811b22534c6a1801ba26e9eada9c650a33728bdbd626b2f5a141",
+    ".agents/plans/end-packs-highlights/check-candidate-bytes.py": "6009001920752e7ee7a020cfa27b4db2b98c14fcac8947f8cccc3da56e5d5424"
+  },
+  "runtime_hook_sha256": "595702481a70385d3c07347d916c3b83f78a0d747df7abfeae43bbb0030e7a78",
+  "current_authority": "null; no current artifact adoption",
+  "browser": false,
+  "server": false,
+  "capture": false,
+  "encoding": false,
+  "native": false,
+  "adoption": false,
+  "limits": "Source-only preparation. All valid render/handoff/hero-image paths remain unexecuted and require full current motion, source/action and actual artifact review. Demo poses intentionally remain variable.",
+  "static_checks": {
+    "build": true,
+    "privacy": 11,
+    "markdown": 6,
+    "diff": true
+  },
+  "qualification": "Staged source checked over plan-head45d9e720. No valid render/image/model-motion path, server, browser or encoder executed. Final source/current-motion/action/artifact review remains required."
+}

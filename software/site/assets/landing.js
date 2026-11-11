@@ -29,8 +29,9 @@ async function showRobot() {
     const fill = new THREE.DirectionalLight(0xffffff, 2); fill.position.set(-3, 2, -1); scene.add(fill);
     const eyes = createEyes({ iris: '#70d8cc' });
     const robot = await buildRobotV2('/', { eyes });
+    const homeHeight=robot.info.homeHeight??.6;
     loadingPhase('Preparing the 3D preview…');
-    scene.add(robot.group); robot.setPose({ height: .6 }); eyes.draw();
+    scene.add(robot.group); robot.setPose({ height: homeHeight }); eyes.draw();
     // Ignore invisible metre-long sensor helpers. The fixed reference camera is
     // shared with the transparent square poster; only FOV changes with aspect.
     robot.group.updateMatrixWorld(true);
@@ -116,7 +117,7 @@ async function showRobot() {
         controls.autoRotate = !reduceMotion.matches && !userOrbited && !pinned && !hovering;
         if (!reduceMotion.matches) {
           eyes.step(activeTime, dt);
-          robot.setPose({ height: .6 + .012 * Math.sin(activeTime * 1.2) });
+          robot.setPose({ height: homeHeight + .012 * Math.sin(activeTime * 1.2) });
         }
         activeTime += dt;
         if (activeTime >= nextLine) {
@@ -140,7 +141,7 @@ async function showRobot() {
         renderer.setPixelRatio(1); renderer.setSize(size, size, false);
         camera.aspect = 1; camera.fov = REFERENCE_FOV; camera.position.copy(homePosition); controls.target.copy(center);
         controls.autoRotate = false; controls.update(); camera.updateProjectionMatrix();
-        robot.setExplode?.(0); robot.setPose({ height: .6 }); eyes.draw();
+        robot.setExplode?.(0); robot.setPose({ height: homeHeight }); eyes.draw();
         renderer.render(scene, camera);
         const image = renderer.domElement.toDataURL('image/png');
         renderer.setPixelRatio(pixelRatio); resize();

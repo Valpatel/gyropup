@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-10",
+  "source_parent": "073693f9f738ccc7cfb2b4dec8c4432ba7f885fa",
+  "qualification": "Actual staged source hashes; nativeChrome151 differs from pinnedCIChromium; existingWebKit. Normal finalhead CI/review pending.",
+  "source_sha256": {
+    "tests/site/content/test-prototype-session.mjs": "73aa9c59e02204b8d773a554a47dc779bedb39241a0d14618ee046d70a527222",
+    "tests/site/content/test-prototype-session-unit.mjs": "d66a3c9553ebb31fe57285e36e2f8b4739cbbcfd3790dfbdf6fe67e2e9569c5e",
+    "tests/site/assembly/test-build-guide.mjs": "bfa6f6b4cb72854aff670036344bb1bb55f16d696044a74f6d598a11c40bc5f8",
+    "package.json": "44d60b5d23ae66103dc92d6e0acfc4f988af0d450faa5a11228300ccd47f45ce"
+  },
+  "actual_controls_raw_sha256": "2ea6477b66ead504bf54243bc78d359955548d075810aa3fca642c796d576ba4",
+  "control_results": "Bothengines: oldopaqueerrornegative; guardedopaque/wrong-origin no-write and real/site/ackpositive; matchingHTTPdenial and ordinaryerror eachobserved.",
+  "reports": {
+    "chromium": {
+      "raw_sha256": "be27676f58e0ecac9d0ac7a9d7d74c2471ff7def410a038b15a24e60523c43d2",
+      "groups": 15,
+      "errors": [],
+      "runtimeErrors": [],
+      "unsupported_requests": [],
+      "browser": "151.0.7922.71",
+      "built_version": {
+        "revision": "073693f9f738ccc7cfb2b4dec8c4432ba7f885fa",
+        "assets": "a14dcd48ce545629b714",
+        "history": true,
+        "built": "2026-11-10T19:53:29.407Z"
+      }
+    },
+    "webkit": {
+      "raw_sha256": "6cf701e05aac7194488b0d021e2ba7427673122a6688375b308a8a1ef2810301",
+      "groups": 15,
+      "errors": [],
+      "runtimeErrors": [],
+      "unsupported_requests": [],
+      "browser": "26.0",
+      "built_version": {
+        "revision": "073693f9f738ccc7cfb2b4dec8c4432ba7f885fa",
+        "assets": "a14dcd48ce545629b714",
+        "history": true,
+        "built": "2026-11-10T19:53:29.407Z"
+      }
+    }
+  },
+  "pure_tests": 23,
+  "fixture_tests": 4,
+  "other_existing_pure_tests": 19,
+  "error_filtering": false,
+  "matching_http_denial_swallowed": false,
+  "runtime_changes": false,
+  "owned_listeners_closed": [
+    36553,
+    40115
+  ]
+}

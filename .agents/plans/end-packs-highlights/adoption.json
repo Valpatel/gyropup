@@ -1,0 +1,563 @@
+{
+  "schema": "gyropup.current-media-adoption/1",
+  "date": "2026-11-10",
+  "capture_source": "76cc5b3dcd9d4d9bd94e156fc70a0652f9c332e0",
+  "adoption_base": "257b6bd0b00a668fb040da00f25fc9d8277278f8",
+  "native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "original_collection_sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+  "current_source": {
+    "file": "web/robot-current/manifest.json",
+    "sha256": "3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3"
+  },
+  "independent_artifact_review": "https://github.com/Valpatel/gyropup/pull/287#issuecomment-6781908221",
+  "exact_asset_acceptance": "https://github.com/Valpatel/gyropup/issues/193#issuecomment-6781924782",
+  "assets": {
+    "software/site/assets/robot-poster.png": {
+      "sha256": "d06bd35083784582d8e70e0969b341983d00963694c419b7ff798fa96c684c7f",
+      "bytes": 145492
+    },
+    "software/site/assets/highlights/capture-frames.json": {
+      "sha256": "9f63d60326f3ff67719b8ee389fd68338ded06796d221b2d07fb7ac0827c5532",
+      "bytes": 100989
+    },
+    "software/site/assets/highlights/capture-receipt.json": {
+      "sha256": "19cabfafc2988956c81762f9acc54a009c528785cdc68ebd1518f8f8cdd8bb2a",
+      "bytes": 259598
+    },
+    "software/site/assets/highlights/gyropup-highlights.mp4": {
+      "sha256": "5b431013fa8f2fe91488ebe9a2a5f88594e86200170a5d20524d60ce55f15520",
+      "bytes": 1954157
+    },
+    "software/site/assets/highlights/gyropup-highlights.webm": {
+      "sha256": "3bd9f0a9ec8da397fdefa198c26f89f4b16fb5c292a350286cd62439a3f30c87",
+      "bytes": 1628631
+    },
+    "software/site/assets/highlights/gyropup-highlights.webp": {
+      "sha256": "aa260dc1304fe1d9fe4c11792e3ca6ae03d6e5b24abf3afeacd78044be24b164",
+      "bytes": 33080
+    },
+    "software/site/assets/highlights/receipt.json": {
+      "sha256": "4e9ba968649be0d4b71f149463c3c5bbef2d16c09c3df8095dff396c27dc206a",
+      "bytes": 68172
+    }
+  },
+  "first_run": {
+    "checkpoint": "https://github.com/Valpatel/gyropup/issues/193#issuecomment-6781497743",
+    "plan_sha256": "b46fe35afc39a07d903b4435d43779e291d42d9d7be6664908d728a0bc792242",
+    "invocation": "c136e447eb104401843e1b97e56e1a55",
+    "status": "FAILED_OR_INCOMPLETE",
+    "exit": 1,
+    "output_members_sha256": "6b8a011ff4a7acd48b261cd36c903aba0f1b4361ddfca29b4b7e495b887c6e35",
+    "final_result_sha256": "9f9206836602821439fcae5f5865355f425090903c3468fe7261aa4320b55e03",
+    "build_stderr_sha256": "781ad9c7392e71658efa4a635a7d54176660b9582cfc7b14561e69246001c2e7",
+    "phase_exits": {
+      "source-fetch": 0,
+      "build": 1
+    },
+    "guards": {
+      "runtime": true,
+      "source": true,
+      "clean_source": true,
+      "originals": true
+    },
+    "quiescent": true,
+    "diagnosis": "ERR_MODULE_NOT_FOUND for htmlparser2 imported from linkedom/esm/shared/parse-from-string.js. The exact dependency bytes were staged under runtime/deps. Node realpath lookup could not find sibling packages under that basename."
+  },
+  "corrected_run": {
+    "action_review": "https://github.com/Valpatel/gyropup/issues/193#issuecomment-6781588365",
+    "submission": "https://github.com/Valpatel/gyropup/issues/193#issuecomment-6781601080",
+    "terminal_checkpoint": "https://github.com/Valpatel/gyropup/issues/193#issuecomment-6781875384",
+    "invocation": "97057c0520284575bd9aa6523d0fe38b",
+    "plan_sha256": "6ff5fd539b55b67d80ff1bb05c03d409dfff41d53aa7c5269b4ddff9abd7f7be",
+    "operator_sha256": "42a75e59cda49140bb4e833c2722702bb8c9b09b6c381fd68650929dbbc3f3ee",
+    "output_members_sha256": "8c6a6630e0a44553eb6fb1467b424cc928ad01755f2c39fdb0a109af3253ea1b",
+    "final_result_sha256": "e235d1eee72c948b8dc451ea825980764bccf60b0bf7f6146380b2cd3d2a5490",
+    "collector_audit_sha256": "b78e7658bc1f7db32e0654172cab86915a8d26fef08ac1425dc6a93b47ca2623",
+    "status": "COMPLETE_CANDIDATES_WITH_OPAQUE_DIAGNOSTICS_REVIEW_REQUIRED",
+    "exit": 1,
+    "files_read_back": 544,
+    "bytes_read_back": 184404627,
+    "phase_exits": {
+      "source-fetch": 0,
+      "dependency-imports": 0,
+      "build": 0,
+      "poster": 0,
+      "hero-parity": 0,
+      "reel-capture": 0,
+      "encode": 0,
+      "strict-check": 0,
+      "binding-tests": 0
+    },
+    "guards": {
+      "runtime": true,
+      "source": true,
+      "dist": true,
+      "overlay": true,
+      "clean_source": true,
+      "originals": true
+    },
+    "quiescent": true,
+    "dependencies": {
+      "files": 4616,
+      "bytes": 578653211,
+      "manifest_sha256": "56da42a0059f8c5418b15b8b3ebf73efe19ce4a1b6e2f79f4686692bd8d7e885",
+      "tree_sha256": "4b31afe2dbdc789821c42d26fde1d6d37ef8493e322108c2e5af42d92969cea2"
+    },
+    "actual_staged_imports": {
+      "status": "PASS",
+      "node": "v22.23.4",
+      "imports": {
+        "linkedom": "linkedom/esm/index.js",
+        "htmlparser2": "htmlparser2/dist/esm/index.js"
+      }
+    },
+    "chrome": "155.0.8059.39",
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "browser_observer_log_sha256": {
+      "poster": "93e6f7faeb9ca99b71cd7962dea6fd28164c142a71658d5bb7e1ff0b85b30c53",
+      "hero-parity": "2548d8d74d864e4781bd0c0029c3f62ce0724c1b31463de59643f03d209b3f12",
+      "reel-capture": "8ddfa2b499123281cb87002f397db05e93a02366af47bd54446a16684846cf2b"
+    },
+    "browser_pageerrors": {
+      "poster": [],
+      "hero-parity": [
+        {
+          "sequence": 4,
+          "at": "2026-11-10T22:58:51.487Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 1,
+          "page": 1,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:111\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 5,
+          "at": "2026-11-10T22:58:51.500Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 1,
+          "page": 1,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 8,
+          "at": "2026-11-10T22:59:28.232Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 2,
+          "page": 2,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:111\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 9,
+          "at": "2026-11-10T22:59:28.240Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 2,
+          "page": 2,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 12,
+          "at": "2026-11-10T23:00:00.184Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 3,
+          "page": 3,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:111\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 13,
+          "at": "2026-11-10T23:00:00.190Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 3,
+          "page": 3,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 16,
+          "at": "2026-11-10T23:00:47.523Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 4,
+          "page": 4,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:111\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 17,
+          "at": "2026-11-10T23:00:47.529Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 4,
+          "page": 4,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 20,
+          "at": "2026-11-10T23:00:49.026Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 5,
+          "page": 5,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:111\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 21,
+          "at": "2026-11-10T23:00:49.032Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 5,
+          "page": 5,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 24,
+          "at": "2026-11-10T23:00:50.012Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 6,
+          "page": 6,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 25,
+          "at": "2026-11-10T23:00:50.019Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 6,
+          "page": 6,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:111\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 28,
+          "at": "2026-11-10T23:01:08.135Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 7,
+          "page": 7,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 29,
+          "at": "2026-11-10T23:01:08.147Z",
+          "event": "pageerror",
+          "phase": "hero-parity",
+          "context": 7,
+          "page": 7,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:111\n    at <anonymous>:3:7"
+        }
+      ],
+      "reel-capture": [
+        {
+          "sequence": 4,
+          "at": "2026-11-10T23:01:55.846Z",
+          "event": "pageerror",
+          "phase": "reel-capture",
+          "context": 1,
+          "page": 1,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 5,
+          "at": "2026-11-10T23:01:55.860Z",
+          "event": "pageerror",
+          "phase": "reel-capture",
+          "context": 1,
+          "page": 1,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:234\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 8,
+          "at": "2026-11-10T23:03:18.561Z",
+          "event": "pageerror",
+          "phase": "reel-capture",
+          "context": 2,
+          "page": 2,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 9,
+          "at": "2026-11-10T23:03:18.567Z",
+          "event": "pageerror",
+          "phase": "reel-capture",
+          "context": 2,
+          "page": 2,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:234\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 12,
+          "at": "2026-11-10T23:04:36.335Z",
+          "event": "pageerror",
+          "phase": "reel-capture",
+          "context": 3,
+          "page": 3,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 13,
+          "at": "2026-11-10T23:04:36.341Z",
+          "event": "pageerror",
+          "phase": "reel-capture",
+          "context": 3,
+          "page": 3,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:234\n    at <anonymous>:3:7"
+        },
+        {
+          "sequence": 16,
+          "at": "2026-11-10T23:07:53.937Z",
+          "event": "pageerror",
+          "phase": "reel-capture",
+          "context": 4,
+          "page": 4,
+          "url": "about:blank",
+          "message": "Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:4:5\n    at <anonymous>:5:7"
+        },
+        {
+          "sequence": 17,
+          "at": "2026-11-10T23:07:53.944Z",
+          "event": "pageerror",
+          "phase": "reel-capture",
+          "context": 4,
+          "page": 4,
+          "url": "about:blank",
+          "message": "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+          "stack": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.\n    at <anonymous>:2:234\n    at <anonymous>:3:7"
+        }
+      ]
+    },
+    "all_owned_listeners_closed": true,
+    "livepoll_requests": 0
+  },
+  "poster": {
+    "sha256": "d06bd35083784582d8e70e0969b341983d00963694c419b7ff798fa96c684c7f",
+    "bytes": 145492,
+    "width": 1024,
+    "height": 1024,
+    "browser": "155.0.8059.39",
+    "basePositionM": [
+      0,
+      0.427,
+      0
+    ],
+    "response_byte_matches": 243,
+    "complete_response_byte_matches": true,
+    "home_leg_mm": 300,
+    "parts": 224,
+    "receipt_sha256": "021434f8af891eae021fe02da0f78f4193dcc3e0dda8eee2f2e2ac00a8c56b02",
+    "native_chrome_parity": {
+      "cases": 12,
+      "handoffs": 2,
+      "minimum_iou": 0.9923790686174699,
+      "maximum_color_error": 2.072519498576984,
+      "pageerrors": []
+    }
+  },
+  "reel": {
+    "frame_counts": {
+      "turret": 120,
+      "mechanism": 90,
+      "battle": 180,
+      "character": 90
+    },
+    "served_response_count": 368,
+    "encoding_source_file_count": 485,
+    "strict_result_sha256": "5bac1b7837f560f4eed06de001fbdceaf8ced671ba39df9113521027ea5f4375",
+    "strict_result": {
+      "gyropup-highlights.mp4": {
+        "bytes": 1954157,
+        "frames": 660,
+        "seconds": 22,
+        "motion": {
+          "turret": {
+            "mean_channel_difference": 10.581,
+            "fraction_changed_over_12": 0.18295833333333333
+          },
+          "mechanism": {
+            "mean_channel_difference": 4.820125,
+            "fraction_changed_over_12": 0.09639583333333333
+          },
+          "battle": {
+            "mean_channel_difference": 6.323520833333333,
+            "fraction_changed_over_12": 0.0963125
+          },
+          "leg": {
+            "mean_channel_difference": 20.42289583333333,
+            "fraction_changed_over_12": 0.24783333333333332
+          },
+          "e1": {
+            "mean_channel_difference": 32.047666666666665,
+            "fraction_changed_over_12": 0.4092708333333333
+          },
+          "character": {
+            "mean_channel_difference": 17.204604166666666,
+            "fraction_changed_over_12": 0.21822916666666667
+          }
+        }
+      },
+      "gyropup-highlights.webm": {
+        "bytes": 1628631,
+        "frames": 660,
+        "seconds": 22,
+        "motion": {
+          "turret": {
+            "mean_channel_difference": 10.584166666666667,
+            "fraction_changed_over_12": 0.18397916666666667
+          },
+          "mechanism": {
+            "mean_channel_difference": 4.8153958333333335,
+            "fraction_changed_over_12": 0.097875
+          },
+          "battle": {
+            "mean_channel_difference": 6.3196666666666665,
+            "fraction_changed_over_12": 0.09483333333333334
+          },
+          "leg": {
+            "mean_channel_difference": 20.404854166666667,
+            "fraction_changed_over_12": 0.24677083333333333
+          },
+          "e1": {
+            "mean_channel_difference": 32.066541666666666,
+            "fraction_changed_over_12": 0.40970833333333334
+          },
+          "character": {
+            "mean_channel_difference": 17.258604166666668,
+            "fraction_changed_over_12": 0.21916666666666668
+          }
+        }
+      },
+      "codec_mean_difference": {
+        "turret": 0.5303333333333333,
+        "mechanism": 0.46467708333333335,
+        "battle": 0.4059270833333333,
+        "leg": 0.49695833333333334,
+        "e1": 0.6567291666666667,
+        "character": 0.540125
+      },
+      "e1_original_frame_mean_difference": {
+        "gyropup-highlights.mp4": 0.1641358024691358,
+        "gyropup-highlights.webm": 0.1621604938271605
+      },
+      "e1_original_labels_mean_difference": {
+        "gyropup-highlights.mp4": 0.23514739229024945,
+        "gyropup-highlights.webm": 0.22491496598639457
+      },
+      "erased_e1_labels_rejected": true,
+      "poster_mean_difference": 0.16141203703703705,
+      "rejected_negative_controls": [
+        "source hash",
+        "source omission",
+        "self-consistent required mesh omission",
+        "self-consistent required renderer omission",
+        "self-consistent current input omission: web/robot-current/manifest.json",
+        "self-consistent current input omission: web/robot-current/meshes/cheek_left.stl",
+        "self-consistent current input omission: designer/current_robot.js",
+        "self-consistent current input omission: designer/kit/assembly/playback.js",
+        "served current manifest",
+        "current authority",
+        "self-consistent firing limits omission",
+        "served firing limits",
+        "capture location contract",
+        "captured artifact revision",
+        "wrong encoding source revision",
+        "wrong capture source revision with matching served metadata",
+        "capture recipe",
+        "served simulator",
+        "stage instrumentation",
+        "frame count",
+        "wrong original name with unchanged part count",
+        "wrong current holder despite current mode",
+        "presentation changes during capture",
+        "historical load baseline",
+        "leg report drift on disk",
+        "static animation label",
+        "media bytes",
+        "frozen turret",
+        "frozen mechanism",
+        "frozen battle",
+        "frozen leg",
+        "frozen e1",
+        "frozen character"
+      ]
+    },
+    "binding_tests_passed": 24,
+    "historical_leg": {
+      "revision": "e7b512870a39259a04a4930e2908af84001bc84e",
+      "video_sha256": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+      "report_sha256": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+      "half_mass_kg": 18.75,
+      "bus_v": 36.0,
+      "wheel": "10in-hub-motor"
+    },
+    "historical_e1": {
+      "source_start_seconds": 1,
+      "source_duration_seconds": 3,
+      "transient_simulation": false,
+      "deformation_exaggeration": 16,
+      "safety_factor": 1.6,
+      "required": 2,
+      "baseline_kg": 37.5
+    }
+  },
+  "recovery": {
+    "host_role": "rendering host",
+    "service": "gy193-current-media-76cc-envfix.service",
+    "log_roles": [
+      "run.log",
+      "out/phases.jsonl"
+    ],
+    "done_roles": [
+      "done",
+      "RUN-DONE",
+      "service result"
+    ],
+    "collect": "rsync -a <render-host>:<owned-scratch>/out/ <fresh-evidence>/out/; fetch run.log and done separately, and compare the actual files against output-members.json.",
+    "raw_frames": "Private retained output. The committed capture-frames receipt seals the 480 raw frames."
+  },
+  "limits": [
+    "The retained job exit is 1 because 22 existing browser init scripts accessed storage in initial opaque documents.",
+    "Chrome ran on the rendering host. WebKit media parity and normal CI/publication remain separate checks.",
+    "The exact adopted bytes preserve the recorded leg and failed E1 source and labels. Physical qualification remains open in issue 193."
+  ]
+}

@@ -1,9 +1,10 @@
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
-/** Validate actual rendered STL landmarks against independently audited CAD datums. */
+/** Validate the legacy interim-body laser and the bench STL landmarks against their CAD datums. */
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
 import { createHash } from 'node:crypto';
+import { waitForUpperHold } from './upper-hold-observation.mjs';
 const fixture = JSON.parse(await readFile(new URL('../../fixtures/turret-motion-reference.json', import.meta.url)));
 assert.ok(fixture.source?.parts, 'Regenerate the independent reference from the reviewed current full scene');
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8879').replace(/\/$/, '');
@@ -75,10 +76,17 @@ function maxError(sample) {
   return {error,worst};
 }
 try {
+  let legacyBindings=0;
+  await page.route(url=>url.origin===new URL(base).origin&&url.pathname==='/designer/robot_current_source.js',route=>{
+    legacyBindings++;
+    return route.fulfill({status:200,contentType:'text/javascript',body:'export const CURRENT_ROBOT_SOURCE = null;\n'});
+  });
   await page.goto(base+'/designer/sim.html?sound=0',{waitUntil:'networkidle'});
   await page.waitForFunction(()=>document.body.dataset.ready==='1');
-  // Older CAD snapshots retain their own frames; their beam must still originate
-  // at their fitted laser rather than the procedural stand-in's old position.
+  assert.equal(legacyBindings,1,'The legacy test authority was requested');
+  const bodyPath=await page.evaluate(()=>new URL(window.__sim.state.robot.presentation.bodySource,location.href).pathname);
+  assert.equal(bodyPath,'/exports/sim/v2/rig/manifest.json');
+  // The interim-body fixture uses local positive Z for its fitted laser lens.
   const checkLaser=()=>page.evaluate(()=>{
     const t=window.__sim.state.robot.turret;
     let mesh;t.tilt.traverse(m=>{if(m.isMesh && /_laser$/.test(m.name))mesh=m;});
@@ -88,7 +96,7 @@ try {
     mesh.updateWorldMatrix(true,false);mesh.localToWorld(front);
     return front.distanceTo(t.laserOrigin.getWorldPosition(front.clone()))<1e-6;
   });
-  assert.ok(await checkLaser(),'V2 CAD laser origin is on its actual lens');
+  assert.ok(await checkLaser(),'Legacy interim-body laser origin is on its actual lens');
   await page.selectOption('#design-select','turret-box');
   await page.waitForFunction(()=>window.__sim.bench()?.active);
   const loadedParts=await page.evaluate(()=>window.__sim.bench().api.mechanism.parts.map(p=>({name:p.e.name,file:p.e.file,group:p.e.group,sha256:p.e.sha256})));
@@ -174,16 +182,41 @@ try {
   assert.ok(maxError(appliedUpper).error<.02,'The applied +12-degree servo pose matches independent CAD landmarks');
   await page.getByLabel('Show straight laser reference',{exact:true}).check();
   const heldBaseline=await page.evaluate(()=>{
-    const b=window.__sim.bench(),a=b.api;window.upperHoldSamples=[];
-    window.__sim.stage.onFrame(()=>{
-      const s=a.state;
+    const sim=window.__sim, b=sim.bench(), a=b.api, stage=sim.stage;
+    window.upperHoldSamples=[];
+    const startMs=performance.now(), startRenderFrame=stage.renderer.info.render.frame;
+    const trace={frames:0, stageSeconds:0, lastStageDt:null, lastFrameMs:null, maxFrameGapMs:0};
+    const observeState=()=>({
+      renderFrame:stage.renderer.info.render.frame, active:b.active, currentBench:sim.bench()===b,
+      speedFraction:a.state.rpm/b.manifest.mechanics.flywheel.rpm,
+      requested:a.state.arm.has('api'), requestCount:a.state.arm.size, reloading:Boolean(a.state.reloading),
+      journey:Boolean(a.state.journey), paused:Boolean(a.state.journey && !a.state.journey.auto),
+      timeScale:a.state.timeScale, samples:window.upperHoldSamples.length,
+      visibility:document.visibilityState, focused:document.hasFocus(),
+      openDialogs:document.querySelectorAll('dialog[open]').length,
+      stageError:document.body.dataset.stageError||null,
+    });
+    const off=stage.onFrame((_,dt)=>{
+      const now=performance.now(), s=a.state;
+      trace.frames++;
+      trace.stageSeconds+=dt;
+      trace.lastStageDt=dt;
+      trace.maxFrameGapMs=Math.max(trace.maxFrameGapMs,now-(trace.lastFrameMs??startMs));
+      trace.lastFrameMs=now;
       if(s.rpm>=.95*b.manifest.mechanics.flywheel.rpm && window.upperHoldSamples.length<15)
         window.upperHoldSamples.push({shots:s.shots,queue:s.queue,phi:s.phi,phiCmd:s.phiCmd,tiltDeg:s.tilt*180/Math.PI,
           laserOn:s.laserOn,beamVisible:a.prediction.laser.visible});
     });
-    a.arm(true);a.fire(2);return {shots:a.state.shots,queue:a.state.queue,phi:a.state.phi,phiCmd:a.state.phiCmd};
+    a.arm(true);a.fire(2);
+    const start=observeState();
+    window.finishUpperHoldTrace=()=>{off();return {startMs,startRenderFrame,start,...trace,end:observeState(),endMs:performance.now()};};
+    return {shots:a.state.shots,queue:a.state.queue,phi:a.state.phi,phiCmd:a.state.phiCmd};
   });
-  await page.waitForFunction(()=>window.upperHoldSamples.length>=15,{},{timeout:15000});
+  await waitForUpperHold(page, ({expected,error,trace})=>writeFile(
+    `${out}/${engine.name()}-upper-hold-failed.json`,JSON.stringify({
+      phase:'upper-stop-hold', engine:engine.name(), browser:browser.version(),
+      expected, error:{name:error.name,message:error.message}, pageErrors:errors,trace,
+    },null,2)+'\n'));
   const upperHold=await page.evaluate(()=>window.upperHoldSamples);
   assert.ok(upperHold.every(s=>s.shots===heldBaseline.shots && s.queue===heldBaseline.queue &&
     Math.abs(s.phi-heldBaseline.phi)<1e-12 && Math.abs(s.phiCmd-heldBaseline.phiCmd)<1e-12 && Math.abs(s.tiltDeg-12)<.01),
@@ -254,13 +287,13 @@ try {
   const requested=await page.evaluate(()=>performance.getEntriesByType('resource').map(e=>e.name));
   for(const p of manifest.parts) assert.ok(requested.some(u=>u.endsWith(`/turret_box/${p.file}?v=${p.sha256}`)),`Content-versioned mesh loaded: ${p.name}`);
   const manifestHash=createHash('sha256').update(manifestBytes).digest('hex');
-  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`${base}; ${engine.name()}; actual Three.js STL vertices; revision=${version.revision}; assets=${version.assets}; manifest_sha256=${manifestHash}; per-mesh hashes in capture-manifest.json`,samples};
+  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`Turret bench and legacy interim-body fixture; ${base}; ${engine.name()}; actual Three.js STL vertices; revision=${version.revision}; assets=${version.assets}; manifest_sha256=${manifestHash}; per-mesh hashes in capture-manifest.json`,samples};
   await writeFile(`${out}/capture-manifest.json`,manifestBytes);
   await writeFile(`${out}/capture-version.json`,JSON.stringify(version));
   await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
   await writeFile(`${out}/contract.json`,JSON.stringify(fixture.contract));
   await writeFile(`${out}/${engine.name()}-asset-bindings.json`,JSON.stringify(responses,null,2));
   await writeFile(`${out}/${engine.name()}-sensitivity.json`,JSON.stringify(sensitivities));
-  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({components:Object.keys(fixture.contract.components).length,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
+  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({scope:'turret-bench-and-legacy-interim-body',legacyBindings,bodyPath,components:Object.keys(fixture.contract.components).length,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
   console.log(`PASS ${engine.name()}: ${Object.keys(fixture.contract.components).length} components × ${samples.length} poses; ${live.length} real firing frames; max ${worst.error.toFixed(6)}mm; negative pivot control rejected; CAD attachments, configured launch speed, 5 phone layouts`);
 } finally {await browser.close();}

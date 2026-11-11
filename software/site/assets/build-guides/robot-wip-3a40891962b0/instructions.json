@@ -1,0 +1,861 @@
+{
+  "snapshot": {
+    "id": "robot-wip-3a40891962b0",
+    "revision": "3a40891962b0",
+    "status": "wip",
+    "source_commit": "3a40891962b0b0a04625e070700f1d130bea3c7b"
+  },
+  "qualification": "WIP CAD assembly study. The order explains named construction relationships; it is not a qualified fastening, fit, wiring or powered-operation procedure.",
+  "steps": [
+    {
+      "id": "overview",
+      "title": "Full robot CAD reference",
+      "text": "Assembled source CAD reference at the 300 mm stance. This overview does not mark any construction operation complete. WIP CAD assembly study. The order explains named construction relationships; it is not a qualified fastening, fit, wiring or powered-operation procedure.",
+      "requirements": []
+    },
+    {
+      "id": "body-spine",
+      "title": "Body spine and hip mounting faces",
+      "text": "Locate the two physical cheek faces and their connecting spacer envelopes. Their CAD mounting holes establish the left/right hip-module datums.",
+      "requirements": [
+        {
+          "title": "cheek_left",
+          "quantity": 1
+        },
+        {
+          "title": "cheek_right",
+          "quantity": 1
+        },
+        {
+          "title": "spacers",
+          "quantity": 1
+        },
+        {
+          "title": "spacer_screws",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-trays",
+      "title": "Floor tray above the spine",
+      "text": "The floor tray approaches the top of the spine. Its rendering does not qualify the fasteners.",
+      "requirements": [
+        {
+          "title": "floor_tray",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-belly",
+      "title": "Belly plate below the spine",
+      "text": "The belly plate approaches from below; the printed leg interfaces remain unchanged.",
+      "requirements": [
+        {
+          "title": "belly_plate",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-end-supports",
+      "title": "Conditional end-pack holders and rigid sit feet",
+      "text": "These body-side supports approach from below. Purchased adapter mounting, loads and drop/retention qualification remain unresolved.",
+      "requirements": [
+        {
+          "title": "end_pack_holder_front",
+          "quantity": 1
+        },
+        {
+          "title": "end_pack_holder_rear",
+          "quantity": 1
+        },
+        {
+          "title": "end_foot_front",
+          "quantity": 1
+        },
+        {
+          "title": "end_foot_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-platforms",
+      "title": "Compute and power support platforms",
+      "text": "Identify the support posts, isolated compute pallet and separate power platform. Bus insulators and conductors remain individually identified; this is not electrical approval.",
+      "requirements": [
+        {
+          "title": "post_1",
+          "quantity": 1
+        },
+        {
+          "title": "post_2",
+          "quantity": 1
+        },
+        {
+          "title": "post_3",
+          "quantity": 1
+        },
+        {
+          "title": "post_4",
+          "quantity": 1
+        },
+        {
+          "title": "isolator_1",
+          "quantity": 1
+        },
+        {
+          "title": "isolator_2",
+          "quantity": 1
+        },
+        {
+          "title": "isolator_3",
+          "quantity": 1
+        },
+        {
+          "title": "isolator_4",
+          "quantity": 1
+        },
+        {
+          "title": "compute_pallet",
+          "quantity": 1
+        },
+        {
+          "title": "plate_post_1",
+          "quantity": 1
+        },
+        {
+          "title": "plate_post_2",
+          "quantity": 1
+        },
+        {
+          "title": "plate_post_3",
+          "quantity": 1
+        },
+        {
+          "title": "plate_post_4",
+          "quantity": 1
+        },
+        {
+          "title": "power_plate",
+          "quantity": 1
+        },
+        {
+          "title": "dcdc_bracket",
+          "quantity": 1
+        },
+        {
+          "title": "bus_insulator_1",
+          "quantity": 1
+        },
+        {
+          "title": "bus_insulator_2",
+          "quantity": 1
+        },
+        {
+          "title": "bus_bar_1",
+          "quantity": 1
+        },
+        {
+          "title": "bus_bar_2",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "l-motors",
+      "title": "Left stationary motor cases",
+      "text": "Present the two motor cases before the hip support closes around them. Their outward arrival avoids passing the cases through the already-installed hip web; the cases still need temporary support. This is a WIP presentation dependency, not a fixture procedure.",
+      "requirements": [
+        {
+          "title": "L.motor_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.motor_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "l-hip",
+      "title": "Left hip frame, support bearings and lug screw group",
+      "text": "Locate the hip frame around the motor cases, then show its support bearings and retained screw groups. Lug screws follow the support and precede the upper links. The source flange screw group remains a group; bearing fits, driver access, temporary support and insert retention are unverified. No torque is specified.",
+      "requirements": [
+        {
+          "title": "L.hip_frame",
+          "quantity": 1
+        },
+        {
+          "title": "L.bearing_61812_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.bearing_61812_rear",
+          "quantity": 1
+        },
+        {
+          "title": "frame_screws_left",
+          "quantity": 1
+        },
+        {
+          "title": "cheek_nuts_left",
+          "quantity": 1
+        },
+        {
+          "title": "L.screws_lugs",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "l-upper",
+      "title": "Left output adapters and upper links",
+      "text": "Each output adapter and its upper link share the authored rotating-link frame. The output screw group precedes the upper links so it does not arrive through their hubs. The front and rear instances are distinct; source screw groups are not individual manufactured screw models.",
+      "requirements": [
+        {
+          "title": "L.output_adapter_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.output_adapter_rear",
+          "quantity": 1
+        },
+        {
+          "title": "L.screws_outputs",
+          "quantity": 1
+        },
+        {
+          "title": "L.upper_link_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.upper_link_rear",
+          "quantity": 1
+        },
+        {
+          "title": "L.screws_links",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "l-front-knee",
+      "title": "Left front knee and lower link",
+      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry. The inboard bearing is blocked by the lower-link shoulder from outside and the upper eye from inside; this arrival remains illustrative pending subassembly validation.",
+      "requirements": [
+        {
+          "title": "L.front_link",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_bearing_front_in",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_bearing_front_out",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_spacer_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.eye_sleeve_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_washer_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_pin_front",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_nut_upper_front",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "l-rear-knee",
+      "title": "Left rear knee and wheel-carrying lower link",
+      "text": "Identify the second knee cartridge and the separate wheel-carrying lower link. Its parent/axis comes from the rear upper-link endpoint; it is not attached to the front knee.",
+      "requirements": [
+        {
+          "title": "L.wheel_link",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_bearing_rear_in",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_bearing_rear_out",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_spacer_rear",
+          "quantity": 1
+        },
+        {
+          "title": "L.eye_sleeve_rear",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_washer_rear",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_pin_rear",
+          "quantity": 1
+        },
+        {
+          "title": "L.knee_nut_upper_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "l-apex",
+      "title": "Left apex connection and loop closure",
+      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. The rigid circlip envelope overlaps its final groove; its illustrated arrival does not model circlip expansion. This closure does not prove physical fit or free motion.",
+      "requirements": [
+        {
+          "title": "L.apex_spacer",
+          "quantity": 1
+        },
+        {
+          "title": "L.apex_61812",
+          "quantity": 1
+        },
+        {
+          "title": "L.apex_circlip",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "l-wheel",
+      "title": "Left wheel hub, tyre and retained screw groups",
+      "text": "The collected wheel hub and tyre share the authored apex/wheel datum. The D69 body collection uses a 254 mm diameter, 64 mm wide tyre-band envelope; its ordered SKU and physical dimensions remain unverified. Keep the wheel-fastener and washer source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in the source screw stack. Thread engagement, wiring and tightening remain unqualified.",
+      "requirements": [
+        {
+          "title": "L.wheel_hub",
+          "quantity": 1
+        },
+        {
+          "title": "L.wheel_tyre",
+          "quantity": 1
+        },
+        {
+          "title": "L.washers_wheel",
+          "quantity": 1
+        },
+        {
+          "title": "L.screws_wheel",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "l-stops",
+      "title": "Left stop posts and four sleeves",
+      "text": "Show the fixed stop-post group and four separate sleeve instances after the motor-access stages. Their CAD position is not a release to bond, preload or power the mechanism.",
+      "requirements": [
+        {
+          "title": "L.stop_posts",
+          "quantity": 1
+        },
+        {
+          "title": "L.stop_sleeve_1",
+          "quantity": 1
+        },
+        {
+          "title": "L.stop_sleeve_2",
+          "quantity": 1
+        },
+        {
+          "title": "L.stop_sleeve_3",
+          "quantity": 1
+        },
+        {
+          "title": "L.stop_sleeve_4",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "r-motors",
+      "title": "Right stationary motor cases",
+      "text": "Present the two motor cases before the hip support closes around them. Their outward arrival avoids passing the cases through the already-installed hip web; the cases still need temporary support. This is a WIP presentation dependency, not a fixture procedure.",
+      "requirements": [
+        {
+          "title": "R.motor_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.motor_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "r-hip",
+      "title": "Right hip frame, support bearings and lug screw group",
+      "text": "Locate the hip frame around the motor cases, then show its support bearings and retained screw groups. Lug screws follow the support and precede the upper links. The source flange screw group remains a group; bearing fits, driver access, temporary support and insert retention are unverified. No torque is specified.",
+      "requirements": [
+        {
+          "title": "R.hip_frame",
+          "quantity": 1
+        },
+        {
+          "title": "R.bearing_61812_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.bearing_61812_rear",
+          "quantity": 1
+        },
+        {
+          "title": "frame_screws_right",
+          "quantity": 1
+        },
+        {
+          "title": "cheek_nuts_right",
+          "quantity": 1
+        },
+        {
+          "title": "R.screws_lugs",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "r-upper",
+      "title": "Right output adapters and upper links",
+      "text": "Each output adapter and its upper link share the authored rotating-link frame. The output screw group precedes the upper links so it does not arrive through their hubs. The front and rear instances are distinct; source screw groups are not individual manufactured screw models.",
+      "requirements": [
+        {
+          "title": "R.output_adapter_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.output_adapter_rear",
+          "quantity": 1
+        },
+        {
+          "title": "R.screws_outputs",
+          "quantity": 1
+        },
+        {
+          "title": "R.upper_link_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.upper_link_rear",
+          "quantity": 1
+        },
+        {
+          "title": "R.screws_links",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "r-front-knee",
+      "title": "Right front knee and lower link",
+      "text": "The current source uses the 6301 knee cartridge in the front lower link, with separate spacer, eye sleeve, washer, shoulder-pin and nut identities. The pin connects the upper eye and lower knee; the archived 6201-era display is not substituted for this geometry. The inboard bearing is blocked by the lower-link shoulder from outside and the upper eye from inside; this arrival remains illustrative pending subassembly validation.",
+      "requirements": [
+        {
+          "title": "R.front_link",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_bearing_front_in",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_bearing_front_out",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_spacer_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.eye_sleeve_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_washer_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_pin_front",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_nut_upper_front",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "r-rear-knee",
+      "title": "Right rear knee and wheel-carrying lower link",
+      "text": "Identify the second knee cartridge and the separate wheel-carrying lower link. Its parent/axis comes from the rear upper-link endpoint; it is not attached to the front knee.",
+      "requirements": [
+        {
+          "title": "R.wheel_link",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_bearing_rear_in",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_bearing_rear_out",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_spacer_rear",
+          "quantity": 1
+        },
+        {
+          "title": "R.eye_sleeve_rear",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_washer_rear",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_pin_rear",
+          "quantity": 1
+        },
+        {
+          "title": "R.knee_nut_upper_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "r-apex",
+      "title": "Right apex connection and loop closure",
+      "text": "The two lower links meet at the source five-bar apex. The spacer, paired-bearing envelope and circlip remain separate CAD identities. The rigid circlip envelope overlaps its final groove; its illustrated arrival does not model circlip expansion. This closure does not prove physical fit or free motion.",
+      "requirements": [
+        {
+          "title": "R.apex_spacer",
+          "quantity": 1
+        },
+        {
+          "title": "R.apex_61812",
+          "quantity": 1
+        },
+        {
+          "title": "R.apex_circlip",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "r-wheel",
+      "title": "Right wheel hub, tyre and retained screw groups",
+      "text": "The collected wheel hub and tyre share the authored apex/wheel datum. The D69 body collection uses a 254 mm diameter, 64 mm wide tyre-band envelope; its ordered SKU and physical dimensions remain unverified. Keep the wheel-fastener and washer source groups visible as groups. Washers precede screws, arriving from the inboard side of the hub as in the source screw stack. Thread engagement, wiring and tightening remain unqualified.",
+      "requirements": [
+        {
+          "title": "R.wheel_hub",
+          "quantity": 1
+        },
+        {
+          "title": "R.wheel_tyre",
+          "quantity": 1
+        },
+        {
+          "title": "R.washers_wheel",
+          "quantity": 1
+        },
+        {
+          "title": "R.screws_wheel",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "r-stops",
+      "title": "Right stop posts and four sleeves",
+      "text": "Show the fixed stop-post group and four separate sleeve instances after the motor-access stages. Their CAD position is not a release to bond, preload or power the mechanism.",
+      "requirements": [
+        {
+          "title": "R.stop_posts",
+          "quantity": 1
+        },
+        {
+          "title": "R.stop_sleeve_1",
+          "quantity": 1
+        },
+        {
+          "title": "R.stop_sleeve_2",
+          "quantity": 1
+        },
+        {
+          "title": "R.stop_sleeve_3",
+          "quantity": 1
+        },
+        {
+          "title": "R.stop_sleeve_4",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-compute",
+      "title": "Compute stack and sensor envelopes",
+      "text": "Locate the tracked J501/AGX assembly and the individually named sensor mounts/envelopes. The robot model uses the tracked parameter snapshot; supplier dimensions and cable access are separate checks.",
+      "requirements": [
+        {
+          "title": "item.j501_carrier",
+          "quantity": 1
+        },
+        {
+          "title": "item.agx_module",
+          "quantity": 1
+        },
+        {
+          "title": "item.agx_spreader",
+          "quantity": 1
+        },
+        {
+          "title": "item.agx_cooler",
+          "quantity": 1
+        },
+        {
+          "title": "item.j501_standoff_15_16.5",
+          "quantity": 1
+        },
+        {
+          "title": "item.j501_standoff_165_16.5",
+          "quantity": 1
+        },
+        {
+          "title": "item.j501_standoff_15_146.5",
+          "quantity": 1
+        },
+        {
+          "title": "item.j501_standoff_165_146.5",
+          "quantity": 1
+        },
+        {
+          "title": "item.lidar_box",
+          "quantity": 1
+        },
+        {
+          "title": "item.lidar_coil",
+          "quantity": 1
+        },
+        {
+          "title": "d435_cradle_front",
+          "quantity": 1
+        },
+        {
+          "title": "d435_cradle_rear",
+          "quantity": 1
+        },
+        {
+          "title": "d435_front",
+          "quantity": 1
+        },
+        {
+          "title": "d435_rear",
+          "quantity": 1
+        },
+        {
+          "title": "eyes_board",
+          "quantity": 1
+        },
+        {
+          "title": "eyes_clip",
+          "quantity": 1
+        },
+        {
+          "title": "ear_bracket_l",
+          "quantity": 1
+        },
+        {
+          "title": "ear_bracket_r",
+          "quantity": 1
+        },
+        {
+          "title": "ear_pod_l",
+          "quantity": 1
+        },
+        {
+          "title": "ear_pod_r",
+          "quantity": 1
+        },
+        {
+          "title": "item.vn100",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-power",
+      "title": "Power electronics envelopes",
+      "text": "These are source layout envelopes on the power platform and the conditional front/rear drop-in mounts. No adapter purchase/fit, series wiring, charging or hot-swap architecture is selected by this view.",
+      "requirements": [
+        {
+          "title": "item.plate_vesc_r",
+          "quantity": 1
+        },
+        {
+          "title": "item.plate_vesc_l",
+          "quantity": 1
+        },
+        {
+          "title": "item.plate_main_switch",
+          "quantity": 1
+        },
+        {
+          "title": "item.plate_shunt",
+          "quantity": 1
+        },
+        {
+          "title": "item.power_dcdc",
+          "quantity": 1
+        },
+        {
+          "title": "item.plate_mrbf_block",
+          "quantity": 1
+        },
+        {
+          "title": "item.plate_fuses",
+          "quantity": 1
+        },
+        {
+          "title": "item.plate_mcu_board",
+          "quantity": 1
+        },
+        {
+          "title": "item.plate_buck_5v",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-adapter-front",
+      "title": "Front Azocek adapter reservation",
+      "text": "Conditional unmeasured outline only. Mounting holes, rail, latch, ratings and positive retention remain unresolved.",
+      "requirements": [
+        {
+          "title": "item.battery_adapter_front",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-adapter-rear",
+      "title": "Rear Azocek adapter reservation",
+      "text": "Conditional unmeasured outline only. Mounting holes, rail, latch, ratings and positive retention remain unresolved.",
+      "requirements": [
+        {
+          "title": "item.battery_adapter_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-packs",
+      "title": "Front/rear vertical drop-in pack envelopes",
+      "text": "Both packs approach down from the +188 mm reservation and remove upward. This does not establish actual rail or latch travel.",
+      "requirements": [
+        {
+          "title": "item.battery_front",
+          "quantity": 1
+        },
+        {
+          "title": "item.battery_rear",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-deck",
+      "title": "Deck, turret plate and lidar mounting datum",
+      "text": "Locate the deck, source turret support plate/riser and lidar geometry. The TM mounting face and pan-axis X coordinate are recorded from body_params.tm(), not the archived playground.",
+      "requirements": [
+        {
+          "title": "deck",
+          "quantity": 1
+        },
+        {
+          "title": "turret_plate",
+          "quantity": 1
+        },
+        {
+          "title": "turret_plate_nuts",
+          "quantity": 1
+        },
+        {
+          "title": "riser",
+          "quantity": 1
+        },
+        {
+          "title": "item.vlp16_window",
+          "quantity": 1
+        },
+        {
+          "title": "item.vlp16_housing",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "body-covers",
+      "title": "Enclosure reference",
+      "text": "The final reference includes the modeled doors and shell panels. Explanatory explosion is not a validated insertion path; keep access and fastening work unresolved.",
+      "requirements": [
+        {
+          "title": "shell_side_l_front",
+          "quantity": 1
+        },
+        {
+          "title": "shell_side_l_rear",
+          "quantity": 1
+        },
+        {
+          "title": "shell_side_r_front",
+          "quantity": 1
+        },
+        {
+          "title": "shell_side_r_rear",
+          "quantity": 1
+        },
+        {
+          "title": "shell_front",
+          "quantity": 1
+        },
+        {
+          "title": "shell_rear",
+          "quantity": 1
+        },
+        {
+          "title": "shell_door",
+          "quantity": 1
+        },
+        {
+          "title": "shell_hatch",
+          "quantity": 1
+        },
+        {
+          "title": "fan_duct",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "gyropup.build-local-origin-correction/1",
+  "date": "2026-11-10",
+  "parent": "ba89804dd441a1bc38b9e0e6539a608dfa00dbc8",
+  "source_sha256": {
+    "tests/site/content/test-prototype-session.mjs": "997a39297102005095ee42adc9c6397552e3dc550f0f42494ad554eccf4ecefb",
+    "tests/site/assembly/build-prototype-session.mjs": "73aa9c59e02204b8d773a554a47dc779bedb39241a0d14618ee046d70a527222",
+    "tests/site/assembly/test-build-session-unit.mjs": "01f2b43efdf9f5e00086587f6e03006c6309656e79488e458f6a065e76ad7317",
+    "tests/site/assembly/test-build-guide.mjs": "8cc20ae564f5ebaac487679d7cd822053a7355860b0f68779a0104413c8a680c",
+    "package.json": "bfa38f38bc603a87f9f98004df328d8b2b94d9ef6785c494211d0dff0fd1a86c"
+  },
+  "historical_helper_restored_exactly_to": "1a291c66",
+  "guarded_helper_byte_identical_to_prior_ba_shared_helper": true,
+  "raw_controls_sha256": "f906f0a84ed8ce608972cc4794b3480e8e0798ace26d9050802e3d7ac860564c",
+  "raw_runner_sha256": "49973356ca22ab4a9ea884327ab066abd63a764cee69437ca837a86b0168d4c4",
+  "controls": "8 actual outcomes, Chrome151/WebKit sequential: old opaque errors2/1; guarded opaque/wrong-origin+real site ack0; matching HTTP denial1 and ordinary error1 each. No error filtering.",
+  "qualification": "Short fixture controls used the existing unchanged product dist; their runner did not record the served version. New fixture import/function bytes were staged. Guarded function is byte-identical to ba, whose actual CI Chromium/WebKit15group reports precede only the historical-media binding failure. No new full guide run claimed. The subsequent build version is recorded separately. Final normal CI/review remain required.",
+  "checks": {
+    "ordinary_pure": 23,
+    "highlight_binding_tests": 11,
+    "highlight_media_full": true,
+    "build": true,
+    "privacy": 11,
+    "markdown": 6
+  },
+  "owned_listener_closed": 43415,
+  "listener_connection_refused": true,
+  "all_browser_contexts_closed": true,
+  "product_tools_hardware_trees_identical_to": "1a291c66",
+  "media_receipts_changed": false,
+  "runtime_changes": false,
+  "post_controls_rebuilt_version": {
+    "revision": "ba89804dd441a1bc38b9e0e6539a608dfa00dbc8",
+    "assets": "a14dcd48ce545629b714",
+    "history": true,
+    "built": "2026-11-10T20:32:22.097Z"
+  }
+}

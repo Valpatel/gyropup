@@ -12,13 +12,13 @@ number shows where it came from. The bench tests (B4: insert pull-out and bearin
 
 - [joints.md](joints.md): the table, the findings and a note for each joint, generated.
 - [joints.json](joints.json): the same, with every source line it read (`bindings`).
-- `inventory.py` writes both; `test_inventory.py` checks them (CI: the mechanism suite).
+- `inventory.py` writes both. The mechanism suite replays `test_inventory.py` with the verified, captured belly-bay CAD inputs and the original report inputs.
+
+This inventory describes the earlier belly-bay rails, doors and adapter plates. The current front and rear pack holders use different interfaces. Their insert geometry, retention and physical qualification remain open under [#193](https://github.com/Valpatel/gyropup/issues/193). The archived inventory still reproduces its original tables and runs its fault controls.
 
 ```sh
-python3 research/insert-joints/inventory.py            # regenerate after a bound source changes
-python3 research/insert-joints/inventory.py --check    # exit 1 when joints.json / joints.md are stale
-python3 research/insert-joints/test_inventory.py       # the checks, kernel-free
-python3 research/insert-joints/inventory.py --cad-agent ../cad-agent/src   # optional: the same sums through cadagent
+python3 -B tests/hardware/manufacturing/test_retained_carrier_studies.py insert-inventory
+python3 docs/research/insert-joints/inventory.py --check  # checks current CAD; rejects the retired bay bindings
 ```
 
 ## Phase 2: the joints through cad-agent

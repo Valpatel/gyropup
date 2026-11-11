@@ -3,63 +3,55 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
-import shutil
-import tempfile
 import unittest
 
 SPEC=importlib.util.spec_from_file_location('support_check',Path(__file__).resolve().parents[3] / 'tools/evidence/interfaces/check-carrier-connector-support.py')
 MOD=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(MOD)
+from tools.evidence.manufacturing.retained_study_inputs import study_inputs
 RECEIPT=MOD.ROOT/'docs/research/carrier-service-connectors/support-candidate.json'
 
 
 class SupportEvidence(unittest.TestCase):
-    def setUp(self):self.receipt=json.loads(RECEIPT.read_text())
+    def setUp(self):
+        self.receipt=json.loads(RECEIPT.read_text())
+        self.source=self.enterContext(study_inputs('connector-support'))
 
-    def test_current_complete_source_identity(self):
-        self.assertTrue(MOD.validate_receipt(self.receipt))
+    def test_dated_source_identity_and_current_staleness(self):
+        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt)
+        self.assertTrue(MOD.validate_receipt(self.receipt,self.source))
 
     def test_private_hardware_identity_and_failed_check_reject(self):
         changed=copy.deepcopy(self.receipt);changed['private_hardware_sha256']['91290A113']='0'*64
-        with self.assertRaisesRegex(ValueError,'hardware identities'):MOD.validate_receipt(changed)
+        with self.assertRaisesRegex(ValueError,'hardware identities'):MOD.validate_receipt(changed,self.source)
         changed=copy.deepcopy(self.receipt);changed['checks'][0]['pass']=False
-        with self.assertRaisesRegex(ValueError,'failed checks'):MOD.validate_receipt(changed)
+        with self.assertRaisesRegex(ValueError,'failed checks'):MOD.validate_receipt(changed,self.source)
 
     def test_deleted_clearance_false_summary_and_duplicate_checks_reject(self):
         for target in ('support:installed_neighbours','carrier:nonmating_neighbours',
                        'carrier_added_material:all_neighbours'):
             changed=copy.deepcopy(self.receipt)
             changed['checks']=[c for c in changed['checks'] if c['id']!=target]
-            with self.assertRaisesRegex(ValueError,'check coverage'):MOD.validate_receipt(changed)
+            with self.assertRaisesRegex(ValueError,'check coverage'):MOD.validate_receipt(changed,self.source)
         changed=copy.deepcopy(self.receipt);changed['checks'].append(copy.deepcopy(changed['checks'][0]))
-        with self.assertRaisesRegex(ValueError,'check coverage'):MOD.validate_receipt(changed)
+        with self.assertRaisesRegex(ValueError,'check coverage'):MOD.validate_receipt(changed,self.source)
         changed=copy.deepcopy(self.receipt);changed['bounded_geometry_checks_pass']=False
-        with self.assertRaisesRegex(ValueError,'failed checks'):MOD.validate_receipt(changed)
+        with self.assertRaisesRegex(ValueError,'failed checks'):MOD.validate_receipt(changed,self.source)
 
     def test_source_closure_change_rejects(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp)
-            artifacts={'hardware/exports/turret/base-board-service/connectors/'+n for n in self.receipt['public_artifact_sha256']}
-            for name in set(self.receipt['inputs']['files'])|set(self.receipt['context_files'])|artifacts:
-                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(MOD.ROOT/name,p)
-            self.assertTrue(MOD.validate_receipt(self.receipt,root))
-            p=root/'hardware/cad/turret/turret_base_board.py';p.write_bytes(p.read_bytes()+b'\n# altered underlying mount\n')
-            with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt,root)
+        self.assertTrue(MOD.validate_receipt(self.receipt,self.source))
+        p=self.source/'hardware/cad/turret/turret_base_board.py';p.write_bytes(p.read_bytes()+b'\n# altered underlying mount\n')
+        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt,self.source)
 
     def test_missing_partial_or_changed_artifact_binding_rejects(self):
         for replacement in (None,{}, {'C3-support-layout.step':self.receipt['public_artifact_sha256']['C3-support-layout.step']}):
             changed=copy.deepcopy(self.receipt)
             if replacement is None:del changed['public_artifact_sha256']
             else:changed['public_artifact_sha256']=replacement
-            with self.assertRaisesRegex(ValueError,'artifact binding'):MOD.validate_receipt(changed)
-        with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp)
-            artifacts={'hardware/exports/turret/base-board-service/connectors/'+n for n in self.receipt['public_artifact_sha256']}
-            for name in set(self.receipt['inputs']['files'])|set(self.receipt['context_files'])|artifacts:
-                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(MOD.ROOT/name,p)
-            self.assertTrue(MOD.validate_receipt(self.receipt,root))
-            p=root/'hardware/exports/turret/base-board-service/connectors/C3-support-candidate.step'
-            p.write_bytes(p.read_bytes()+b'\nchanged export\n')
-            with self.assertRaisesRegex(ValueError,'public artifact changed'):MOD.validate_receipt(self.receipt,root)
+            with self.assertRaisesRegex(ValueError,'artifact binding'):MOD.validate_receipt(changed,self.source)
+        self.assertTrue(MOD.validate_receipt(self.receipt,self.source))
+        p=self.source/'hardware/exports/turret/base-board-service/connectors/C3-support-candidate.step'
+        p.write_bytes(p.read_bytes()+b'\nchanged export\n')
+        with self.assertRaisesRegex(ValueError,'public artifact changed'):MOD.validate_receipt(self.receipt,self.source)
 
     def test_actual_negative_controls_and_original_mounts_present(self):
         checks={c['id']:c['pass'] for c in self.receipt['checks']}
@@ -95,9 +87,9 @@ class SupportEvidence(unittest.TestCase):
         self.assertGreater(screen['one_post_equivalent_estimate_mpa'],35.)
         for key in ('readiness',):
             changed=copy.deepcopy(self.receipt);changed[key]=True
-            with self.assertRaisesRegex(ValueError,'readiness'):MOD.validate_receipt(changed)
+            with self.assertRaisesRegex(ValueError,'readiness'):MOD.validate_receipt(changed,self.source)
         changed=copy.deepcopy(self.receipt);changed['load_screen']['structural_readiness']=True
-        with self.assertRaisesRegex(ValueError,'readiness'):MOD.validate_receipt(changed)
+        with self.assertRaisesRegex(ValueError,'readiness'):MOD.validate_receipt(changed,self.source)
 
 
 if __name__=='__main__':unittest.main()

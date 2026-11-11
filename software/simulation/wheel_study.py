@@ -1,7 +1,7 @@
 """Wheel study (issue #18): the leg rig and the full robot with an air-tyre hub motor in place of the BotWheel.
 
     python -m sim.wheel_study rig  [--wheels hb10 ...] [--half-mass 16.25] [--only jump drop_150] [--v-static 38]
-    python -m sim.wheel_study curb [--wheels hb10 ...] [--heights 25 40 50 60 80 100] [--speed 0.6]
+    python -m software.simulation.wheel_study curb --out /fresh/study [--wheels hb10 ...] [--heights ...] [--speed 0.6]
     python -m sim.wheel_study fit  [--wheels hb10 ...]              # the wheel's reach at every stance (geometry only)
 
 Nothing in sim/leg_rig.py, cad/fivebar.py or rig/ is edited: the candidate wheel is put into sim.leg_rig's module
@@ -153,8 +153,18 @@ def fit(wheels) -> dict:
     return out
 
 
-def curb(wheels, heights, speed: float, video: bool = False) -> dict:
+def curb(wheels, heights, speed: float, video: bool = False, *, out_root=None) -> dict:
     """The full robot (sim/robot_v2.py, its balance controller) driving at a kerb of each height with each wheel."""
+    if out_root is None:
+        raise ValueError('Current v2 wheel study requires a fresh --out outside the checkout')
+    candidate = Path(out_root).resolve()
+    if candidate.exists() or candidate.is_relative_to(R.resolve()):
+        raise ValueError('Use a fresh wheel-study output outside the source checkout')
+    if any(name not in CANDIDATES for name in wheels):
+        raise ValueError('Unknown wheel candidate')
+    candidate.mkdir(parents=True, mode=0o700, exist_ok=False)
+    destination = candidate / 'results'
+    destination.mkdir()
     from software.simulation import scenarios as S
     from software.simulation.controller import Command
     out = {}
@@ -163,16 +173,19 @@ def curb(wheels, heights, speed: float, video: bool = False) -> dict:
         lr = patch_rig(w)
         _patch_cad(w)
         import software.simulation.robot_v2 as rv
-        info = rv.build()
-        xml = R / 'build' / 'sim' / 'v2' / 'robot.xml'
-        row = {'wheel': w, 'model_mass_kg': round(info['total_mass_kg'], 2), 'wheel_motor': info['wheel_motor'], 'speed_mps': speed, 'heights': {}}
+        model_root = candidate / 'models' / name
+        info = rv.build(model_root)
+        xml = rv.generated_file(model_root, info['files']['model'])
+        rv.generated_file(model_root, info['files']['rig_manifest'])
+        row = {'wheel': w, 'model_mass_kg': round(info['total_mass_kg'], 2), 'wheel_motor': info['wheel_motor'], 'speed_mps': speed, 'heights': {},
+               'model_directory': ('models/' + name), 'model_files': info['files'], 'physical_test': False}
         print(f"== {name}: robot {info['total_mass_kg']:.2f} kg, wheel r {lr.WHEEL_R * 1000:.0f} mm, wheel peak {info['wheel_motor']['peak_nm']} N m")
         for h in heights:
             sc = S.Scenario(f'curb{h}', f'Drive up a {h} mm kerb at {speed} m/s', 9.0,
                             lambda t, v=speed: Command(height=0.6, speed=S.ramp_profile(t, 1, 1.0, v) if t < 6 else 0.0),
                             terrain=S.curb(h / 1000), must_reach_x=1.5)
             t0 = time.time()
-            res = S.run(xml, info, sc, video=(OUT / f'curb_{name}_{h}.mp4') if video else None)
+            res = S.run(xml, info, sc, video=(destination / f'curb_{name}_{h}.mp4') if video else None)
             wl = res['motors']['wheel_l']
             row['heights'][str(h)] = {'pass': res['pass'], 'reasons': res['reasons'], 'x_max_m': res['x_max_m'], 'max_theta_deg': res['max_theta_deg'],
                                       'fell_at': res.get('fell_at'), 'wheel_peak_nm': wl['peak_torque_nm'], 'wheel_of_peak': wl['of_peak'],
@@ -180,8 +193,7 @@ def curb(wheels, heights, speed: float, video: bool = False) -> dict:
                                       'wall_s': round(time.time() - t0, 1)}
             print(f"  kerb {h:3} mm: {'PASS' if res['pass'] else 'FAIL'}  x_max {res['x_max_m']:.2f} m  lean {res['max_theta_deg']:.1f} deg  "
                   f"wheel {wl['peak_torque_nm']:.1f} N m ({wl['of_peak'] * 100:.0f} % of peak, saturated {wl['saturated_s']} s)  {res['reasons']}")
-        OUT.mkdir(parents=True, exist_ok=True)
-        (OUT / f'curb_{name}.json').write_text(json.dumps(row, indent=1) + '\n')
+        (destination / f'curb_{name}.json').write_text(json.dumps(row, indent=1) + '\n')
         out[name] = row
     return out
 
@@ -196,15 +208,21 @@ def main(argv=None):
     ap.add_argument('--heights', nargs='*', type=float, default=[25, 40, 50, 60, 80, 100])
     ap.add_argument('--speed', type=float, default=0.6)
     ap.add_argument('--video', action='store_true')
+    ap.add_argument('--out', type=Path, help='Required fresh external root for current v2 curb models and results')
     a = ap.parse_args(argv)
+    if a.mode == 'curb' and a.out is None:
+        ap.error('curb requires a fresh --out outside the checkout')
+    if a.mode != 'curb' and a.out is not None:
+        ap.error('--out is currently the v2 curb-study option')
     if a.mode == 'rig':
         res = rig(a.wheels, a.half_mass, a.only, a.v_static)
     elif a.mode == 'curb':
-        res = curb(a.wheels, a.heights, a.speed, a.video)
+        res = curb(a.wheels, a.heights, a.speed, a.video, out_root=a.out)
     else:
         res = fit(a.wheels)
-    OUT.mkdir(parents=True, exist_ok=True)
-    f = OUT / f'summary_{a.mode}.json'
+    destination = a.out.resolve() / 'results' if a.mode == 'curb' else OUT
+    destination.mkdir(parents=True, exist_ok=True)
+    f = destination / f'summary_{a.mode}.json'
     prev = json.loads(f.read_text()) if f.is_file() else {}
     prev.update(res)
     f.write_text(json.dumps(prev, indent=1) + '\n')

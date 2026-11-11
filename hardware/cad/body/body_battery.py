@@ -1,424 +1,299 @@
-"""The battery (milestone M5, D65): two DeWalt DCB609 FLEXVOLT packs in 20 V mode, in series, in a bay under the belly
-plate. Robot frame (mm).
+"""Conditional front/rear DeWalt packs through the existing body CAD owner (#193).
 
-D65 (the user's choice, 2026-10-27) replaces D43's 13S2P brick and its Daly BMS: each pack (5S3P in 20 V mode, 9.0 Ah)
-slides onto an off-the-shelf DeWalt 20 V rail adapter (Terrafirma Technology, 10 AWG leads, 30 A stated, no fuse or
-switch), the two in series: 10S3P, 36 V nominal, about 41 V full, 30 V empty (3.0 V a cell: the robot enforces the
-cut-off and a current limit itself; the packs talk to nothing). Charging is the user's DeWalt chargers: the packs
-come out, so the robot has no charge port and no dock contacts (D64's dock is overtaken).
-
-Why the belly, again (the alternatives in docs/body-sections.md 1): a pack is 138 x 87 x 97 mm and nothing in the body
-above the belly plate has 122 mm of height free over a 138 x 87 footprint (the floor tray carries the J501 and the
-power plate; the deck has 120 mm under it and the turret over it); on the front and rear faces the packs would grow the
-body 244 mm, sit in the lidar's lowest beam and the eyes', and hang where a child grabs them. In the belly they are low
-(the robot's centre falls), boxed, and between the legs, at a price: the bay is 132 mm deep, so with D69's 10 in wheels
-the robot sits on its crush pads when its legs are under 140 mm (it never runs under 180: sim/robot_v2.py H_RANGE).
-
-The bay (one design from P1 on; the 13S2P's printed P0-P2 bay and P3 tub are gone):
-  - two printed PA6-CF adapter plates screwed up into the belly plate's PEM nuts (4 x M4 each); each adapter screws to
-    its plate (M3 into heat-set inserts placed from the adapter's own holes on arrival: their pattern is not published)
-  - the packs hang from the adapters as from a tool, their rails along x: the front pack slides out forwards, the rear
-    one backwards, each through its end door; a 30 mm space between them holds the adapters' leads, the series link's
-    XT90 pair and the two leads' way up through the belly's slot into the spine's gap
-  - a SendCutSend 5052 0.063 floor (a U, its 20 mm flanges up) and two flat side plates with lightening windows, the
-    sides screwed to the floor's flange nuts and to two printed rails, the rails screwed up into the belly's nuts
-  - two PETG end doors on two knurled M3 thumbscrews each (tool-free), four printed TPU crush pads on VHB tape under the floor,
-    each lip held by two side-plate screws (issues #19, #26): the robot sits on them
+Overall pack/adapter outlines are planning envelopes. The selected Azocek
+interface, latch, mounting holes and electrical ratings are unmeasured. These
+parts are WIP geometry, not a manufacturing or physical retention release.
+The old belly bay and its pad studies remain historical, source-pinned evidence.
 """
 from __future__ import annotations
 
-# Support direct-file CLI execution as well as checkout package imports.
 if __package__ in (None, ''):
     import sys as _checkout_sys
     from pathlib import Path as _CheckoutPath
     _checkout_sys.path.insert(0, str(_CheckoutPath(__file__).resolve().parents[3]))
 
-
-import functools
 import math
-import os
-
+from collections.abc import Mapping
 import cadquery as cq
-
 import hardware.cad.body.body_params as bp
 
-# The pack (the DeWalt sheet for its EU twin DCB547-XJ: 138 x 87 x 97 mm, 1.46 kg; Ace Tool lists the DCB609 at 3.2 lb.
-# DeWalt publishes no US outline: measure one pack before the bay is printed). The rail runs along L on the top face.
-PACK = {'name': 'DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0 Ah (20 V mode: 5S3P)', 'L': 138.0, 'W': 87.0, 'H': 97.0, 'mass_g': 1565.0,
-        'wh_rated': 180.0, 'ah': 9.0, 'series': 5,
-        'source': 'ENVELOPE, blocked on issue #20 (measure a real pack): a box from the DeWalt DCB547-XJ datasheet (138 x 87 x 97 mm '
-                  'incl. the rail tower); DeWalt US 3.45 lb = 1565 g (the conservative of 1.46-1.57 kg). No rail, latch, button or '
-                  'terminal is modelled and none is guessed',
-        'envelope': True, 'blocked_by': 'issue #20: calipers on a DCB609 (rail tower, rails, latch, release button, terminals, gauge)'}
-# The rail adapter (Terrafirma Technology "4pack 10AWG Adapter for DeWALT 20V", Amazon B07HYJ628S, $64.00 the four, 30 A
-# stated). Its outline is not published: this envelope is a guess to be measured on arrival (the bay's plates are printed).
-ADAPTER = {'L': 100.0, 'W': 72.0, 'H': 25.0, 'mass_g': 70.0, 'envelope': True,
-           'basis': 'ENVELOPE, blocked on issue #20 (measure a real adapter): a guessed box; Terrafirma publishes no drawing, '
-                    'so its rail, catch, holes and lead exit are not modelled',
-           'blocked_by': 'issue #20: calipers on the Terrafirma adapter (outline, rail, catch, holes, lead exit)'}
-SERIES = 2 * PACK['series']                  # 10S
-V_FULL, V_NOM, V_EMPTY = 4.1 * SERIES, 3.6 * SERIES, 3.0 * SERIES
-R_PACK_OHM = 0.10                            # the leg rig's figure for the pair with its leads (rig/run.py, D65)
+# Issue #193 planning inputs. These are overall outlines, not mating-interface CAD.
+# AMKUS LAI-002 Rev05 (2021-11-15), p8, identifies DCB609 as 137 x 97 x 91 mm,
+# 1.45 kg, and DCB606 as 124 x 84 x 91 mm, 1.0 kg. The existing DCB547-derived
+# 138 x 87 x 97 outline is retained as a conflicting reference, not relabelled.
+PACK_OUTLINE_SOURCE = ('https://device.report/m/'
+    'ece13665cf944f3420373a08d01f8946493f8ec6b33ccaa41fbd18d8d414dc6d.pdf#page=8')
+PACK_PROFILES = {
+    'DCB609': {'name': 'DeWalt DCB609 FLEXVOLT 20V/60V MAX 9.0 Ah',
+               'L': 137.0, 'W': 97.0, 'H': 91.0, 'mass_g': 1565.0,
+               'published_mass_g': 1450.0, 'ah': 9.0, 'wh_rated': 180.0},
+    'DCB606': {'name': 'DeWalt DCB606 FLEXVOLT 20V/60V MAX 6.0 Ah',
+               'L': 124.0, 'W': 84.0, 'H': 91.0, 'mass_g': 1000.0,
+               'published_mass_g': 1000.0, 'ah': 6.0, 'wh_rated': 120.0},
+}
+SUPPORTED_OUTLINE_MM = (138.0, 97.0, 97.0)  # union of dated references, NOT a measured pack
+END_PACK = {'shell_allowance_mm': 2.6, 'wall_gap_mm': 5.0,
+            'support_stock': '5052-0.125', 'bottom_margin_mm': 5.0,
+            'hand_clearance_mm': 50.0}
+SELECTED_ADAPTER = {'name': 'Azocek DeWalt 20V adapter', 'asin': 'B0CDGR4Y8K',
+                    'source': 'https://www.amazon.com/dp/B0CDGR4Y8K',
+                    'interface_measured': False, 'mount_holes': None, 'rail': None,
+                    'latch': None, 'electrical_ratings_verified': False,
+                    'planning_outline_mm': (100.0, 72.0, 25.0),
+                    'basis': 'CONDITIONAL planning reservation only; selected Azocek is not the old Terrafirma adapter'}
 
-PLATE_T = 4.0                                # the printed adapter plates under the belly
-GAP_MID = 30.0                               # between the packs: the leads and the series link
-DOOR_T = 4.0
-END_CLEAR = 2.0                              # a pack's end to its door
-SIDE_CLEAR = 4.5                             # a pack's side to the floor's flange: the flange nuts' bodies (3.2) and the M3 x 6 tips
-FLOOR_CLEAR = 1.0                            # under a pack
-TUB_STOCK = '5052-0.063'
-TUB_FLANGE = 20.0
-# Issue #19: four crush pads under the floor in place of the 3 mm skids. D69's 10 in wheels lift the body 41 mm at every
-# leg length, so the old skids would never reach the floor (they touched under a 98 mm leg; the leg folds to 101.5 mm on its
-# stops): the pads reach down instead, and the robot sits on them (D55; D69's parking brake). Each is a printed TPU 95A HF
-# gyroid block on VHB tape: a crush lattice, whose force rises to a plateau and stays there while its cells buckle, until
-# it densifies. In sim/robot_v2.py and sim/scenarios.py each pad is a body on a slide joint with that force law: min(k x,
-# the plateau) plus a damper c while it loads, unload_ratio of the elastic part while it unloads (the lattice's
-# hysteresis), the densified pad past its stroke as a stiff stop. Sizing: sim/bay_pad_study.py, exports/body/bay-pad-study.json.
-#   h       free height 50 mm. The falls need it: a pad lands either flat on all four (a gentle push) or on two (the front
-#           and back falls), and a crush pad's plateau must be low enough for four together (<= ~650 N each under
-#           3,000 N) yet absorb the two-pad landing's ~30 J within its stroke: 25 mm (at the 160 mm lowest controlled leg)
-#           and 35 mm pads fail some of the nine falls at every plateau; 45 mm passes only in a 600-650 N window (600
-#           reaches its stroke at push x1.4, 650 peaks at 2,909 N at x0.6: the review of #21); 50 mm with 600 N keeps
-#           its stroke at every push (sim/bay_pad_study.py depth, exports/body/bay-pad-depth.json). So the lowest
-#           controlled leg rises from 160 to 185 mm (sim/robot_v2.py H_RANGE reads it from here; the leg's stops do not
-#           move), which keeps D69's 40 mm under the pads (puddles, the rolling step); they touch the ground under a
-#           145 mm leg
-#   w       24 mm under each of the floor's long edges, front and rear halves of its length
-#   stroke  0.6 h: a gyroid lattice densifies past about 60 % strain
-#   k       its initial stiffness, per pad (N/mm): a crush lattice reaches its plateau within ~10 % strain;
-#           plateau_n its crush force, per pad (N); c its damper (N s/m)
-#   unload_ratio  the share of the elastic force a pad pushes back with while it unloads. The study's finding: a pad that
-#           gives back much of what it stores bounces the robot in the back fall and tips it onto its face (the lidar
-#           strikes the floor). The coupon's drop and rebound test measures it
-PAD = {'h': 50.0, 'w': 24.0, 'l': None, 'stroke': 30.0, 'k_n_per_mm': 500.0, 'plateau_n': 600.0, 'c_ns_per_m': 100.0,
-       'unload_ratio': 0.2, 'material': 'tpu95-gyroid', 'wheel_r': 127.0, 'lowest_leg_mm': 185.0,
-       'basis': 'issue #19: sized by sim/bay_pad_study.py on the D69 model; a coupon drop test to confirm k, the plateau and the rebound'}
-if os.environ.get('GYROPUP_PAD_H'):          # a study's deeper pad (sim/bay_pad_study.py depth): stroke 0.6 h
-    PAD.update(h=float(os.environ['GYROPUP_PAD_H']), stroke=0.6 * float(os.environ['GYROPUP_PAD_H']),
-               lowest_leg_mm=160.0 + float(os.environ['GYROPUP_PAD_H']) - 25.0)     # 40 mm under the pad, as designed
-SKID_T = PAD['h']
-RAIL_W, RAIL_H = 8.0, 10.0                   # the printed rails at the top, inside the side plates
-THUMB = {'thread': 'M3', 'length': 10.0}     # the doors' knurled thumbscrews into the rails' end inserts
-LEADS_SLOT = (-30.0, 24.0)                   # the belly's slot for the two leads (x centre, length): between the standoffs at x -72 and -10
+
+def pack_profile(profile='DCB609'):
+    """A dated nominal outline or an explicitly supplied smaller planning envelope.
+
+    Bounds are checked against the reference union; choosing a smaller envelope
+    never rescales the adapter, rail or mounting datum. Electrical/interface fit
+    is not inferred from an outline. Custom mass must be provided independently.
+    """
+    if isinstance(profile, str):
+        if profile not in PACK_PROFILES:
+            raise ValueError(f'Unknown pack profile: {profile}')
+        out = dict(PACK_PROFILES[profile], profile=profile, source=PACK_OUTLINE_SOURCE)
+    elif isinstance(profile, Mapping):
+        if set(profile) - {'name', 'source', 'L', 'W', 'H', 'mass_g'}:
+            raise ValueError('Custom pack accepts only overall dimensions, mass, name and source; no inferred interface or electrical specification')
+        out = dict(profile)
+        out.setdefault('name', 'Smaller conditional pack envelope')
+        out['profile'] = 'custom'
+        out.setdefault('source', 'User-supplied planning envelope; not a measured mating interface')
+    else:
+        raise ValueError('Pack profile must name a supported pack or supply an explicit envelope')
+    if any(not isinstance(out.get(key), str) or not out[key].strip() for key in ('name', 'source')):
+        raise ValueError('Pack name and source must be nonempty text')
+    for key in ('L', 'W', 'H', 'mass_g'):
+        value = out.get(key)
+        try:
+            number = float(value) if not isinstance(value, bool) and isinstance(value, (int, float)) else math.nan
+        except (OverflowError, ValueError):
+            number = math.nan
+        if not math.isfinite(number) or number <= 0:
+            raise ValueError(f'Pack {key} must be finite and positive')
+        out[key] = number
+    if not math.isfinite(2.0 * out['mass_g']):
+        raise ValueError('Combined pack mass must remain finite')
+    if any(out[key] > cap for key, cap in zip(('L', 'W', 'H'), SUPPORTED_OUTLINE_MM)):
+        raise ValueError('Pack exceeds the supported reference envelope; recheck the holder and all clearances')
+    out.update(envelope=True, interface_measured=False, physical_fit_verified=False,
+               blocked_by='issue #20 / #193: actual pack and Azocek rail, latch, terminals and mounting-hole measurements')
+    if out['profile'] == 'DCB609':
+        out['mass_basis'] = '1.565 kg retained conservative planning mass; AMKUS lists 1.45 kg; actual pack unweighed'
+    else:
+        out['mass_basis'] = 'AMKUS published mass' if out['profile'] == 'DCB606' else 'User-supplied planning mass'
+    return out
+
+
+def _placed_bounds(box, matrix):
+    """Bounds of eight independently transformed corners; no CAD or interface scaling."""
+    points = [tuple(sum(matrix[4 * row + col] * p[col] for col in range(3)) + matrix[4 * row + 3]
+                    for row in range(3))
+              for p in ((x, y, z) for x in box[:2] for y in box[2:4] for z in box[4:6])]
+    return tuple(value for axis in range(3) for value in (min(p[axis] for p in points), max(p[axis] for p in points)))
+
+
+def end_pack_geometry(profile='DCB609', *, belly_z=None, body_x=None, support_t=None):
+    """Conditional vertical end packs in the existing robot frame (mm, z up).
+
+    Local X is the upward rail axis, Y is lateral, and +Z points into the adapter.
+    The top/mating reference is fixed by the maximum reference outline, not by a
+    variant's dimensions. Its actual relationship to a purchased latch is unknown.
+    """
+    spec = pack_profile(profile)
+    belly_z = z_belly() if belly_z is None else belly_z
+    body_x = bp.BODY_X if body_x is None else body_x
+    support_t = bp.STOCK[END_PACK['support_stock']]['t'] if support_t is None else support_t
+    try:
+        valid_frame = (isinstance(body_x, (list, tuple)) and len(body_x) == 2 and
+            all(not isinstance(v, bool) and isinstance(v, (int, float)) and math.isfinite(v)
+                for v in (*body_x, belly_z, support_t)) and body_x[0] < body_x[1] and support_t > 0)
+    except (OverflowError, TypeError, ValueError):
+        valid_frame = False
+    if not valid_frame:
+        raise ValueError('End-pack frame needs finite ordered body ends, belly height and positive support thickness')
+    al, aw, ah = SELECTED_ADAPTER['planning_outline_mm']
+    cap_l, cap_w, cap_h = SUPPORTED_OUTLINE_MM
+    top_z = belly_z + cap_l + END_PACK['bottom_margin_mm']
+    travel = cap_l + END_PACK['hand_clearance_mm']
+    local = (-spec['L'], 0.0, -spec['W'] / 2, spec['W'] / 2, -spec['H'], 0.0)
+    conservative = (-cap_l, 0.0, -cap_w / 2, cap_w / 2, -cap_h, 0.0)
+    adapter = (-al, 0.0, -aw / 2, aw / 2, 0.0, ah)
+    out = {'profile': spec, 'reference_union_mm': list(SUPPORTED_OUTLINE_MM),
+           'reference_union_measured': False, 'z_belly': float(belly_z), 'support_t': float(support_t),
+           'removal_offset_mm': (0.0, 0.0, travel), 'insertion_direction': (0.0, 0.0, -1.0),
+           'transforms': {}, 'packs': {}, 'adapters': {}, 'clearance_packs': {}, 'removal_volumes': {}}
+    for end, sign, body_end in (('front', 1.0, body_x[1]), ('rear', -1.0, body_x[0])):
+        datum_x = body_end + sign * (END_PACK['shell_allowance_mm'] + END_PACK['wall_gap_mm'] + support_t + ah)
+        # Front: RY(-90). Rear: RZ(180)*front. Both have determinant +1,
+        # local +X -> world +Z and mating +Z -> inward; neither reflects a mesh.
+        matrix = (0.0, 0.0, -sign, datum_x, 0.0, sign, 0.0, 0.0, 1.0, 0.0, 0.0, top_z)
+        out['transforms'][end] = matrix
+        out['packs'][end] = _placed_bounds(local, matrix)
+        out['adapters'][end] = _placed_bounds(adapter, matrix)
+        b = _placed_bounds(conservative, matrix)
+        out['clearance_packs'][end] = b
+        out['removal_volumes'][end] = (*b[:5], b[5] + travel)
+    return out
+
+
+PACK = pack_profile()
+PACK.update(series=5, source='ENVELOPE: dated nominal outline, not mating CAD; ' + PACK_OUTLINE_SOURCE)
+ADAPTER = dict(SELECTED_ADAPTER, L=100.0, W=72.0, H=25.0, mass_g=150.0, envelope=True,
+               basis='ENVELOPE: unmeasured Azocek B0CDGR4Y8K; 100x72x25 mm reservation and 150 g assumed mass, not a specification',
+               blocked_by='issue #20 / #193: measure and weigh selected Azocek adapter')
+SERIES = 2 * PACK['series']
+V_FULL, V_NOM, V_EMPTY = 4.1 * SERIES, 3.6 * SERIES, 3.0 * SERIES
+R_PACK_OHM = 0.10  # existing electrical model; this placement change does not qualify a new supply
+LEADS_SLOT = (-30.0, 24.0)  # retained spine-gap harness opening, not a selected electrical topology
+PAD = {'lowest_leg_mm': 185.0, 'wheel_r': 127.0,
+       'basis': 'Existing controller/firmware limits retained; historical bay-pad law is NOT adopted for end feet'}
+END_FOOT = {'sit_leg_mm': 101.5, 'flange_t': 4.0, 'counterbore_depth': 1.5,
+            'sole_t': 8.0, 'rib_t': 10.0, 'material': 'pa6-cf',
+            'compliance_qualified': False, 'force_curve': None,
+            'basis': 'Rigid WIP sit support at the existing mechanical leg-stop reference; no inherited crush-pad/drop acceptance'}
 
 
 def z_belly():
-    """The belly plate's underside: the bay's roof."""
+    """Existing belly underside; the protected hip/leg datums do not move."""
     return -bp.z_spine_top() - bp.STOCK[bp.BELLY]['t']
 
 
-@functools.lru_cache(maxsize=1)
-def geometry():
-    """The bay's numbers (robot frame)."""
-    t = bp.STOCK[TUB_STOCK]['t']
-    zr = z_belly()
-    z_adapter = (zr - PLATE_T - ADAPTER['H'], zr - PLATE_T)
-    z_pack = (z_adapter[0] - PACK['H'], z_adapter[0])
-    z_floor_top = z_pack[0] - FLOOR_CLEAR
-    side_in = PACK['W'] / 2 + SIDE_CLEAR + t                  # the floor's flanges sit inside the side plates
-    side_out = side_in + t
-    inner_x = PACK['L'] * 2 + GAP_MID + 2 * END_CLEAR
-    x_in = (-inner_x / 2, inner_x / 2)
-    x_out = (x_in[0] - DOOR_T, x_in[1] + DOOR_T)
-    packs = {'front': (GAP_MID / 2, GAP_MID / 2 + PACK['L']), 'rear': (-GAP_MID / 2 - PACK['L'], -GAP_MID / 2)}
-    adapters = {k: ((a + b) / 2 - ADAPTER['L'] / 2 + (1 if k == 'front' else -1) * (PACK['L'] - ADAPTER['L']) / 2,
-                    (a + b) / 2 + ADAPTER['L'] / 2 + (1 if k == 'front' else -1) * (PACK['L'] - ADAPTER['L']) / 2)
-                for k, (a, b) in packs.items()}             # each adapter at its door's end: the latch and release face the door
-    return {'t': t, 'z_belly': zr, 'z_adapter': z_adapter, 'z_pack': z_pack, 'z_floor_top': z_floor_top, 'z_floor': z_floor_top - t,
-            'z_bottom': z_floor_top - t - SKID_T, 'side_in': side_in, 'side_out': side_out, 'flange_in': side_in - t,
-            'x_in': x_in, 'x_out': x_out, 'packs': packs, 'adapters': adapters,
-            'rail_y': (side_in - RAIL_W, side_in),
-            'rail_z': (zr - RAIL_H, zr), 'half_y': side_out}
+def geometry(profile='DCB609'):
+    """The canonical current end-pack placement, shared by CAD/layout/reports."""
+    g = end_pack_geometry(profile)
+    g['layout'] = 'front-rear-vertical-drop-in'
+    g['foot_bottom_z'] = -END_FOOT['sit_leg_mm'] - PAD['wheel_r']
+    g['holder_half_y'] = SUPPORTED_OUTLINE_MM[1] / 2 + 6.0
+    g['base_top_z'] = g['z_belly']
+    g['base_bottom_z'] = g['z_belly'] - g['support_t']
+    return g
 
 
-def pack_boxes():
-    g = geometry()
-    return {k: (a, b, -PACK['W'] / 2, PACK['W'] / 2, *g['z_pack']) for k, (a, b) in g['packs'].items()}
+def foot_collision_boxes(end='front', g=None):
+    """Conservative stock boxes for conditional rigid-foot simulation.
+
+    Screw/tool holes are omitted from these boxes. This is not exact native
+    contact geometry and carries no inherited drop/compliance qualification.
+    """
+    if end not in ('front', 'rear'):
+        raise ValueError('Unknown end-pack holder')
+    g = geometry() if g is None else g
+    x1, hy = g['adapters']['front'][0], g['holder_half_y']
+    top, bottom = g['base_bottom_z'], g['foot_bottom_z']
+    ft, st, rt = END_FOOT['flange_t'], END_FOOT['sole_t'], END_FOOT['rib_t']
+    boxes = [(94.0, x1, -hy, hy, top-ft, top), (120.0, x1, -hy, hy, bottom, bottom+st),
+             (130.0, 160.0, -hy, -hy+rt, bottom+st, top-ft),
+             (130.0, 160.0, hy-rt, hy, bottom+st, top-ft)]
+    return boxes if end == 'front' else [(-b[1], -b[0], -b[3], -b[2], b[4], b[5]) for b in boxes]
+
+
+def pack_boxes(profile='DCB609'):
+    return geometry(profile)['packs']
 
 
 def adapter_boxes():
-    g = geometry()
-    return {k: (a, b, -ADAPTER['W'] / 2, ADAPTER['W'] / 2, *g['z_adapter']) for k, (a, b) in g['adapters'].items()}
+    return geometry()['adapters']
+
+
+def plate_holes(end):
+    """Retain the existing known belly end lands; never invent Azocek holes."""
+    if end not in ('front', 'rear'):
+        raise ValueError('Unknown end-pack holder')
+    sign = 1.0 if end == 'front' else -1.0
+    return [(sign * x, y) for x in (102.0, 150.0) for y in (-30.0, 30.0)]
 
 
 def summary():
     g = geometry()
-    wheel_r = PAD['wheel_r']                                 # D69's 10 in tyre
-    sit = -g['z_bottom'] - wheel_r                           # the leg length at which the pads touch the floor
-    return {'pack': PACK['name'], 'config': f'{SERIES}S3P (two packs in series)', 'v_full': round(V_FULL, 1), 'v_nominal': V_NOM, 'v_empty': V_EMPTY,
-            'wh_rated': 2 * PACK['wh_rated'], 'packs_kg': round(2 * PACK['mass_g'] / 1000, 2),
-            'bay_mm': [round(g['x_out'][1] - g['x_out'][0], 1), round(2 * g['side_out'], 1), round(g['z_belly'] - g['z_bottom'], 1)],
-            'bay_bottom_z': round(g['z_bottom'], 1), 'sits_on_skids_below_leg_mm': round(sit, 1),
-            'clearance_at_lowest_leg_mm': round(PAD['lowest_leg_mm'] + wheel_r + g['z_bottom'], 1),
-            'clearance_at_300_mm': round(300 + wheel_r + g['z_bottom'], 1), 'pad': {k: v for k, v in PAD.items() if k != 'basis'},
-            'knee_gap_mm': round(83.0 - g['side_out'], 1), 'adapter': ADAPTER['basis']}
+    lowest = g['foot_bottom_z']
+    return {'layout': 'front-rear-vertical-drop-in', 'pack': PACK['name'], 'profile': g['profile'],
+            'reference_union_mm': g['reference_union_mm'], 'reference_union_measured': False,
+            'config': f'{SERIES}S; existing electrical model unchanged',
+            'v_full': round(V_FULL, 1), 'v_nominal': V_NOM, 'v_empty': V_EMPTY,
+            'wh_rated': 2 * PACK['wh_rated'], 'packs_kg': 2 * PACK['mass_g'] / 1000,
+            'pack_boxes_mm': g['packs'], 'adapter_boxes_mm': g['adapters'],
+            'removal_offset_mm': g['removal_offset_mm'], 'removal_volumes_mm': g['removal_volumes'],
+            'belly_z_mm': g['z_belly'], 'foot_bottom_z_mm': lowest,
+            'sits_at_leg_mm': END_FOOT['sit_leg_mm'],
+            'clearance_at_lowest_leg_mm': PAD['lowest_leg_mm'] + PAD['wheel_r'] + lowest,
+            'clearance_at_300_mm': 300.0 + PAD['wheel_r'] + lowest,
+            'adapter': dict(SELECTED_ADAPTER), 'support': dict(END_FOOT),
+            'limits': ['Pack/adapter fit, latch and retention unmeasured',
+                       'New support/camera/leg/removal clearances need native checks',
+                       'Old belly-pad fall results do not qualify these rigid end feet']}
 
-
-# ------------------------------------------------------------------------------------------- the parts
 
 def _box(x0, x1, y0, y1, z0, z1):
-    (x0, x1), (y0, y1), (z0, z1) = sorted((x0, x1)), sorted((y0, y1)), sorted((z0, z1))
-    return cq.Workplane('XY').box(x1 - x0, y1 - y0, z1 - z0, centered=False).translate((x0, y0, z0))
+    return cq.Workplane('XY').box(x1-x0, y1-y0, z1-z0, centered=False).translate((x0, y0, z0))
 
 
-def _cyl_z(r, z0, z1, x=0.0, y=0.0):
-    return cq.Workplane('XY').workplane(offset=z0).center(x, y).circle(r).extrude(z1 - z0)
+def holder_part():
+    """One-bend body-owned backing bracket, reused at the rear by a rigid rotation.
 
-
-def _cyl_y(r, y0, y1, x=0.0, z=0.0):
-    return cq.Workplane('XZ', origin=(0, y1, 0)).center(x, z).circle(r).extrude(y1 - y0)
-
-
-def _cyl_x(r, x0, x1, y=0.0, z=0.0):
-    return cq.Workplane('YZ', origin=(x0, 0, 0)).center(y, z).circle(r).extrude(x1 - x0)
-
-
-# The belly's nuts for the bay: S-M4-0, their bodies on the belly's top, so only beyond the cheeks' ends (|x| > 92: inside
-# them the cheeks' lower flanges lie on the belly out to |y| 45.5)
-BELLY_NUT_X = (-150.0, -102.0, 102.0, 150.0)
-
-
-def plate_holes(k):
-    """An adapter plate's four M4 screws up into the belly's PEM nuts (robot x, y): at its outer end, beyond the cheeks."""
-    sx = 1.0 if k == 'front' else -1.0
-    return [(sx * x, y) for x in (102.0, 150.0) for y in (-ADAPTER['W'] / 2 + 6.0, ADAPTER['W'] / 2 - 6.0)]
-
-
-def rail_holes():
-    """The rails' M4 screws up into the belly's PEM nuts (robot x, |y|): four each, beyond the cheeks' ends."""
+    Its base uses known belly PEM lands. The vertical face has no guessed bought
+    adapter holes: that mounting interface remains explicitly unresolved.
+    """
+    from hardware.cad.body import body_sheet as sheet
     g = geometry()
-    yc = (g['rail_y'][0] + g['rail_y'][1]) / 2
-    return [(x, yc) for x in BELLY_NUT_X]
+    x0 = 94.0
+    outer_x = g['adapters']['front'][0]
+    width = 2 * g['holder_half_y']
+    height = g['transforms']['front'][11] - g['base_bottom_z']
+    features = [sheet.Feature('hole', 'base', (x-x0, y+width/2), 4.5,
+                              note='M4 existing belly end lands; no bought-adapter pattern')
+                for x, y in plate_holes('front')]
+    return sheet.SheetPart('end_pack_holder', END_PACK['support_stock'], outer_x-x0, width,
+                           flanges=[sheet.Flange('E', height)], features=features, qty=2,
+                           note='Conditional WIP one-bend support; Azocek mounting/retention unresolved; verify loads and all clearances')
 
 
-SIDE_SCREWS_X = (-125.0, -60.0, 0.0, 60.0, 125.0)            # the side plates into the floor's flange nuts and the rails' inserts
-
-
-def adapter_plate(k):
-    """A printed PA6-CF plate under the belly that carries one adapter: four M4 counterbored from below up into the
-    belly's nuts (the heads under the adapter's footprint's edges), the adapter's own screws into inserts set on arrival."""
+def place_holder(shape, end='front'):
+    if end not in ('front', 'rear'):
+        raise ValueError('Unknown end-pack holder')
     g = geometry()
-    a, b = g['adapters'][k]
-    a, b = (min(a, 96.0), min(max(b, 154.5), g['x_in'][1] - 0.5)) if k == 'front' else (max(min(a, -154.5), g['x_in'][0] + 0.5), max(b, -96.0))
-    zr = g['z_belly']
-    w = ADAPTER['W'] / 2
-    s = _box(a, b, -w, w, zr - PLATE_T, zr)
-    for x, y in plate_holes(k):
-        s = s.cut(_cyl_z(2.25, zr - PLATE_T - 1, zr + 1, x, y)).cut(_cyl_z(4.0, zr - PLATE_T - 1, zr - PLATE_T + 1.5, x, y))
-    return s
+    s = shape.translate((94.0, -g['holder_half_y'], g['base_bottom_z']))
+    return s if end == 'front' else s.rotate((0, 0, 0), (0, 0, 1), 180)
 
 
-def rail(side):
-    """A rail (PA6-CF), inside the side plate at the top: up into the belly's nuts (M4, heads sunk), the side plate's
-    top row into its inserts (M3), the doors' thumbscrews into inserts in its ends."""
+def end_foot(end='front'):
+    """Rigid WIP sit frame with a real load path and open middle, not old pad geometry.
+
+    Counterbored top seats reuse the current M4x12 family. Bottom access holes
+    leave the same bolt axes open for a tool; contact/drop strength is unverified.
+    """
+    if end not in ('front', 'rear'):
+        raise ValueError('Unknown end-pack holder')
     g = geometry()
-    sy = 1.0 if side == 'l' else -1.0
-    y0, y1 = sorted((sy * g['rail_y'][0], sy * g['rail_y'][1]))
-    z0, z1 = g['rail_z']
-    x0, x1 = g['x_in']
-    r = _box(x0, x1, y0, y1, z0, z1)
-    yc = (y0 + y1) / 2
-    for x, _ in rail_holes():                                 # M4 x 20 socket heads under the rail (19 mm over the packs)
-        r = r.cut(_cyl_z(2.25, z0 - 1, z1 + 1, x, yc))
-    zc = (z0 + z1) / 2
-    for x in SIDE_SCREWS_X:                                   # M3 inserts from the outer face (the side plate's top row)
-        yo = sy * g['side_in']
-        r = r.cut(_cyl_y(2.0, *sorted((yo, yo - sy * 6.5)), x, zc))
-    for xe, d in ((x0, 1), (x1, -1)):                          # the doors' thumbscrews: M3 inserts in the ends
-        r = r.cut(_cyl_x(2.0, *sorted((xe, xe + d * 7.5)), yc, zc))
-    return r
+    x1, hy = g['adapters']['front'][0], g['holder_half_y']
+    top, bottom = g['base_bottom_z'], g['foot_bottom_z']
+    flange_t, sole_t = END_FOOT['flange_t'], END_FOOT['sole_t']
+    s = _box(94.0, x1, -hy, hy, top-flange_t, top)
+    s = s.union(_box(120.0, x1, -hy, hy, bottom, bottom+sole_t))
+    for y0, y1 in [(-hy, -hy+END_FOOT['rib_t']), (hy-END_FOOT['rib_t'], hy)]:
+        s = s.union(_box(130.0, 160.0, y0, y1, bottom+sole_t, top-flange_t))
+    for x, y in plate_holes('front'):
+        s = s.cut(cq.Workplane('XY', origin=(x, y, top-flange_t-1)).circle(2.25).extrude(flange_t+2))
+        s = s.cut(cq.Workplane('XY', origin=(x, y, top-flange_t-1)).circle(4.0).extrude(END_FOOT['counterbore_depth']+1))
+        if x >= 120.0:
+            s = s.cut(cq.Workplane('XY', origin=(x, y, bottom-1)).circle(4.0).extrude(sole_t+2))
+    return s if end == 'front' else s.rotate((0, 0, 0), (0, 0, 1), 180)
 
 
-def floor_part():
-    """The bay's floor (SendCutSend 5052-H32 0.063 in): a U with 20 mm flanges up, PEM S-M3-0 in the flanges for the side
-    plates' bottom row, the skids' holes."""
-    import hardware.cad.body.body_sheet as bs
-    g = geometry()
-    L = g['x_in'][1] - g['x_in'][0]
-    W = 2 * g['side_in'] - 0.1                                   # its flanges inside the side plates
-    feats = []
-    for x in SIDE_SCREWS_X:
-        for e in ('S', 'N'):
-            feats.append(bs.Feature('pem', e, (x - g['x_in'][0], 12.0), bp.PEM['S-M3-0']['H'], spec='S-M3-0', note='bay side plate'))
-    feats.append(bs.Feature('slot', 'base', (L / 2, W / 2), size=(24.0, 40.0, 4.0), note='drain and the leads\' inspection'))
-    return bs.SheetPart('bay_floor', TUB_STOCK, L, W, flanges=[bs.Flange('S', TUB_FLANGE), bs.Flange('N', TUB_FLANGE)], features=feats,
-                        note='the battery bay\'s floor: flanges up; PEM S-M3-0 pressed from the inside')
-
-
-def side_part():
-    """A bay side plate (SendCutSend 5052-H32 0.063 in, flat; one part for both sides), three lightening windows."""
-    import hardware.cad.body.body_sheet as bs
-    g = geometry()
-    L = g['x_in'][1] - g['x_in'][0]
-    H = g['z_belly'] - g['z_floor']
-    feats = []
-    for x in SIDE_SCREWS_X:
-        feats.append(bs.Feature('hole', 'base', (x - g['x_in'][0], 12.0), 3.4,
-                                note='into the floor flange\'s nut: M3 x 6, or M3 x 10 through a crush pad\'s lip (#26)'))
-        feats.append(bs.Feature('hole', 'base', (x - g['x_in'][0], H - RAIL_H / 2), 3.4, note='M3 x 6 into the rail\'s insert'))
-    zw0, zw1 = TUB_FLANGE + 6.0, H - RAIL_H - 6.0
-    for xa, xb in ((-115.0, -70.0), (-50.0, -10.0), (10.0, 50.0), (70.0, 115.0)):
-        feats.append(bs.Feature('slot', 'base', (((xa + xb) / 2) - g['x_in'][0], (zw0 + zw1) / 2), size=(xb - xa, zw1 - zw0, 6.0),
-                                note='lightening window'))
-    return bs.SheetPart('bay_side', TUB_STOCK, L, H, features=feats, qty=2, note='flat; the two sides are the same part')
-
-
-def place_floor(shape):
-    g = geometry()
-    W = 2 * g['side_in'] - 0.1
-    return shape.translate((g['x_in'][0], -W / 2, g['z_floor']))
-
-
-def place_side(shape, side):
-    g = geometry()
-    s = shape.rotate((0, 0, 0), (1, 0, 0), 90).translate((g['x_in'][0], 0, g['z_floor']))     # (u, v, w) -> (x, -w, z)
-    return s.translate((0, g['side_out'], 0)) if side == 'l' else s.mirror('XZ').translate((0, -g['side_out'], 0))
-
-
-def door(front):
-    """An end door (PETG, 4 mm): the pack slides out behind it; two knurled M3 thumbscrews into the rails' ends."""
-    g = geometry()
-    x0, x1 = (g['x_in'][1], g['x_out'][1]) if front else (g['x_out'][0], g['x_in'][0])
-    w = g['side_out']
-    d = _box(x0, x1, -w, w, g['z_floor'], g['z_belly'] - 0.5).edges('|X').fillet(3.0)
-    zc = sum(g['rail_z']) / 2
-    yc = (g['rail_y'][0] + g['rail_y'][1]) / 2
-    for y in (yc, -yc):
-        d = d.cut(_cyl_x(1.7, x0 - 1, x1 + 1, y, zc))
-    return d
-
-
-def pad_boxes():
-    """The four crush pads' boxes (x0, x1, y0, y1, z0, z1), robot frame: under the floor's long edges, front and rear halves."""
-    g = geometry()
-    W = 2 * g['side_in'] - 0.1
-    half = (g['x_in'][1] - g['x_in'][0] - 12) / 2
-    ln = PAD['l'] or half
-    out = []
-    for sy in (1.0, -1.0):
-        for x0 in (g['x_in'][0] + 5.0, g['x_in'][1] - 5.0 - ln):
-            y0, y1 = sorted((sy * (W / 2 - 1.0), sy * (W / 2 - 1.0 - PAD['w'])))
-            out.append((x0, x0 + ln, y0, y1, g['z_bottom'], g['z_floor']))
-    return out
-
-
-# Issue #26: the pads' retention. VHB alone may peel in a sliding or slanted landing (the sim's pads are rigid sideways),
-# so each pad carries a solid 3 mm lip up the side plate's outer face, joined to its lattice by a solid web under the
-# floor's edge and the side plate's bottom edge, and the side plate's two low M3 screws over it pass through the lip into
-# the floor flange's existing PEM S-M3-0 nuts (M3 x 10 for the M3 x 6: the floor is not changed). The lattice below the
-# web is the crush pad the sim models; the web's underside stays 44 mm over the ground, above the 30 mm stroke.
-LIP = {'t': 3.0, 'h': 18.0, 'web_t': 6.0}         # mm: the lip's thickness and height over the floor's underside; the web
-# A side-plate screw that does not pass through a lip (x 0, between the front and rear pads) keeps its head clear of
-# both lips: the M3 socket head is Ø5.5 (91290A111), so each lip ends 4 mm from that screw's axis (1.25 mm clear).
-LIP_HEAD_CLEAR = 4.0
-# The four lip screws clamp TPU 95A (3 mm) between the side plate and the floor flange, and TPU creeps: they are
-# tightened snug with medium-strength threadlocker on the thread (the S-M3-0 nuts do not lock), and the joint carries
-# the floor in bearing on the screws' shanks, as before. If the bench shows them loosening, a 3 mm steel compression
-# sleeve in each lip hole takes the TPU out of the clamp (#26).
-LIP_SCREWS = 'snug, medium-strength threadlocker (TPU 95A in the clamp creeps)'
-
-
-def _through(b, x):
-    """Does the side plate's low screw at x pass through the lip of the pad in box b?"""
-    return b[0] + 6.0 <= x <= b[1] - 6.0
-
-
-def pad_retention_boxes(b):
-    """A pad's solid web and lip (two boxes) for its lattice box b. The lip stops LIP_HEAD_CLEAR short of any low
-    side-plate screw it does not take, so that screw's head seats on the side plate, not on the lip."""
-    g = geometry()
-    x0, x1, y0, y1, z0, z1 = b
-    sy = 1.0 if y0 > 0 else -1.0
-    yi = y1 if sy > 0 else y0                                     # the lattice's outer face
-    yo = sy * (g['side_out'] + LIP['t'])
-    web = (x0, x1, *sorted((yi, yo)), z1 - LIP['web_t'], z1)
-    lx0, lx1 = x0, x1
-    for x in SIDE_SCREWS_X:
-        if not _through(b, x) and x0 - LIP_HEAD_CLEAR < x < x1 + LIP_HEAD_CLEAR:
-            if x < (x0 + x1) / 2:
-                lx0 = max(lx0, x + LIP_HEAD_CLEAR)
-            else:
-                lx1 = min(lx1, x - LIP_HEAD_CLEAR)
-    lip = (lx0, lx1, *sorted((sy * g['side_out'], yo)), z1, z1 + LIP['h'])
-    return web, lip
-
-
-def pad_web_chamfer(b):
-    """The 45 deg fillet of solid TPU under a pad's web, from the lattice's outer face out to the web's outer edge: the
-    pad prints upright (lattice on the bed), and without it the web would be a 5.65 mm ledge with nothing under it.
-    Returns (x0, x1, yi, yo, z_top): a triangle in y-z (legs |yo - yi|) under z_top, prismatic along x."""
-    web, _ = pad_retention_boxes(b)
-    x0, x1, ya, yb, zw0, _ = web
-    sy = 1.0 if b[2] > 0 else -1.0
-    yi, yo = (ya, yb) if sy > 0 else (yb, ya)
-    return x0, x1, yi, yo, zw0
-
-
-def _chamfer_solid(c):
-    x0, x1, yi, yo, zt = c
-    w = abs(yo - yi)
-    return (cq.Workplane('YZ', origin=(x0, 0, 0)).polyline([(yi, zt), (yo, zt), (yi, zt - w)]).close().extrude(x1 - x0))
-
-
-def pad_solid_volume_mm3(b):
-    """The solid (not lattice) TPU of a pad: its web, lip and the web's chamfer, mm^3."""
-    vol = sum((q[1] - q[0]) * (q[3] - q[2]) * (q[5] - q[4]) for q in pad_retention_boxes(b))
-    x0, x1, yi, yo, _ = pad_web_chamfer(b)
-    return vol + 0.5 * (yo - yi) ** 2 * (x1 - x0)
-
-
-def skids():
-    """The crush pads as solids (the names stay bay_skid_N: the joints and the views know them by it): the lattice, its
-    web and its lip, one printed part (the lattice gyroid, the web and lip solid: two process settings in one print)."""
-    g = geometry()
-    out = []
-    for b in pad_boxes():
-        web, lip = pad_retention_boxes(b)
-        s = _box(*b).union(_box(*web)).union(_box(*lip)).union(_chamfer_solid(pad_web_chamfer(b)))
-        for x in SIDE_SCREWS_X:                                   # the side plate's low screws through the lip: Ø3.4
-            if _through(b, x):
-                s = s.cut(cq.Workplane('XZ').workplane(offset=-(lip[3] + 1.0)).center(x, g['z_floor'] + 12.0).circle(1.7)
-                          .extrude(lip[3] - lip[2] + 2.0))
-        out.append(s)
-    return out
-
-
-def pad_screws():
-    """The side plates' low screws that pass through a pad's lip: {(side, x): pad index 1..4}."""
+def end_parts():
+    """Current structural candidates only; no old bay floor, doors or crush pads."""
+    from hardware.cad.body.body_frame import Part
+    sheet = holder_part()
+    local = sheet.solid()
     out = {}
-    for i, b in enumerate(pad_boxes()):
-        side = 'l' if b[2] > 0 else 'r'
-        for x in SIDE_SCREWS_X:
-            if b[0] + 6.0 <= x <= b[1] - 6.0:
-                out[(side, x)] = i + 1
-    return out
-
-
-def bay_parts() -> dict:
-    """Every part of the bay as body_frame.Part (robot frame), from P1."""
-    import hardware.cad.body.body_frame as bf
-    Part = bf.Part
-    out = {}
-    pa6, petg, al = (0.22, 0.24, 0.27), (0.85, 0.55, 0.15), (0.66, 0.70, 0.75)
-    fl = floor_part()
-    fls = fl.solid()
-    out['bay_floor'] = Part('bay_floor', 'sheet', place_floor(fls), 1, fl, fls, fl.s['material'], colour=al, note=fl.note)
-    sd = side_part()
-    sds = sd.solid()
-    for side in ('l', 'r'):
-        out[f'bay_side_{side}'] = Part(f'bay_side_{side}', 'sheet', place_side(sds, side), 1, sd if side == 'l' else None, sds,
-                                       sd.s['material'], colour=al, note=sd.note)
-        out[f'bay_rail_{side}'] = Part(f'bay_rail_{side}', 'printed', rail(side), 1, material='pa6-cf', colour=pa6,
-                                       note='PA6-CF; four M4 x 20 up into the belly\'s nuts, five M3 inserts, two in its ends')
-    for k in ('front', 'rear'):
-        out[f'adapter_plate_{k}'] = Part(f'adapter_plate_{k}', 'printed', adapter_plate(k), 1, material='pa6-cf', colour=pa6,
-                                         note='PA6-CF; four M4 x 12 up into the belly\'s nuts; the adapter\'s screws into inserts set on arrival')
-        out[f'bay_door_{k}'] = Part(f'bay_door_{k}', 'printed', door(k == 'front'), 1, material='petg', colour=petg,
-                                    note='PETG; two knurled M3 x 10 thumbscrews into the rails\' ends', print_rotation=((0, 1, 0), 90))
-    for i, sk in enumerate(skids()):
-        out[f'bay_skid_{i + 1}'] = Part(f'bay_skid_{i + 1}', 'printed', sk, 1, material=PAD['material'], colour=(0.15, 0.15, 0.17),
-                                        note=f"crush pad (#19): TPU 95A HF gyroid lattice, {PAD['h']:.0f} mm free, {PAD['stroke']:.0f} mm stroke, "
-                                             f"{PAD['plateau_n']:.0f} N plateau, on 3M VHB tape, its solid lip under the side plate's two low M3 x 10 (#26); "
-                                             'the robot sits on these')
+    for end in ('front', 'rear'):
+        name = f'end_pack_holder_{end}'
+        out[name] = Part(name, 'sheet', place_holder(local, end), sheet=sheet if end == 'front' else None,
+                         local=local, material=sheet.s['material'], colour=(.66, .70, .75), note=sheet.note)
+        name = f'end_foot_{end}'
+        out[name] = Part(name, 'printed', end_foot(end), material=END_FOOT['material'], colour=(.22, .24, .27),
+                         print_rotation=((0, 1, 0), 90),
+                         note='Conditional rigid sit support; no compliance/drop or manufacturing qualification')
     return out

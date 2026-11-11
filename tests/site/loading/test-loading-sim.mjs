@@ -2,6 +2,10 @@
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {chromium,webkit} from '@playwright/test';
+import {CURRENT_ROBOT_SOURCE} from '../../../software/site/designer/robot_current_source.js';
+assert.equal(CURRENT_ROBOT_SOURCE?.file,'web/robot-current/manifest.json','This test owns the actual adopted current startup');
+assert.equal(CURRENT_ROBOT_SOURCE.sha256,'3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3');
+const currentManifest=url=>url.pathname==='/'+CURRENT_ROBOT_SOURCE.file;
 const base=(process.env.SITE_URL||'http://127.0.0.1:8892').replace(/\/$/,'');
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
@@ -11,7 +15,7 @@ const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);
 page.on('pageerror',e=>errors.push(e.message));
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-loading-sim';await mkdir(out,{recursive:true});
 const status=page.locator('#sim-loading'),retry=status.locator('[data-retry]');
-const ready=()=>page.waitForFunction(()=>document.body.dataset.ready==='1'&&window.__sim?.talk&&document.getElementById('sim-startup').hidden);
+const ready=()=>page.waitForFunction(()=>document.body?.dataset.ready==='1'&&window.__sim?.talk&&document.getElementById('sim-startup')?.hidden);
 const hidden=()=>page.waitForFunction(()=>document.getElementById('sim-loading').hidden);
 const identity=()=>page.evaluate(()=>{const s=window.__sim,k=window.loadingIdentity;return s.stage.scene===k.scene&&s.talk===k.talk&&JSON.stringify(s.talk.conversation)===k.history;});
 const afterFrames=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
@@ -33,13 +37,15 @@ try {
  await page.goto(base+'/designer/sim.html?run=none&demo=0&sound=0',{waitUntil:'networkidle'});
  await page.waitForFunction(()=>document.getElementById('sim-startup').dataset.state==='error');
  assert.equal(await page.locator('#sim-startup button').isVisible(),true);
- await page.route('**/exports/sim/v2/rig/manifest.json',async r=>{await new Promise(resolve=>{releaseModel=resolve;});await r.continue();});
- const modelRequest=page.waitForRequest('**/exports/sim/v2/rig/manifest.json');
+ await page.route(currentManifest,async r=>{await new Promise(resolve=>{releaseModel=resolve;});await r.continue();});
+ const modelRequest=page.waitForRequest(request=>currentManifest(new URL(request.url())));
  await page.locator('#sim-startup button').click();await modelRequest;
  await page.waitForFunction(()=>document.getElementById('sim-startup').dataset.state==='loading');
+ assert.ok(releaseModel,'The actual adopted manifest request is held');
  assert.equal(await page.locator('#sim-startup').getAttribute('aria-busy'),'true');
  assert.match(await page.locator('#sim-startup').textContent(),/Loading/);
- releaseModel();await page.unroute('**/exports/sim/v2/rig/manifest.json');await ready();
+ releaseModel();await page.unroute(currentManifest);await ready();
+ assert.equal(await page.evaluate(()=>window.__sim.state.robot.presentation.collectionSha256),'7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67');
  assert.equal(await page.locator('#app canvas').count(),1);
  await page.unroute('**/designer/sim.js*');
  // Record a real exchange so an empty, recreated conversation cannot pass identity checks.

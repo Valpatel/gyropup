@@ -2,7 +2,7 @@
 
     python tools/simulate.py designs/default.json                # every scenario
     python tools/simulate.py designs/default.json --only stand push --video
-    python tools/simulate.py --v2 [--only ...] [--video]        # Gyropup v2: five-bar legs (sim/robot_v2.py)
+    python tools/engineering/robot/simulate.py --v2 --out /fresh/candidate [--only ...] [--video]
 
 Writes exports/sim/<design>/<scenario>.json (metrics and replay frames), <scenario>.mp4 with --video, and summary.json.
 Swap a part in the design file (or in the designer) and run it again: the model, the controller and the limits all
@@ -32,19 +32,25 @@ from software.simulation.model import build                     # noqa: E402
 from software.simulation.scenarios import SCENARIOS, recoil_scenario, run          # noqa: E402
 
 
-def simulate(design: Path, only=None, video=False, v2=False) -> dict:
+def simulate(design: Path, only=None, video=False, v2=False, out: Path | None = None) -> dict:
     exports = Path(os.environ['GYROPUP_EXPORTS']).resolve() if os.environ.get('GYROPUP_EXPORTS') else (R / 'hardware/exports')
-    if v2:                                               # Gyropup v2: two five-bar legs, the turret, an interim body
-        from software.simulation.robot_v2 import build as build_v2
-        info = build_v2()
-        xml = R / 'build' / 'sim' / 'v2' / 'robot.xml'
-        out = exports / 'sim' / 'v2'
+    if v2:
+        if out is None:
+            raise ValueError('Current v2 simulation requires a fresh --out outside the source checkout')
+        from software.simulation.robot_v2 import build as build_v2, generated_file
+        candidate = Path(out).resolve()
+        info = build_v2(candidate)
+        xml = generated_file(candidate, info['files']['model'])
+        generated_file(candidate, info['files']['rig_manifest'])
+        out, exports = candidate / 'scenarios', candidate / 'evidence'
     else:
+        if out is not None:
+            raise ValueError('--out is currently a v2 candidate option')
         design = Path(design).resolve()
         info = build(design)
         xml = R / 'build' / 'sim' / design.stem / 'robot.xml'
         out = exports / 'sim' / design.stem
-    out.mkdir(parents=True, exist_ok=True)
+    out.mkdir(parents=True, exist_ok=not v2)
     results = {}
     suite = dict(SCENARIOS)
     if info.get('head_payload'):
@@ -70,6 +76,8 @@ def simulate(design: Path, only=None, video=False, v2=False) -> dict:
                'mass_reconciles': info['mass_reconciles'], 'scenarios': prev,
                'passed': sum(1 for s in prev.values() if s['pass']), 'total': len(prev), 'estimates': info['estimates'],
                'physical_test': False}
+    if v2:
+        summary['model_files'] = info['files']
     (out / 'summary.json').write_text(json.dumps(summary, indent=1) + '\n')
     if v2:                                               # the body's evidence (D62): exports/sim/ is not kept in git
         body_evidence(summary, info, exports)
@@ -90,7 +98,8 @@ def body_evidence(summary, info, exports):
           'ledger_kg': (info.get('ledger') or {}).get('total_kg'), 'mass_reconciles': summary['mass_reconciles'], 'bus_v': info.get('bus_v'),
           'com_mm': info.get('com_mm'), 'track_mm': info.get('track_mm'), 'passed': summary['passed'], 'total': summary['total'],
           'design_ballast_kg': info.get('design_ballast_kg', 0.0),
-          'scenarios': rows, 'note': 'tools/simulate.py --v2 (the full results and videos: exports/sim/v2/, not in git)'}
+          'scenarios': rows, 'model_files': info.get('files'), 'physical_test': False,
+          'note': 'Current v2 candidate only; full results/videos are under its fresh scenarios/ directory. Historical rig/results and pad qualification are not replaced.'}
     f = exports / 'body' / ('sim-v2-design-mass.json' if info.get('design_ballast_kg') else 'sim-v2.json')
     f.parent.mkdir(parents=True, exist_ok=True)
     f.write_text(json.dumps(ev, indent=1) + '\n')
@@ -102,11 +111,16 @@ def main():
     ap.add_argument('--only', nargs='+')
     ap.add_argument('--video', action='store_true')
     ap.add_argument('--all', action='store_true')
-    ap.add_argument('--v2', action='store_true', help='Gyropup v2 (five-bar legs, sim/robot_v2.py)')
+    ap.add_argument('--v2', action='store_true', help='Current five-bar model candidate')
+    ap.add_argument('--out', type=Path, help='Fresh v2 candidate root outside the checkout; preserves recorded model/results')
     a = ap.parse_args()
+    if a.v2 and a.out is None:
+        ap.error('--v2 requires a fresh --out outside the source checkout')
+    if not a.v2 and a.out is not None:
+        ap.error('--out is currently a v2 candidate option')
     if a.v2:
         print('Gyropup v2:')
-        s = simulate(None, a.only, a.video, v2=True)
+        s = simulate(None, a.only, a.video, v2=True, out=a.out)
         print(f"  {s['passed']}/{s['total']} scenarios pass; model {s['mass_kg']} kg")
         return 0 if s['passed'] == s['total'] else 1
     designs = sorted(((R / 'hardware/designs')).glob('*.json')) if a.all else [Path(a.design)]

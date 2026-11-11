@@ -1,0 +1,1580 @@
+{
+  "scope": "Actual gamepad A hops, actual existing stage callbacks; explicit1000ms slow-rAF gate is a timing control, not a product or CAD qualification.",
+  "phases": [
+    {
+      "gated": false,
+      "error": null,
+      "jump": null,
+      "y": 0,
+      "demo": {
+        "on": false,
+        "playing": true
+      },
+      "hidden": false,
+      "stageError": null,
+      "trace": [
+        {
+          "t": 1.2638999999761582,
+          "dt": 0.034,
+          "wall": 2903.2999999523163,
+          "jump": {
+            "t": 0,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 1.4565000000000001,
+          "dt": 0.05,
+          "wall": 3095.100000023842,
+          "jump": {
+            "t": 0.05,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 1.7442999999523163,
+          "dt": 0.05,
+          "wall": 3383.2999999523163,
+          "jump": {
+            "t": 0.1,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 1.9406999999284744,
+          "dt": 0.05,
+          "wall": 3579.600000023842,
+          "jump": {
+            "t": 0.15000000000000002,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 2.157399999976158,
+          "dt": 0.05,
+          "wall": 3795.600000023842,
+          "jump": {
+            "t": 0.2,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 2.360100000023842,
+          "dt": 0.05,
+          "wall": 3997.7000000476837,
+          "jump": {
+            "t": 0.25,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 2.5422999999523164,
+          "dt": 0.05,
+          "wall": 4180.5,
+          "jump": {
+            "t": 0.3,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 2.7186999999284747,
+          "dt": 0.05,
+          "wall": 4356.299999952316,
+          "jump": {
+            "t": 0.35,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 2.8988999999761584,
+          "dt": 0.05,
+          "wall": 4537.299999952316,
+          "jump": {
+            "t": 0.39999999999999997,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 3.0723999999761586,
+          "dt": 0.05,
+          "wall": 4710,
+          "jump": {
+            "t": 0.44999999999999996,
+            "from": 0.68
+          },
+          "y": 0.048249437897250114,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 3.250600000023842,
+          "dt": 0.05,
+          "wall": 4888.299999952316,
+          "jump": {
+            "t": 0.49999999999999994,
+            "from": 0.68
+          },
+          "y": 0.14287832197325057,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 3.440600000023842,
+          "dt": 0.05,
+          "wall": 5078.100000023842,
+          "jump": {
+            "t": 0.5499999999999999,
+            "from": 0.68
+          },
+          "y": 0.1879742815390047,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 3.6351999999284748,
+          "dt": 0.05,
+          "wall": 5272.799999952316,
+          "jump": {
+            "t": 0.6,
+            "from": 0.68
+          },
+          "y": 0.17458862059246794,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 3.819199999928475,
+          "dt": 0.05,
+          "wall": 5457.5,
+          "jump": {
+            "t": 0.65,
+            "from": 0.68
+          },
+          "y": 0.13667795964593127,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 4.001799999952317,
+          "dt": 0.05,
+          "wall": 5639.100000023842,
+          "jump": {
+            "t": 0.7000000000000001,
+            "from": 0.68
+          },
+          "y": 0.07424229869939458,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 4.181699999928474,
+          "dt": 0.05,
+          "wall": 5819,
+          "jump": {
+            "t": 0.7500000000000001,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 4.3657999999523165,
+          "dt": 0.05,
+          "wall": 6003.399999976158,
+          "jump": {
+            "t": 0.8000000000000002,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 4.548500000000001,
+          "dt": 0.05,
+          "wall": 6186,
+          "jump": {
+            "t": 0.8500000000000002,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 4.735600000023842,
+          "dt": 0.05,
+          "wall": 6373.200000047684,
+          "jump": {
+            "t": 0.9000000000000002,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 4.9195,
+          "dt": 0.05,
+          "wall": 6557,
+          "jump": {
+            "t": 0.9500000000000003,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 5.103199999928474,
+          "dt": 0.05,
+          "wall": 6740.700000047684,
+          "jump": {
+            "t": 1.0000000000000002,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 5.302100000023842,
+          "dt": 0.05,
+          "wall": 6939.600000023842,
+          "jump": {
+            "t": 1.0500000000000003,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 5.481,
+          "dt": 0.05,
+          "wall": 7118.5,
+          "jump": {
+            "t": 1.1000000000000003,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 5.656899999976158,
+          "dt": 0.05,
+          "wall": 7294.399999976158,
+          "jump": {
+            "t": 1.1500000000000004,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 5.837199999928474,
+          "dt": 0.05,
+          "wall": 7474.600000023842,
+          "jump": {
+            "t": 1.2000000000000004,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 6.018,
+          "dt": 0.05,
+          "wall": 7655.5,
+          "jump": {
+            "t": 1.2500000000000004,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 6.1941999999284745,
+          "dt": 0.05,
+          "wall": 7831.700000047684,
+          "jump": {
+            "t": 1.3000000000000005,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 6.373600000023842,
+          "dt": 0.05,
+          "wall": 8010.899999976158,
+          "jump": {
+            "t": 1.3500000000000005,
+            "from": 0.68,
+            "landedAt": 0.3300000000000001,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 6.557899999976158,
+          "dt": 0.05,
+          "wall": 8195.600000023842,
+          "jump": null,
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        }
+      ]
+    },
+    {
+      "gated": true,
+      "error": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.",
+      "jump": {
+        "t": 1.193699999928475,
+        "from": 0.68,
+        "landedAt": 0.3236999999284746,
+        "landFrom": 0.52
+      },
+      "y": 0,
+      "demo": {
+        "on": false,
+        "playing": true
+      },
+      "hidden": false,
+      "stageError": null,
+      "trace": [
+        {
+          "t": 6.735899999976158,
+          "dt": 0.05,
+          "wall": 8373.700000047684,
+          "jump": {
+            "t": 0,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 6.914699999928474,
+          "dt": 0.05,
+          "wall": 8552.299999952316,
+          "jump": {
+            "t": 0.05,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 7.092100000023842,
+          "dt": 0.05,
+          "wall": 8729.399999976158,
+          "jump": {
+            "t": 0.1,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 7.273199999928474,
+          "dt": 0.05,
+          "wall": 8910.5,
+          "jump": {
+            "t": 0.15000000000000002,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 7.4522999999523165,
+          "dt": 0.05,
+          "wall": 9090,
+          "jump": {
+            "t": 0.2,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 7.635199999928474,
+          "dt": 0.05,
+          "wall": 9272.799999952316,
+          "jump": {
+            "t": 0.25,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 7.995100000023842,
+          "dt": 0.05,
+          "wall": 9632.5,
+          "jump": {
+            "t": 0.3,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 8.038799999952317,
+          "dt": 0.043699999928474426,
+          "wall": 9676.100000023842,
+          "jump": {
+            "t": 0.34369999992847444,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 8.217500000000001,
+          "dt": 0.05,
+          "wall": 9854.899999976158,
+          "jump": {
+            "t": 0.39369999992847443,
+            "from": 0.68
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 8.399100000023843,
+          "dt": 0.05,
+          "wall": 10036.700000047684,
+          "jump": {
+            "t": 0.4436999999284744,
+            "from": 0.68
+          },
+          "y": 0.0367147991766093,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 8.576299999952317,
+          "dt": 0.05,
+          "wall": 10213.700000047684,
+          "jump": {
+            "t": 0.4936999999284744,
+            "from": 0.68
+          },
+          "y": 0.1320809284501282,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 9.754199999928476,
+          "dt": 0.05,
+          "wall": 11391.5,
+          "jump": {
+            "t": 0.5436999999284744,
+            "from": 0.68
+          },
+          "y": 0.1876083453811212,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 10.762299999952317,
+          "dt": 0.05,
+          "wall": 12399.700000047684,
+          "jump": {
+            "t": 0.5936999999284744,
+            "from": 0.68
+          },
+          "y": 0.17762560945400108,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 11.765500000000001,
+          "dt": 0.05,
+          "wall": 13402.899999976158,
+          "jump": {
+            "t": 0.6436999999284745,
+            "from": 0.68
+          },
+          "y": 0.14280509854254758,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 12.783600000023842,
+          "dt": 0.05,
+          "wall": 14421.100000023842,
+          "jump": {
+            "t": 0.6936999999284745,
+            "from": 0.68
+          },
+          "y": 0.08345958763109412,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 13.802899999976159,
+          "dt": 0.05,
+          "wall": 15440.200000047684,
+          "jump": {
+            "t": 0.7436999999284746,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 14.821399999976158,
+          "dt": 0.05,
+          "wall": 16458.799999952316,
+          "jump": {
+            "t": 0.7936999999284746,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 15.841799999952316,
+          "dt": 0.05,
+          "wall": 17479.200000047684,
+          "jump": {
+            "t": 0.8436999999284747,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 16.84689999997616,
+          "dt": 0.05,
+          "wall": 18484.200000047684,
+          "jump": {
+            "t": 0.8936999999284747,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 17.8545,
+          "dt": 0.05,
+          "wall": 19491.899999976158,
+          "jump": {
+            "t": 0.9436999999284748,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 18.868600000023843,
+          "dt": 0.05,
+          "wall": 20506.100000023842,
+          "jump": {
+            "t": 0.9936999999284748,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 19.8745,
+          "dt": 0.05,
+          "wall": 21511.899999976158,
+          "jump": {
+            "t": 1.0436999999284748,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 20.890699999928476,
+          "dt": 0.05,
+          "wall": 22528.100000023842,
+          "jump": {
+            "t": 1.0936999999284749,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 21.90189999997616,
+          "dt": 0.05,
+          "wall": 23539.200000047684,
+          "jump": {
+            "t": 1.143699999928475,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        },
+        {
+          "t": 22.917699999928477,
+          "dt": 0.05,
+          "wall": 24555.399999976158,
+          "jump": {
+            "t": 1.193699999928475,
+            "from": 0.68,
+            "landedAt": 0.3236999999284746,
+            "landFrom": 0.52
+          },
+          "y": 0,
+          "demo": {
+            "on": false,
+            "playing": true
+          },
+          "replay": false,
+          "hidden": false,
+          "stageError": null
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "engine": "151.0.7922.71",
+  "release": {
+    "jump": null,
+    "y": 0,
+    "trace": [
+      {
+        "t": 6.735899999976158,
+        "dt": 0.05,
+        "wall": 8373.700000047684,
+        "jump": {
+          "t": 0,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 6.914699999928474,
+        "dt": 0.05,
+        "wall": 8552.299999952316,
+        "jump": {
+          "t": 0.05,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 7.092100000023842,
+        "dt": 0.05,
+        "wall": 8729.399999976158,
+        "jump": {
+          "t": 0.1,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 7.273199999928474,
+        "dt": 0.05,
+        "wall": 8910.5,
+        "jump": {
+          "t": 0.15000000000000002,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 7.4522999999523165,
+        "dt": 0.05,
+        "wall": 9090,
+        "jump": {
+          "t": 0.2,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 7.635199999928474,
+        "dt": 0.05,
+        "wall": 9272.799999952316,
+        "jump": {
+          "t": 0.25,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 7.995100000023842,
+        "dt": 0.05,
+        "wall": 9632.5,
+        "jump": {
+          "t": 0.3,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 8.038799999952317,
+        "dt": 0.043699999928474426,
+        "wall": 9676.100000023842,
+        "jump": {
+          "t": 0.34369999992847444,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 8.217500000000001,
+        "dt": 0.05,
+        "wall": 9854.899999976158,
+        "jump": {
+          "t": 0.39369999992847443,
+          "from": 0.68
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 8.399100000023843,
+        "dt": 0.05,
+        "wall": 10036.700000047684,
+        "jump": {
+          "t": 0.4436999999284744,
+          "from": 0.68
+        },
+        "y": 0.0367147991766093,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 8.576299999952317,
+        "dt": 0.05,
+        "wall": 10213.700000047684,
+        "jump": {
+          "t": 0.4936999999284744,
+          "from": 0.68
+        },
+        "y": 0.1320809284501282,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 9.754199999928476,
+        "dt": 0.05,
+        "wall": 11391.5,
+        "jump": {
+          "t": 0.5436999999284744,
+          "from": 0.68
+        },
+        "y": 0.1876083453811212,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 10.762299999952317,
+        "dt": 0.05,
+        "wall": 12399.700000047684,
+        "jump": {
+          "t": 0.5936999999284744,
+          "from": 0.68
+        },
+        "y": 0.17762560945400108,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 11.765500000000001,
+        "dt": 0.05,
+        "wall": 13402.899999976158,
+        "jump": {
+          "t": 0.6436999999284745,
+          "from": 0.68
+        },
+        "y": 0.14280509854254758,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 12.783600000023842,
+        "dt": 0.05,
+        "wall": 14421.100000023842,
+        "jump": {
+          "t": 0.6936999999284745,
+          "from": 0.68
+        },
+        "y": 0.08345958763109412,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 13.802899999976159,
+        "dt": 0.05,
+        "wall": 15440.200000047684,
+        "jump": {
+          "t": 0.7436999999284746,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 14.821399999976158,
+        "dt": 0.05,
+        "wall": 16458.799999952316,
+        "jump": {
+          "t": 0.7936999999284746,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 15.841799999952316,
+        "dt": 0.05,
+        "wall": 17479.200000047684,
+        "jump": {
+          "t": 0.8436999999284747,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 16.84689999997616,
+        "dt": 0.05,
+        "wall": 18484.200000047684,
+        "jump": {
+          "t": 0.8936999999284747,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 17.8545,
+        "dt": 0.05,
+        "wall": 19491.899999976158,
+        "jump": {
+          "t": 0.9436999999284748,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 18.868600000023843,
+        "dt": 0.05,
+        "wall": 20506.100000023842,
+        "jump": {
+          "t": 0.9936999999284748,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 19.8745,
+        "dt": 0.05,
+        "wall": 21511.899999976158,
+        "jump": {
+          "t": 1.0436999999284748,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 20.890699999928476,
+        "dt": 0.05,
+        "wall": 22528.100000023842,
+        "jump": {
+          "t": 1.0936999999284749,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 21.90189999997616,
+        "dt": 0.05,
+        "wall": 23539.200000047684,
+        "jump": {
+          "t": 1.143699999928475,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 22.917699999928477,
+        "dt": 0.05,
+        "wall": 24555.399999976158,
+        "jump": {
+          "t": 1.193699999928475,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 23.935699999928477,
+        "dt": 0.05,
+        "wall": 25573.200000047684,
+        "jump": {
+          "t": 1.243699999928475,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 23.94579999995232,
+        "dt": 0.010100000023841859,
+        "wall": 25583.299999952316,
+        "jump": {
+          "t": 1.2537999999523168,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 23.97319999992848,
+        "dt": 0.02739999997615814,
+        "wall": 25610.700000047684,
+        "jump": {
+          "t": 1.2811999999284749,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 24.130100000023845,
+        "dt": 0.05,
+        "wall": 25767.299999952316,
+        "jump": {
+          "t": 1.331199999928475,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 24.346100000023846,
+        "dt": 0.05,
+        "wall": 25983.700000047684,
+        "jump": {
+          "t": 1.381199999928475,
+          "from": 0.68,
+          "landedAt": 0.3236999999284746,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 24.529100000023845,
+        "dt": 0.05,
+        "wall": 26166.600000023842,
+        "jump": null,
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      },
+      {
+        "t": 24.71729999995232,
+        "dt": 0.05,
+        "wall": 26354.799999952316,
+        "jump": null,
+        "y": 0,
+        "demo": {
+          "on": false,
+          "playing": true
+        },
+        "replay": false,
+        "hidden": false,
+        "stageError": null
+      }
+    ]
+  },
+  "final": {
+    "stageError": null,
+    "visible": "visible",
+    "jump": null
+  }
+}

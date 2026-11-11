@@ -203,40 +203,17 @@ class _It:
 PAD_WASHER = 0.8      # mm: 91116A120 (washer_m3_large, M3 oversized Ø9, 0.7-0.9 thick) under the lip screws' heads (#26)
 
 
-def bay_joints():
-    """The battery bay (cad/body_battery.py, D65)."""
-    import hardware.cad.body.body_battery as bb
+def end_pack_joints():
+    """Known body-side stacks only; purchased adapter/pack retention stays unresolved."""
+    from hardware.cad.body import body_battery as bb
     g = bb.geometry()
-    J = []
-    for side, sy in (('l', 1.0), ('r', -1.0)):
-        J.append(Joint(f'bay_rail_{side}', 'M4', 20.0, 'socket', [_z(x, sy * yc, g['rail_z'][0]) for x, yc in bb.rail_holes()], (0.0, 0.0, 1.0),
-                       (f'bay_rail_{side}', 'belly_plate'), ('pem', 'belly_plate'), pem='S-M4-0', bom='screw_m4x20',
-                       note='a bay rail up into the belly\'s nuts, beyond the cheeks\' ends'))
-        ps = bb.pad_screws()
-        free = [x for x in bb.SIDE_SCREWS_X if (side, x) not in ps]
-        J.append(Joint(f'bay_side_{side}_low', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_floor'] + 12.0) for x in free],
-                       (0.0, -sy, 0.0), (f'bay_side_{side}', 'bay_floor'), ('pem', 'bay_floor'), pem='S-M3-0', bom='screw_m3x6',
-                       note='a side plate into the floor\'s flange nuts'))
-        for n in sorted(set(v for (sd, _), v in ps.items() if sd == side)):
-            xs = [x for (sd, x), v in ps.items() if sd == side and v == n]
-            J.append(Joint(f'bay_pad_{n}', 'M3', 10.0, 'socket', [_z(x, sy * (g['side_out'] + bb.LIP['t'] + PAD_WASHER), g['z_floor'] + 12.0) for x in xs],
-                           (0.0, -sy, 0.0), (f'bay_skid_{n}', f'bay_side_{side}', 'bay_floor'), ('pem', 'bay_floor'), pem='S-M3-0',
-                           bom='turret_screw_m3x10', washer=PAD_WASHER, washer_bom='washer_m3_large',
-                           note='#26: a crush pad\'s lip held by the side plate\'s low screws into the floor\'s nuts (a Ø9 M3 washer on the TPU; ' + bb.LIP_SCREWS + ')'))
-        J.append(Joint(f'bay_side_{side}_high', 'M3', 6.0, 'button', [_z(x, sy * g['side_out'], g['z_belly'] - bb.RAIL_H / 2) for x in bb.SIDE_SCREWS_X],
-                       (0.0, -sy, 0.0), (f'bay_side_{side}',), ('insert', f'bay_rail_{side}'), bom='screw_m3x6',
-                       note='a side plate into its rail\'s inserts'))
-    yc = (g['rail_y'][0] + g['rail_y'][1]) / 2
-    zc = sum(g['rail_z']) / 2
-    for k, sx in (('front', 1.0), ('rear', -1.0)):
-        J.append(Joint(f'adapter_plate_{k}', 'M4', 12.0, 'socket', [_z(x, y, g['z_belly'] - bb.PLATE_T + 1.5) for x, y in bb.plate_holes(k)],
-                       (0.0, 0.0, 1.0), (f'adapter_plate_{k}', 'belly_plate'), ('pem', 'belly_plate'), pem='S-M4-0', bom='screw_m4x12_socket',
-                       note='a pack adapter\'s printed plate up into the belly\'s nuts (heads counterbored 1.5 mm)'))
-        for side, sy in (('l', 1.0), ('r', -1.0)):
-            J.append(Joint(f'bay_door_{k}_{side}', 'M3', bb.THUMB['length'], 'thumb', [_z(sx * g['x_out'][1], sy * yc, zc)], (-sx, 0.0, 0.0),
-                           (f'bay_door_{k}',), ('insert', f'bay_rail_{side}'), bom='thumbscrew_m3x10',
-                           note='a door\'s knurled thumbscrew into its rail\'s end (tool-free)'))
-    return J
+    head_z = g['base_bottom_z'] - bb.END_FOOT['flange_t'] + bb.END_FOOT['counterbore_depth']
+    return [Joint(f'end_pack_support_{end}', 'M4', 12.0, 'socket',
+                  [_z(x, y, head_z) for x, y in bb.plate_holes(end)], (0.0, 0.0, 1.0),
+                  (f'end_foot_{end}', f'end_pack_holder_{end}', 'belly_plate'), ('pem', 'belly_plate'),
+                  pem='S-M4-0', bom='screw_m4x12_socket',
+                  note='Existing M4x12 family; 1.5 mm counterbored foot seat. Bought-adapter mount and retention remain unqualified')
+            for end in ('front', 'rear')]
 
 
 def shell_joints():
@@ -265,10 +242,10 @@ def shell_joints():
             J.append(Joint(f'{face}_post_{"l" if y > 0 else "r"}', 'M3', 16.0, 'pan', [_z(sx * W.XO, y, z) for z in W.POST_Z_FACE], (-sx, 0.0, 0.0),
                            (face,), ('insert', post[(sx * 142.0, y)]), stage='P3', bom='screw_m3x16', note='a face into its post\'s end inserts'))
         cr = f'd435_cradle_{"front" if front else "rear"}'
-        J.append(Joint(f'{cr}_feet', 'M3', 8.0, 'pan', [_z(sx * W.XO, y, z) for y, z in W.cradle_screws()], (-sx, 0.0, 0.0), (face,),
-                       ('insert', cr), stage='P3', bom='screw_m3x8_socket', note='the camera\'s cradle to the apron, from outside'))
+        J.append(Joint(f'{cr}_feet', 'M3', 8.0, 'pan', [_z(sx * W.XI, y, z) for y, z in W.cradle_screws()], (sx, 0.0, 0.0), (face,),
+                       ('insert', cr), stage='P3', bom='screw_m3x8_socket', note='conditional outward camera cradle; screws from inside the shell into outside feet'))
         L_, Wd, H = W.D435['size']
-        xb = sx * (W.XO - L_)
+        xb = W.d435_face_x(front) - sx * L_
         zc = sum(W.D435['z']) / 2
         cam = f'd435_{"front" if front else "rear"}'
         J.append(Joint(f'{cam}_back', 'M3', 8.0, 'socket', [_z(xb - sx * 4.0, y, zc) for y in (-W.D435['back_m3'] / 2, W.D435['back_m3'] / 2)],
@@ -293,7 +270,7 @@ def shell_joints():
 def joints(items=None):
     items_by_name = {i['name']: i for i in (items or [])}
     import hardware.cad.body.body_shell as bs3
-    return frame_joints() + _item_joints(items_by_name) + bay_joints() + shell_joints()
+    return frame_joints() + _item_joints(items_by_name) + end_pack_joints() + shell_joints()
 
 
 # Holds that are not screws (each a reason): a PEM nut pressed into its sheet, a part captured or clipped, a bought
@@ -301,15 +278,9 @@ def joints(items=None):
 def holds():
     H = [('cheek_nuts_left', 'cheek_left', 'PEM SS-M5-0 pressed by SendCutSend'),
          ('compute_pallet', 'isolator_1', 'captured between the isolators\' feet and caps (four, each on its M4)'),
-         ('item.battery_front', 'item.battery_adapter_front', 'the DeWalt rail and its latch; the door behind it'),
-         ('item.battery_rear', 'item.battery_adapter_rear', 'the DeWalt rail and its latch; the door behind it'),
-         ('item.battery_adapter_front', 'adapter_plate_front', 'the adapter\'s own screws into inserts set from its holes on arrival'),
-         ('item.battery_adapter_rear', 'adapter_plate_rear', 'the adapter\'s own screws into inserts set from its holes on arrival'),
          ('ear_pod_l', 'ear_bracket_l', 'the SSC1\'s 5/16-18 foot bolt into the nut held in the bracket\'s shelf'),
          ('ear_pod_r', 'ear_bracket_r', 'the SSC1\'s 5/16-18 foot bolt into the nut held in the bracket\'s shelf'),
          ('eyes_board', 'eyes_clip', 'clamped between the clip and the face round its window'),
-         ('bay_skid_1', 'bay_floor', '3M VHB tape (and its lip\'s two screws, #26)'), ('bay_skid_2', 'bay_floor', '3M VHB tape (and its lip\'s two screws, #26)'),
-         ('bay_skid_3', 'bay_floor', '3M VHB tape (and its lip\'s two screws, #26)'), ('bay_skid_4', 'bay_floor', '3M VHB tape (and its lip\'s two screws, #26)'),
          ('cheek_nuts_right', 'cheek_right', 'PEM SS-M5-0 pressed by SendCutSend'),
          ('turret_plate_nuts', 'turret_plate', 'PEM SS-M5-0 pressed by SendCutSend'),
          ]
@@ -595,7 +566,14 @@ def run(parts, items=None, stages=('P1', 'P2', 'P3'), clashes=None):
     for it in (items or []):
         H.extend(item_holds(it))
     legs = leg_frames()
-    report = {'joints': [], 'floating': {}, 'connectivity': {}, 'holds': [list(h) for h in H], 'stages': list(stages)}
+    report = {'joints': [], 'floating': {}, 'connectivity': {}, 'holds': [list(h) for h in H], 'stages': list(stages),
+              'unresolved_interfaces': [
+                  {'part': f'item.battery_adapter_{end}', 'into': f'end_pack_holder_{end}',
+                   'reason': 'Azocek mounting holes/fit unmeasured; no inferred hold'} for end in ('front', 'rear')
+              ] + [
+                  {'part': f'item.battery_{end}', 'into': f'item.battery_adapter_{end}',
+                   'reason': 'Actual rail/latch and secondary retention unmeasured; no inferred hold'} for end in ('front', 'rear')
+              ], 'physical_retention_verified': False}
     from cadagent.gates.cache import PairCache
     cache = PairCache(R / 'build' / 'gates-cache')            # unchanged pairs are free on the next build
     for st in stages:

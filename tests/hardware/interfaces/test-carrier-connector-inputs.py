@@ -2,13 +2,13 @@
 import hashlib
 import importlib.util
 import json
-import shutil
 from pathlib import Path
 import tempfile
 import unittest
 
 SPEC=importlib.util.spec_from_file_location('connector_inputs',(Path(__file__).resolve().parents[3] / 'tools/evidence/interfaces/check-carrier-connector-inputs.py'))
 MOD=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(MOD)
+from tools.evidence.manufacturing.retained_study_inputs import study_inputs
 
 
 class PrivateInputs(unittest.TestCase):
@@ -39,22 +39,22 @@ class PrivateInputs(unittest.TestCase):
 
     def test_committed_diagnosis_matches_source_and_manifest(self):
         receipt=json.loads((MOD.ROOT/'docs/research/carrier-service-connectors/private-input-diagnosis.json').read_text())
-        self.assertTrue(MOD.validate_receipt(receipt))
+        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt)
+        with study_inputs('connector-inputs') as root:
+            self.assertTrue(MOD.validate_receipt(receipt,root))
 
     def test_changed_deleted_and_new_geometry_inputs_reject(self):
         receipt=json.loads((MOD.ROOT/'docs/research/carrier-service-connectors/private-input-diagnosis.json').read_text())
-        for name in set(receipt['inputs']['files'])|set(receipt['context_files']):
-            target=self.root/name;target.parent.mkdir(parents=True,exist_ok=True)
-            shutil.copyfile(MOD.ROOT/name,target)
-        self.assertTrue(MOD.validate_receipt(receipt,self.root))
-        helper=self.root/'hardware/cad/manufacturing/print_provenance.py';original=helper.read_bytes()
-        helper.write_bytes(original+b'\n# changed imported helper\n')
-        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
-        helper.unlink()
-        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
-        helper.write_bytes(original)
-        (self.root/'hardware/cad/new_input.py').write_text('NEW_GEOMETRY=True\n')
-        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,self.root)
+        with study_inputs('connector-inputs') as root:
+            self.assertTrue(MOD.validate_receipt(receipt,root))
+            helper=root/'hardware/cad/manufacturing/print_provenance.py';original=helper.read_bytes()
+            helper.write_bytes(original+b'\n# changed imported helper\n')
+            with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,root)
+            helper.unlink()
+            with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,root)
+            helper.write_bytes(original)
+            (root/'hardware/cad/new_input.py').write_text('NEW_GEOMETRY=True\n')
+            with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(receipt,root)
 
 
 if __name__=='__main__':unittest.main()

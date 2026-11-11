@@ -1,5 +1,6 @@
 import {publicForSource,sourceForPublic,markRetiredCatalogLinks} from '../../../tools/site/source-layout.mjs';
 import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
 /** Design-note pages (tools/doc-page.mjs): the same words as the Markdown, shown with a lead card, status strips
  * counted from the note's own tables, and folds. Browser tests use SITE_URL, or serve dist/ (run `npm run build`). */
 import assert from 'node:assert/strict';
@@ -399,6 +400,8 @@ test('the playful Gyropup title builds a graph, solidifies and really loops', as
 });
 
 test('the local Made with badge animates normally and selects its genuine still', async () => {
+  const output=process.env.TEST_OUTPUT||await mkdtemp(path.join(tmpdir(),'gyropup-badge-motion-'));
+  await mkdir(output,{recursive:true});
   for(const route of ['/','/site/pages/readme-md.html'])for(const reducedMotion of ['no-preference','reduce']) {
     const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion});
     try {
@@ -420,12 +423,32 @@ test('the local Made with badge animates normally and selects its genuine still'
       assert.equal(!first.equals(await image.screenshot()),reducedMotion==='no-preference');
       if(reducedMotion==='reduce') {
         const body=readFileSync(path.join(root,'docs/img/hero/made-with-cad-agent-still.svg'),'utf8');
-        await page.route('**/made-with-wrong-still.svg',r=>r.fulfill({contentType:'image/svg+xml',body:body.replace('</svg>','<style>:root{animation:broken 8s linear infinite!important}@keyframes broken{from{opacity:.1}to{opacity:1}}</style></svg>')}));
+        // Change opaque pixels on a child over a long continuous ramp. Short
+        // cycles can repeatedly sample the same phase during slow captures.
+        const swatch='<rect class="wrong-still-swatch" x="20" y="16" width="70" height="80" fill="#e0007f"/>';
+        const motion='<style>.wrong-still-swatch{animation:wrong-still-fill 60s linear infinite alternate!important}@keyframes wrong-still-fill{from{fill:#e0007f}to{fill:#00e0d8}}</style>';
+        const animated=body.replace('</svg>',swatch+motion+'</svg>');
+        await page.route('**/made-with-wrong-still.svg',r=>r.fulfill({contentType:'image/svg+xml',body:animated}));
         const wrong=base+'/docs/img/hero/made-with-wrong-still.svg';
         await image.evaluate((i,u)=>i.parentElement.querySelector('source').srcset=u,wrong);
         await page.waitForFunction(u=>[...document.images].find(i=>i.alt==='Made with cad-agent')?.currentSrc===u,wrong);await image.evaluate(i=>i.decode());
-        const before=await image.screenshot();await page.waitForTimeout(1250);
-        assert.ok(!before.equals(await image.screenshot()),'a still with actual animated pixels must fail');
+        const name=route==='/'?'home':'readme',engine=browser.browserType().name();
+        const prefix=path.join(output,`${engine}-${name}-wrong-still`);
+        const sha256=bytes=>createHash('sha256').update(bytes).digest('hex');
+        const samples=[],start=performance.now();
+        const capture=async()=>{
+          const beforeMs=performance.now()-start;
+          const png=await image.screenshot({path:`${prefix}-${samples.length}.png`});
+          samples.push({beforeMs,afterMs:performance.now()-start,sha256:sha256(png)});
+          return png;
+        };
+        const before=await capture();await page.waitForTimeout(1250);
+        let changed=!before.equals(await capture());
+        if(!changed){await page.waitForTimeout(750);changed=!before.equals(await capture());}
+        const src=new URL(await image.evaluate(i=>i.currentSrc)).pathname;
+        await writeFile(`${prefix}.json`,JSON.stringify({browser:browser.version(),src,svgSha256:sha256(animated),samples,changed},null,2)+'\n');
+        assert.equal(src,'/docs/img/hero/made-with-wrong-still.svg');
+        assert.ok(changed,'a still with actual animated pixels must fail');
       }
     }finally{await context.close();}
   }

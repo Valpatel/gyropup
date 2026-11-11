@@ -1,0 +1,45 @@
+{
+  "source": "1abbe0d2aea9ac904c224f4db02faa29ca8d9bf8",
+  "native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "job": 268,
+  "projection_seconds": 24.13246772577986,
+  "parity_seconds": 0.21718198992311954,
+  "archive": "cff191fb7580f173830d7f494ffc4cd094bb7368ec67d308ee8ec6c8c41828ef",
+  "projection_members": 9,
+  "part_groups": {
+    "body": 82,
+    "far_leg": 40,
+    "near_leg": 40,
+    "turret": 62
+  },
+  "triangles": {
+    "body": 109910,
+    "far_leg": 71960,
+    "near_leg": 71960,
+    "turret": 92809
+  },
+  "guards": {
+    "source": true,
+    "hardware": true,
+    "runtime": true,
+    "toolkit": true,
+    "original_collection": true,
+    "profile": true
+  },
+  "assets": {
+    "current-design.scene.json": {
+      "sha256": "8974cd187e1fb456b2a3a05ebcd8b4ab9a51ba616ec4db3c10ac69590061f9a8",
+      "bytes": 210069
+    },
+    "current-design.svg": {
+      "sha256": "a72fc3ad4d4ad74f90933ad30f023a6ad6ae48d0816040498a544a76917038e9",
+      "bytes": 60173
+    },
+    "current-design.receipt.json": {
+      "sha256": "8aa88ad4259c66cd443b02337fd422251e1fd0e7ec6855d0fe4f4952d4993af3",
+      "bytes": 10210
+    }
+  },
+  "visual_review": false,
+  "adoption": false
+}

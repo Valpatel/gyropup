@@ -12,9 +12,31 @@ sys.path.insert(0,str(ROOT/'tools/site/assembly'))
 from robot_data import bounds,sha
 from robot_manufacturing import mapping
 from export_robot_guide import generate,verified_parts
+from robot_recipe import robot_operations
 
 
 class DataGuide(unittest.TestCase):
+    def test_collected_wheel_cannot_inherit_the_historical_botwheel_sku(self):
+        names=[side+'.'+part for side in ('L','R') for part in ('wheel_hub','wheel_tyre')]
+        historical=mapping(ROOT,names)
+        self.assertTrue(all(row['part_key']=='buy/odrive-botwheel' for row in historical.values()))
+        for collection in ({'source_commit':'3a40891962b0b0a04625e070700f1d130bea3c7b'},
+                           {'source_commit':'unknown'}):
+            current=mapping(ROOT,names,collection)
+            for name,row in current.items():
+                self.assertEqual(row['kind'],'unresolved')
+                self.assertEqual(row['component_of'],name[0]+'.wheel')
+                self.assertEqual(row['originals'],[])
+                for field in ('key','part_key','source','recorded_quantities'):
+                    self.assertNotIn(field,row)
+                self.assertNotIn('odrive-botwheel',json.dumps(row))
+                self.assertNotIn('BW0124',json.dumps(row))
+                if collection['source_commit'].startswith('3a408919'):
+                    ref=row['design_reference']
+                    self.assertEqual((ref['nominal_diameter_mm'],ref['tyre_band_width_mm']),(254,64))
+                    self.assertFalse(ref['ordered_sku_verified']);self.assertFalse(ref['physical_measurements_verified'])
+                    self.assertEqual(ref['sha256'],sha(ROOT/ref['source_file']))
+
     def test_manufacturing_links_are_originals_and_handed_modules_share_parts(self):
         names=['L.hip_frame','R.hip_frame','L.upper_link_front','R.upper_link_front','L.wheel_hub','L.wheel_tyre',
                'L.knee_bearing_front_in','cheek_left','cheek_right','item.battery_adapter_front','turret.pan_base']
@@ -58,7 +80,11 @@ class DataGuide(unittest.TestCase):
     def fixture(self,folder):
         # Explicit synthetic triangles exercise serializer integrity, never CAD validity.
         inventory=json.loads((ROOT/'hardware/exports/robot/robot.json').read_text())
-        names=[n for group in inventory['groups'].values() for n in group['members']]
+        # This is a serializer fixture for the current recipe, not an asserted
+        # native collection. Preserve the recorded turret inventory while using
+        # the current end-support body names instead of the retired belly bay.
+        names=[n for op in robot_operations() for n in op['additions']]
+        names += [n for group in inventory['groups'].values() for n in group['members'] if n.startswith('turret.')]
         p=folder/'meshes';p.mkdir()
         blob=b'\0'*80+struct.pack('<I',1)+struct.pack('<12fH',0,0,1,0,0,0,2,0,0,0,3,0,0)
         parts=[]
@@ -75,7 +101,7 @@ class DataGuide(unittest.TestCase):
     def test_two_coherent_snapshots_overview_stage_order_and_static_text(self):
         with tempfile.TemporaryDirectory() as tmp:
             folder=Path(tmp);record=self.fixture(folder)
-            m=mapping(ROOT,[p['name'] for p in record['parts']])
+            m=mapping(ROOT,[p['name'] for p in record['parts']],record)
             outputs=generate(record,folder,'4'*64,{},'5'*64,m)
             entries=json.loads(outputs['index-entries.json']);self.assertEqual([r['assembly'] for r in entries],['robot','combined'])
             for row in entries:
@@ -96,6 +122,12 @@ class DataGuide(unittest.TestCase):
                 self.assertEqual(text.count('<section '),len(g['steps']))
                 self.assertEqual(g['snapshot']['status'],'wip')
                 self.assertTrue(g['source']['qualification'])
+                for side in ('L','R'):
+                    for suffix in ('wheel_hub','wheel_tyre'):
+                        current=g['source']['manufacturing_by_part'][side+'.'+suffix]
+                        self.assertEqual(current['kind'],'unresolved')
+                        self.assertNotIn('buy/odrive-botwheel',json.dumps(current))
+                self.assertNotIn('BotWheel',text)
                 if row['assembly']=='robot':self.assertFalse(any(n.startswith('turret.') for n in seen))
                 else:self.assertEqual(g['source']['step_kinds']['turret-module'],'subassembly-placement')
 

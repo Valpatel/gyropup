@@ -1,0 +1,78 @@
+{
+  "source": "426f77f667ae9a39f8b94b51190ca4b8cd8599c8",
+  "engine": "WebKit26.0",
+  "capture_exit": 0,
+  "shared_validation_exit": 0,
+  "outputs_rehashed": 27,
+  "shared_reports": 21,
+  "faults_rejected": [
+    "right-rotation",
+    "wrong-pivot-home-preserved",
+    "axis-sign",
+    "units",
+    "lost-parent",
+    "stationary-owner",
+    "missing-part"
+  ],
+  "worst_point_mm": 1.8293285663834593e-05,
+  "visibleCanvas": {
+    "desktop": {
+      "collectionSha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+      "parts": 228,
+      "opacity": 1,
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 1280,
+        "height": 836
+      },
+      "buffer": {
+        "width": 1280,
+        "height": 836
+      },
+      "render": {
+        "frame": 14,
+        "calls": 240,
+        "triangles": 347263
+      }
+    },
+    "mobile": {
+      "collectionSha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+      "parts": 228,
+      "opacity": 1,
+      "display": "block",
+      "visibility": "visible",
+      "rect": {
+        "x": 0,
+        "y": 56,
+        "width": 320,
+        "height": 512
+      },
+      "buffer": {
+        "width": 320,
+        "height": 512
+      },
+      "render": {
+        "frame": 2,
+        "calls": 238,
+        "triangles": 347235
+      }
+    }
+  },
+  "actual_desktop_mobile_pngs_inspected": true,
+  "acceptance": "PASS_PRESENTATION_SCOPE",
+  "engineering": {
+    "mechanical_ownership_complete": false,
+    "physics_current": false,
+    "continuous_clearance_qualified": false,
+    "manufacturing_released": false,
+    "physical_qualified": false
+  },
+  "capture_index_sha256": "b32dee43c1f43be95eb78ddc0f45687581958e6c462dbd8249c69436d3750810",
+  "validation_sha256": "d016a359860933ac1359ee8da4f12ab38f643f0cf4a8f7aef11d9f9eacd38051",
+  "mobile_image_sha256": "718592ee9d67b14310055d0e985cfdfee0fa0c011ac0cdf1a903e9e91db8e43c",
+  "source_model_webroot_guards": true,
+  "prior_failed_and_visual_incomplete_attempts_preserved": true
+}

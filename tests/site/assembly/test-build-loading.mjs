@@ -12,12 +12,15 @@ const server=process.env.SITE_URL?null:createSiteServer(path.join(root,'dist'));
 if(server){server.listen(0,'127.0.0.1');await once(server,'listening');}
 const base=(process.env.SITE_URL||`http://127.0.0.1:${server.address().port}`).replace(/\/$/,'');
 const index=JSON.parse(await readFile(path.join(root,'software/site/assets/build-guides/index.json')));
-const rows=Object.fromEntries(index.snapshots.map(row=>[row.assembly||'turret',row]));
+// Runtime chooses the first snapshot for an assembly; later rows are archives.
+const rows=Object.fromEntries(['robot','combined','turret'].map(assembly=>[assembly,index.snapshots.find(row=>(row.assembly||'turret')===assembly)]));
+assert.equal(rows.robot.id,'robot-wip-3a40891962b0');assert.equal(rows.combined.id,'combined-wip-3a40891962b0');
 async function mesh(assembly,i=0){
  const row=rows[assembly],guide=JSON.parse(await readFile(path.join(root,'software/site/assets/build-guides',row.file)));
  const guideURL=new URL(row.file,base+'/web/build-guides/'),viewURL=new URL(guide.model.file,guideURL);
  const localView=path.join(root,'software/site/assets',viewURL.pathname.replace(/^\/web\//,''));
  const view=JSON.parse(await readFile(localView)),url=new URL(view.parts[i].file,viewURL);
+ if(assembly!=='turret'){assert.equal(guide.snapshot.source_commit,'3a40891962b0b0a04625e070700f1d130bea3c7b');assert.equal(guide.source.collection_sha256,'7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67');assert.equal(view.parts.length,assembly==='robot'?162:224);}
  return {url,bytes:await readFile(path.join(root,'software/site/assets',url.pathname.replace(/^\/web\//,''))),total:view.parts.length};
 }
 let browser,context;const cases=[],errors=[],releases=[];

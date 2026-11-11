@@ -1,0 +1,80 @@
+
+> test:privacy
+> node --test tests/site/content/test-privacy.mjs
+
+TAP version 13
+# Subtest: each kind of private string is caught, without reporting the string
+ok 1 - each kind of private string is caught, without reporting the string
+  ---
+  duration_ms: 3.264017
+  type: 'test'
+  ...
+# Subtest: public look-alikes pass
+ok 2 - public look-alikes pass
+  ---
+  duration_ms: 0.407904
+  type: 'test'
+  ...
+# Subtest: extra private names come from the environment only
+ok 3 - extra private names come from the environment only
+  ---
+  duration_ms: 0.346619
+  type: 'test'
+  ...
+# Subtest: exemptions and allowances are narrow and still needed
+ok 4 - exemptions and allowances are narrow and still needed
+  ---
+  duration_ms: 3450.563342
+  type: 'test'
+  ...
+# Subtest: the ratchet parses one line per file
+ok 5 - the ratchet parses one line per file
+  ---
+  duration_ms: 0.594785
+  type: 'test'
+  ...
+# Subtest: the ratchet is exact: fixing a file without updating it fails, and so does a new finding
+ok 6 - the ratchet is exact: fixing a file without updating it fails, and so does a new finding
+  ---
+  duration_ms: 0.690453
+  type: 'test'
+  ...
+# Subtest: the ratchet only shrinks
+ok 7 - the ratchet only shrinks
+  ---
+  duration_ms: 0.411731
+  type: 'test'
+  ...
+# Subtest: the base override must name a commit
+ok 8 - the base override must name a commit
+  ---
+  duration_ms: 19.694357
+  type: 'test'
+  ...
+# Subtest: tools/site/privacy-ratchet.txt is well formed and no larger than on the base branch
+ok 9 - tools/site/privacy-ratchet.txt is well formed and no larger than on the base branch
+  ---
+  duration_ms: 11.433847
+  type: 'test'
+  ...
+# Subtest: tracked files hold no private details beyond the ratchet
+ok 10 - tracked files hold no private details beyond the ratchet
+  ---
+  duration_ms: 3352.871358
+  type: 'test'
+  ...
+# Subtest: the built site holds none either
+ok 11 - the built site holds none either
+  ---
+  duration_ms: 3369.005713
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10279.259382

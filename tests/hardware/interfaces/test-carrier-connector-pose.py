@@ -3,20 +3,22 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
-import shutil
-import tempfile
 import unittest
 
 SPEC=importlib.util.spec_from_file_location('connector_pose',Path(__file__).resolve().parents[3] / 'tools/evidence/interfaces/check-carrier-connector-pose.py')
 MOD=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(MOD)
+from tools.evidence.manufacturing.retained_study_inputs import study_inputs
 RECEIPT=MOD.ROOT/'docs/research/carrier-service-connectors/external-pose.json'
 
 
 class CandidateEvidence(unittest.TestCase):
-    def setUp(self):self.receipt=json.loads(RECEIPT.read_text())
+    def setUp(self):
+        self.receipt=json.loads(RECEIPT.read_text())
+        self.source=self.enterContext(study_inputs('connector-pose'))
 
-    def test_current_source_identity(self):
-        self.assertTrue(MOD.validate_receipt(self.receipt))
+    def test_dated_source_identity_and_current_staleness(self):
+        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt)
+        self.assertTrue(MOD.validate_receipt(self.receipt,self.source))
 
     def test_explicit_external_positives_and_collision_controls(self):
         checks={r['id']:r['external_clear'] for r in self.receipt['external_checks']}
@@ -33,19 +35,15 @@ class CandidateEvidence(unittest.TestCase):
         self.assertIs(self.receipt['readiness'],False)
 
     def test_helper_change_rejects(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp)
-            for name in set(self.receipt['inputs']['files'])|set(self.receipt['context_files']):
-                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(MOD.ROOT/name,p)
-            self.assertTrue(MOD.validate_receipt(self.receipt,root))
-            p=root/'hardware/cad/robot/gmi.py';p.write_bytes(p.read_bytes()+b'\n# changed neighbour geometry dependency\n')
-            with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt,root)
+        self.assertTrue(MOD.validate_receipt(self.receipt,self.source))
+        p=self.source/'hardware/cad/robot/gmi.py';p.write_bytes(p.read_bytes()+b'\n# changed neighbour geometry dependency\n')
+        with self.assertRaisesRegex(ValueError,'closure changed'):MOD.validate_receipt(self.receipt,self.source)
 
     def test_false_readiness_and_private_substitution_reject(self):
         changed=copy.deepcopy(self.receipt);changed['readiness']=True
-        with self.assertRaises(ValueError):MOD.validate_receipt(changed)
+        with self.assertRaises(ValueError):MOD.validate_receipt(changed,self.source)
         changed=copy.deepcopy(self.receipt);changed['private_inputs']['43025-1200']='0'*64
-        with self.assertRaises(ValueError):MOD.validate_receipt(changed)
+        with self.assertRaises(ValueError):MOD.validate_receipt(changed,self.source)
 
 
 if __name__=='__main__':unittest.main()
