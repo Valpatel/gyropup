@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-11-11T16:00:51.365Z",
+  "engine": "chromium",
+  "errors": [],
+  "checks": [
+    "numeric/text stable sorting",
+    "unknown values last both directions",
+    "keyboard/touch controls",
+    "filter count",
+    "stable checked identities",
+    "revisit/cross-tab persistence",
+    "atomic import and native download",
+    "stale/disposed import isolation",
+    "denied storage",
+    "4 responsive layouts"
+  ]
+}
