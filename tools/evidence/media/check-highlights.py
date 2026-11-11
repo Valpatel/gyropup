@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 from tools.site.source_layout import source_file, source_for_public
 
 CAPTURE_SCRIPT = 'tools/evidence/media/capture-highlights.mjs'
-CAPTURE_LOCATIONS = ('tools/site/source-layout.mjs', 'tools/site/source-layout.json', 'tests/site/content/test-prototype-session.mjs')
+CAPTURE_LOCATIONS = ('tools/site/source-layout.mjs', 'tools/site/source-layout.json', 'tests/site/assembly/build-prototype-session.mjs')
 ENCODING_SOURCES = ('tools/evidence/media/encode-highlights.py', 'tools/evidence/media/check-highlights.py', 'tools/site/source_layout.py')
 OUT = (ROOT / 'software/site/assets/highlights')
 WIDTH, HEIGHT, FPS, FRAMES = 1280, 720, 30, 660

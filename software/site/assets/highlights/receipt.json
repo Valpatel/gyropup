@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "76cc5b3dcd9d4d9bd94e156fc70a0652f9c332e0",
+  "source_revision": "acd084a690d33957d047bd8bace7d03672aa7552",
   "source_hashes": {
     "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
     "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
@@ -465,7 +465,7 @@
     "software/site/designer/robot_kinematics.js": "55b3628c1f820fc4748fa223bf110635accaf662d746375076a22cde3c95033b",
     "software/site/designer/robot_presentations.js": "c76e67b7cd16544ac0c7e29c473dff6df7abeeb65347c2d5a866fcfc8699b872",
     "software/site/designer/robot_sensors.js": "59b2d81595899191362594631ad138a986796bc7d3cd1c9e9c62908c0541869f",
-    "software/site/designer/robot_v2.js": "cadc2bdff1a308c30155989ef767804ddf66a33c6b56cb0e502a7d90c20cccb5",
+    "software/site/designer/robot_v2.js": "fee243b1b163fcf096a0fc328b74592ad2fdc1d8b859e0fe0d8b36d5985b512d",
     "software/site/designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "software/site/designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "software/site/designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
@@ -480,11 +480,11 @@
     "tests/hardware/turret/test_turret_gate_sources.py": "fb85a82ab0a322debc60b6b93a3b8018227949e80fb7d5bcc453171b0f397732",
     "tests/hardware/turret/test_turret_snaps.py": "96afedabae5991a7d99eab3af5f324ae901589d7e92e45b2a36f32bc7a709fd6",
     "tests/hardware/turret/test_turret_solids.py": "d03677019224ad4e95f8775f374010c450299daf67fd729f546a1ea458e87a31",
-    "tests/site/content/test-prototype-session.mjs": "997a39297102005095ee42adc9c6397552e3dc550f0f42494ad554eccf4ecefb",
+    "tests/site/assembly/build-prototype-session.mjs": "73aa9c59e02204b8d773a554a47dc779bedb39241a0d14618ee046d70a527222",
     "tools/engineering/robot/robot_view.py": "2008d1b935203110c5218bb1fa8e660a94c7100ee3ef4a20622d6fc23920e40f",
     "tools/evidence/manufacturing/retained_fit_history.py": "47b05f0211f49aadd244f4670157df8f2b01288968d2a6f0dd0eee4791e69709",
-    "tools/evidence/media/capture-highlights.mjs": "ddf106c39ca35f9d84a669ddc815602a949d5868022acf8fdd5eae88abacadae",
-    "tools/evidence/media/check-highlights.py": "6e117a1278c478d5354900707bd226e88276cb76e87247ef4282d9d9d33dc865",
+    "tools/evidence/media/capture-highlights.mjs": "21f072b03137649f4a1147ed378eac93d2bd3b0a562119f4dbbdf81a3726a7a0",
+    "tools/evidence/media/check-highlights.py": "0f1229d988383b27ce311f41df2d11090af13191aaee52d6e55330e1a4921bcc",
     "tools/evidence/media/encode-highlights.py": "0ce8144b69740fe74759e7f320bb3d8d828c679112db2f1508e3d9215df50618",
     "tools/site/assembly/export_robot_guide.py": "cc9559130762af1f80feb656ac775126dc4760e6f5afc99daa237315abb37d6a",
     "tools/site/assembly/robot_current_print_acceptance.py": "d55f92494a1cd05bf6b1f1803de45a871a0486fb772aedce45c0f15438ac28ce",
@@ -739,23 +739,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "5b431013fa8f2fe91488ebe9a2a5f88594e86200170a5d20524d60ce55f15520",
-      "bytes": 1954157
+      "sha256": "bf3b269134b764bfe5882725a10cc86897d3d72a4804adc107fd1f8272c0fb7b",
+      "bytes": 1952337
     },
     "gyropup-highlights.webm": {
-      "sha256": "3bd9f0a9ec8da397fdefa198c26f89f4b16fb5c292a350286cd62439a3f30c87",
-      "bytes": 1628631
+      "sha256": "d569ef1ad19ad2d63ca4c8a25981cb496d171ba9ecad04623442d1d6bfa60c84",
+      "bytes": 1621471
     },
     "gyropup-highlights.webp": {
-      "sha256": "aa260dc1304fe1d9fe4c11792e3ca6ae03d6e5b24abf3afeacd78044be24b164",
-      "bytes": 33080
+      "sha256": "ed07ba42a3e8be3e488b81c7d723d3883465bcf2c9080ca3b7879be445b69c09",
+      "bytes": 33044
     },
     "capture-receipt.json": {
-      "sha256": "19cabfafc2988956c81762f9acc54a009c528785cdc68ebd1518f8f8cdd8bb2a",
-      "bytes": 259598
+      "sha256": "0f108e70daa85af6fd29f99b5ffa1ac4a2791ec718b15262bd2dc4aff731f6e5",
+      "bytes": 259599
     },
     "capture-frames.json": {
-      "sha256": "9f63d60326f3ff67719b8ee389fd68338ded06796d221b2d07fb7ac0827c5532",
+      "sha256": "233cf7bc373afc38d0d6044f2f9e7882859200f0b6fc1c985135df96d96cc152",
       "bytes": 100989
     }
   }

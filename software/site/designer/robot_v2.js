@@ -190,7 +190,11 @@ async function buildRigRobotV2(root, { eyes, color = 0xf5b82e, recordedOnly=fals
     if(recordedReady)return;
     if(!recordedLoading)recordedLoading=(async()=>{
       const definitions=[...man.body.filter(p=>p.name.startsWith('turret_')),...(T.pan??[]),...(T.tilt??[])];
-      await Promise.all(definitions.map(p=>loadGeometry(p.file)));
+      // Complete the bounded cohort before exposing retry. A rejected first
+      // mesh must not leave sibling promises available to the next attempt.
+      let firstFailure;
+      await Promise.all(definitions.map(p=>loadGeometry(p.file).catch(error=>{ firstFailure??=error; })));
+      if(firstFailure)throw firstFailure;
       if(disposed)throw new Error('Recorded robot disposed during loading');
       const fixed=new THREE.Group(),pan=new THREE.Group(),tilt=new THREE.Group();
       fixed.position.copy(panP).negate();
