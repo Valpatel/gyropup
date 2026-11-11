@@ -41,3 +41,9 @@ The `amended-*` PDFs and JSON reports retain the actual successful outputs:
 The author independently replayed `pdftotext -bbox` checks on all four product PDFs: unique expected IDs, repeated `ID`/`Quantity` headers on every page, whole compact tokens, 21 `pending` tokens for the pending queue and no word beyond page boundaries. `amended-pdf-audit.json` seals those product files. The shared reviewer’s original machine audit is `amended-shared-pdf-audit.json`.
 
 These are bounded Chromium/browser/PDF results with the unrelated 3D assembly module explicitly isolated. Normal CI supplies WebKit and complete Build-page integration; physical printer output, manufacturing readiness and physical fit/strength remain unqualified. No CAD/native or printed-leg geometry changed.
+
+## Actual All orders/BOM gap and correction in progress
+
+The later279-row All orders fixture found a genuine gap in queue-only evidence. Original full PDFs are212 A4/237 Letter pages and unreadable despite complete IDs; a width-only candidate still failed at72/75 pages. Both failed packets are preserved in `orders-original/` and `orders-width-only/`, including source identity, measurements and the original assertion. The32-path planner input closure retains the original0b7b5 build identity honestly.
+
+Shared cad-agent#573 correctionc9794848 adds per-part grouped note rows for supporting text over240 characters; scalar amounts/statuses and main identity/name/quantity/currency columns remain ordinary table cells. Gyropup copies the shared component unchanged. Product wiring supplies readable mobile-label and seller-note text boundaries. The next focused source-fixture checks all actual BOM values/IDs/statuses plus complete supporting text and whole-sheet row bounds; final PDF/readability and queue controls remain required before new review and release adoption. This is still a draft, not a public integration pass.

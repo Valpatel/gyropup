@@ -1,0 +1,218 @@
+{
+  "pass": true,
+  "fixtureVersion": {
+    "revision": "0b7b5f0c0ef094898259c0b6f8a6ac52cd3a5feb",
+    "assets": "f2fcf51ca3310aa8bc38",
+    "history": true,
+    "built": "2026-11-11T16:02:18.299Z"
+  },
+  "currentSource": "ec5f2e3b8ce56c4491a70f137fddf57a0f6b06dd",
+  "sourceDeltaSinceFixture": [
+    ".agents/plans/printable-parts/README.md",
+    ".agents/plans/printable-parts/amended-gyropup-A4.pdf",
+    ".agents/plans/printable-parts/amended-gyropup-Letter.pdf",
+    ".agents/plans/printable-parts/amended-gyropup-pending-A4.pdf",
+    ".agents/plans/printable-parts/amended-gyropup-pending-Letter.pdf",
+    ".agents/plans/printable-parts/amended-pdf-audit.json",
+    ".agents/plans/printable-parts/amended-report.json",
+    ".agents/plans/printable-parts/amended-shared-A4.pdf",
+    ".agents/plans/printable-parts/amended-shared-Letter.pdf",
+    ".agents/plans/printable-parts/amended-shared-chromium-report.json",
+    ".agents/plans/printable-parts/amended-shared-pdf-audit.json"
+  ],
+  "rows": [
+    {
+      "url": "exports/leg/bom.json",
+      "source": "hardware/exports/leg/bom.json",
+      "sourceSha256": "77c19e0a4acb896b3fd372f581281954c6aa36efd71bb427390adbf188a06f79",
+      "servedSha256": "77c19e0a4acb896b3fd372f581281954c6aa36efd71bb427390adbf188a06f79"
+    },
+    {
+      "url": "exports/rig/bom.json",
+      "source": "hardware/exports/rig/bom.json",
+      "sourceSha256": "da1e958ee1caee023901503b205fda7d9e2e02f12122ab9a8604f4b3c464d825",
+      "servedSha256": "da1e958ee1caee023901503b205fda7d9e2e02f12122ab9a8604f4b3c464d825"
+    },
+    {
+      "url": "exports/turret/bench/bom.json",
+      "source": "hardware/exports/turret/bench/bom.json",
+      "sourceSha256": "e12a51b8ed727b287293667d093f032631f2765399bc93340a710f90f4a92bc3",
+      "servedSha256": "e12a51b8ed727b287293667d093f032631f2765399bc93340a710f90f4a92bc3"
+    },
+    {
+      "url": "exports/body/bom.json",
+      "source": "hardware/exports/body/bom.json",
+      "sourceSha256": "e7a72fd31eb0be55c1f1306170f3cc20b86793002a2f1f6fa037326627246d74",
+      "servedSha256": "e7a72fd31eb0be55c1f1306170f3cc20b86793002a2f1f6fa037326627246d74"
+    },
+    {
+      "url": "exports/leg/print-plan.json",
+      "source": "hardware/exports/leg/print-plan.json",
+      "sourceSha256": "d53ed973099f0a8355c87b52d9dbf2de777cc4ce67cb2fb7b60b3fa8885ca6b4",
+      "servedSha256": "d53ed973099f0a8355c87b52d9dbf2de777cc4ce67cb2fb7b60b3fa8885ca6b4"
+    },
+    {
+      "url": "exports/rig/print-plan.json",
+      "source": "hardware/exports/rig/print-plan.json",
+      "sourceSha256": "0650cb49fe08d09834f129770a955faf69d31048e5594054b696f0f61d5b1779",
+      "servedSha256": "0650cb49fe08d09834f129770a955faf69d31048e5594054b696f0f61d5b1779"
+    },
+    {
+      "url": "exports/rig/bench/print-plan.json",
+      "source": "hardware/exports/rig/bench/print-plan.json",
+      "sourceSha256": "ef804b028710bc1e2e0caf968b78a4fd44c41341e726dd529c588f9543327379",
+      "servedSha256": "ef804b028710bc1e2e0caf968b78a4fd44c41341e726dd529c588f9543327379"
+    },
+    {
+      "url": "exports/turret/bench/print-plan.json",
+      "source": "hardware/exports/turret/bench/print-plan.json",
+      "sourceSha256": "9834d01132b1763daeaf8c27200797abea546761d3d6cf0f08885ced0f82b71f",
+      "servedSha256": "9834d01132b1763daeaf8c27200797abea546761d3d6cf0f08885ced0f82b71f"
+    },
+    {
+      "url": "exports/body/print-plan.json",
+      "source": "hardware/exports/body/print-plan.json",
+      "sourceSha256": "268f3210ea0ba5fd31d4d73e5c73bdded8d3f00c1ac43ddb66d1f0b8042b3e8d",
+      "servedSha256": "268f3210ea0ba5fd31d4d73e5c73bdded8d3f00c1ac43ddb66d1f0b8042b3e8d"
+    },
+    {
+      "url": "exports/turret/turret.json",
+      "source": "hardware/exports/turret/turret.json",
+      "sourceSha256": "33de532d39e379daffff5258574b635e17de2926946395e78bbdc61bb602e0ae",
+      "servedSha256": "33de532d39e379daffff5258574b635e17de2926946395e78bbdc61bb602e0ae"
+    },
+    {
+      "url": "catalog/images.json",
+      "source": "hardware/catalog/images.json",
+      "sourceSha256": "918f8c682e95ae0210f732197c0d9bd58d27c066a9cffc0037bee4284b795e73",
+      "servedSha256": "332b7ac5a3adba758acbd456a265cbb2d083321a7a1f8f02e67fe3d58d6e71b6"
+    },
+    {
+      "url": "catalog/alternates.json",
+      "source": "hardware/catalog/alternates.json",
+      "sourceSha256": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b",
+      "servedSha256": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b"
+    },
+    {
+      "url": "catalog/sourcing.json",
+      "source": "hardware/catalog/sourcing.json",
+      "sourceSha256": "a002bac6b795357a717ed0528ea6e2a561d774a7e608c35fee64fd8231370a12",
+      "servedSha256": "a002bac6b795357a717ed0528ea6e2a561d774a7e608c35fee64fd8231370a12"
+    },
+    {
+      "url": "catalog/index.json",
+      "source": "hardware/catalog/index.json",
+      "sourceSha256": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334",
+      "servedSha256": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334"
+    },
+    {
+      "url": "catalog/materials.json",
+      "source": "hardware/catalog/materials.json",
+      "sourceSha256": "f699e8ea644aeb4f66227f5e021a2a7996b477ef1a41d6048b7f638364ba5d1f",
+      "servedSha256": "f699e8ea644aeb4f66227f5e021a2a7996b477ef1a41d6048b7f638364ba5d1f"
+    },
+    {
+      "url": "catalog/hardware.json",
+      "source": "hardware/catalog/hardware.json",
+      "sourceSha256": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015",
+      "servedSha256": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015"
+    },
+    {
+      "url": "catalog/rig.json",
+      "source": "hardware/catalog/rig.json",
+      "sourceSha256": "87b982f76287ec4141cdb043de880e985373ca8305a8cf30ed15d378f25879b5",
+      "servedSha256": "87b982f76287ec4141cdb043de880e985373ca8305a8cf30ed15d378f25879b5"
+    },
+    {
+      "url": "catalog/body.json",
+      "source": "hardware/catalog/body.json",
+      "sourceSha256": "2b0f3a5ef9313bead13b9bfdb1de4b15a7159bccfd1910b029608bceb8c4616f",
+      "servedSha256": "2b0f3a5ef9313bead13b9bfdb1de4b15a7159bccfd1910b029608bceb8c4616f"
+    },
+    {
+      "url": "catalog/leg_actuators.json",
+      "source": "hardware/catalog/leg_actuators.json",
+      "sourceSha256": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5",
+      "servedSha256": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5"
+    },
+    {
+      "url": "catalog/lights.json",
+      "source": "hardware/catalog/lights.json",
+      "sourceSha256": "7f8a4a2ebf819141ba8929257bce17a3868d5420fd34a4ee137e7d8b2ee51f78",
+      "servedSha256": "7f8a4a2ebf819141ba8929257bce17a3868d5420fd34a4ee137e7d8b2ee51f78"
+    },
+    {
+      "url": "catalog/motor_drivers.json",
+      "source": "hardware/catalog/motor_drivers.json",
+      "sourceSha256": "4b4d83c2ba6ded0127992de1fb01982e96d831a79864af73ff49ecad102704e3",
+      "servedSha256": "4b4d83c2ba6ded0127992de1fb01982e96d831a79864af73ff49ecad102704e3"
+    },
+    {
+      "url": "catalog/power_electronics.json",
+      "source": "hardware/catalog/power_electronics.json",
+      "sourceSha256": "896ad5da63cb4cf56ebb38607e012343395e220d3c4a8d0a2275e9a614012c97",
+      "servedSha256": "896ad5da63cb4cf56ebb38607e012343395e220d3c4a8d0a2275e9a614012c97"
+    },
+    {
+      "url": "catalog/sensors_compute.json",
+      "source": "hardware/catalog/sensors_compute.json",
+      "sourceSha256": "7ba205b22b43195db0dcff85976a18f0a8405f782c3437e675122dbbc549f47a",
+      "servedSha256": "7ba205b22b43195db0dcff85976a18f0a8405f782c3437e675122dbbc549f47a"
+    },
+    {
+      "url": "catalog/turret.json",
+      "source": "hardware/catalog/turret.json",
+      "sourceSha256": "4e0ab8a62f75e4da60e50e84dcddc85d2e462ffc0949bacdcdf60d7f4aade9f7",
+      "servedSha256": "4e0ab8a62f75e4da60e50e84dcddc85d2e462ffc0949bacdcdf60d7f4aade9f7"
+    },
+    {
+      "url": "catalog/wheel_motors.json",
+      "source": "hardware/catalog/wheel_motors.json",
+      "sourceSha256": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99",
+      "servedSha256": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99"
+    },
+    {
+      "url": "docs/leg-prototype-plan.md",
+      "source": "docs/legs/leg-prototype-plan.md",
+      "sourceSha256": "855e98f92e637a70039f0f09afa31a08eec7a6c023130a15b74e2db188d6bff7",
+      "servedSha256": "855e98f92e637a70039f0f09afa31a08eec7a6c023130a15b74e2db188d6bff7"
+    },
+    {
+      "url": "docs/turret-prototype-plan.md",
+      "source": "docs/turret/turret-prototype-plan.md",
+      "sourceSha256": "16f1ac123828b27a37a8b775182af40d2c6b87923648c94d57bfab02c8a1d4ae",
+      "servedSha256": "16f1ac123828b27a37a8b775182af40d2c6b87923648c94d57bfab02c8a1d4ae"
+    },
+    {
+      "url": "docs/body-plan.md",
+      "source": "docs/body/body-plan.md",
+      "sourceSha256": "b91e79958199f572e9fedf9d761e5cd560a25ec10e4b9d73ccc38dab631c6d13",
+      "servedSha256": "b91e79958199f572e9fedf9d761e5cd560a25ec10e4b9d73ccc38dab631c6d13"
+    },
+    {
+      "url": "designer/build.js",
+      "source": "software/site/designer/build.js",
+      "sourceSha256": "2ff18334faa3515a33641167110ecd8cf2d17855d4966b2d6955142161186976",
+      "servedSha256": "2ff18334faa3515a33641167110ecd8cf2d17855d4966b2d6955142161186976"
+    },
+    {
+      "url": "designer/portal-parts.js",
+      "source": "software/site/designer/portal-parts.js",
+      "sourceSha256": "0b46a1c7b768e2cc9677b90f0d32f26dda828761b82650473bf40dcec7a19147",
+      "servedSha256": "0b46a1c7b768e2cc9677b90f0d32f26dda828761b82650473bf40dcec7a19147"
+    },
+    {
+      "url": "designer/kit/part-table.js",
+      "source": "software/site/designer/kit/part-table.js",
+      "sourceSha256": "9d893a93410c3ec52bd4c5ad8f15be1491057cb1dd98d71b60a0585345f41ad8",
+      "servedSha256": "9d893a93410c3ec52bd4c5ad8f15be1491057cb1dd98d71b60a0585345f41ad8"
+    },
+    {
+      "url": "designer/kit/part-tracker.js",
+      "source": "software/site/designer/kit/part-tracker.js",
+      "sourceSha256": "24dacb7803a81ea7731d69a815430fdef743aabe86320c64c08784f99e1a0553",
+      "servedSha256": "24dacb7803a81ea7731d69a815430fdef743aabe86320c64c08784f99e1a0553"
+    }
+  ],
+  "limits": "Read-only complete planner input/source comparison for existing fixture. Directory membership comes from current tracked publication; this is not public or complete assembly evidence."
+}

@@ -15,8 +15,21 @@ export function createPortalParts(host, {revision = 'unavailable'} = {}) {
         th.dataset.sort=[...table.tBodies[0].rows].some(row=>row.cells[index]?.hasAttribute('data-sort-value'))?'number':'text';
       }
       if(!table.parentElement.classList.contains('cad-table-scroll')){const wrap=document.createElement('div');wrap.className='cad-table-scroll';table.before(wrap);wrap.append(table);}
+      // Mobile-only labels repeat the printed headers. Preserve the actual value
+      // and every pack/cut/price note with explicit boundaries in the plain snapshot.
+      for(const cell of table.querySelectorAll('td[data-sort-value]'))if(cell.querySelector('.lbl')){
+        const plain=cell.cloneNode(true);plain.querySelectorAll('.lbl').forEach(label=>label.remove());
+        cell.dataset.printValue=[...plain.childNodes].map(node=>node.textContent.trim()).filter(Boolean).join(' — ');
+      }
+      // Seller/availability notes are separate UI spans, often adjacent in HTML.
+      // Supply those boundaries explicitly instead of concatenating their words.
+      for(const cell of table.querySelectorAll('td'))if(!cell.hasAttribute('data-print-value')&&cell.querySelector('small,br,.avail,.tag')){
+        const plain=cell.cloneNode(true);plain.querySelectorAll('[hidden],[aria-hidden="true"]').forEach(node=>node.remove());
+        for(const note of plain.querySelectorAll('small,br,.avail,.tag')){note.before(document.createTextNode(' '));note.after(document.createTextNode(' '));}
+        cell.dataset.printValue=plain.textContent.replace(/\s+/g,' ').trim();
+      }
       const identity=[...table.tHead.rows[0].cells].findIndex(th=>/^part$/i.test(th.textContent.trim()));
-      if(table.dataset.track&&identity>=0){table.tHead.rows[0].cells[identity].classList.add('cad-part-identity');for(const row of table.tBodies[0].rows){const cell=row.cells[identity];if(cell){cell.classList.add('cad-part-identity');const notes=[...cell.querySelectorAll('small'),...row.querySelectorAll('[data-print-note]')].map(note=>note.textContent.trim()).filter(Boolean);cell.dataset.printValue=[row.dataset.partLabel||cell.textContent.trim(),...new Set(notes)].join(' — ');}}}
+      if(table.dataset.track&&identity>=0){table.tHead.rows[0].cells[identity].classList.add('cad-part-identity');for(const row of table.tBodies[0].rows){const cell=row.cells[identity];if(cell){cell.classList.add('cad-part-identity');const notes=[...cell.querySelectorAll('small,.tag.warn,.tag.fail'),...row.querySelectorAll('[data-print-note]')].map(note=>note.textContent.trim()).filter(Boolean);cell.dataset.printValue=[row.dataset.partLabel||cell.textContent.trim(),...new Set(notes)].join(' — ');}}}
       const statuses=table.dataset.track==='print'?[{id:'printed',label:'Printed'}]:table.dataset.track==='buy'?[{id:'ordered',label:'Ordered'},{id:'inHand',label:'In hand'}]:[];
       for(const th of table.tHead.rows[0].cells)if(/^(picture|print setup)$/i.test(th.textContent.trim()))th.dataset.print='omit';
       const api=enhancePartTable(table,{printable: table.dataset.track ? {project:'Gyropup retained prototype workstreams',revision,notice:'Original leg, rig, turret and earlier body planning lists. Current front/rear-pack robot manufacturing plan remains incomplete. Checklist marks track parts, not purchased quantities. This list does not qualify fit, strength or a complete robot.'} : undefined,label:table.dataset.label||table.caption?.textContent||'Parts',tracker,statuses,searchable:many,pageSize:Number(table.dataset.pageSize)||0});
