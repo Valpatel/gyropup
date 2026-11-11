@@ -1,0 +1,7 @@
+{
+  "scope": "Read-only coordinator preflight; no seal, marker, unit or browser execution",
+  "failed_predicate": "Expected cad-agent machine verdict marker in Gyropup source review5865337208",
+  "observed_error": "RuntimeError: Source review missing or dismissed",
+  "readback": "Review exists, COMMENTED at exact90232f8b, first paragraph independently states source PASS; Gyropup has no cad-agent marker rule",
+  "correction": "Validate the actual Gyropup review commit/state and explicit independent PASS, plus all current CI. No review or runtime input changed."
+}
