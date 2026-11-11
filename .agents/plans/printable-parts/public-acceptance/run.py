@@ -2,6 +2,8 @@
 """One reviewed bounded execution; THIS PREPARED PACKET REFUSES TO RUN."""
 import hashlib,json,os,re,subprocess,sys,time
 from pathlib import Path
+if not __debug__:
+    raise SystemExit('Refusing Python optimization: assertion-based admission must remain enabled')
 P=Path(__file__).resolve().parent
 assert sys.argv[1:]==['--execute-reviewed'], 'Only the explicit reviewed invocation is accepted'
 c=json.loads((P/'contract.json').read_text())
@@ -9,7 +11,7 @@ assert c['approved_for_execution'] is True, 'Prepared packet is not approved'
 assert 'TODO' not in json.dumps(c) and 'UNBOUND' not in json.dumps(c), 'Unbound future identities'
 seal=json.loads((P/'review-seal.json').read_text()) # deliberately absent until final GPT-6 review
 assert seal['review_url'].startswith('https://github.com/Valpatel/gyropup/pull/')
-for f in ['run.py','public-checklists.mjs','audit-pdfs.py','pdf-id-extractor.py','contract.json','provider-reference.json','release-binding.json']:
+for f in ['run.py','public-checklists.mjs','audit-pdfs.py','pdf-id-extractor.py','capture-diagnostics.mjs','clip-geometry.mjs','position-header.mjs','deployment-html.mjs','cleanup-observer.mjs','contract.json','provider-reference.json','release-binding.json','compiled-build.html','served-build.html','deployment-beacon.html']:
     assert hashlib.sha256((P/f).read_bytes()).hexdigest()==seal['files_sha256'][f], f+' differs from reviewed bytes'
 unit=c['unit']+'.service'
 assert re.fullmatch(r'gy318-public-acceptance-[a-z0-9-]+\.service',unit)
@@ -39,6 +41,23 @@ for url,expected in c['built'].items():
     assert digest(Path(c['final_build_root'])/url.lstrip('/'))==expected
 built_version=json.loads((Path(c['final_build_root'])/'version.json').read_text())
 assert built_version['revision']==c['main'] and built_version['assets']==c['assets']
+h=c['deployed_html']
+assert h['artifact']=='/designer/build.html' and h['request_path']=='/designer/build'
+assert h['transformation']=='one exact byte insertion'
+assert h['compiled_sha256']==c['built']['/designer/build.html']
+assert h['compiled_fixture']=='compiled-build.html' and h['served_fixture']=='served-build.html' and h['insertion_file']=='deployment-beacon.html'
+compiled=(Path(c['final_build_root'])/'designer/build.html').read_bytes()
+assert (P/h['compiled_fixture']).read_bytes()==compiled
+served=(P/h['served_fixture']).read_bytes();insertion=(P/h['insertion_file']).read_bytes()
+assert digest(P/h['served_fixture'])==h['served_sha256'] and digest(P/h['insertion_file'])==h['insertion_sha256']
+assert len(insertion)==h['insertion_bytes'] and isinstance(h['insertion_offset'],int) and 0<=h['insertion_offset']<=len(compiled)
+assert served==compiled[:h['insertion_offset']]+insertion+compiled[h['insertion_offset']:], 'Unexpected compiled-to-served HTML difference'
+assert c['schema']=='gyropup.public-checklists/2' and c['work_timeout_ms']==420000 and c['unit_runtime_seconds']==480
+assert git(c['repo'],'rev-parse','HEAD').decode().strip()==c['main'] and not git(c['repo'],'status','--porcelain').strip(), 'Final source checkout changed'
+assert c['helper']['source']=='tests/site/assembly/capture-diagnostics.mjs'
+assert hashlib.sha256(git(c['repo'],'show',c['main']+':'+c['helper']['source'])).hexdigest()==c['helper']['sha256']
+assert digest(P/'capture-diagnostics.mjs')==c['helper']['sha256']
+assert c['framing_profile']=={'documentMode':'CSS1Compat','scrollingElement':'HTML','rootOverflowX':'hidden','rootOverflowY':'auto','visualScale':1,'visualOffsetLeft':0,'visualOffsetTop':0,'position_total_ms':5000,'sample_gap_ms':100,'geometry_tolerance_px':1,'scroll':{'behavior':'instant','block':'center','inline':'nearest'}}
 assert {t['name'] for t in c['tables']}=={'queue','orders','made','pending'} and len(c['tables'])==4
 for table in c['tables']:
     assert isinstance(table['count'],int) and table['count']>0 and isinstance(table['index'],int) and table['index']>=0
@@ -54,7 +73,7 @@ for table in c['tables']:
         assert fields and all(isinstance(column,str) and column for column in fields)
         for fragments in fields.values():assert isinstance(fragments,list) and fragments and all(isinstance(value,str) and value.strip() for value in fragments)
 provider=json.loads((P/'provider-reference.json').read_text())
-for key in ['node','playwright','chrome']:assert digest(provider[key]['path'])==provider[key]['sha256']
+for key in ['node','playwright','chrome','capture_protocol']:assert digest(provider[key]['path'])==provider[key]['sha256']
 assert subprocess.check_output([provider['node']['path'],'--version'],text=True,timeout=5).strip()==provider['node']['version']
 assert json.loads((Path(provider['playwright']['path']).parent/'package.json').read_text())['version']==provider['playwright']['version']
 def show():

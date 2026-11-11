@@ -256,3 +256,8 @@
 - A BOM has complete IDs but hundreds of pages or one-character names: [budget annotated numbers and same-part sourcing notes](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#rich-procurement-notes-need-their-own-printable-space).
 
 - Complete IDs/layout pass while setup, uses or fabrication details disappear: [bind fidelity before adapter enhancement](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#source-fidelity-must-be-measured-before-the-adapter-can-discard-it).
+
+- Positive table widths pass but the PNG shows a footer, or root clip bottom becomes negative after scrolling: [distinguish root viewport and real nested clips](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md#root-viewport-coordinates-and-nested-clips-are-different-evidence).
+- Compiled HTML differs only after deployment while six JS/CSS hashes match: [bind exact deployment bytes before capture](plans/printable-parts/public-acceptance/README.md#bind-source-and-delivered-identity-separately).
+- Required PNGs return but graceful browser close times out although the owned cgroup is empty: [retain the failed lifetime contract](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md#a-completed-capture-does-not-establish-graceful-shutdown).
+- One parallel worker returning accidentally releases the coordinator's combined issue lease: [checkpoint scope without releasing the shared claim](inbox/2026-11-11-successful-transient-units-can-lose-readback.md#shared-coordination-claims-outlive-one-worker).

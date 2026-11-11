@@ -17,3 +17,8 @@ Capture effective properties while the unit is loaded. Keep the configured comma
 ## Limits
 
 A later missing unit and default infinity values do not establish the historical effective CPU/RAM/runtime caps. Current absence establishes only current cleanup state; the successful child/browser report does not retroactively make the original property assertion pass. The independent terminal-recovery receipt is separate from the original failed collector.
+
+
+## Shared coordination claims outlive one worker
+
+2026-11-11, parallel #281/#323 work exposed that workers on one host/harness can share the same pseudonymous work-claim tag. [The recovered #323 coordination receipt](https://github.com/Valpatel/gyropup/issues/323#issuecomment-6805395424) records the accidental shared-lease release and recovery. Returning a worker slot does not finish the coordinator's combined acceptance scope. Checkpoint the author's finite scope; do not release/done the shared issue while its coordinator still owns unfinished public acceptance. The coordinator performs final closure/release. This rule concerns shared claim ownership, not permission to alter another worker's source or processes.
