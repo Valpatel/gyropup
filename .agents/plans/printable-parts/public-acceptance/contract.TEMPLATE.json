@@ -1,0 +1,123 @@
+{
+  "approved_for_execution": false,
+  "main": "TODO_FINAL_MAIN_40_HEX",
+  "tree": "TODO_FINAL_TREE_40_HEX",
+  "assets": "TODO_FINAL_ASSETS_20_HEX",
+  "toolkit_release": "TODO_ACTUAL_RELEASE_TAG",
+  "toolkit_commit": "TODO_ACTUAL_RELEASE_COMMIT_40_HEX",
+  "toolkit_part_table_sha256": "TODO_RELEASED_COMPONENT_64_HEX",
+  "repo": "TODO_FINAL_GYROPUP_CHECKOUT",
+  "out": "TODO_EXCLUSIVE_OUTPUT_DIRECTORY",
+  "unit": "gy318-public-acceptance-UNBOUND",
+  "guide": {
+    "assembly": "combined",
+    "snapshot": "TODO_SOURCE_BOUND_SNAPSHOT",
+    "native": "TODO_NATIVE_40_HEX",
+    "collection": "TODO_COLLECTION_64_HEX",
+    "model": "TODO_MODEL_64_HEX",
+    "parts": 224,
+    "steps": 30
+  },
+  "sources": {
+    "/designer/build.js": "TODO_SOURCE_SHA256",
+    "/designer/portal-parts.js": "TODO_SOURCE_SHA256",
+    "/designer/kit/part-table.js": "TODO_RELEASED_COMPONENT_64_HEX",
+    "/designer/assembly/build-guide.js": "TODO_SOURCE_SHA256"
+  },
+  "tables": [
+    {
+      "name": "queue",
+      "selector": "#queue table",
+      "index": 0,
+      "panel": "print",
+      "count": 54,
+      "requiredId": "print/leg/hip_frame",
+      "ids": [],
+      "pdfPages": {
+        "A4": "TODO_FINAL_SOURCE_PAGES",
+        "Letter": "TODO_FINAL_SOURCE_PAGES"
+      },
+      "matchingIds": [],
+      "longNotes": {},
+      "requiredFields": {
+        "TODO_SOURCE_BOUND_PART_ID": {
+          "TODO_COLUMN": [
+            "TODO_FINAL_RAW_SOURCE_FRAGMENT"
+          ]
+        }
+      }
+    },
+    {
+      "name": "orders",
+      "selector": "#orders table",
+      "index": 0,
+      "panel": "buy",
+      "count": 279,
+      "requiredId": "TODO_REAL_BUY_STABLE_ID",
+      "ids": [],
+      "pdfPages": {
+        "A4": "TODO_FINAL_SOURCE_PAGES",
+        "Letter": "TODO_FINAL_SOURCE_PAGES"
+      },
+      "matchingIds": [],
+      "longNotes": {},
+      "requiredFields": {
+        "TODO_SOURCE_BOUND_PART_ID": {
+          "TODO_COLUMN": [
+            "TODO_FINAL_RAW_SOURCE_FRAGMENT"
+          ]
+        }
+      }
+    },
+    {
+      "name": "made",
+      "selector": "#made table",
+      "index": 0,
+      "panel": "buy",
+      "count": "TODO_COUNT_FROM_REVIEWED_SOURCE",
+      "requiredId": "TODO_REAL_MADE_STABLE_ID",
+      "ids": [],
+      "longNotes": {},
+      "requiredFields": {
+        "TODO_SOURCE_BOUND_PART_ID": {
+          "TODO_COLUMN": [
+            "TODO_FINAL_RAW_SOURCE_FRAGMENT"
+          ]
+        }
+      },
+      "pdfPages": {
+        "A4": "TODO_FINAL_SOURCE_PAGES",
+        "Letter": "TODO_FINAL_SOURCE_PAGES"
+      }
+    },
+    {
+      "name": "pending",
+      "selector": "#queue table",
+      "index": "TODO_TURRET_TABLE_INDEX",
+      "panel": "print",
+      "count": 23,
+      "pendingWarnings": 21,
+      "requiredId": "TODO_REAL_TURRET_STABLE_ID",
+      "ids": [],
+      "pdfPages": {
+        "A4": "TODO_FINAL_SOURCE_PAGES",
+        "Letter": "TODO_FINAL_SOURCE_PAGES"
+      },
+      "longNotes": {},
+      "requiredFields": {
+        "TODO_SOURCE_BOUND_PART_ID": {
+          "TODO_COLUMN": [
+            "TODO_FINAL_RAW_SOURCE_FRAGMENT"
+          ]
+        }
+      }
+    }
+  ],
+  "final_build_root": "TODO_FINAL_BUILT_ARTIFACT_ROOT",
+  "toolkit_repo": "TODO_RELEASED_TOOLKIT_OBJECT_DATABASE",
+  "built": {
+    "/designer/build.html": "TODO_FINAL_BUILT_SHA256",
+    "/designer/kit/part-table.css": "TODO_FINAL_BUILT_SHA256",
+    "/designer/portal-parts.css": "TODO_FINAL_BUILT_SHA256"
+  }
+}

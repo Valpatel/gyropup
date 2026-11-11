@@ -1,0 +1,18 @@
+[
+  {
+    "format": "A4",
+    "pages": 3,
+    "repeated_header_pages": 3,
+    "unique_part_ids": 75,
+    "all_75_once": true,
+    "out_of_page_words": 0
+  },
+  {
+    "format": "Letter",
+    "pages": 3,
+    "repeated_header_pages": 3,
+    "unique_part_ids": 75,
+    "all_75_once": true,
+    "out_of_page_words": 0
+  }
+]

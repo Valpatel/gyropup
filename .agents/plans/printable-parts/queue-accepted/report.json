@@ -1,0 +1,285 @@
+{
+  "engine": "chromium",
+  "errors": [],
+  "observations": [
+    {
+      "label": "Print queue",
+      "width": 1280,
+      "bounds": [
+        {
+          "column": "Order↕",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Picture",
+          "headerWidth": 75.5625,
+          "cellWidth": 75.5625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part↕",
+          "headerWidth": 255.625,
+          "cellWidth": 255.625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Material↕",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity↕",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Grams↕",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Hours↕",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Print setup↕",
+          "headerWidth": 222.28125,
+          "cellWidth": 222.28125,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Printed",
+          "headerWidth": 97.828125,
+          "cellWidth": 97.828125,
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Find a part",
+      "width": 1280,
+      "bounds": [
+        {
+          "column": "Picture",
+          "headerWidth": 76.40625,
+          "cellWidth": 76.40625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part↕",
+          "headerWidth": 258.46875,
+          "cellWidth": 258.46875,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Design files↕",
+          "headerWidth": 224.765625,
+          "cellWidth": 224.765625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity↕",
+          "headerWidth": 112.375,
+          "cellWidth": 112.375,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Supplier↕",
+          "headerWidth": 224.765625,
+          "cellWidth": 224.765625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Estimate↕",
+          "headerWidth": 112.375,
+          "cellWidth": 112.375,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Ordered",
+          "headerWidth": 98.890625,
+          "cellWidth": 98.890625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "In hand",
+          "headerWidth": 98.953125,
+          "cellWidth": 98.953125,
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Print queue",
+      "width": 320,
+      "bounds": [
+        {
+          "column": "Order↕",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Picture",
+          "headerWidth": 68,
+          "cellWidth": 68,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part↕",
+          "headerWidth": 120,
+          "cellWidth": 120,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Material↕",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity↕",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Grams↕",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Hours↕",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Print setup↕",
+          "headerWidth": 200,
+          "cellWidth": 200,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Printed",
+          "headerWidth": 84,
+          "cellWidth": 84,
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Find a part",
+      "width": 320,
+      "bounds": [
+        {
+          "column": "Picture",
+          "headerWidth": 68,
+          "cellWidth": 68,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part↕",
+          "headerWidth": 120,
+          "cellWidth": 120,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Design files↕",
+          "headerWidth": 200,
+          "cellWidth": 200,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity↕",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Supplier↕",
+          "headerWidth": 200,
+          "cellWidth": 200,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Estimate↕",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Ordered",
+          "headerWidth": 84,
+          "cellWidth": 84,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "In hand",
+          "headerWidth": 84,
+          "cellWidth": 84,
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "total": 54,
+      "visible": 10,
+      "filtered": 3,
+      "checkedKey": "print/rig/pod"
+    },
+    {
+      "case": "actual turret pending exports retained",
+      "pendingRows": 21
+    },
+    {
+      "case": "one-part printable product adapter",
+      "printedRows": 1,
+      "checked": true,
+      "searchControls": 0,
+      "sortControls": 0
+    }
+  ]
+}

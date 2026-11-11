@@ -1,0 +1,224 @@
+[
+  {
+    "format": "A4",
+    "cells": [
+      {
+        "text": "Done",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Part ID",
+        "compact": false,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Part",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Supplier part number",
+        "compact": false,
+        "lines": 2,
+        "within": true
+      },
+      {
+        "text": "Quantity needed",
+        "compact": false,
+        "lines": 2,
+        "within": true
+      },
+      {
+        "text": "Unit price",
+        "compact": false,
+        "lines": 2,
+        "within": true
+      },
+      {
+        "text": "Order cost",
+        "compact": false,
+        "lines": 2,
+        "within": true
+      },
+      {
+        "text": "Alternates",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Ordered",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "In hand",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☐",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "2",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "$52.94",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "$105.88",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☑",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☐",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      }
+    ],
+    "documentBounds": {
+      "width": 1031,
+      "scroll": 1031,
+      "rows": [
+        {
+          "id": "buy/ballast_shaft",
+          "height": 62
+        }
+      ]
+    }
+  },
+  {
+    "format": "Letter",
+    "cells": [
+      {
+        "text": "Done",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Part ID",
+        "compact": false,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Part",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Supplier part number",
+        "compact": false,
+        "lines": 2,
+        "within": true
+      },
+      {
+        "text": "Quantity needed",
+        "compact": false,
+        "lines": 2,
+        "within": true
+      },
+      {
+        "text": "Unit price",
+        "compact": false,
+        "lines": 2,
+        "within": true
+      },
+      {
+        "text": "Order cost",
+        "compact": false,
+        "lines": 2,
+        "within": true
+      },
+      {
+        "text": "Alternates",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Ordered",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "In hand",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☐",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "2",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "$52.94",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "$105.88",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☑",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☐",
+        "compact": true,
+        "lines": 1,
+        "within": true
+      }
+    ],
+    "documentBounds": {
+      "width": 965,
+      "scroll": 965,
+      "rows": [
+        {
+          "id": "buy/ballast_shaft",
+          "height": 62
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "format": "A4",
+    "pages": 4,
+    "repeated_header_pages": 4,
+    "unique_part_ids": 75,
+    "out_of_page_words": 0,
+    "pdf_sha256": "04a459a99dae73678566d6a3a3100155568bceff7b23769e6419064876d86280"
+  },
+  {
+    "format": "Letter",
+    "pages": 4,
+    "repeated_header_pages": 4,
+    "unique_part_ids": 75,
+    "out_of_page_words": 0,
+    "pdf_sha256": "7b93829fec010d45190931bbf9b41a04c1d9c133ac2876e845bd4f3a0757df16"
+  }
+]

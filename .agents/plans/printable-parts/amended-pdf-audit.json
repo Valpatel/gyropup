@@ -1,0 +1,50 @@
+[
+  {
+    "file": "gyropup-A4.pdf",
+    "sha256": "720878a24fb28e8c016f0a4552c4a881756cc8ac0198dc5e87c392319aebe09b",
+    "pages": 3,
+    "unique_part_ids": 54,
+    "repeated_header_pages": 3,
+    "out_of_page_words": 0,
+    "compact_tokens": [
+      "1106",
+      "72.5",
+      "Hours"
+    ],
+    "pending_warnings": 0
+  },
+  {
+    "file": "gyropup-Letter.pdf",
+    "sha256": "3f8f24a1a132d97967c5e34477ba338674b96795e677312ae6b4f4ee566203a3",
+    "pages": 3,
+    "unique_part_ids": 54,
+    "repeated_header_pages": 3,
+    "out_of_page_words": 0,
+    "compact_tokens": [
+      "1106",
+      "72.5",
+      "Hours"
+    ],
+    "pending_warnings": 0
+  },
+  {
+    "file": "gyropup-pending-A4.pdf",
+    "sha256": "d8ea0e169970ea040b318af5de676be33f12eea25f715b5ca73b55915e0e55f5",
+    "pages": 2,
+    "unique_part_ids": 23,
+    "repeated_header_pages": 2,
+    "out_of_page_words": 0,
+    "compact_tokens": [],
+    "pending_warnings": 21
+  },
+  {
+    "file": "gyropup-pending-Letter.pdf",
+    "sha256": "246f2ff1d1fa49992a5622fdd8178c3b96d4b804cbb072b2fc034d90daa529cc",
+    "pages": 2,
+    "unique_part_ids": 23,
+    "repeated_header_pages": 2,
+    "out_of_page_words": 0,
+    "compact_tokens": [],
+    "pending_warnings": 21
+  }
+]

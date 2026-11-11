@@ -1,0 +1,23 @@
+{
+  "functional_source": "cd276824fcbe0bea6c3c39099120afd465b751a3",
+  "fixture_version": {
+    "revision": "cd276824fcbe0bea6c3c39099120afd465b751a3",
+    "assets": "1c2cdb23425cfe03518c",
+    "history": true,
+    "built": "2026-11-11T17:52:48.513Z"
+  },
+  "source_adapter_sha256": "fc026d4152b1ebc8ccc39d60f3ed2e98a2bc55f2d393b17588ff8e2689802c24",
+  "shared_component_sha256": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+  "executed_test_sha256": "61f0796a7c12c56f2848ed1e6ef2f1793bb93b9567ca3c7cb17c6defde2c8f7f",
+  "final_test_sha256": "40d5ef0f95dbd3e78714dfb3c4489fec0c4a7b3e37372281f5466ca1050616d8",
+  "post_fixture_test_delta": "Only honor existing PLAYWRIGHT_CHANNEL=chromium in normal CI, as the existing portal harness does. Local default installed Chrome branch remains identical. No product source changed after this fixture.",
+  "browser_command": "timeout 150s env TEST_OUTPUT=<owned-output> node tests/site/content/test-print-checklist.mjs",
+  "oracle": "Synchronous producer innerHTML capture before enhancement; no data-print-value allowed in capture; raw leg print plan/rig BOM/CNC BOM sentinels independently checked.",
+  "assembly": "Intentionally isolated in local source fixture; no public/full Build acceptance.",
+  "remaining": [
+    "Fresh independent GPT-6 review",
+    "normal CI and WebKit",
+    "actual toolkit release provenance",
+    "published main and reviewed public acceptance"
+  ]
+}

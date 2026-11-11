@@ -1,0 +1,21 @@
+{
+  "verified_at": "2026-11-11T18:48:14.268946Z",
+  "toolkit_repository": "Valpatel/cad-agent",
+  "tag": "v0.36.0",
+  "commit": "cb2ca73f05f342c65ba7bd880a29b92bf6f2dec4",
+  "release_url": "https://github.com/Valpatel/cad-agent/releases/tag/v0.36.0",
+  "published_at": "2026-11-11T18:45:07Z",
+  "draft": false,
+  "prerelease": false,
+  "tag_identity_checks": [
+    "GitHub git/ref API direct commit",
+    "fetched refs/tags/v0.36.0^{commit}"
+  ],
+  "upstream_component": "software/cadagent/webkit/part-table.js",
+  "product_component": "software/site/designer/kit/part-table.js",
+  "component_sha256": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+  "byte_identical": true,
+  "runtime_change": "None: the already reviewed product component is byte-identical to the actual release.",
+  "other_toolkit_assets": "Existing independent provenance is retained; no bulk toolkit or CAD/engineering pin change.",
+  "acceptance": "Source-fixture evidence remains bound to its original revision; published main and independently reviewed public Build acceptance remain pending."
+}

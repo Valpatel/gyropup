@@ -1,0 +1,18 @@
+2026-11-11 UTC: original offline PDF audit failure excerpt; local script paths redacted.
+
+The source-fidelity browser fixture had passed. The initial per-ID whitespace-tolerant PDF parser then reported:
+
+AssertionError: ('orders-all-A4.pdf', 'buy/turret_screw_m3x10', 'ID occurrence', 2)
+
+The raw PDF text contained these two actual identities:
+
+buy/turret_s
+crew_m3x10
+[Part A]
+
+buy/turret_s
+crew_m3x10
+_flat
+[Part B]
+
+The second identity is the separate expected buy/turret_screw_m3x10_flat. Its wrapped suffix let a trailing immediate-character boundary incorrectly count its prefix as another shorter ID. No DOM duplicate was observed or accepted. The corrected finite parser allocates longer known-ID spans first, rejects overlaps, and still requires each independent source ID exactly once. Controls reject genuine duplicate short/long IDs and a missing short ID. Exact DOM identity/membership remains a separate prerequisite.
