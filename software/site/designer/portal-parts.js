@@ -18,14 +18,14 @@ export function createPortalParts(host, {revision = 'unavailable'} = {}) {
       // Mobile-only labels repeat the printed headers. Preserve the actual value
       // and every pack/cut/price note with explicit boundaries in the plain snapshot.
       for(const cell of table.querySelectorAll('td[data-sort-value]'))if(cell.querySelector('.lbl')){
-        const plain=cell.cloneNode(true);plain.querySelectorAll('.lbl').forEach(label=>label.remove());
+        const plain=cell.cloneNode(true);plain.querySelectorAll('.lbl').forEach(label=>label.remove());plain.querySelectorAll('br').forEach(br=>br.replaceWith(document.createTextNode(' — ')));
         cell.dataset.printValue=[...plain.childNodes].map(node=>node.textContent.trim()).filter(Boolean).join(' — ');
       }
       // Seller/availability notes are separate UI spans, often adjacent in HTML.
       // Supply those boundaries explicitly instead of concatenating their words.
-      for(const cell of table.querySelectorAll('td'))if(!cell.hasAttribute('data-print-value')&&cell.querySelector('small,br,.avail,.tag')){
+      for(const cell of table.querySelectorAll('td'))if(!cell.hasAttribute('data-print-value')&&cell.querySelector('small,br,.avail,.tag,div,li,p,summary')){
         const plain=cell.cloneNode(true);plain.querySelectorAll('[hidden],[aria-hidden="true"]').forEach(node=>node.remove());
-        for(const note of plain.querySelectorAll('small,br,.avail,.tag')){note.before(document.createTextNode(' '));note.after(document.createTextNode(' '));}
+        for(const note of plain.querySelectorAll('small,br,.avail,.tag,div,li,p,summary')){note.before(document.createTextNode(' '));note.after(document.createTextNode(' '));}
         cell.dataset.printValue=plain.textContent.replace(/\s+/g,' ').trim();
       }
       const identity=[...table.tHead.rows[0].cells].findIndex(th=>/^part$/i.test(th.textContent.trim()));

@@ -60,7 +60,7 @@ try{
   const expected=await table.locator('tbody tr').evaluateAll((rows,term)=>rows.filter(row=>row.textContent.toLowerCase().includes(term.toLowerCase())).map(row=>row.dataset.partKey),term);
   const filteredEvent=page.waitForEvent('popup');await tools.getByRole('button',{name:'Print checklist',exact:true}).click();const filtered=await filteredEvent;
   await filtered.waitForLoadState();assert.equal(await filtered.locator('tbody tr[data-print-part]').count(),expected.length);
-  for(const id of expected)assert.ok((await filtered.locator('tbody').textContent()).includes(id));await filtered.close();
+  for(const id of expected)assert.ok((await filtered.locator('tbody').allTextContents()).join('\n').includes(id));await filtered.close();
   await tools.getByLabel(/Checklist scope/).selectOption('all');const allEvent=page.waitForEvent('popup');await tools.getByRole('button',{name:'Print checklist',exact:true}).click();const all=await allEvent;await all.waitForLoadState();assert.equal(await all.locator('tbody tr[data-print-part]').count(),total);await all.close();
   observations.push({total,visible,filtered:expected.length,checkedKey:key});
   // Exercise the actual product adapter with a durable one-part fixture: list size
