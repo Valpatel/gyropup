@@ -1,4 +1,5 @@
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
+import { observeTalkViewport, readTalkViewport } from './talk-viewport-observation.mjs';
 /** Public CAD/FEA/character routes must have a useful entry point and reachable phone controls. */
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -17,7 +18,18 @@ page.on('pageerror', error => errors.push(error.message));
 page.on('response', response => { if (response.status() >= 400 && response.url().startsWith(base) && !response.url().includes('/_cadagent/')) missing.push(response.url()); });
 const portrait = [[320, 568], [360, 640], [375, 667], [390, 844], [393, 852], [412, 915], [414, 896], [430, 932], [480, 960]];
 const sizes = [...portrait, ...portrait.map(([w, h]) => [h, w]), [768, 1024], [1024, 768], [1440, 900]];
-async function settle() { await page.waitForTimeout(800); }
+const settleMs = 800;
+async function settle() { await page.waitForTimeout(settleMs); }
+async function resizeTalkViewport(width, height) {
+  await page.evaluate(observeTalkViewport, { width, height, settleMs });
+  try {
+    await page.setViewportSize({ width, height });
+    await page.waitForFunction(readTalkViewport, false, { timeout: 15000 });
+    return await page.evaluate(readTalkViewport, true);
+  } finally {
+    await page.evaluate(() => window.__portalTalkViewport?.stop()).catch(() => {});
+  }
+}
 async function visibleModel(key, minimumHeight = 35, targetPage = page) {
   const bounds = await targetPage.evaluate(async key => {
     const THREE = await import('/designer/kit/vendor/three/three.module.min.js');
@@ -127,11 +139,18 @@ try {
   await page.evaluate(() => window.__talk.dock.collapse(false));
   await page.waitForFunction(()=>{const b=document.querySelector('.gp-bubble');return b?.textContent.includes('target game')&&!b.classList.contains('typing');});
   for (const [width, height] of [[320, 568], [390, 844], [568, 320], [844, 390], [1440, 900]]) {
-    await page.setViewportSize({ width, height }); await settle();
-    results.push({ route: 'Talk demo', width, height, bounds: await visibleModel('__talkDemo') });
+    try {
+      const viewportCommit = await resizeTalkViewport(width, height);
+      results.push({ route: 'Talk demo', width, height, viewportCommit, bounds: await visibleModel('__talkDemo') });
+    } catch (error) {
+      const viewportCommit = await page.evaluate(readTalkViewport, true).catch(() => null);
+      await writeFile(`${out}/talk-viewport-failure.json`, JSON.stringify({ width, height, viewportCommit, results, errors, missing, error: error.stack }, null, 2)).catch(() => {});
+      await page.screenshot({ path: `${out}/talk-viewport-failure.png`, timeout: 5000 }).catch(() => {});
+      throw error;
+    }
     if(width===568)await page.screenshot({path:`${out}/talk-landscape.png`});
   }
-  await page.setViewportSize({ width: 320, height: 568 }); await settle();
+  await resizeTalkViewport(320, 568);
   await page.screenshot({ path: `${out}/talk-phone.png` });
   await page.getByRole('button', { name: 'SHOW PANEL', exact: true }).click();
   await page.getByRole('button', { name: 'curious', exact: true }).click();

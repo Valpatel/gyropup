@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {runInNewContext} from 'node:vm';
 import {currentRobotReady,currentRobotCanvasReady} from './current-motion-ready.mjs';
+import {prepareStaticMotionDocument,isStaticMotionChangeRequest} from './current-motion-static.mjs';
 
 test('actual serialized readiness callback waits through bodyless/loading/wrong-source states',()=>{
   const observe=(document,window={})=>runInNewContext('('+currentRobotReady.toString()+')("expected")',{document,window});
@@ -40,4 +41,30 @@ test('actual canvas observer rejects logical-only readiness, fade, missing draw 
   ];
   for(const mutate of mutations){const f=fixture();mutate(f);assert.equal(observe(f),false);}
   const broken=fixture();broken.getComputedStyle=()=>{throw new Error('Deliberate CSS observer failure');};assert.throws(()=>observe(broken),/Deliberate CSS observer failure/);
+});
+
+test('the transported static init seeds only the exact owned security origin',()=>{
+  const owned='http://127.0.0.1:46077';
+  const invoke=f=>runInNewContext(`(${prepareStaticMotionDocument})(${JSON.stringify(owned)})`,f);
+  for(const origin of ['null','http://127.0.0.1:46078','https://gyropup.com']){
+    const window={get sessionStorage(){throw Error('wrong origin storage');},get localStorage(){throw Error('wrong origin storage');}};
+    invoke({origin,window});
+    assert.equal(Object.hasOwn(window,'__cadagentLive'),false);
+  }
+  const session=new Map(),local=new Map();
+  const window={sessionStorage:{setItem:(k,v)=>session.set(k,v)},localStorage:{setItem:(k,v)=>local.set(k,v)}};
+  invoke({origin:owned,window});
+  assert.equal(window.__cadagentLive,true);
+  assert.deepEqual([...session],[['gyropup.prototype-notice','2026-10-29-v1']]);
+  assert.deepEqual([...local],[['gyropup.probe','off'],['gyropup-sfx','0']]);
+  const denied={get sessionStorage(){throw Error('matching origin storage failure');}};
+  assert.throws(()=>invoke({origin:owned,window:denied}),/matching origin storage failure/);
+});
+
+test('the unsupported request guard identifies only the owned change endpoint',()=>{
+  const owned='http://127.0.0.1:46077';
+  assert.equal(isStaticMotionChangeRequest(owned+'/_cadagent/changes',owned),true);
+  assert.equal(isStaticMotionChangeRequest(owned+'/_cadagent/changes?fresh=1',owned),true);
+  for(const url of [owned+'/_cadagent/changes-extra',owned+'/web/robot-current/manifest.json','http://127.0.0.1:46078/_cadagent/changes','https://gyropup.com/_cadagent/changes'])
+    assert.equal(isStaticMotionChangeRequest(url,owned),false);
 });

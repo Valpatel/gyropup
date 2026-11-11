@@ -64,6 +64,7 @@
 | A page shows large blank stretches on a phone, or a full-page screenshot shows empty picture boxes | [Empty space is measured per screen](inbox/2026-11-03-empty-space-is-measured-per-screen.md) |
 | Motto or landing graphics feel cheesy despite passing layout checks | [Gyropup visual character](domains/brand-presentation.md) |
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
+| A simulated motion sample wait times out after the applied pose passes | [Retain animation state and frame progress at the failed wait](inbox/2026-11-11-simulated-samples-need-frame-evidence.md) |
 | Upper links move while output adapters or their screws remain fixed to the robot body | [Output-adapter ownership](inbox/2026-10-29-output-adapters-belong-to-upper-links.md) |
 | Static build succeeds but a new simulator module returns 404 or the page never initializes | [Static build module references](domains/static-build.md) |
 | A network-failure test passes but its fixture never intercepts a versioned module | [Versioned imports and verified fixtures](domains/static-build.md) |
@@ -74,6 +75,7 @@
 | Loading-hero test sees the hero move by whole pixels (e.g. 20 px at 844×390) only on CI or under load | [Take the baseline after the screenshot](inbox/2026-11-02-loading-hero-baseline-before-screenshot.md) |
 | Current pages show different robot versions, or archived balls miss a newly swapped barrel | [Current models and physics archives](domains/rendered-mechanisms.md#current-models-and-physics-archives) |
 | Model bounds pass but speech hides the robot, or a fresh wide phone looks worse than resized tests | [Visible mechanism layout checks](domains/rendered-mechanisms.md) |
+| A Talk landscape check projects portrait model bounds into the new CSS canvas | [Observe the viewport change and a real draw before measuring](inbox/2026-10-29-fresh-layouts-must-test-fixed-overlays.md#resize-observations-need-the-committed-camera-and-draw) |
 | A failed download looks unpublished, a partial model looks ready, or a retry overwrites newer data | [Loading readiness and report availability](domains/loading-readiness.md) |
 | A study shows a zero-second player, or a valid encoded movie is frozen or mislabels static analysis as transient physics | [Structural media and recorded evidence](domains/structural-media.md) |
 | Video works in local Chrome but CI Chromium reports no supported streams or never reaches ready | [Chrome and Chromium codec coverage](inbox/2026-10-29-chrome-and-chromium-do-not-share-video-codecs.md) |

@@ -41,3 +41,22 @@ loopback-only marker already used by carrier inspection to every guide context.
 Record the flag, request/error phase telemetry, assert zero unsupported requests,
 and retain the strict errors[] assertion for all pages. No imported kit/server
 change, production-origin opt-out or browser-error filter is introduced.
+
+## 2026-11-11 UTC: The adopted motion fixture is also a static loopback server
+
+PR305's [mechanism job](https://github.com/Valpatel/gyropup/actions/runs/42931576490/job/130231359460)
+passed the turret sample wait and the Chromium current-motion validation. The
+WebKit motion capture wrote pose, fault, and mobile recovery outputs, then
+failed the original strict page-error check with the same changes-endpoint
+error. The [78-member artifact](https://github.com/Valpatel/gyropup/actions/runs/42931576490/artifacts/13817565898)
+has SHA256 `bfbc0e5ab1673353ccfd29fbc53534a900199cc5d9ffcc93432d554659e48f2f`.
+Its failed index records the same port as the error and a closed listener. It
+does not identify the request's exact page or lifecycle timing.
+
+The motion harness starts its own static server, whose source does not provide
+the development endpoint. Apply the existing marker only on that exact
+security origin in both browser contexts. Retain all page errors and require
+zero same-origin development requests through the final context close. Pure
+controls exercise the transported init on matching, opaque, and wrong origins
+and distinguish the unsupported request from asset and other-origin requests.
+The captured failure and previous geometry records retain their original status.
