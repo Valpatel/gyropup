@@ -88,7 +88,8 @@
     },
     "privacy_finding": "Review5854558025/thread4534565407; fixed09a08542, original evidence preserved, recheck pending.",
     "new_content_failure": "Stale Home timeline-planting target; plant the adversarial timeline at actual Progress owner, retaining all-page/Home budgets and all thresholds.",
-    "readiness_cause": "Unclassified; neither pending assets nor initial opaque storage error establish the timeout cause."
+    "readiness_cause": "Unclassified; neither pending assets nor initial opaque storage error establish the timeout cause.",
+    "privacy_recheck": "Independent combined source PASS5854773495 at3efdb47f; original review/thread retained and resolved after recheck."
   },
   "fixture_correction": {
     "caller": "tests/site/layout/test-empty-space.mjs",
@@ -96,5 +97,45 @@
     "old_helper_bytes_preserved": true,
     "controls": "Actual caller opaque/wrong/current/denied-origin callback execution",
     "limit": "Demonstrated fixture correction only; timeout cause remains unproven."
+  },
+  "initial_record_scope": "The original source-only observations above are historical; later executed evidence is recorded below.",
+  "tablet_configuration_followup": {
+    "source": "84f8b9b91c4af99203005e5d976c3f58d3c8c355",
+    "tree": "bc23795fd01eb1cc387f2a49b3c05ff4f558f53c",
+    "normal_ci_run": 42979492092,
+    "ci_synthetic_merge": "2ca46625979e2acc5fe8ad2a9948e782eccd6153",
+    "ci_tree_equal_to_source": true,
+    "normal_ci_result": "Only tablet simulator startup and stale guide closure failed; phone, presentation controls and Print Chrome/WebKit passed.",
+    "invocation": "5c2e57788e2a4449844688a8670cc3e0",
+    "archive_sha256": "a237aae9e93d691e03fd1cdd42176a3f650bb993a178297375e0e18805fa460e",
+    "artifact_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5856604280",
+    "same_runtime_and_build": "Node22.23.4, Playwright1.56.1, bundled Chromium141.0.7390.37; actual source/tree/build, selected headless-shell and three original ANGLE/SwiftShader launch flags verified in both arms.",
+    "coverage": "Each arm completed314 unique route/theme tuples and planted controls; zero spatial findings; original30s readiness and20minute arm caps retained.",
+    "baseline_three": {
+      "native_exit": 1,
+      "scan_seconds": 335,
+      "readiness": "Original30s TimeoutError",
+      "home_to_sim_observed": true,
+      "native_webgl_context_seconds": 10.306,
+      "heartbeat_gap_seconds": 38.03,
+      "setup_seconds_approx": 40.5
+    },
+    "comparison_one": {
+      "native_exit": 0,
+      "scan_seconds": 381,
+      "findings": [],
+      "profile_seconds": 5.393,
+      "setup_seconds_approx": 5.43,
+      "native_webgl_context_ms": 11.4,
+      "max_heartbeat_gap_ms": 301,
+      "home_to_sim": "Deterministic one-worker permutation; successful-route history receipt unavailable in unchanged producer."
+    },
+    "controller_outcome": "FAILED after both arms: post-comparison capacity CPU/load assertion failed before final measurement/append and global guard. Completed-arms list therefore contains baseline only; comparison arm receipts/logs/native result were already written. Discarded failed measurement cannot be reconstructed.",
+    "terminal_proof": "MainPID0, service failed/exit-code/status1, exact cgroup absent/empty, all three owned containers absent; no arm cap or OOM; failures retained, no retries.",
+    "interpretation": "Configuration-associated improvement only. Warmup, order and host load remain confounders; no native GPU/scheduler causal claim or CI waiver.",
+    "adopted_patch_sha256": "b53148750167c4d9cdf5837ed876c3835ae2f595186a0fa83bc7383d3d87fd90",
+    "patch_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5856857141",
+    "patch_scope": "Only default full tablet CI selects one worker and dynamic Home-to-Sim permutation; complete page set, both themes, controls, deadlines and other sizes/explicit selections preserved.",
+    "acceptance_remaining": "Normal CI on final pushed adoption head remains required."
   }
 }

@@ -4,6 +4,8 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A container build stops at Git dubious ownership before browser arms start | [Mounted workspace Git identity](inbox/2026-11-11-mounted-workspaces-need-git-identity.md) |
+| Instructions are delivered to a completed worker but no new turn or progress follows | [Wake completed workers explicitly](inbox/2026-11-11-handoffs-must-wake-idle-workers.md) |
 | Diagnostic controls pass but temporary paths, WebSocket endpoints or about-query values survive serialization | [Diagnostic redaction formats](domains/loading-readiness.md) |
 | Layout completes its views but simulator readiness times out with no current scene or request evidence | [Readiness failure observations](domains/loading-readiness.md) |
 | HTML has a deep evidence link but generated Markdown drops it after a semantic nav change | [Content navigation conversion](domains/static-build.md) |

@@ -1,0 +1,87 @@
+{
+  "schema": "gyropup.public-entry-guide-adoption/1",
+  "date": "2026-11-11",
+  "capture_source": "84f8b9b91c4af99203005e5d976c3f58d3c8c355",
+  "capture_tree": "bc23795fd01eb1cc387f2a49b3c05ff4f558f53c",
+  "visual_sha256": "18fad50b2184fcf16ca1958f3ca87c1e6d68536e0616f636d5ca34d9d0209478",
+  "declared_visual_dependencies": 37,
+  "invocation": "d221abfa389d445594e0a00dca5432a3",
+  "artifact_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5857110915",
+  "root_acceptance": "https://github.com/Valpatel/gyropup/pull/315#issuecomment-6793123078",
+  "archive_sha256": "501aa8ce2a184d0d6936ea5f01e9522c92c52ef00c21190e76e2963d09669fc1",
+  "full_receipt": {
+    "file": ".agents/plans/versioned-build-guide-poster-capture-current.json",
+    "bytes": 36265,
+    "sha256": "f39c542df55683cd3fad921431f2704549c26d24236474ada2d13143db9250f6"
+  },
+  "previous_full_receipt_sha256": "0f71761f9f302865277df3582930d543b35c010e9b3511df96c23290694d2b8b",
+  "previous_receipt_preserved": "Git parent84f8b9b9 and prior history; never restamped.",
+  "files": [
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-01.png",
+      "bytes": 215102,
+      "sha256": "f46fcd460ef6db1caadf535a81bda846c88208e1ff04012b3c2cf693dfaa4b4a"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-02.png",
+      "bytes": 326779,
+      "sha256": "e0591ea5bf221f7015bcab00e0751abce7a73139ea89e03cdfb1969ad0686a53"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-03.png",
+      "bytes": 393507,
+      "sha256": "f735a926c5a3cacab35622add7430e5326c81548b9a29b3eff9d2b40a2ab440f"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-04.png",
+      "bytes": 372856,
+      "sha256": "f1ec41c11f6327b2731c5e5654d75dd539f01c699b51a1f5a2a008156576e3fd"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-05.png",
+      "bytes": 436021,
+      "sha256": "c7c6640813663f73d96c30a4fa72d6f899cf6a83770497a33e43c00e3d774683"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-06.png",
+      "bytes": 233403,
+      "sha256": "90b458cb4511de33d0bfdd245a98b1d8121c65178796fcd10e08816202428d9b"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-07.png",
+      "bytes": 343709,
+      "sha256": "a44ca1f7d40821fed00352c08c1adaabc7ea13877dbdfedb9605234c9cee44b8"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-08.png",
+      "bytes": 374829,
+      "sha256": "7b0801ece9fb590471e7d73e2bcf4b86f17e53d5530a52dd8974f4cf1d480748"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-09.png",
+      "bytes": 428137,
+      "sha256": "29dd6dbc8f80320137c813c00b00a8471ce83f40aff549acd03ae91564fa1471"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-10.png",
+      "bytes": 371121,
+      "sha256": "0aa624c9dccd618393589b890e654f19d18e30ae0ec325b2b74549ae93a9eb3a"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-11.png",
+      "bytes": 436198,
+      "sha256": "a0f92bd55c0b419a923adf265fc454eaf8bbda0a2d8b9d8038529ad1e6067d07"
+    },
+    {
+      "destination": "software/site/assets/build-guides/turret-wip-4866459e2abd/posters/step-12.png",
+      "bytes": 498187,
+      "sha256": "01f4400b3c338cab6282703f2ded162b5d90f534db820b3f257b20752d69aebc"
+    }
+  ],
+  "png_bytes_equal_previous": true,
+  "capture": "Twelve actual native-fullscreen1280x900 light/ghost/explode1 frames at original poses; Node22.23.4, Playwright1.56.1, Chromium155.0.8059.39; native0 in62.018s, below180s cap.",
+  "errors": "Producer errors and foreign requests empty; native stderr contains retained DEPRECATED_ENDPOINT/XNNPACK diagnostics, so no empty-stderr claim.",
+  "cleanup": "Owned listener refused, descendants empty, cgroup absent, MainPID0; no forced cleanup.",
+  "adoption_order": "Capture frozen visual source84 first; then adopt only test scheduling, lessons and generated guide metadata. Full receipt remains actual84; final complete visual contract and transitive source identity must match.",
+  "qualification_limits": "PNG pixels are unchanged, not new imagery. No geometry, physical fit, strength or manufacturing release claim. Final normal CI remains required."
+}

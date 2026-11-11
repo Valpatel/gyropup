@@ -1,13 +1,13 @@
 {
-  "visual_sha256": "6e012c3390e004f36669a7e69ef6efaca15d2226e8570cee05124e5d0e286f38",
-  "source_commit": "df7fec062753be4b0170c4d22453a6d44bf18def",
+  "visual_sha256": "18fad50b2184fcf16ca1958f3ca87c1e6d68536e0616f636d5ca34d9d0209478",
+  "source_commit": "84f8b9b91c4af99203005e5d976c3f58d3c8c355",
   "version": {
-    "revision": "df7fec062753be4b0170c4d22453a6d44bf18def",
-    "assets": "65ec72e22a8ffbf45eca",
+    "revision": "84f8b9b91c4af99203005e5d976c3f58d3c8c355",
+    "assets": "ae6d9334d1c66995f39e",
     "history": true,
-    "built": "2026-11-10T18:52:21.454Z"
+    "built": "2026-11-11T10:05:01.368Z"
   },
-  "browser": "151.0.7922.71",
+  "browser": "155.0.8059.39",
   "session_notice_acknowledged": true,
   "render": {
     "capture": "actual preserved WebGL canvas PNG readback after applyStep(id,{mode:ghost,explode:1,frame:true})",
@@ -728,7 +728,7 @@
         "dt_receptacle"
       ],
       "camera": [
-        0.17847425835790715,
+        0.1784742583579071,
         0.30767425912084667,
         0.4439535177839298
       ],
