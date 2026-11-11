@@ -1,5 +1,6 @@
 /** "What changed" (tools/timeline.mjs): the published timeline against git, read again here by its own commands, and
  * its layout, motion and Markdown. Browser tests use SITE_URL, or serve dist/ (run `npm run build` first). */
+import {prepareStaticMotionDocument,isStaticMotionChangeRequest} from '../models/current-motion-static.mjs';
 import assert from 'node:assert/strict';
 import sharp from 'sharp';
 import { execFileSync } from 'node:child_process';
@@ -282,6 +283,7 @@ test('Progress carries the complete timeline; Home links to it without embedding
 });
 
 let browser, server, base;
+const unsupportedLiveRequests=[];
 before(async () => {
   base = process.env.SITE_URL?.replace(/\/$/, '');
   if (!base) {
@@ -295,9 +297,12 @@ before(async () => {
 after(async () => {
   await browser?.close();
   if (server) await new Promise(resolve => server.close(resolve));
+  assert.deepEqual(unsupportedLiveRequests,[],'Static fixture never requests an unsupported development endpoint');
 });
 async function open(route, { width = 1440, height = 1000, reducedMotion = 'no-preference', javaScriptEnabled = true } = {}) {
   const context = await browser.newContext({ viewport: { width, height }, reducedMotion, javaScriptEnabled });
+  if (/^(127\.0\.0\.1|localhost|\[::1\])$/.test(new URL(base).hostname)) await context.addInitScript(prepareStaticMotionDocument,new URL(base).origin);
+  context.on('request',request=>{if(isStaticMotionChangeRequest(request.url(),new URL(base).origin))unsupportedLiveRequests.push(request.url());});
   await acknowledgePrototypeNotice(context, base);
   await context.route('https://cad-agent.gyropup.com/**', r => r.abort());
   const page = await context.newPage();

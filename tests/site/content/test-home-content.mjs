@@ -26,7 +26,7 @@ function checkHome(html,progressHTML=progress){
   assert.ok(main.querySelector('a[href="/designer/progress.html#loop"]'));
   assert.ok(p.querySelector('#workshop-stories #loop .loop-cards'),'Dated evidence remains on Progress');
   assert.equal(p.querySelector('#workshop-stories').hasAttribute('open'),false,'Stories stay one deliberate click away');
-  assert.match(main.querySelector('.home-prototype').textContent,/prototype.*physical testing is still ahead/i);
+  assert.match(main.querySelector('.home-prototype').textContent,/prototype.*hardware and build files are experimental/i);
   assert.match(main.querySelector('.hero-copy').textContent,/browser/i);
   assert.match(main.querySelector('.motto-line').textContent.replace(/\s+/g,' ').trim(),/^Strike first, strike fast, strike last$/);
   for(const id of ['robot-preview','hero-loading','hero-loading-message','hero-inspect','hero-sound','hero-volume','highlight-video'])assert.ok(d.getElementById(id),`Existing interactive contract #${id}`);

@@ -115,6 +115,7 @@ await acknowledgePrototypeNotice(context,base);
    const controls=await page.locator('.hero-controls').evaluate(e=>[...e.querySelectorAll('button,summary')].map(b=>{const r=b.getBoundingClientRect();return{w:r.width,h:r.height,x:r.x,right:r.right};}));
    for(const b of controls)assert.ok(b.w>=44&&b.h>=44&&b.x>=0&&b.right<=width,`Reachable control ${width}: ${JSON.stringify(b)}`);
    if(width===320||width===844||width===1440)await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-ready-${width}-dpr${dpr}.png`});
+   if(dpr===1&&(width===320||width===1440))await page.screenshot({path:`${out}/${engine.name()}-home-${width}.png`,fullPage:true});
    cases.push({width,height,dpr,...c});
   }
   assert.equal(await page.evaluate(()=>window.__heroPreview.controls.autoRotate),false,'Reduced motion disables automatic rotation');

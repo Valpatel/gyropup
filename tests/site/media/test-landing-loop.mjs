@@ -2,6 +2,7 @@ import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 /** The dated Progress workshop stories (formerly on Home): its numbers against the committed records, its live line, and its layout.
  * Evidence checks read the repository. Browser checks use SITE_URL, or serve dist/ (run `npm run build` first) on a
  * test-owned listener that is closed in teardown. Requests to cad-agent.gyropup.com are always intercepted. */
+import {prepareStaticMotionDocument,isStaticMotionChangeRequest} from '../models/current-motion-static.mjs';
 import assert from 'node:assert/strict';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -47,7 +48,7 @@ test('FEA card: the v0.6.0 re-run counts and toolkit come from research/fea-v060
   assert.deepEqual(bars, [before, afterCount]);
   assert.deepEqual([...fea.querySelectorAll('.loop-bars b')].map(text), [String(before), String(afterCount)]);
   assert.match(text(fea.querySelector('.loop-bars small')), new RegExp(`^of ${studies} `));
-  assert.match(await read('web/landing.css'), new RegExp(`calc\\(var\\(--n\\) / ${studies} \\* 100%\\)`));
+  assert.match(await read('web/workshop-stories.css'), new RegExp(`calc\\(var\\(--n\\) / ${studies} \\* 100%\\)`));
   // The drawing is hidden from assistive technology and Markdown; one sentence carries the same numbers.
   assert.equal(fea.querySelector('.loop-bars').getAttribute('aria-hidden'), 'true');
   assert.equal(text(fea.querySelector('.loop-bars').previousElementSibling),
@@ -116,6 +117,7 @@ test('live line: only well-formed version.json fields are shown', () => {
 });
 
 let browser, server, base;
+const unsupportedLiveRequests=[];
 before(async () => {
   base = process.env.SITE_URL?.replace(/\/$/, '');
   if (!base) {
@@ -129,11 +131,14 @@ before(async () => {
 after(async () => {
   await browser?.close();
   if (server) await new Promise(resolve => server.close(resolve));
+  assert.deepEqual(unsupportedLiveRequests,[],'Static fixture never requests an unsupported development endpoint');
 });
 
 /** A page whose cad-agent requests are answered by `answer` once `release` resolves; nothing reaches the network. */
 async function open({ width = 1440, height = 1000, answer = 'live', javaScriptEnabled = true, reducedMotion = 'no-preference', near = true } = {}) {
   const context = await browser.newContext({ viewport: { width, height }, javaScriptEnabled, reducedMotion });
+  if (/^(127\.0\.0\.1|localhost|\[::1\])$/.test(new URL(base).hostname)) await context.addInitScript(prepareStaticMotionDocument,new URL(base).origin);
+  context.on('request',request=>{if(isStaticMotionChangeRequest(request.url(),new URL(base).origin))unsupportedLiveRequests.push(request.url());});
   await acknowledgePrototypeNotice(context, base);
   let release;
   const gate = new Promise(resolve => { release = resolve; });
@@ -276,7 +281,7 @@ test('every link in the section resolves, including anchors, and llms.txt names 
   const llms = await (await fetch(base + '/llms.txt')).text();
   assert.match(llms, /\[cad-agent\]\(https:\/\/cad-agent\.gyropup\.com\)/);
   assert.match(llms, /general-purpose CAD toolkit/);
-  const overview = await (await fetch(base + '/index.md')).text();
+  const overview = await (await fetch(base + '/designer/progress.md')).text();
   const section = overview.slice(overview.indexOf('ALWAYS IMPROVING'), overview.indexOf('physical tests are still ahead'));
   assert.match(section, /\[Explore cad-agent\]\(https:\/\/cad-agent\.gyropup\.com\/?\) \[Source on GitHub/);
   assert.match(section, /Studies below their own target: 2 of 54 on cad-agent v0\.4\.2’s material data, 16 of 54 after the re-run on v0\.6\.0\./);
