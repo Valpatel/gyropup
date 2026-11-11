@@ -119,5 +119,42 @@
     "/designer/build.html": "TODO_FINAL_BUILT_SHA256",
     "/designer/kit/part-table.css": "TODO_FINAL_BUILT_SHA256",
     "/designer/portal-parts.css": "TODO_FINAL_BUILT_SHA256"
+  },
+  "schema": "gyropup.public-checklists/2",
+  "work_timeout_ms": 420000,
+  "unit_runtime_seconds": 480,
+  "helper": {
+    "source": "tests/site/assembly/capture-diagnostics.mjs",
+    "sha256": "TODO_FINAL_HELPER_SHA256"
+  },
+  "framing_profile": {
+    "documentMode": "CSS1Compat",
+    "scrollingElement": "HTML",
+    "rootOverflowX": "hidden",
+    "rootOverflowY": "auto",
+    "visualScale": 1,
+    "visualOffsetLeft": 0,
+    "visualOffsetTop": 0,
+    "position_total_ms": 5000,
+    "sample_gap_ms": 100,
+    "geometry_tolerance_px": 1,
+    "scroll": {
+      "behavior": "instant",
+      "block": "center",
+      "inline": "nearest"
+    }
+  },
+  "deployed_html": {
+    "artifact": "/designer/build.html",
+    "request_path": "/designer/build",
+    "compiled_sha256": "TODO_FINAL_BUILT_HTML_SHA256",
+    "served_sha256": "TODO_EXACT_DEPLOYED_RESPONSE_SHA256",
+    "transformation": "one exact byte insertion",
+    "insertion_offset": "TODO_EXACT_INTEGER_BYTE_OFFSET",
+    "insertion_file": "deployment-beacon.html",
+    "insertion_sha256": "TODO_EXACT_BEACON_BYTES_SHA256",
+    "insertion_bytes": "TODO_EXACT_INTEGER_INSERTION_LENGTH",
+    "compiled_fixture": "compiled-build.html",
+    "served_fixture": "served-build.html"
   }
 }

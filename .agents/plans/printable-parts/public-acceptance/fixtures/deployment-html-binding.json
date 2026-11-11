@@ -1,0 +1,14 @@
+{
+  "artifact": "/designer/build.html",
+  "request_path": "/designer/build",
+  "compiled_sha256": "ced95b7eafb90cb99f63c7a9b71ce85d94e9e43eb04653f25786ccac4c7993a5",
+  "served_sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+  "transformation": "one exact byte insertion",
+  "insertion_offset": 41928,
+  "insertion_file": "deployment-beacon.html",
+  "insertion_sha256": "788159bec5be034f2413739258f81670e634b355a229f81a02372df9f4b931c2",
+  "insertion_bytes": 367,
+  "compiled_fixture": "compiled-build.html",
+  "served_fixture": "served-build.html",
+  "observed_at": "2026-11-11T20:07:40.335648+00:00"
+}

@@ -1,0 +1,7 @@
+{
+  "at": "2026-11-11T22:22:54.882484+00:00",
+  "scope": "Read-only arming precheck stopped before any input changed or action ran",
+  "error": "FileNotFoundError for schema: coordinator incorrectly treated a versioned manifest envelope as the prior bare file map",
+  "readback": "gyropup.private-acceptance-preparation/1 carries 75 file hashes under files_sha256; contract remained false and every marker/seal/output absent",
+  "correction": "Require the actual schema/source head and verify files_sha256 entries; no payload/runtime/schema changes"
+}

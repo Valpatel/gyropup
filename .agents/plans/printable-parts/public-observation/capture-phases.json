@@ -1,0 +1,140 @@
+{
+  "source_report_sha256": "7f3c5d7ff2b53fafdd456c881a3ed0be2204677f876486a2c8ca185447452e0d",
+  "scope": "V3 actual two required captures; protocol metadata has no image payload. Overall attempt failed during browser close.",
+  "observations": [
+    {
+      "table": "queue",
+      "capture": {
+        "startedMs": 65651.201086,
+        "status": "passed",
+        "completedMs": 73944.659251,
+        "durationMs": 8293.458165000004,
+        "completionComparedWithReference": "completed-within-reference-bound"
+      },
+      "protocol": {
+        "supported": true,
+        "calls": [
+          {
+            "id": 304,
+            "method": "Runtime.callFunctionOn",
+            "phase": "prepare-screenshot",
+            "sentMs": 65652.60431,
+            "receivedMs": 65749.800517,
+            "durationMs": 97.19620700000087,
+            "errorCode": null
+          },
+          {
+            "id": 305,
+            "method": "Runtime.callFunctionOn",
+            "phase": "font-ready",
+            "sentMs": 65749.951641,
+            "receivedMs": 65751.376525,
+            "durationMs": 1.424883999992744,
+            "errorCode": null
+          },
+          {
+            "id": 306,
+            "method": "Page.getLayoutMetrics",
+            "phase": "Page.getLayoutMetrics",
+            "sentMs": 65751.753773,
+            "receivedMs": 65839.96176,
+            "durationMs": 88.2079870000016,
+            "errorCode": null
+          },
+          {
+            "id": 307,
+            "method": "Page.captureScreenshot",
+            "phase": "Page.captureScreenshot",
+            "sentMs": 65840.122932,
+            "receivedMs": 73941.258368,
+            "durationMs": 8101.135435999997,
+            "errorCode": null,
+            "base64Length": 245300
+          },
+          {
+            "id": 308,
+            "method": "Runtime.callFunctionOn",
+            "phase": "restore-screenshot",
+            "sentMs": 73941.651165,
+            "receivedMs": 73943.623828,
+            "durationMs": 1.9726629999931902,
+            "errorCode": null
+          }
+        ],
+        "observerErrors": [],
+        "droppedCalls": 0
+      },
+      "options": {
+        "file": "queue-1280.png",
+        "timeout": 30000
+      }
+    },
+    {
+      "table": "orders",
+      "capture": {
+        "startedMs": 76650.341384,
+        "status": "passed",
+        "completedMs": 92544.594644,
+        "durationMs": 15894.253259999998,
+        "completionComparedWithReference": "completed-within-reference-bound"
+      },
+      "protocol": {
+        "supported": true,
+        "calls": [
+          {
+            "id": 390,
+            "method": "Runtime.callFunctionOn",
+            "phase": "prepare-screenshot",
+            "sentMs": 76650.618634,
+            "receivedMs": 76747.026029,
+            "durationMs": 96.407395000002,
+            "errorCode": null
+          },
+          {
+            "id": 391,
+            "method": "Runtime.callFunctionOn",
+            "phase": "font-ready",
+            "sentMs": 76747.157576,
+            "receivedMs": 76748.272399,
+            "durationMs": 1.1148229999962496,
+            "errorCode": null
+          },
+          {
+            "id": 392,
+            "method": "Page.getLayoutMetrics",
+            "phase": "Page.getLayoutMetrics",
+            "sentMs": 76748.311943,
+            "receivedMs": 76748.706003,
+            "durationMs": 0.39406000000599306,
+            "errorCode": null
+          },
+          {
+            "id": 393,
+            "method": "Page.captureScreenshot",
+            "phase": "Page.captureScreenshot",
+            "sentMs": 76748.731521,
+            "receivedMs": 92540.654609,
+            "durationMs": 15791.92308800001,
+            "errorCode": null,
+            "base64Length": 287904
+          },
+          {
+            "id": 394,
+            "method": "Runtime.callFunctionOn",
+            "phase": "restore-screenshot",
+            "sentMs": 92540.854874,
+            "receivedMs": 92543.986222,
+            "durationMs": 3.1313480000098934,
+            "errorCode": null
+          }
+        ],
+        "observerErrors": [],
+        "droppedCalls": 0
+      },
+      "options": {
+        "file": "orders-1280.png",
+        "timeout": 30000
+      }
+    }
+  ]
+}
