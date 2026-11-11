@@ -1,5 +1,6 @@
 /** "What changed" (tools/timeline.mjs): the published timeline against git, read again here by its own commands, and
  * its layout, motion and Markdown. Browser tests use SITE_URL, or serve dist/ (run `npm run build` first). */
+import {prepareStaticMotionDocument,isStaticMotionChangeRequest} from '../models/current-motion-static.mjs';
 import assert from 'node:assert/strict';
 import sharp from 'sharp';
 import { execFileSync } from 'node:child_process';
@@ -12,7 +13,7 @@ import { after, before, test } from 'node:test';
 import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from '../../../tools/site/serve-site.mjs';
-import { acknowledgePrototypeNotice } from './test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../assembly/build-prototype-session.mjs';
 import { DESIGN_PATHS, SYNTHETIC_MERGE, changeUnits, collectTimeline, decisionChanges, gitIn, imagePaths, previewPaths, renderTimeline, shorten, subsystemOf } from '../../../tools/site/timeline.mjs';
 import { shortDate } from '../../../tools/site/status-board.mjs';
 
@@ -262,11 +263,11 @@ test('before and after originals remain Git blobs and card previews derive from 
   assert.ok(pairs >= 3, 'some changes show a before and an after');
 });
 
-test('both pages carry the timeline; the landing shows the newest and links to the rest', () => {
-  const p = progress.querySelectorAll('#changes .tl-event'), l = landing.querySelectorAll('#changes .tl-event');
+test('Progress carries the complete timeline; Home links to it without embedding history', () => {
+  const p = progress.querySelectorAll('#changes .tl-event');
+  assert.equal(landing.querySelectorAll('.tl-event').length, 0);
   assert.equal(p.length, events.length);
-  assert.ok(l.length > 0 && l.length < p.length);
-  assert.equal(landing.querySelector('#changes .tl-all').getAttribute('href'), '/designer/progress.html#changes');
+  assert.equal(landing.querySelector('a#changes').getAttribute('href'), '/designer/progress.html#changes');
   for (const [i, el] of [...p].entries()) {
     const e = events[i];
     assert.equal(el.querySelector('time').getAttribute('datetime'), e.date);
@@ -282,6 +283,7 @@ test('both pages carry the timeline; the landing shows the newest and links to t
 });
 
 let browser, server, base;
+const unsupportedLiveRequests=[];
 before(async () => {
   base = process.env.SITE_URL?.replace(/\/$/, '');
   if (!base) {
@@ -295,10 +297,13 @@ before(async () => {
 after(async () => {
   await browser?.close();
   if (server) await new Promise(resolve => server.close(resolve));
+  assert.deepEqual(unsupportedLiveRequests,[],'Static fixture never requests an unsupported development endpoint');
 });
 async function open(route, { width = 1440, height = 1000, reducedMotion = 'no-preference', javaScriptEnabled = true } = {}) {
   const context = await browser.newContext({ viewport: { width, height }, reducedMotion, javaScriptEnabled });
-  await acknowledgePrototypeNotice(context);
+  if (/^(127\.0\.0\.1|localhost|\[::1\])$/.test(new URL(base).hostname)) await context.addInitScript(prepareStaticMotionDocument,new URL(base).origin);
+  context.on('request',request=>{if(isStaticMotionChangeRequest(request.url(),new URL(base).origin))unsupportedLiveRequests.push(request.url());});
+  await acknowledgePrototypeNotice(context, base);
   await context.route('https://cad-agent.gyropup.com/**', r => r.abort());
   const page = await context.newPage();
   const errors = [];
@@ -309,7 +314,7 @@ async function open(route, { width = 1440, height = 1000, reducedMotion = 'no-pr
 
 test('no overflow from 320 to 1440 px; changes slide in, and stay put with reduced motion or no script', async () => {
   // Laid out at rest: with motion, a change that has not come into view yet waits 14 px to the left.
-  for (const route of ['/', '/designer/progress.html']) for (const [width, height] of [[320, 640], [390, 844], [768, 1024], [1440, 1000]]) {
+  for (const route of ['/designer/progress.html']) for (const [width, height] of [[320, 640], [390, 844], [768, 1024], [1440, 1000]]) {
     const { context, page, errors } = await open(route, { width, height, reducedMotion: 'reduce' });
     // Progress can fold twice: the text-only run before the anchor and the earlier changes (tools/timeline.mjs). Open
     // every fold, so all of them are laid out and checked, whatever the newest commits happen to be.

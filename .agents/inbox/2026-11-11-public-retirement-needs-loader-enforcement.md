@@ -1,0 +1,11 @@
+# Retire public models at the loader boundary while preserving research fixtures
+
+On 2026-11-11, issue #311 requested disabling the broken serial-leg Gyropup v1 in the public simulator. Source inspection (`rg -n 'designs/default|loadDesign' software/site/designer/sim.js tests/site`) found a selectable legacy menu entry, direct query activation and four browser harnesses that still selected it. A disabled menu option alone would leave `loadDesign` capable of accepting restored or dispatched legacy values.
+
+The public availability policy now gates both initial/query selection and every loader call. The disabled v1 entry explains its status; legacy requests show an unavailable notice and the current robot. A legacy `run=drive` query cannot silently activate a different model’s archived recording. The browser regression requires reload/back/forward to preserve the safe route behavior. Source, CAD research, historical Build snapshots and the explicit archived `loadCadRig` fixture remain intact.
+
+Retiring a public option also changes its tests. Current/bench fixtures replace public v1 selection. The loading suite retains a genuinely stalled model request, its original bounded timeout, all HTTP/malformed/empty-mesh failures and successful retry; those now use the enabled turret instead. Invalid current recording-list coverage starts at current bootstrap instead of requiring a legacy round-trip. Current desktop/touch controls and archived v2 recordings remain tested.
+
+`node --test tests/site/controls/test-sim-designs.mjs` initially passed 3/3 policy/source-preservation controls. Browser acceptance is recorded separately; source inspection is not a browser result. The simulator entry is a source-bound media input, so the existing capture stays historical until a fresh reviewed run. The new policy module is independently required by the existing media input checker, preventing self-consistent omission from a future receipt.
+
+Limits: this disables public simulator activation; it does not claim the old design was repaired or delete research artifacts. It does not change model geometry, caching, assembly playback or rendering. Future re-enablement requires a new explicit availability change with reviewed evidence.

@@ -85,7 +85,7 @@ try {
   await noScript.goto(base+'/',{waitUntil:'domcontentloaded'});
   for(const width of [320,390,759,760,761,899,900,901,1440]) {
    await noScript.setViewportSize({width,height:844});
-   assert.ok(await noScript.getByRole('link',{name:'Design notes'}).isVisible(),`No-script landing at ${width}: nav links hidden`);
+   assert.ok(await noScript.locator('.landing-nav').getByRole('link',{name:'Design notes',exact:true}).isVisible(),`No-script landing at ${width}: nav links hidden`);
    assert.ok(!(await noScript.getByRole('button',{name:'Menu'}).isVisible()),`No-script landing at ${width}: a Menu button that cannot work`);
    const scroll=await noScript.evaluate(()=>document.documentElement.scrollWidth);
    assert.ok(scroll<=width+1,`No-script landing overflows at ${width}: ${scroll}`);
@@ -105,7 +105,7 @@ try {
   await early.goto(base+'/',{waitUntil:'domcontentloaded'});
   const before=await early.locator('.site-header').evaluate(h=>h.getBoundingClientRect().height);
   assert.ok(await early.getByRole('button',{name:'Menu'}).isVisible(),'Without its script the landing shows no Menu button');
-  assert.ok(!(await early.getByRole('link',{name:'Design notes'}).isVisible()),'Without its script the landing shows the phone links inline');
+  assert.ok(!(await early.locator('.landing-nav').getByRole('link',{name:'Design notes',exact:true}).isVisible()),'Without its script the landing shows the phone links inline');
   await page.goto(base+'/',{waitUntil:'networkidle'});
   await page.setViewportSize({width:390,height:844});
   await page.waitForSelector('.landing-nav.has-menu');
@@ -135,8 +135,8 @@ try {
  if(await turretSection.count() && (await turretSection.getAttribute('open'))===null) await turretSection.locator('summary').click();
  await page.getByRole('button',{name:'FIRE',exact:true}).click();
  await page.locator('#drawer-handle').click();
- await page.selectOption('#design-select','designs/default.json');
- await page.waitForFunction(()=>window.__sim.state.v2===false && window.__sim.state.robot?.info);
+ assert.equal(await page.locator('#design-select option[value="designs/default.json"]').isDisabled(),true,'Legacy v1 is unavailable publicly');
+ assert.equal(await page.evaluate(()=>window.__sim.state.modelKey),'v2');
  await page.selectOption('#design-select','turret-box');
  await page.waitForFunction(()=>window.__sim.state.bench===true);
  await page.screenshot({path:'test-results/turret-phone.png'});

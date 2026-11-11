@@ -5,6 +5,7 @@ from pathlib import Path
 import re
 import sys
 import unittest
+from test_robot_snapshots import verify_live_index
 
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'tools/site/assembly'))
@@ -18,7 +19,6 @@ RECORDS=ROOT/'.agents/plans/end-packs/guide-adoption'
 SOURCE='3a40891962b0b0a04625e070700f1d130bea3c7b'
 MANIFEST='3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3'
 COLLECTION='7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67'
-INDEX='16af1475fb58fdcc1eb6db939a6539044fea632916ce8fad6e6741df952e3244'
 ACCEPTED_INDEX='7e8a51f3743e154230e0882e8ac20641b79e74e657773acd22b13d0548231016'
 
 class AdoptedCurrentSnapshots(unittest.TestCase):
@@ -39,9 +39,8 @@ class AdoptedCurrentSnapshots(unittest.TestCase):
         for flag in ['physics_current','manufacturing_released','physical_qualified']:self.assertIs(manifest['engineering'][flag],False)
 
     def test_five_row_index_preserves_old_three_and_has_explicit_current_defaults(self):
-        self.assertEqual(sha(ASSETS/'index.json'),INDEX)
         self.assertEqual(sha(RECORDS/'final-index.json'),ACCEPTED_INDEX)
-        self.assertEqual(json.loads((ASSETS/'index.json').read_bytes()),json.loads((RECORDS/'final-index.json').read_bytes()))
+        verify_live_index((ASSETS/'index.json').read_bytes(),(RECORDS/'final-index.json').read_bytes(),(ASSETS/'turret-wip-4866459e2abd/guide.json').read_bytes())
         index=json.loads((ASSETS/'index.json').read_bytes());old=json.loads((ROOT/'.agents/plans/robot-assembly/index-entries-260.json').read_bytes())
         self.assertEqual(len(index['snapshots']),5);self.assertEqual(index['snapshots'][0]['id'],'turret-wip-4866459e2abd')
         for assembly in ['robot','combined']:
@@ -49,6 +48,20 @@ class AdoptedCurrentSnapshots(unittest.TestCase):
             self.assertEqual(rows[0]['id'],assembly+'-wip-3a40891962b0')
             self.assertEqual(rows[1],next(r for r in old if r['assembly']==assembly))
         self.assertEqual([r['id']for r in index['unavailable']],['released','rig'])
+
+    def test_live_index_rejects_other_rows_fields_and_wrong_guide_digest(self):
+        blob=(ASSETS/'index.json').read_bytes();archived=(RECORDS/'final-index.json').read_bytes()
+        guide=(ASSETS/'turret-wip-4866459e2abd/guide.json').read_bytes()
+        verify_live_index(blob,archived,guide)
+        for kind in ['non-turret-row','turret-title','guide-digest','omission','duplicate']:
+            bad=json.loads(blob)
+            if kind=='non-turret-row':bad['snapshots'][1]['sha256']='0'*64
+            elif kind=='turret-title':bad['snapshots'][0]['title']='unreviewed title'
+            elif kind=='guide-digest':bad['snapshots'][0]['sha256']='0'*64
+            elif kind=='omission':bad['snapshots'].pop()
+            else:bad['snapshots'].append(dict(bad['snapshots'][0]))
+            with self.subTest(kind=kind),self.assertRaises(AssertionError):verify_live_index(json.dumps(bad).encode(),archived,guide)
+        with self.assertRaises(AssertionError):verify_live_index(blob,archived,guide+b' ')
 
     def test_current233_outputs_reproduce_without_regenerating_archives(self):
         c=json.loads((CURRENT/'collection.json').read_bytes())

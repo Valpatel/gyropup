@@ -5,12 +5,19 @@ import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {chromium} from '@playwright/test';
-import {acknowledgePrototypeNotice} from '../../../tests/site/content/test-prototype-session.mjs';
+import {acknowledgePrototypeNotice} from '../../../tests/site/assembly/build-prototype-session.mjs';
 import {CURRENT_ROBOT_SOURCE} from '../../../software/site/designer/robot_current_source.js';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8983').replace(/\/$/,''),out=process.env.CAPTURE_OUTPUT||'/tmp/gyropup-highlights-frames';
 const width=1280,height=720,fps=30,seed=1042026;
+function seedCapture({seed,expectedOrigin}){
+ const actualOrigin=globalThis.origin;
+ if(!/^https?:$/.test(location.protocol)||!actualOrigin||actualOrigin==='null'||actualOrigin!==expectedOrigin)return;
+ let state=seed;Math.random=()=>{state=(Math.imul(state,1664525)+1013904223)>>>0;return state/4294967296;};
+ localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');window.__cadagentLive=true;
+}
+
 const repository=new URL('../../../',import.meta.url);
-const locationFiles=['tools/site/source-layout.mjs','tools/site/source-layout.json','tests/site/content/test-prototype-session.mjs'];
+const locationFiles=['tools/site/source-layout.mjs','tools/site/source-layout.json','tests/site/assembly/build-prototype-session.mjs'];
 const locationContracts=Object.fromEntries(await Promise.all(locationFiles.map(async file=>[file,createHash('sha256').update(await readFile(new URL(file,repository))).digest('hex')])));
 const shots=[{id:'turret',seconds:4,bench:true},{id:'mechanism',seconds:3,bench:true},{id:'battle',seconds:6},{id:'character',seconds:3}];
 const only=process.env.CAPTURE_SHOT,limit=Number(process.env.CAPTURE_FRAMES||0);
@@ -27,8 +34,8 @@ report.servedVersion=await (await fetch(base+'/version.json')).json();
 try{
 for(const shot of shots.filter(s=>!only||s.id===only)){
  const dir=out+'/'+shot.id;await mkdir(dir,{recursive:true});
- const context=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});await acknowledgePrototypeNotice(context);
- await context.addInitScript(seed=>{let state=seed;Math.random=()=>{state=(Math.imul(state,1664525)+1013904223)>>>0;return state/4294967296;};localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');window.__cadagentLive=true;},seed);
+ const context=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});await acknowledgePrototypeNotice(context,base);
+ await context.addInitScript(seedCapture,{seed,expectedOrigin:new URL(base).origin});
  const page=await context.newPage(),errors=[],requests=[];
  page.on('pageerror',e=>errors.push(e.message));
  page.on('response',r=>{

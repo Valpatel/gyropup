@@ -16,3 +16,21 @@ The first current CAD media invocation at `76cc5b3d` repeated that layout failur
 The fresh invocation staged the same 4,616 dependency files in an actual `node_modules` directory. Its bounded pre-build Node ESM probe resolved both packages to the owned staged tree and parsed an HTML fragment through each. A copied-tree control reproduced the original failure before renaming the directory and passed afterward. Check module resolution from the exact source working directory before running the full build. The [adoption receipt](../plans/end-packs-highlights/adoption.json) preserves both attempts, the exact-byte identity and the separate browser diagnostics.
 
 Limits: native Chrome capture does not establish pinned CI browser parity or physical behavior. Historical leg and E1 source/video/failed strength limits remain retained. No hardware or runtime source changed during media adoption. Independent review and full current CI are separate integration requirements. This repository has no `.agents/WRITING-IT-DOWN.md` at this revision; this incident follows the supplied lesson/evidence/cause/rule/limits format and is indexed here.
+
+## A copied live phase guard must bind to the new sealed source
+
+On 2026-11-11, independent [action review](https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5854097249) blocked the first composed-source media packet before any operator, preflight, SSH, browser or run. Its plan and built source named `59f20f62`, while copied `serve-phase.mjs` still asserted the historical `acd084a` version. The actual extracted assertion rejected the current source and accepted the archive. Correct plan/source hashes did not establish the identity of every executed phase consumer. The original 19-file packet and BLOCK remain immutable.
+
+The separately reviewed corrected packet reads the sealed staged plan and calls the same pure revision validator tested before any producer child. Dated actual control evidence:
+
+```text
+2026-11-11 UTC: node version-guard-controls.mjs
+LIVE_VERSION_BINDING_CONTROLS_PASS
+currentAccepted=true; oldActualGuardRejectsCurrent=true; oldActualGuardAcceptsArchive=true
+archival/different/missing/empty/short revision and invalid/missing plan source reject
+browserLaunched=false; serverStarted=false; remoteAccessed=false
+```
+
+Run the actual helper/callsite controls before network probing and repeat them in the existing bounded observer-control phase. Audit live version comparisons separately from legitimate historical insert, fixture, model-authority and ancestor references; do not globally replace old revisions. The corrected packet retained all resource caps, observer bytes, context counts, mandatory source guards, originals and protected legs. Its [accepted adoption record](../plans/public-entry-closeout/media-adoption.json) binds the resulting fresh 480-frame capture, 486-source actual inventory and seven exact accepted outputs. Final worker/browser errors were empty; seeded historical negative-control stderr remains preserved and is not reclassified as an empty stream.
+
+Pure controls establish the version binding, not rendering acceptance. Independent exact action review, root START, terminal/cgroup verification, actual artifact review and root acceptance remained separate. The source/capture receipts were not restamped, and the initial packet block was not a product failure or failed remote run. Pre-adoption CI failures remain separate acceptance work; media adoption alone does not clear them.

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import {chromium,webkit} from '@playwright/test';
+import {observedSummaryClick} from '../diagnostic-probes.mjs';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8899').replace(/\/$/,''),scope=process.env.WORKSPACE_CASE||'layout';
 if(!['layout','interactions','playback','print'].includes(scope))throw Error('Unknown workspace scope');
 if(process.env.WORKSPACE_WIDTH&&!['1440','1024','390','320'].includes(process.env.WORKSPACE_WIDTH))throw Error('Unknown workspace width');
@@ -47,11 +48,35 @@ async function nativeReset(p){
 async function projected(p){return p.evaluate(async()=>{const a=window.__buildGuide.active,v=a.viewer,T=await import('/designer/kit/vendor/three/three.module.min.js'),r=v.stage.renderer.domElement.getBoundingClientRect(),insets=v.stage.getInsets?.(),points=[];v.stage.root.updateMatrixWorld(true);v.stage.camera.updateMatrixWorld(true);const overlays=[...document.querySelectorAll('.assembly-topbar,.assembly-nav,.assembly-step,#assembly-explorer,#assembly-tools')].filter(e=>!e.hidden).map(e=>{const b=e.getBoundingClientRect();return{x:b.x,y:b.y,w:b.width,h:b.height};});v.stage.root.traverseVisible(o=>{if(!o.isMesh)return;const pos=o.geometry.attributes.position;for(let i=0;i<pos.count;i+=Math.max(1,Math.floor(pos.count/60))){const q=new T.Vector3().fromBufferAttribute(pos,i).applyMatrix4(o.matrixWorld).project(v.stage.camera);points.push({x:r.x+(q.x+1)*r.width/2,y:r.y+(1-q.y)*r.height/2,z:q.z});}});return{parts:v.parts.filter(part=>part.mesh.visible).length,points,overlays,box:{x:r.x,y:r.y,w:r.width,h:r.height},insets};});}
 function framed(result){const r=result.box;return result.parts>0&&result.points.length>0&&result.points.every(p=>[p.x,p.y,p.z].every(Number.isFinite)&&p.x>=r.x&&p.x<=r.x+r.w&&p.y>=r.y&&p.y<=r.y+r.h&&Math.abs(p.z)<=1&&!result.overlays.some(o=>p.x>o.x&&p.x<o.x+o.w&&p.y>o.y&&p.y<o.y+o.h));}
 async function openTree(p){if(await p.locator('#assembly-explorer').isHidden())await p.locator('[data-explorer-toggle]').click();}
-async function pickList(p,name){await openTree(p);const button=p.locator('[data-part='+JSON.stringify(name)+']');
+async function openSummaryWithKeyboard(p,summary) {
+ const target=await summary.elementHandle();assert.ok(target,'Capture the exact summary before keyboard activation');
+ let parent,failure;
+ try{
+  parent=await target.evaluateHandle(element=>element.parentElement);
+  assert.equal(await target.isVisible(),true,'Keyboard summary must be visible');
+  assert.equal(await target.isEnabled(),true,'Keyboard summary must be enabled');
+  const closed=await target.evaluate((element,details)=>element.isConnected&&details.isConnected&&element.tagName==='SUMMARY'&&details.tagName==='DETAILS'&&element.parentElement===details&&!details.open,parent);
+  assert.equal(closed,true,'The captured summary and closed parent must remain connected');
+  await target.focus();
+  assert.equal(await target.evaluate((element,details)=>document.hasFocus()&&document.activeElement===element&&element.parentElement===details&&!details.open,parent),true,'The same closed summary must own focus before Enter');
+  await p.keyboard.press('Enter');
+  assert.equal(await target.evaluate((element,details)=>element.isConnected&&details.isConnected&&element.parentElement===details&&details.open,parent),true,'Real Enter must open the same captured parent');
+ }catch(error){failure=error;throw error;}
+ finally{
+  const disposed=await Promise.allSettled([parent?.dispose(),target.dispose()]);
+  if(!failure){const rejected=disposed.find(row=>row.status==='rejected');if(rejected)throw rejected.reason;}
+ }
+}
+async function pickList(p,name,input='pointer'){assert.ok(['pointer','keyboard'].includes(input),'Choose disclosure input before activation');await openTree(p);const button=p.locator('[data-part='+JSON.stringify(name)+']');
  // XPath's ancestor axis is nearest-first; select the outermost *closed*
  // ancestor afresh after each real summary click, without relying on nth order.
  const outerClosed=button.locator('xpath=ancestor::details[not(@open)][last()]'),levels=await button.locator('xpath=ancestor::details').count();
- for(let i=0;i<levels&&await outerClosed.count();i++)await outerClosed.locator(':scope > summary').click();
+ for(let i=0;i<levels&&await outerClosed.count();i++){
+  const summary=outerClosed.locator(':scope > summary');
+  const activate=input==='keyboard'?()=>openSummaryWithKeyboard(p,summary):()=>summary.click();
+  if(scope==='print'&&process.env.PRINT_CASE==='current')await observedSummaryClick(p,summary,activate,observations,{part:name,ancestorStep:i});
+  else await activate();
+ }
  assert.equal(await outerClosed.count(),0,`All ancestors of ${name} must be open before selecting it`);
  await button.focus();await p.keyboard.press('Enter');await p.waitForFunction(name=>window.__buildGuide.active.selected===name,name);}
 async function surface(p,name){return p.evaluate(async name=>{const a=window.__buildGuide.active,v=a.viewer,part=v.parts.find(part=>part.name===name),T=await import('/designer/kit/vendor/three/three.module.min.js'),pos=part.mesh.geometry.attributes.position,r=v.stage.renderer.domElement.getBoundingClientRect();part.mesh.updateWorldMatrix(true,false);v.stage.camera.updateMatrixWorld(true);for(let i=0;i<pos.count-2;i+=Math.max(3,Math.floor(pos.count/500)*3)){const q=new T.Vector3();for(let k=0;k<3;k++)q.add(new T.Vector3().fromBufferAttribute(pos,i+k));q.divideScalar(3).applyMatrix4(part.mesh.matrixWorld).project(v.stage.camera);const x=r.x+(q.x+1)*r.width/2,y=r.y+(1-q.y)*r.height/2;if(Math.abs(q.z)<1&&document.elementFromPoint(x,y)===v.stage.renderer.domElement){const ray=new T.Raycaster();ray.setFromCamera(new T.Vector2(q.x,q.y),v.stage.camera);if(ray.intersectObjects(v.parts.filter(item=>item.mesh.visible).map(item=>item.mesh),false)[0]?.object===part.mesh)return{x,y};}}return null;},name);}
@@ -141,7 +166,9 @@ try{
      assert.equal(checked.status,0,checked.stderr||String(checked.error));observations.push({part:name,download:label,readback:checked.stdout});
     }
     const popup=p.locator('[data-part-popup]');if(await popup.isVisible())await popup.locator('[data-part-close]').click();
-    await pickList(p,'L.upper_link_front');assert.equal(await popup.isVisible(),true);assert.equal(await popup.locator('[data-part-details] code').textContent(),'L.upper_link_front');assert.equal(await p.locator('[data-part-print]').isHidden(),true);
+    // Deliberate redundant-input coverage: L pending selection uses pointer; R uses real keyboard disclosures.
+    const pendingInput=name==='R.hip_frame'?'keyboard':'pointer';
+    await pickList(p,'L.upper_link_front',pendingInput);assert.equal(await popup.isVisible(),true);assert.equal(await popup.locator('[data-part-details] code').textContent(),'L.upper_link_front');assert.equal(await p.locator('[data-part-print]').isHidden(),true);
     await p.context().close();
    }
    // The actual download verifier must reject corrupted project bytes, keeping

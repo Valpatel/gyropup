@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "76cc5b3dcd9d4d9bd94e156fc70a0652f9c332e0",
+  "source_revision": "59f20f625fe1b8d0f321aa6231b64a0d810afaa0",
   "source_hashes": {
     "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
     "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
@@ -465,11 +465,12 @@
     "software/site/designer/robot_kinematics.js": "55b3628c1f820fc4748fa223bf110635accaf662d746375076a22cde3c95033b",
     "software/site/designer/robot_presentations.js": "c76e67b7cd16544ac0c7e29c473dff6df7abeeb65347c2d5a866fcfc8699b872",
     "software/site/designer/robot_sensors.js": "59b2d81595899191362594631ad138a986796bc7d3cd1c9e9c62908c0541869f",
-    "software/site/designer/robot_v2.js": "cadc2bdff1a308c30155989ef767804ddf66a33c6b56cb0e502a7d90c20cccb5",
+    "software/site/designer/robot_v2.js": "fee243b1b163fcf096a0fc328b74592ad2fdc1d8b859e0fe0d8b36d5985b512d",
     "software/site/designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "software/site/designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "software/site/designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
-    "software/site/designer/sim.js": "dca41548b7f42ac275fc0b5f2bbc29805770b750f0e75fc0224769e02cf4d5a1",
+    "software/site/designer/sim.js": "ebc4f5024004417dfd893d1611ee1a1e1224284d6fb7856d468cfd2648924432",
+    "software/site/designer/sim_designs.js": "f96809302f296ca84b821e79f9c5d2cab41dab5bfa409fe0d2cc640f81e63635",
     "software/site/designer/sim_gamepad.js": "6c4867ed61d50e17e8a1fab6ebc46529ff9849dcecfdaf6c7f49ebb41f27af9d",
     "software/site/designer/turret3d.js": "e44ccb972c7d370657c4464f4c596ef40d638b91c48b714f740ac6289d185bbb",
     "software/site/designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
@@ -480,11 +481,11 @@
     "tests/hardware/turret/test_turret_gate_sources.py": "fb85a82ab0a322debc60b6b93a3b8018227949e80fb7d5bcc453171b0f397732",
     "tests/hardware/turret/test_turret_snaps.py": "96afedabae5991a7d99eab3af5f324ae901589d7e92e45b2a36f32bc7a709fd6",
     "tests/hardware/turret/test_turret_solids.py": "d03677019224ad4e95f8775f374010c450299daf67fd729f546a1ea458e87a31",
-    "tests/site/content/test-prototype-session.mjs": "997a39297102005095ee42adc9c6397552e3dc550f0f42494ad554eccf4ecefb",
+    "tests/site/assembly/build-prototype-session.mjs": "73aa9c59e02204b8d773a554a47dc779bedb39241a0d14618ee046d70a527222",
     "tools/engineering/robot/robot_view.py": "2008d1b935203110c5218bb1fa8e660a94c7100ee3ef4a20622d6fc23920e40f",
     "tools/evidence/manufacturing/retained_fit_history.py": "47b05f0211f49aadd244f4670157df8f2b01288968d2a6f0dd0eee4791e69709",
-    "tools/evidence/media/capture-highlights.mjs": "ddf106c39ca35f9d84a669ddc815602a949d5868022acf8fdd5eae88abacadae",
-    "tools/evidence/media/check-highlights.py": "6e117a1278c478d5354900707bd226e88276cb76e87247ef4282d9d9d33dc865",
+    "tools/evidence/media/capture-highlights.mjs": "21f072b03137649f4a1147ed378eac93d2bd3b0a562119f4dbbdf81a3726a7a0",
+    "tools/evidence/media/check-highlights.py": "e3cb4f98c98cd20a5c9ccf94388c692b23899e414338825e44f97772d2c39306",
     "tools/evidence/media/encode-highlights.py": "0ce8144b69740fe74759e7f320bb3d8d828c679112db2f1508e3d9215df50618",
     "tools/site/assembly/export_robot_guide.py": "cc9559130762af1f80feb656ac775126dc4760e6f5afc99daa237315abb37d6a",
     "tools/site/assembly/robot_current_print_acceptance.py": "d55f92494a1cd05bf6b1f1803de45a871a0486fb772aedce45c0f15438ac28ce",
@@ -739,23 +740,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "5b431013fa8f2fe91488ebe9a2a5f88594e86200170a5d20524d60ce55f15520",
-      "bytes": 1954157
+      "sha256": "dce90a8b07c664bcfdac6c3789f8fc2ca64cafea2e7e12c93092843f53dc3bb9",
+      "bytes": 1953450
     },
     "gyropup-highlights.webm": {
-      "sha256": "3bd9f0a9ec8da397fdefa198c26f89f4b16fb5c292a350286cd62439a3f30c87",
-      "bytes": 1628631
+      "sha256": "1d5143fdbe6d72d304d3e5f8f513c27752ae63cc1f21990488fc35586ebd0141",
+      "bytes": 1627962
     },
     "gyropup-highlights.webp": {
-      "sha256": "aa260dc1304fe1d9fe4c11792e3ca6ae03d6e5b24abf3afeacd78044be24b164",
-      "bytes": 33080
+      "sha256": "6ceaaf78f35b842080b4fdf2c076949d71bf7d60000fc851d02a45aa812bc69d",
+      "bytes": 33108
     },
     "capture-receipt.json": {
-      "sha256": "19cabfafc2988956c81762f9acc54a009c528785cdc68ebd1518f8f8cdd8bb2a",
-      "bytes": 259598
+      "sha256": "a237409dbe49c6d233b3d7456bef7bfaf2131916862a415ca9cd9ade5da1857c",
+      "bytes": 259837
     },
     "capture-frames.json": {
-      "sha256": "9f63d60326f3ff67719b8ee389fd68338ded06796d221b2d07fb7ac0827c5532",
+      "sha256": "1279db2957d7214821ee8168ef0bcd5814b951de2dcd6c851d98f321e0c6f783",
       "bytes": 100989
     }
   }

@@ -1,6 +1,8 @@
 /** Pure output/identity controls; synthetic metadata is not rendered-geometry evidence. */
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import vm from 'node:vm';
+import {acknowledgePrototypeNotice} from '../../site/assembly/build-prototype-session.mjs';
 import {mkdtemp,mkdir,readFile,writeFile,symlink,rm,stat} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
@@ -65,5 +67,61 @@ test('legacy identity, wrong original,1mm home drift and wrong actual pose rejec
   const f=identity(),o=f.observed;
   if(fault==='native')o.presentation.nativeSource='old';else if(fault==='collection')o.presentation.collectionSha256='old';else if(fault==='recorded')o.presentation.robotId='gyropup-v2-rig';else if(fault==='wrong-path')o.presentation.bodySource='https://site.fixture.test/web/old/manifest.json';else if(fault==='missing-original')o.parts.pop();else if(fault==='home-leg')o.homeLegMM=299;else if(fault==='height299')o.homeHeight=.6;else if(fault==='wrong-wheel')o.wheelR=128;else if(fault==='applied299')o.basePositionM[1]=.426;else o.baseQuaternion=[0,.1,0,.99];
   assert.throws(()=>assertPosterIdentity(o,f.current),undefined,fault);
+ }
+});
+
+// Extract only each named transported function, never execute a producer's top-level module.
+async function captureFixture(file,name){
+ const source=await readFile(path.join(ROOT,file),'utf8');
+ const match=source.match(new RegExp('^function '+name+'\\([^]*?^}', 'm'));
+ assert.ok(match,`Missing actual ${name} init callback`);
+ return {source,run:(state,arg)=>{
+  const scope={argument:arg};Object.defineProperties(scope,Object.getOwnPropertyDescriptors(state));
+  return vm.runInNewContext('('+match[0]+')(argument)',scope);
+ }};
+}
+async function initFixtures(){
+ const hero=await captureFixture('tests/site/media/test-hero-preview.mjs','prefs');
+ const recorder=await captureFixture('tools/evidence/media/capture-highlights.mjs','seedCapture');
+ assert.equal((hero.source.match(/addInitScript\(prefs,new URL\(base\).origin\)/g)||[]).length,4);
+ assert.match(recorder.source,/addInitScript\(seedCapture,\{seed,expectedOrigin:new URL\(base\).origin\}\)/);
+ for(const {source}of[hero,recorder]){
+  assert.match(source,/assembly\/build-prototype-session.mjs/);
+  assert.doesNotMatch(source,/content\/test-prototype-session.mjs/);
+  assert.match(source,/acknowledgePrototypeNotice\(context,base\)/);
+ }
+ let script,arg;await acknowledgePrototypeNotice({addInitScript(fn,value){script=fn;arg=value;}},'https://site.fixture.test/path');
+ const notice={run(state){const scope={argument:arg};Object.defineProperties(scope,Object.getOwnPropertyDescriptors(state));return vm.runInNewContext('('+script.toString()+')(argument)',scope);}};
+ return [{name:'hero',...hero,arg:'https://site.fixture.test'},{name:'recorder',...recorder,arg:{seed:1042026,expectedOrigin:'https://site.fixture.test'}},{name:'notice',...notice}];
+}
+test('actual media init callbacks avoid storage, random and live hooks on opaque or wrong origins',async()=>{
+ for(const f of await initFixtures())for(const origin of [{protocol:'about:',origin:'null'},{protocol:'https:',origin:'null'},{protocol:'https:',origin:'https://other.fixture.test'},{protocol:'file:',origin:'file://'}]){
+  const state={location:{protocol:origin.protocol},origin:origin.origin};
+  for(const key of ['localStorage','sessionStorage','Math','window'])Object.defineProperty(state,key,{enumerable:true,get(){throw Error('must not access '+key);}});
+  assert.doesNotThrow(()=>f.run(state,f.arg),f.name);
+ }
+});
+test('actual matching media init writes exact preferences and retains the seeded sequence/live hook',async()=>{
+ for(const f of await initFixtures()){
+  const writes=[],math={imul:Math.imul,random:()=>-1},state={location:{protocol:'https:'},origin:'https://site.fixture.test',window:{},Math:math};
+  for(const key of ['localStorage','sessionStorage'])state[key]={setItem(...args){writes.push([key,...args]);}};
+  f.run(state,f.arg);
+  assert.deepEqual(writes,f.name==='notice'?[['sessionStorage','gyropup.prototype-notice','2026-10-29-v1']]:[['localStorage','gyropup.probe','off'],['localStorage','gyropup-sfx','0']]);
+  if(f.name==='recorder'){
+   let seed=1042026;for(let i=0;i<3;i++){seed=(Math.imul(seed,1664525)+1013904223)>>>0;assert.equal(math.random(),seed/4294967296);}
+   assert.equal(state.window.__cadagentLive,true);
+  }else{assert.equal(math.random(),-1);assert.equal(state.window.__cadagentLive,undefined);}
+ }
+});
+test('matching-origin media storage denial still propagates with the original error',async()=>{
+ for(const f of await initFixtures()){
+  const state={location:{protocol:'https:'},origin:'https://site.fixture.test',window:{},Math:{imul:Math.imul}},failure=Error('matching-origin denied fixture');
+  for(const key of ['localStorage','sessionStorage'])state[key]={setItem(){throw failure;}};
+  assert.throws(()=>f.run(state,f.arg),error=>error===failure,f.name);
+  // Node's VM converts a throwing global getter into ReferenceError; still prove
+  // the matching-origin accessor is attempted and failure escapes the callback.
+  let accessed=false;
+  for(const key of ['localStorage','sessionStorage'])Object.defineProperty(state,key,{enumerable:true,get(){accessed=true;throw failure;}});
+  assert.throws(()=>f.run(state,f.arg));assert.equal(accessed,true,f.name);
  }
 });

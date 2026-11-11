@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 from tools.site.source_layout import source_file, source_for_public
 
 CAPTURE_SCRIPT = 'tools/evidence/media/capture-highlights.mjs'
-CAPTURE_LOCATIONS = ('tools/site/source-layout.mjs', 'tools/site/source-layout.json', 'tests/site/content/test-prototype-session.mjs')
+CAPTURE_LOCATIONS = ('tools/site/source-layout.mjs', 'tools/site/source-layout.json', 'tests/site/assembly/build-prototype-session.mjs')
 ENCODING_SOURCES = ('tools/evidence/media/encode-highlights.py', 'tools/evidence/media/check-highlights.py', 'tools/site/source_layout.py')
 OUT = (ROOT / 'software/site/assets/highlights')
 WIDTH, HEIGHT, FPS, FRAMES = 1280, 720, 30, 660
@@ -177,7 +177,7 @@ def required_capture_inputs(current=None):
     """Derive geometry closure independently of the capture's optional inputs map."""
     paths = {
         '/designer/' + name for name in (
-            'sim.js', 'robot_v2.js', 'current_turret.js', 'turret_bench.js', 'turret_reload.js',
+            'sim.js', 'sim_designs.js', 'robot_v2.js', 'current_turret.js', 'turret_bench.js', 'turret_reload.js',
             'robot3d.js', 'cadrig.js', 'turret3d.js', 'model.js', 'sfx.js', 'robot_actions.js',
             'current_robot.js', 'robot_current_source.js', 'robot_identity.js', 'robot_kinematics.js',
             'robot_presentations.js', 'robot_sensors.js', 'kit/assembly/guide.js', 'kit/assembly/playback.js',

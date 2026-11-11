@@ -4,12 +4,23 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A current Print disclosure stalls at native actionability despite stationary visible samples | [Explicit pointer and keyboard coverage with exact-target checks](inbox/2026-11-10-browser-harnesses-need-current-and-archive-bindings.md#2026-11-11--diversify-redundant-print-disclosure-input-coverage) |
+| A container build stops at Git dubious ownership before browser arms start | [Mounted workspace Git identity](inbox/2026-11-11-mounted-workspaces-need-git-identity.md) |
+| Instructions are delivered to a completed worker but no new turn or progress follows | [Wake completed workers explicitly](inbox/2026-11-11-handoffs-must-wake-idle-workers.md) |
+| Diagnostic controls pass but temporary paths, WebSocket endpoints or about-query values survive serialization | [Diagnostic redaction formats](domains/loading-readiness.md) |
+| Layout completes its views but simulator readiness times out with no current scene or request evidence | [Readiness failure observations](domains/loading-readiness.md) |
+| HTML has a deep evidence link but generated Markdown drops it after a semantic nav change | [Content navigation conversion](domains/static-build.md) |
+| A capture packet pins the new source but a live phase still accepts an archived served revision | [Live phase source binding](domains/structural-media.md) |
+| A functional homepage check passes but a resting capture shows a displaced skip link, blank canvas or lazy offscreen picture | [Landing capture preconditions and claim limits](domains/landing-preview.md) |
+| A first-load failure route sees no request after a model round trip, and the selection never reverts | [Loading fixture cache ownership](domains/loading-readiness.md) |
 | A cached CAD illustration has new source headers but old body membership, or native and projection runtimes are conflated | [Bind original collection and new projection consumer separately](inbox/2026-11-10-cached-projections-need-separate-consumer-provenance.md) |
 | Small mode-switch doubles pass but recorded-only model construction fails or metadata remains on the previous body | [Exercise the real archived constructor and atomic holder](inbox/2026-11-10-atomic-model-switches-need-real-archive-construction.md) |
 | A collection differs from an isolated module default, or sampled bounds suggest a changed nominal radius | [Trace effective overrides and actual bound geometry first](inbox/2026-11-10-collection-geometry-needs-effective-runtime-parameters.md) |
 | Removing a model factory breaks unrelated quotes, a fresh-output guard breaks simulation callers, or pack bounds move sensor effects | [Trace actual caller contracts and canonical sensor datums](inbox/2026-11-10-current-labels-need-the-current-body-model.md#model-api-changes-need-real-consumer-call-paths) |
 | A latest/current robot view retains a belly battery despite a front/rear-pack plan | [Trace actual current body geometry and preserve historical recordings](inbox/2026-11-10-current-labels-need-the-current-body-model.md) |
 | A screenshot times out after “fonts loaded” while interaction observations pass | [Time the original capture phases without clearing its failure](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md) |
+| Screenshot production needs a different budget from product interaction readiness | [Keep a finite artifact bound and verify the actual timeout path](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md#2026-11-11--distinguish-an-artifact-budget-from-product-readiness) |
+| A held-font screenshot control times out in Chromium but returns an image in WebKit | [Treat demonstrated stalls as engine-specific evidence](inbox/2026-11-10-screenshot-deadlines-need-timed-capture-phases.md#a-demonstrated-stall-is-engine-specific) |
 | A playing→paused contextual click moves even though status height and scroll range stay constant | [Preserve existing playback text nodes during genuine pause](inbox/2026-11-10-playing-pause-must-preserve-text-nodes.md) |
 | Flip/Rotate miss after a capture-time pause refresh despite a valid initial hit | [Leave unchanged native controls untouched during playback refresh](inbox/2026-11-10-no-op-playback-renders-must-preserve-native-controls.md) |
 | A Reset button gets pointerdown/focus but leaves old model or section state | [Keep pointer-focused actions fixed until native click completes](inbox/2026-11-10-pointer-focus-must-not-move-panel-actions.md) |
@@ -62,6 +73,7 @@
 | Repeated exact relation queries stall without checkpoints, or a broad-phase bound is presented as measured clearance | [Batch relations with explicit distance bounds](inbox/2026-10-31-batch-relations-with-explicit-distance-bounds.md) |
 | Entry warning loses focus, hides controls, or changes saved audio/scene state | [Prototype notice](domains/prototype-notice.md) |
 | A page shows large blank stretches on a phone, or a full-page screenshot shows empty picture boxes | [Empty space is measured per screen](inbox/2026-11-03-empty-space-is-measured-per-screen.md) |
+| Home repeats stale CAD, mass or study status despite intact source records | [Keep the entrance evergreen and the engineering state on its evidence routes](inbox/2026-11-10-home-should-link-to-engineering-state.md) |
 | Motto or landing graphics feel cheesy despite passing layout checks | [Gyropup visual character](domains/brand-presentation.md) |
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
 | A simulated motion sample wait times out after the applied pose passes | [Retain animation state and frame progress at the failed wait](inbox/2026-11-11-simulated-samples-need-frame-evidence.md) |
@@ -77,6 +89,7 @@
 | Model bounds pass but speech hides the robot, or a fresh wide phone looks worse than resized tests | [Visible mechanism layout checks](domains/rendered-mechanisms.md) |
 | A Talk landscape check projects portrait model bounds into the new CSS canvas | [Observe the viewport change and a real draw before measuring](inbox/2026-10-29-fresh-layouts-must-test-fixed-overlays.md#resize-observations-need-the-committed-camera-and-draw) |
 | A failed download looks unpublished, a partial model looks ready, or a retry overwrites newer data | [Loading readiness and report availability](domains/loading-readiness.md) |
+| An immediate archived-model retry reuses a failed sibling download | [Finish the failed archive cohort before retry](inbox/2026-11-11-failed-archive-cohorts-must-settle-before-retry.md) |
 | A study shows a zero-second player, or a valid encoded movie is frozen or mislabels static analysis as transient physics | [Structural media and recorded evidence](domains/structural-media.md) |
 | Video works in local Chrome but CI Chromium reports no supported streams or never reaches ready | [Chrome and Chromium codec coverage](inbox/2026-10-29-chrome-and-chromium-do-not-share-video-codecs.md) |
 | Highlights reject `Source changed: software/site/designer/kit/stage.js` after a lifecycle correction | [Capture changed renderer inputs freshly](inbox/2026-11-10-stage-lifecycle-changes-need-fresh-media.md) |
@@ -228,5 +241,9 @@
 
 - Context-wide page-error capture finds sessionStorage denied only on about:blank initial documents: [guard the fixture's intended HTTP security origin before reading storage](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md).
 - A current Build browser test expects171/233 parts, waits for the recorded rig manifest, or confuses index order with the bare-page default: [bind current defaults separately from explicit archives](inbox/2026-11-10-browser-harnesses-need-current-and-archive-bindings.md).
+- A fresh media candidate retains about:blank local/session storage errors despite successful child commands: [guard each actual init callback and bind the reused helper](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#a-fresh-media-capture-must-guard-every-context-init-before-storage-access).
 - Highlight-media source validation rejects a newly edited shared test helper: [preserve recorded fixture bytes and narrow the caller fix](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#historical-capture-fixtures-can-require-a-narrower-caller-fix).
 - A poster utility overwrites its public PNG before artifact review, or pure import starts a browser: [reserve fresh candidate output and preserve the actual hero hook](inbox/2026-11-10-poster-captures-need-fresh-candidate-output.md).
+
+- A retired simulator option remains reachable through old queries or restored form state: [gate public availability at the actual loader and preserve historical fixtures](inbox/2026-11-11-public-retirement-needs-loader-enforcement.md).
+- A dynamically constructed probe regex passes syntax checking but fails before capture, or collection mistakes a retained worker error for a missing terminal marker: [exercise actual extraction and separate byte verification from worker success](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#compile-the-actual-extractor-and-keep-byte-collection-separate-from-worker-success).

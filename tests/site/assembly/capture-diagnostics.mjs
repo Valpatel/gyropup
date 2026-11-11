@@ -56,6 +56,9 @@ export async function observeScreenshot({capture,options,collect,writeReport,pro
  let value,failure,failed=false,writeFailure,writeFailed=false;report.capture={startedMs:stamp()};
  try{value=await capture(options);report.capture.status='passed';}catch(error){failed=true;failure=error;report.capture.status='failed';report.capture.error=errorInfo(error);}
  finally{report.capture.completedMs=stamp();report.capture.durationMs=report.capture.completedMs===null||report.capture.startedMs===null?null:report.capture.completedMs-report.capture.startedMs;try{report.protocol=protocol.finish();}catch(error){report.protocolEndError=errorInfo(error);}}
+ if(Number.isFinite(metadata.referenceArtifactBoundMs)&&metadata.referenceArtifactBoundMs>0){
+  report.capture.completionComparedWithReference=failed?'capture-failed':report.capture.durationMs===null?'duration-unavailable':report.capture.durationMs<=metadata.referenceArtifactBoundMs?'completed-within-reference-bound':'completed-after-reference-bound';
+ }
  report.after=await readCaptureDiagnostic(()=>collect('after'),diagnosticTimeout);
  try{await bounded(()=>writeReport(report),diagnosticTimeout);}catch(error){writeFailed=true;writeFailure=error;}
  if(failed)throw failure;
