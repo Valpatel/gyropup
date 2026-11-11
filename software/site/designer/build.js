@@ -24,7 +24,8 @@ const getText=(url,options={})=>dataReader.text(url,{validate:isMarkdown,...opti
 const validBOM=value=>isRecord(value)&&Object.values(value).some(Array.isArray);
 const validPrint=value=>isRecord(value)&&isRecord(value.parts)&&isRecord(value.by_material)&&Number.isFinite(value.total_hours);
 const $ = (id) => document.getElementById(id);
-const partsUI=createPortalParts($('progress-tools'));
+const publishedVersion=await getJson('../version.json',{optional:true,label:'Published site revision'});
+const partsUI=createPortalParts($('progress-tools'),{revision:publishedVersion?.revision || 'unavailable (unversioned preview)'});
 $('progress-tools').insertAdjacentHTML('beforeend','<p class="media-note">Checklist boxes track parts, not purchased quantities. Required quantities continue to follow the selected design.</p>');
 $('progress-tools').insertAdjacentHTML('beforeend','<p class="media-note" data-current-source-note>These lists retain the original BotWheel leg prototype, rig, turret and earlier body workstreams. The current Robot and Combined guides show the accepted front/rear-pack CAD and D69 wheel envelope. A complete current-body order/print plan and D69 procurement remain pending. Per-part Prepare print offers only the separately verified WIP geometry files; it does not qualify a full robot or start printing.</p>');
 const R = '../';                                            // the project root, from designer/
