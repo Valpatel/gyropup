@@ -104,3 +104,32 @@ review, not a correction to a demonstrated missing prior page. No new capture,
 runtime, zero-error or publication claim follows from this fixture correction.
 Preserve the original failed dependency attempt, qualified22-error candidate
 result and already-verified d694 public release.
+
+
+## Compile the actual extractor and keep byte collection separate from worker success
+
+The first authorized archive-retry media refresh on 2026-11-11 stopped before any
+capture: private init-control.mjs:13 constructed an under-escaped regex and raised
+`SyntaxError: Invalid regular expression … Unterminated group`. A syntax-only
+`node --check` had not executed that constructor. The worker exited 1 and closed
+its browser/listener. The collector then exposed a second assumption: it required
+RUN-DONE to be the last line, while the unchanged worker prints its original
+exception afterward. Both failures remain preserved in the
+[actual failure checkpoint](https://github.com/Valpatel/gyropup/issues/306#issuecomment-6784963025).
+
+The separately reviewed corrected packet reused the existing tested extraction
+literal. Pure preflight invoked the actual old extractor (required rejection),
+extracted and compiled both actual callbacks, and rejected a missing callback
+before browser imports/launch. The terminal-log audit requires one exact DONE
+marker matching the service exit and an exact original-error tail. Eight planted
+log faults were rejected. Verified byte collection retains worker status/exit
+separately; the collector propagates failed/incomplete exits 1/2 after saving its
+byte receipt. A verified failed archive cannot become a successful worker.
+
+The corrected run completed all 12 phases, 480 new frames and both 22-second movies with
+zero production page errors. Independent review accepted the exact seven candidate
+files. The [source-bound adoption receipt](../plans/end-packs-highlights/archive-retry-refresh.json)
+records original failure, corrected action, raw/hash checks, source/native/runtime
+pins, unchanged history and cleanup. Native Chrome capture and pure controls do
+not establish final composed CI, WebKit/publication, performance or physical
+qualification. No retry, parser exception or error filter rewrites the old outcomes.
