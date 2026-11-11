@@ -1,0 +1,392 @@
+{
+  "matching_input_snapshot": "f77fcde00880d4cedf8ca1a7edabd993714deaca",
+  "members": {
+    "docs/research/actuator-interfaces.md": {
+      "bytes": 26546,
+      "sha256": "cb60373c321383a18a23ab3a0cdff3fd0e41c1d41e152e2828c395a731644699"
+    },
+    "hardware/__init__.py": {
+      "bytes": 84,
+      "sha256": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0"
+    },
+    "hardware/cad/__init__.py": {
+      "bytes": 84,
+      "sha256": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0"
+    },
+    "hardware/cad/analysis/studies.py": {
+      "bytes": 22561,
+      "sha256": "41d2807c06b54abfa69c966fb274eaa0933e080ee642f977bae8e1aa1900d349"
+    },
+    "hardware/cad/body/body_battery.py": {
+      "bytes": 25433,
+      "sha256": "3f491f0e4ccafa2e985fd1f0b20ef886c7b53f059593b354817e17a47b65fa71"
+    },
+    "hardware/cad/body/body_bom.py": {
+      "bytes": 38856,
+      "sha256": "aab4d9612ef7176fe74b511be838ad2bb3695a61a81d233ab788cca5650098c0"
+    },
+    "hardware/cad/body/body_frame.py": {
+      "bytes": 50849,
+      "sha256": "0dbff64156008827de6e7841e0e310d1741739de93623d23390fa8fe773f7c32"
+    },
+    "hardware/cad/body/body_fuse_board.py": {
+      "bytes": 15383,
+      "sha256": "5dcb993962fdcfc0a18cea93c43dec7bb04f0ce3f2174228465f2a73e76d20de"
+    },
+    "hardware/cad/body/body_guards.py": {
+      "bytes": 6724,
+      "sha256": "488427babff18f5503df518831dcf68f8ce71573c2fd3d517cedf70af116ff57"
+    },
+    "hardware/cad/body/body_joints.py": {
+      "bytes": 43388,
+      "sha256": "696ada09b51da53b01c930ab274f171bf86f8e9f19e1eeb942a8d48345358ee6"
+    },
+    "hardware/cad/body/body_layout.py": {
+      "bytes": 48425,
+      "sha256": "2d4514ca185c983caa290ab2c2cc6b167894c9fc473e9b15bf284cb3878e324a"
+    },
+    "hardware/cad/body/body_legloads.py": {
+      "bytes": 8281,
+      "sha256": "3a5726ef7c7adf58d2183dd2c55156e1a9f6a55e1c181b3344c777b10d2ce136"
+    },
+    "hardware/cad/body/body_params.py": {
+      "bytes": 30863,
+      "sha256": "a68737201e93af4ce8f00f675fbe3c235453b8bb0e19440fe3062635737a2247"
+    },
+    "hardware/cad/body/body_sections.py": {
+      "bytes": 22612,
+      "sha256": "1592a87f99a3428761432a4231a9931c2bbddeddbbf20449005aaf3b46710515"
+    },
+    "hardware/cad/body/body_sheet.py": {
+      "bytes": 25675,
+      "sha256": "d695fa0d8f3cf1d8c0f9b71fe08a52cb6e701f4d0ed895bf3053cd2325f56459"
+    },
+    "hardware/cad/body/body_shell.py": {
+      "bytes": 28074,
+      "sha256": "a5e8f050988b12b1cd7f69e247314eb01ec4b08eed9e4911d7fde5578e780296"
+    },
+    "hardware/cad/body/body_studies.py": {
+      "bytes": 30977,
+      "sha256": "e496e35481580e4d1c1c635da5434a300ee63d5140662c5b25a95130375cab0c"
+    },
+    "hardware/cad/body/body_thermal.py": {
+      "bytes": 14934,
+      "sha256": "d0aa1a5e8fc31cd9e4fa8ac1bf1600b374611546233cab1db9fe8f884f32b104"
+    },
+    "hardware/cad/body/body_views.py": {
+      "bytes": 5956,
+      "sha256": "d6a59be073b020537d55448be63dc89a7867f1118c6e0bf36290482f5518fc0e"
+    },
+    "hardware/cad/body/body_wiring.py": {
+      "bytes": 21700,
+      "sha256": "7ae4a6e9684fe852cc22f5efe6cef377be53da3cd1a9dd28b6b1a6a8c69fb1d9"
+    },
+    "hardware/cad/builders/build.py": {
+      "bytes": 44973,
+      "sha256": "83b7342f3e1b6fba2555649668d51814ec814258b2e018372b127ef046d0fcec"
+    },
+    "hardware/cad/builders/build_body.py": {
+      "bytes": 25759,
+      "sha256": "218b22c53eac82d94a0f4e6014f4c6f7d833be9c10cffbc062f6ffa4b64fa087"
+    },
+    "hardware/cad/builders/build_leg.py": {
+      "bytes": 18380,
+      "sha256": "b2ed60b0da4f38390f8798124e01b0f64c1005fd860204beb944cb17ae80c1ed"
+    },
+    "hardware/cad/builders/build_rig.py": {
+      "bytes": 47422,
+      "sha256": "619c6cfd0ad666dbe52fe75e732515bfeefa14a2ab6694c29f91aec4c9ea8779"
+    },
+    "hardware/cad/builders/build_turret.py": {
+      "bytes": 24349,
+      "sha256": "1ff62e01fb86b8de8159c7e75dbec2c502aebde457d528f53dedcda4b7a15915"
+    },
+    "hardware/cad/builders/build_turret_box.py": {
+      "bytes": 69098,
+      "sha256": "1c9c3bc4297b572c6619df53e565568818469abd23796e0370671a1923837100"
+    },
+    "hardware/cad/legs/fivebar.py": {
+      "bytes": 86291,
+      "sha256": "79aa5ae2f902c9a87323a7c9d40edbe71a5f04da8ed228907bddf2dc100a4d17"
+    },
+    "hardware/cad/legs/leg.py": {
+      "bytes": 26722,
+      "sha256": "f8cf486e8056b55b024b83d87223429c1d2d163443d3734115e36e2e0f16f1eb"
+    },
+    "hardware/cad/legs/leg_studies.py": {
+      "bytes": 54271,
+      "sha256": "a89b96dae120a0d56430eabc8fba5eb7a69f75fc4685087eff106cd496dc9c4a"
+    },
+    "hardware/cad/legs/rs04_lug_checks.py": {
+      "bytes": 39583,
+      "sha256": "c5751f8ef30f1b7ea804494e818667419dcfd05f5ac200a03f5936ae3a78d823"
+    },
+    "hardware/cad/legs/wheel_fit.py": {
+      "bytes": 3584,
+      "sha256": "ab2141bab7743d89ee330401906ec182e59448188f67e1bce7afb32970badcfc"
+    },
+    "hardware/cad/locations.py": {
+      "bytes": 1737,
+      "sha256": "ce87f089e519134d47a041a933b9bf862b91917ddf03e073152d132e845c130e"
+    },
+    "hardware/cad/manufacturing/bom_media.py": {
+      "bytes": 4494,
+      "sha256": "785b9c60608980cff01b03fa054159e50230df6a7f223c0edb9172292e9314cb"
+    },
+    "hardware/cad/manufacturing/print_provenance.py": {
+      "bytes": 10506,
+      "sha256": "10ab9d0688273573e7d4647b1f2abea23efcfe43a1d89a0ff11330fb04cf558a"
+    },
+    "hardware/cad/manufacturing/print_slicing.py": {
+      "bytes": 6786,
+      "sha256": "61c6d39b363efec49e8d111c234c53dfbd9f2c60752bfb0cbe3d253906be1704"
+    },
+    "hardware/cad/manufacturing/printplan.py": {
+      "bytes": 3641,
+      "sha256": "3bff04439c3a60ec89a1263b44f6a16c0eb42afe18b514d1207b59d8bfc294d0"
+    },
+    "hardware/cad/rig/rig_assembly.py": {
+      "bytes": 21601,
+      "sha256": "13382c222d6bf56363f494279507f761381aa882d95a27409114b1bcb959f9be"
+    },
+    "hardware/cad/rig/rig_bench.py": {
+      "bytes": 36113,
+      "sha256": "70c545bbc7fe5fee3d022fa219acb8e25dc074c6534fb19e7ee5c75ca64a9fca"
+    },
+    "hardware/cad/rig/rig_hardware.py": {
+      "bytes": 18562,
+      "sha256": "5fa85d0973dc3fff49a4b6ddf7765c01fba193e70fcf102ae11dd58036d983fe"
+    },
+    "hardware/cad/rig/rig_integrity.py": {
+      "bytes": 8624,
+      "sha256": "c361c7323b3c2fe461fd5d9c0af9edbee8a4dedfee3fd8ed0fe622e9013365ad"
+    },
+    "hardware/cad/rig/rig_parts.py": {
+      "bytes": 35821,
+      "sha256": "4fb51ecb263971c06712696617e59c3bef59280db8bb3bff12ee906e8bd70143"
+    },
+    "hardware/cad/rig/rig_views.py": {
+      "bytes": 4826,
+      "sha256": "de912fbdad7616f61c965786add7b296e830e60ae04b134a448cbc9182500709"
+    },
+    "hardware/cad/robot/assembly.py": {
+      "bytes": 5944,
+      "sha256": "8da70c67e060884544d1b44c69153480a8a5e541f0f7caa3ea8aec87b0991e1a"
+    },
+    "hardware/cad/robot/assembly_checks.py": {
+      "bytes": 9373,
+      "sha256": "33ee6454e3477586e2a2dc7af2901e60678ca61a567152d5d7e987bfde104122"
+    },
+    "hardware/cad/robot/cables.py": {
+      "bytes": 12372,
+      "sha256": "26ff1e464439bfe776fa0a30fb511b36d8bbee56fdb92980fde49f82105da75a"
+    },
+    "hardware/cad/robot/electronics.py": {
+      "bytes": 9227,
+      "sha256": "e3d322ee903366af22caa191dbc1aab80546a1c90aac886d1d87b7905af93daa"
+    },
+    "hardware/cad/robot/gmi.py": {
+      "bytes": 23837,
+      "sha256": "13ee0da5ad9cc1399d6be16d661775633ae16b4ef872907d7c52ff3dc9b45269"
+    },
+    "hardware/cad/robot/interfaces.json": {
+      "bytes": 6818,
+      "sha256": "a4842a317dd2e64e9b4e11d34376bc36c26e1ddf8435a4b16a85dae3cd730b73"
+    },
+    "hardware/cad/robot/parameters.json": {
+      "bytes": 1411,
+      "sha256": "92cfeaa792a2466594852afeef08af70fe74335ce60f458bd976f62ec0a39e13"
+    },
+    "hardware/cad/turret/check_base_board_interfaces.py": {
+      "bytes": 12824,
+      "sha256": "e66019c5d03b14239535af20eaf7aa6ca9db7884a72f01a39fe4182fdd7dc02e"
+    },
+    "hardware/cad/turret/check_base_board_print.py": {
+      "bytes": 2269,
+      "sha256": "cdabcfec32a17ab901880ce6fa94f74398923fd0237758a2b6ee5b8d6deb8aeb"
+    },
+    "hardware/cad/turret/check_base_board_service.py": {
+      "bytes": 12738,
+      "sha256": "56f07bb65cb5c103948b41e2d5e971a809401b3e7cf793da48317c8000050dc2"
+    },
+    "hardware/cad/turret/turret.py": {
+      "bytes": 175771,
+      "sha256": "bba2ddcadb453fc99ad548aa3d3f912d0bf66b2d43eb4af59077b34873c04808"
+    },
+    "hardware/cad/turret/turret_assembly.py": {
+      "bytes": 13346,
+      "sha256": "bd581546115d97277ccb320e122afc126a40ec494c8766eb8b0a64bb0a043a43"
+    },
+    "hardware/cad/turret/turret_base_board.py": {
+      "bytes": 7105,
+      "sha256": "68fa770daf4d6568f253c103d8f89225c90eadb2a5a523e7afbf3e689fbd395e"
+    },
+    "hardware/cad/turret/turret_boards.py": {
+      "bytes": 31762,
+      "sha256": "a10736535be770721bbd3ca59579d5854655026bbd3f4670a96d360b8f8deb71"
+    },
+    "hardware/cad/turret/turret_box.py": {
+      "bytes": 43653,
+      "sha256": "9d3f6a82712f1449e03edafe78383fa0916ac0efa1740d0ea9dc6ed03a7ddafe"
+    },
+    "hardware/cad/turret/turret_carrier_interfaces.py": {
+      "bytes": 6912,
+      "sha256": "d43e7f968fc16e51447bcbdc515cb4e6043ca8b169b406da4820785cf97eb04f"
+    },
+    "hardware/cad/turret/turret_carrier_support.py": {
+      "bytes": 9893,
+      "sha256": "6ce4f816778c10a4d2e91c64b58ca8583c70f6ad443cd34fff9f36cf37b6438a"
+    },
+    "hardware/cad/turret/turret_dossier.py": {
+      "bytes": 19249,
+      "sha256": "3cb60f119539a1adfb5f56439ce5b4d8011b86baf09ebc44c684ae6a1677e707"
+    },
+    "hardware/cad/turret/turret_gates.py": {
+      "bytes": 40550,
+      "sha256": "d994b3a737cffc1dfbbb5b3b6a2a6d06dfaf906fe139c42d96e613d29257545f"
+    },
+    "hardware/cad/turret/turret_lidar.py": {
+      "bytes": 22153,
+      "sha256": "1f892cc50a2508d7a79e2d8411dbd6d42a1e4b60951355400eee979879af235c"
+    },
+    "hardware/cad/turret/turret_limits.py": {
+      "bytes": 4201,
+      "sha256": "a725c29197ef2908f00bac4e6d8b14815c3449196c4d0d15483719f0276b6b6e"
+    },
+    "hardware/cad/turret/turret_motion.py": {
+      "bytes": 12619,
+      "sha256": "f3d40ab565a1121dcd46e32e8d4b907f44732f203aa67faa44bf359b8132ac9c"
+    },
+    "hardware/cad/turret/turret_mount.py": {
+      "bytes": 26360,
+      "sha256": "19e6b657b4b29baf5937bc0e5814726a67cfa0c499311b65233c33824a20acef"
+    },
+    "hardware/cad/turret/turret_orders.py": {
+      "bytes": 11942,
+      "sha256": "d8654ac8d7bc1ccc92a897741f336115e2065b39a45e2a94e5ce05cb36568ae7"
+    },
+    "hardware/cad/turret/turret_print.py": {
+      "bytes": 20890,
+      "sha256": "7482db25ad8334a60ec4ee15e8606c20ef5a15e025c0310e1e64a831334cd54f"
+    },
+    "hardware/cad/turret/turret_snaps.py": {
+      "bytes": 23841,
+      "sha256": "9dd5ed2fffeed0c8798e11836866725003fe3265e2bc2f915b56a543d98ad0c1"
+    },
+    "hardware/cad/turret/turret_stand.py": {
+      "bytes": 15129,
+      "sha256": "5fb158d98b56c7273056a95c10238b05af2766e17ddcde8a7c684847983d3562"
+    },
+    "hardware/cad/turret/turret_studies.py": {
+      "bytes": 51719,
+      "sha256": "faf8a0900752a39fdd38fdb8cccc20dc3cdd1ff82679d93d47886680ba9701ac"
+    },
+    "hardware/cad/turret/turret_tilt_range.py": {
+      "bytes": 15109,
+      "sha256": "1852dedd5edb5a67b8198dc2bac888d10f505e96c399769f7a9e0aac84a94885"
+    },
+    "hardware/catalog/alternates.json": {
+      "bytes": 107525,
+      "sha256": "9d5da650878fefa12654cdedae841d2daf22c1101c7f038018a75b8921d5ee3b"
+    },
+    "hardware/catalog/body.json": {
+      "bytes": 95295,
+      "sha256": "91a27038348a4e8e4beb3ede92c5c84a073d4728cd73e14f66d3e3226ab9b52b"
+    },
+    "hardware/catalog/designed-media-validation.json": {
+      "bytes": 10598,
+      "sha256": "b31f669c36e93dc2d5e701f161fbd74374688688b21a8bacf6f93227e808a435"
+    },
+    "hardware/catalog/hardware.json": {
+      "bytes": 203917,
+      "sha256": "af0f7f3bdce4ee93649e278106d00a93fe2ebea3569c057f1d2a04fe4b360015"
+    },
+    "hardware/catalog/images.json": {
+      "bytes": 132812,
+      "sha256": "918f8c682e95ae0210f732197c0d9bd58d27c066a9cffc0037bee4284b795e73"
+    },
+    "hardware/catalog/index.json": {
+      "bytes": 246,
+      "sha256": "5e77d00c8ab4961f5da0bb2d5692a23170b9f4143e05d850d7b33fe36d70f334"
+    },
+    "hardware/catalog/interfaces.json": {
+      "bytes": 6419,
+      "sha256": "3889bc34503444f389e7951d74944f37b7e57b0b2b3be68ed596b959e83a46af"
+    },
+    "hardware/catalog/leg_actuators.json": {
+      "bytes": 1919,
+      "sha256": "b8ed3125cca22e9936b929fa1529395b1dead7a9585c21c63995bb294fa31bc5"
+    },
+    "hardware/catalog/lights.json": {
+      "bytes": 2778,
+      "sha256": "7f8a4a2ebf819141ba8929257bce17a3868d5420fd34a4ee137e7d8b2ee51f78"
+    },
+    "hardware/catalog/materials.json": {
+      "bytes": 7280,
+      "sha256": "f699e8ea644aeb4f66227f5e021a2a7996b477ef1a41d6048b7f638364ba5d1f"
+    },
+    "hardware/catalog/motor_drivers.json": {
+      "bytes": 4424,
+      "sha256": "4b4d83c2ba6ded0127992de1fb01982e96d831a79864af73ff49ecad102704e3"
+    },
+    "hardware/catalog/power_electronics.json": {
+      "bytes": 37634,
+      "sha256": "896ad5da63cb4cf56ebb38607e012343395e220d3c4a8d0a2275e9a614012c97"
+    },
+    "hardware/catalog/rig.json": {
+      "bytes": 114134,
+      "sha256": "87b982f76287ec4141cdb043de880e985373ca8305a8cf30ed15d378f25879b5"
+    },
+    "hardware/catalog/sensors_compute.json": {
+      "bytes": 17217,
+      "sha256": "7ba205b22b43195db0dcff85976a18f0a8405f782c3437e675122dbbc549f47a"
+    },
+    "hardware/catalog/sourcing.json": {
+      "bytes": 40782,
+      "sha256": "a002bac6b795357a717ed0528ea6e2a561d774a7e608c35fee64fd8231370a12"
+    },
+    "hardware/catalog/turret.json": {
+      "bytes": 329307,
+      "sha256": "4e0ab8a62f75e4da60e50e84dcddc85d2e462ffc0949bacdcdf60d7f4aade9f7"
+    },
+    "hardware/catalog/vendor-media-verification.json": {
+      "bytes": 93585,
+      "sha256": "3025ca6b68918b33986078c8a8087f036a653f17c230accf665127fa3d72d733"
+    },
+    "hardware/catalog/wheel_motors.json": {
+      "bytes": 2570,
+      "sha256": "e92baa60e433e177d87450145943c32bd6b60bebb97e1c1746354aa00f2dbc99"
+    },
+    "hardware/designs/default.json": {
+      "bytes": 4720,
+      "sha256": "3dc7d04d0d6eeec81decefa360f3904b093f19515d6944910c2cb20c976db211"
+    },
+    "tests/hardware/body/test_body.py": {
+      "bytes": 23625,
+      "sha256": "1f99193493bd0512cbbcef0f771f1e0585dd1a820ea159719bd828a54f564d64"
+    },
+    "tests/hardware/interfaces/test-rs04-lug-stacks.py": {
+      "bytes": 14941,
+      "sha256": "b6dd4c77b62dad3c8154d9eb7f8227a4d2d778625542b48715596f49542970b0"
+    },
+    "tests/hardware/legs/test_leg_loads.py": {
+      "bytes": 3322,
+      "sha256": "f05c09f4719541fa8880dbee28ce01e4314ae5dba7a599e7eecb6240d94341a4"
+    },
+    "tests/hardware/turret/test_turret_gate_sources.py": {
+      "bytes": 7015,
+      "sha256": "fb85a82ab0a322debc60b6b93a3b8018227949e80fb7d5bcc453171b0f397732"
+    },
+    "tests/hardware/turret/test_turret_snaps.py": {
+      "bytes": 22294,
+      "sha256": "96afedabae5991a7d99eab3af5f324ae901589d7e92e45b2a36f32bc7a709fd6"
+    },
+    "tests/hardware/turret/test_turret_solids.py": {
+      "bytes": 3917,
+      "sha256": "d03677019224ad4e95f8775f374010c450299daf67fd729f546a1ea458e87a31"
+    }
+  },
+  "recorded_slice_producer": "017e1e03eacdfaec7eda891a14143a2f9254581a",
+  "schema": "gyropup.retained-fit-input-snapshot/1",
+  "scope": "Public captured input DATA only; never import or execute. Matching snapshot is not asserted to be the original execution commit."
+}

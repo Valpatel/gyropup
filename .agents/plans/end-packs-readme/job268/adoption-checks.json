@@ -1,0 +1,41 @@
+{
+  "schema": "gyropup.readme-adoption-checks/1",
+  "date": "2026-11-10",
+  "projection_producer": "1abbe0d2aea9ac904c224f4db02faa29ca8d9bf8",
+  "original_native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "producer_code_and_config_unchanged": {
+    "tools/engineering/robot/readme_design.py": "31067c2d5a2f0bf2bfafa1ffd230147c72ab344841418b8cd67498db1bcfcb1f",
+    "tools/engineering/robot/readme-design.json": "56d59eba324e244d554d2172a8c769e0c46faef3de65288e9a13ff520d1d877b",
+    "tests/evidence/media/test-readme-design.py": "29e5463bfaf386e8e37f0442e9eee6078f51dd8e61f72413246f10b0b15790e9",
+    "tests/evidence/media/test-readme-collection.py": "5d074f9ea8c5ce92f10b8133eb1177cd4b28c6bf9b0ef5fe6ff867c918a67faf",
+    "tests/evidence/media/fixtures/old-readme-body-membership.json": "15d48d4ade38a35b008e7958bb201ab13a8959fc73be7f0738274e15a639f6c6"
+  },
+  "full_readme_tests": {
+    "count": 22,
+    "pass": 22,
+    "skip": 0,
+    "log": "adopt-tests.log"
+  },
+  "actual_adopted_parity": {
+    "pass": true,
+    "inputs": 95,
+    "log": "adopt-parity.log"
+  },
+  "build": {
+    "pass": true,
+    "log": "adopt-build.log"
+  },
+  "privacy": {
+    "pass": 11,
+    "log": "adopt-privacy.log"
+  },
+  "markdown": {
+    "pass": 6,
+    "log": "adopt-markdown.log"
+  },
+  "new_projection": false,
+  "new_browser": false,
+  "new_native": false,
+  "manufacturing_qualification": false,
+  "publication": false
+}

@@ -263,7 +263,8 @@ def main():
              'compute_pallet': bf.pallet_part, 'power_plate': bf.power_plate_part, 'bus_bar': bf.bus_bar_part,
              'turret_plate': bf.turret_plate_part}
     import hardware.cad.body.body_battery as bb
-    parts.update({'bay_floor': bb.floor_part, 'bay_side': bb.side_part})
+    parts['end_pack_holder'] = bb.holder_part
+    no_mounts = {'cheek', 'bus_bar', 'turret_plate', 'end_pack_holder'}
     outf = Path(a.out)
     res = json.loads(outf.read_text()) if outf.exists() else {}
     today = datetime.date.today().isoformat()
@@ -273,8 +274,11 @@ def main():
                 continue
             feats = []
             if name in parts:
-                import hardware.cad.body.body_layout as bl
-                sp = parts[name](bl.layout()['mounts']) if name not in ('cheek', 'bus_bar', 'turret_plate', 'bay_floor', 'bay_side') else parts[name]()
+                if name in no_mounts:
+                    sp = parts[name]()
+                else:
+                    import hardware.cad.body.body_layout as bl
+                    sp = parts[name](bl.layout()['mounts'])
                 feats = [{'d': f.d, 'note': f.note, 'kind': f.kind} for f in sp.features]
             o = order_of(s, feats)
             app = App(p, Path(a.shots) / name if a.shots else None)

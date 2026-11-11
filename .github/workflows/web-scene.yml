@@ -34,7 +34,10 @@ jobs:
           PYTHONPATH: .cad-agent-toolkit/src
         run: |
           python tests/hardware/manufacturing/test-fit-job.py
-          python tools/evidence/manufacturing/package-fit-job.py --verify hardware/exports/leg/rs04-fit-job
+          # Historical archive integrity uses fixed captured inputs, never a current-fit fallback.
+          # --full includes the real historical positive AND unchanged current-root stale negatives.
+          python tests/hardware/manufacturing/test_retained_fit_history.py --full
+          python tools/evidence/manufacturing/verify-retained-fit-history.py
           python tests/hardware/manufacturing/test-survey-fit-job.py
           python tools/evidence/manufacturing/package-survey-fit-job.py --verify hardware/exports/turret/shaft-survey-fit-job
   privacy:
@@ -80,17 +83,18 @@ jobs:
             commands: |
               python3 tests/hardware/manufacturing/test-motor-day-render-inputs.py
               python3 tests/hardware/manufacturing/test-print-provenance.py
-              python3 tests/hardware/interfaces/test-rs04-lug-stacks.py
+              # Only the dated committed-receipt assertion moves to retained-fit-job's
+              # mandatory historical positive/current-stale negatives. Original checker stays strict.
+              python3 tests/hardware/interfaces/test-rs04-lug-stacks.py --pure
               python3 tests/hardware/interfaces/test-rs04-dowel-protrusion.py
-              python3 tests/hardware/interfaces/test-rs04-support-probe.py
+              python3 tests/hardware/interfaces/test-rs04-support-probe.py --historical
               python3 docs/research/thread-mating-2026-10-29/test_wrapper.py
               python3 tests/hardware/interfaces/test-base-board-interfaces.py
               python3 tests/hardware/interfaces/test-carrier-connector-inputs.py
               python3 tests/hardware/interfaces/test-carrier-connector-pose.py
               python3 tests/hardware/interfaces/test-carrier-connector-support.py
-              python3 docs/research/carrier-insert-fit/verify.py
-              python3 docs/research/carrier-insert-fit/test_guards.py
-              python3 docs/research/insert-joints/test_inventory.py
+              python3 -B tests/hardware/manufacturing/test_retained_carrier_studies.py carrier-insert-fit
+              python3 -B tests/hardware/manufacturing/test_retained_carrier_studies.py insert-inventory
               python3 docs/research/insert-joints/test_phase2.py
               python3 docs/research/snap-fits/test_snaps.py
               python3 docs/research/leg-preprint/test_screen.py
@@ -134,6 +138,11 @@ jobs:
               npm run test:diagrams
               npm run test:services
               npm run test:preview
+          - suite: presentation-webkit-media
+            commands: |
+              PLAYWRIGHT_BROWSER=webkit npm run test:hero
+              PLAYWRIGHT_BROWSER=webkit npm run test:highlights
+              PLAYWRIGHT_BROWSER=webkit HIGHLIGHT_INTEGRATION_CASE=all npm run test:highlight-integration
           - suite: loading
             commands: |
               npm run test:part-media
@@ -232,7 +241,9 @@ jobs:
           - suite: build-workspace-print
             commands: |
               WORKSPACE_CASE=print npm run test:build-workspace
+              TEST_OUTPUT=/tmp/gyropup-build-workspace-current-print WORKSPACE_CASE=print PRINT_CASE=current npm run test:build-workspace
               PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=print npm run test:build-workspace
+              TEST_OUTPUT=/tmp/gyropup-build-workspace-current-print PLAYWRIGHT_BROWSER=webkit WORKSPACE_CASE=print PRINT_CASE=current npm run test:build-workspace
           - suite: build-portal
             commands: |
               npm run test:build-guide
@@ -257,6 +268,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - if: matrix.suite == 'mechanism'
+        uses: actions/checkout@v4
+        with:
+          repository: Valpatel/cad-agent
+          ref: c67149b0a35127f93a237d3083ac0b70fcf0d17d # Existing shared motion_trace; no CAD engine installation.
+          path: .cad-agent-motion
+          persist-credentials: false
+      - if: matrix.suite == 'mechanism'
+        run: python -m pip install numpy==2.5.4
       - run: npm ci
       - name: Verify the locked browser runtime
         run: |
@@ -275,6 +295,7 @@ jobs:
       - run: npm run build
       - name: Validate ${{ matrix.suite }}
         env:
+          CURRENT_MOTION_TOOLKIT: .cad-agent-motion
           PORT: 8879
           PLAYWRIGHT_CHANNEL: chromium
           SITE_URL: http://127.0.0.1:8879
@@ -303,7 +324,7 @@ jobs:
         env:
           BROWSER_RESULT: ${{ needs.browser-validation.result }}
         run: test "$BROWSER_RESULT" = success
-  # Preserve main's required presentation context across the two command partitions.
+  # Preserve main's required presentation context across the browser partitions.
   presentation:
     name: browser-validation (presentation)
     if: always() && github.event_name != 'schedule'

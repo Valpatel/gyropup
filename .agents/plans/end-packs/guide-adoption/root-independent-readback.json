@@ -1,0 +1,39 @@
+{
+  "status": "PASS_CANDIDATE_READBACK",
+  "source": "eb3cc327d9bf942f018c4daa608c189ccffa99e5",
+  "files_rehashed": 233,
+  "guides": [
+    {
+      "snapshot": "robot-wip-3a40891962b0",
+      "parts": 162,
+      "guide_sha256": "a2a3959c2eaa0210f31748e207a1f737606ec9269cb991f73f89548b593e3c9c",
+      "model_sha256": "de163012d3ab626ce97be07dd7e8b0187168c07c8bbf36aeb50b5f2e46827cf5",
+      "prepared_instances": [
+        "L.hip_frame",
+        "R.hip_frame"
+      ],
+      "source_order_only": true
+    },
+    {
+      "snapshot": "combined-wip-3a40891962b0",
+      "parts": 224,
+      "guide_sha256": "9e69dc165eb2608aa0816d8cdb6de5622c0a8363e141c30ba27c994c6a340f67",
+      "model_sha256": "fd40d4b43beb93b7ef3e6ac7bc1798a804e195a31062748cd23d87cac9ac28ca",
+      "prepared_instances": [
+        "L.hip_frame",
+        "R.hip_frame"
+      ],
+      "source_order_only": true
+    }
+  ],
+  "all224_original_meshes_exact": true,
+  "five_row_index_sha256": "7e8a51f3743e154230e0882e8ac20641b79e74e657773acd22b13d0548231016",
+  "old_three_rows_and_unavailable_exact": true,
+  "turret_no_query_default_unchanged": true,
+  "current_defaults": {
+    "robot": "robot-wip-3a40891962b0",
+    "combined": "combined-wip-3a40891962b0"
+  },
+  "manufacturing_qualified": false,
+  "public_adoption": false
+}

@@ -1,7 +1,8 @@
 /** Gamepad control in the playground and the kit's demo page, with navigator.getGamepads mocked. */
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile,mkdir,writeFile } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
+import {checkHopProgress,HOP_LIMITS,pollHop,readHopSample} from './hop-budget.mjs';
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8882').replace(/\/$/, '');
@@ -26,7 +27,8 @@ const mockPads = () => {
   Object.defineProperty(Navigator.prototype, 'getGamepads', { configurable: true, value() { return slots.slice(); } });
 };
 
-const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+// Keep desktop layout and select the product's lighter renderer through its real touch capability.
+const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1, hasTouch: true });
 await acknowledgePrototypeNotice(context);
 await context.addInitScript(() => { localStorage.setItem('gyropup.probe', 'off'); localStorage.setItem('gyropup-sfx', '0'); });
 await context.addInitScript(mockPads);
@@ -81,9 +83,45 @@ try {
   await pad('axes', 0, [0, 0, 0, -1]);
   const tiltMax = await sim(() => +[...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input').max);
   await until((m) => Math.abs(window.__sim.gun.tilt * 180 / Math.PI - m) < 1e-6, tiltMax);
-  await pad('axes', 0, [0, 0, 0, 1]);
-  await until(() => { const s = window.__sim, slider = [...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input');
-    return Math.abs(s.gun.tilt * 180 / Math.PI - Math.max(+slider.min, -s.tiltLimitDeg())) < 1e-6; });
+  // Set up the lower-stop check separately. The stick uses clamped stage dt,
+  // so traversing the entire range also measures the software renderer's frame rate.
+  await pad('axes', 0, [0, 0, 0, 0]);
+  await until(() => window.__sim.gamepad.control.value('tilt') === 0);
+  const downStart = await sim(() => {
+    const s = window.__sim;
+    const slider = [...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input');
+    const limit = Math.max(+slider.min, -s.tiltLimitDeg());
+    s.command.tiltDeg(limit + 4);
+    return { tilt: s.gun.tilt * 180 / Math.PI, limit };
+  });
+  assert.ok(Math.abs(downStart.tilt - downStart.limit - 4) < 1e-6, 'Lower-stop setup leaves four degrees for the stick to move');
+  const tiltTrace = await page.evaluateHandle(() => {
+    const s = window.__sim, axis = () => window.__fakePads.slots[0]?.axes[3];
+    let frames = 0, downFrames = 0, simulatedS = 0;
+    const off = s.stage.onFrame((_, dt) => {
+      frames++;
+      if (axis() === 1) { downFrames++; simulatedS += dt; }
+    });
+    return () => {
+      off();
+      return { tilt: s.gun.tilt * 180 / Math.PI, pan: s.gun.pan * 180 / Math.PI, axis: axis(), input: s.gamepad.control.value('tilt'),
+        frames, downFrames, simulatedS, visibility: document.visibilityState, stageError: document.body.dataset.stageError || null };
+    };
+  });
+  let tiltError;
+  try {
+    await pad('axes', 0, [0, 0, 0, 1]);
+    await until(() => { const s = window.__sim, slider = [...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input');
+      return s.gamepad.control.value('tilt') === -1 && Math.abs(s.gun.tilt * 180 / Math.PI - Math.max(+slider.min, -s.tiltLimitDeg())) < 1e-6; });
+  } catch (error) {
+    tiltError = error;
+    throw error;
+  } finally {
+    let observed;
+    try { observed = await tiltTrace.evaluate(finish => finish()); await tiltTrace.dispose(); }
+    catch (error) { if (!tiltError) throw error; observed = { observationError: error.message }; }
+    if (tiltError) console.error('Lower tilt stop failure state:', JSON.stringify({ start: downStart, observed }));
+  }
   const { tilt, limit } = await sim(() => {
     const s = window.__sim;
     const slider = [...document.querySelectorAll('#panel .hud-slider')].find((l) => /^Tilt/.test(l.textContent)).querySelector('input');
@@ -138,21 +176,51 @@ try {
   await pad('connect', 0);
   await until(() => !document.getElementById('gamepad-pill').hidden);
 
-  // ---- jump: a hop that leaves the ground and lands
-  await pad('button', 0, 'A', 1);
-  await until(() => !!window.__sim.state.jump);
-  await pad('button', 0, 'A', 0);
-  await until(() => window.__sim.state.robot.group.position.y > 0.12);   // wheels clear: the hip's rise plus the tuck
+  // ---- jump: input/start and real airborne geometry retain their15s response bounds.
+  // Landing follows actual clamped stage dt, with separate wall/stalled-render limits.
+  const hopEnvironment = await sim(() => {
+    const s = window.__sim, r = s.stage.renderer, model = s.state.robot;
+    return { presentation: model.presentation, parts: model.parts.length, coarse: matchMedia('(pointer: coarse)').matches,
+      viewport: [innerWidth, innerHeight], devicePixelRatio, shadows: r.shadowMap.enabled,
+      drawingBuffer: [r.domElement.width, r.domElement.height], connected: r.domElement.isConnected,
+      contextLost: r.getContext().isContextLost(), drawCalls: r.info.render.calls, triangles: r.info.render.triangles };
+  });
+  assert.equal(hopEnvironment.presentation.mode, 'current');
+  assert.equal(hopEnvironment.presentation.nativeSource, '3a40891962b0b0a04625e070700f1d130bea3c7b');
+  assert.equal(hopEnvironment.presentation.collectionSha256, '7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67');
+  assert.equal(hopEnvironment.parts, 228);
+  assert.deepEqual(hopEnvironment.viewport, [1440, 1000]);
+  assert.equal(hopEnvironment.devicePixelRatio, 1);
+  assert.ok(hopEnvironment.connected && !hopEnvironment.contextLost && hopEnvironment.drawCalls > 0 && hopEnvironment.triangles > 0);
+  assert.ok(hopEnvironment.drawingBuffer[0] === 1440 && hopEnvironment.drawingBuffer[1] >= 900);
+  if (engine === chromium) assert.equal(hopEnvironment.coarse, true, 'Chromium selects the product touch renderer');
+  assert.equal(hopEnvironment.shadows, !hopEnvironment.coarse);
+  const hopGuard=await page.evaluateHandle('('+checkHopProgress.toString()+')'),hopSample=await page.evaluateHandle('('+readHopSample.toString()+')');
+  await sim(()=>{
+    window.__hopTrace={frames:0,rows:[],started:false,simulatedS:0,maxY:0};
+    window.__hopTraceOff=window.__sim.stage.onFrame((t,dt)=>{
+      const s=window.__sim,r=window.__hopTrace,now=performance.now();
+      if(!r.started&&s.state.jump){r.started=true;r.startedAt=now;}
+      if(!r.started)return;
+      r.frames++;r.simulatedS+=dt;r.lastFrameAt=now;r.maxY=Math.max(r.maxY,s.state.robot.group.position.y);
+      r.rows.push({t,dt,wall:now,jump:s.state.jump?{...s.state.jump}:null,y:s.state.robot.group.position.y,paused:s.demo.on&&!s.demo.playing,demoOn:s.demo.on,playing:s.demo.playing,replay:!!s.state.replay,visibility:document.visibilityState,stageError:document.body.dataset.stageError||null});
+      if(r.rows.length>512)r.rows.shift();
+    });
+  });
+  let hopError;
   try {
-    await until(() => !window.__sim.state.jump && window.__sim.state.robot.group.position.y === 0);
-  } catch (error) {
-    try {
-      console.error('Hop landing failure state:', JSON.stringify(await sim(() => ({
-        modelKey: window.__sim.state.modelKey, jump: window.__sim.state.jump,
-        y: window.__sim.state.robot.group.position.y, visibility: document.visibilityState,
-      }))));
-    } catch (diagnosticError) { console.error('Hop landing diagnostic unavailable:', diagnosticError.message); }
-    throw error;
+    await pad('button',0,'A',1);
+    await until(()=>!!window.__sim.state.jump);
+    await pad('button',0,'A',0);
+    await until(()=>window.__sim.state.robot.group.position.y>.12);
+    await page.waitForFunction(pollHop,{guard:hopGuard,readSample:hopSample,limits:HOP_LIMITS},{timeout:HOP_LIMITS.wallMs,polling:100});
+  }catch(error){hopError=error;throw error;}finally{
+    await Promise.all([hopGuard.dispose(),hopSample.dispose()]);
+    try{
+      const trace=await sim(()=>{window.__hopTraceOff();return{modelKey:window.__sim.state.modelKey,frameTrace:window.__hopTrace,jump:window.__sim.state.jump,y:window.__sim.state.robot.group.position.y};});
+      const out=process.env.TEST_OUTPUT||'/tmp/gyropup-gamepad';await mkdir(out,{recursive:true});await writeFile(`${out}/${engine.name()}-hop.json`,JSON.stringify({engine:engine.name(),browser:browser.version(),limits:HOP_LIMITS,error:hopError?String(hopError):null,environment:hopEnvironment,...trace},null,2));
+      if(hopError)console.error('Hop landing failure state:',JSON.stringify({environment:hopEnvironment,...trace}));
+    }catch(error){if(!hopError)throw error;console.error('Hop diagnostic unavailable:',error.message);}
   }
 
   // ---- Menu: the settings dialog, live diagram, actions suspended, rebind persisted, reset

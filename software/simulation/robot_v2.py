@@ -1,7 +1,8 @@
 """Gyropup v2 for the physics and the 3D game page: two five-bar legs (cad/fivebar.py), the foam-ball turret
 (cad/turret.py) and the REAL BODY of milestone M5 (cad/body_*.py), as built (D62).
 
-    python -m sim.robot_v2        # build/sim/v2/robot.xml + model.json; exports/sim/v2/rig/ (meshes + manifest.json)
+    python -m software.simulation.robot_v2 --out /fresh/candidate
+    # Candidate build/robot.xml + model.json and rig/; archived rig is preserved.
 
 Robot frame: x forward, y left, z up, origin on the hip axis between the two legs. The left leg is cad/fivebar.py's
 module as built, its frame shifted out by the body's Y_OFF (cad/body_params.py: its centre-plane face on the left
@@ -14,9 +15,10 @@ The body is cad/body_layout.py's P3 ledger, row for row (every mass and centre t
 exports/body/mass.json): the frame parts from their CAD solids (inertia included), each bought part as its box, the
 estimates (harness, hardware, the shell's panels) where the ledger puts them; the legs carry exports/leg/leg.json's
 total; the turret's moving groups come from cad/turret.py and the rest of the head budget (body_params.tm()) sits at
-the head's centre, so the model's mass is the ledger's (mass_reconciles). It collides with the ground as the real
-parts would: the cheeks, the floor tray, the deck with its lips, the belly plate, the battery bay (the lowest part),
-the ear pods and the lidar. On the deck the VLP-16 and the turret's pan axis are where the body puts them (143 mm
+the head's centre, so the model's mass is the ledger's (mass_reconciles). Ground collisions use
+the declared candidate geometry: the cheeks, floor tray, deck, belly plate, pack envelopes, rigid end-foot stock
+boxes, ear pods and lidar. Stock-box contacts omit tool holes and do not qualify physical fit or drops.
+On the deck the VLP-16 and the turret's pan axis are where the body puts them (143 mm
 apart, the turret on its 30 mm riser); over the lidar the turret's depression is limited by pan (computed here from
 the meshes; model.json turret.tilt_max_deg).
 """
@@ -66,9 +68,7 @@ TILT_UP_STOP_DEG = float(_LIMITS['max'])             # the upper hard stop, + = 
 PAN_STOP_DEG = 170.0
 REF_H = 300.0                                       # the model's joints are zero standing at this leg length
 import hardware.cad.body.body_battery as _bb  # noqa: E402
-H_RANGE = (_bb.PAD['lowest_leg_mm'], 375.0)        # leg length (mm) for the controller's height 0..1. Issue #19: the bay's 50 mm
-                                                    # crush pads (cad/body_battery.py PAD) need the lowest height at 185 mm (it was
-                                                    # 160) to keep D69's 40 mm under them; they touch the floor under a 145 mm leg
+H_RANGE = (_bb.PAD['lowest_leg_mm'], 375.0)        # Preserve existing controller/firmware height limits through #193.
 WHEEL_KEY = 'hb10'                                  # D69: sim/wheel_candidates.json's 10 in hub motor, at the ledger's wheel mass
 _WHEEL = {}
 
@@ -100,9 +100,10 @@ def use_d69_wheel() -> dict:
 
 
 def pads():
-    """The battery bay's crush pads (issue #19; cad/body_battery.py PAD): [(name, box mm)], and the pad's numbers."""
-    import hardware.cad.body.body_battery as bb
-    return [(f'pad_{i + 1}', b) for i, b in enumerate(bb.pad_boxes())], dict(bb.PAD)
+    """No old pad force law transfers to the current rigid WIP end feet."""
+    return [], dict(k_n_per_mm=0.0, c_ns_per_m=0.0, plateau_n=0.0,
+                    unload_ratio=0.0, stroke=0.0, h=0.0, qualified=False,
+                    basis='Rigid WIP end feet; old belly-pad/drop qualification does not transfer')
 COLORS = {'body': '#9fb4c7', 'frame': '#5f6670', 'motor': '#2a2d33', 'link': '#f5b82e', 'wheel_link': '#e9a21f',
           'adapter': '#c9ced6', 'tyre': '#1b1d21', 'hub': '#4a5058', 'battery': '#fdb913', 'compute': '#5a6b7c',
           'driver': '#2b6cb0', 'power': '#8f9aa7', 'lidar': '#2a2d33', 'camera': '#2a2d33', 'light': '#3a3f47',
@@ -200,12 +201,15 @@ def real_body():
         ('floor_tray', (X[0], X[1], -HY, HY, zt - bp.TRAY_LIP, zt)),
         ('deck', (X[0], X[1], -HY, HY, bp.TOP - bp.DECK_LIP, bp.TOP)),
         ('belly_plate', (X[0], X[1], -bp.BELLY_HALF_Y, bp.BELLY_HALF_Y, -zs - be, -zs)),
-        ('battery_bay', (tg['x_out'][0], tg['x_out'][1], -tg['side_out'], tg['side_out'], tg['z_floor'], tg['z_belly'])),   # the pads hang under
         ('shell_l', (-bs3.XO, bs3.XO, bs3.YI, bs3.YO, bs3.ZB, bs3.ZT)), ('shell_r', (-bs3.XO, bs3.XO, -bs3.YO, -bs3.YI, bs3.ZB, bs3.ZT)),
         ('shell_front', (bs3.XI, bs3.XO, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
         ('shell_rear', (-bs3.XO, -bs3.XI, -bs3.YI, bs3.YI, bs3.APRON['z0'], bs3.ZT)),
     ] + ear_boxes()
-    B = {'x': tuple(X), 'y': (-HY, HY), 'z': (round(tg['z_bottom'], 2), bp.TOP)}
+    collide += [(f'battery_{end}', box) for end, box in tg['clearance_packs'].items()]
+    for end in ('front', 'rear'):
+        collide += [(f'end_foot_{end}_{i}', b) for i, b in enumerate(bb.foot_collision_boxes(end, tg))]
+    B = {'x': (min(X[0], tg['clearance_packs']['rear'][0]), max(X[1], tg['clearance_packs']['front'][1])),
+         'y': (-HY, HY), 'z': (round(tg['foot_bottom_z'], 2), bp.TOP)}
     return {'L': L, 'parts': parts, 'ledger': led, 'collide': collide, 'B': B}
 
 
@@ -218,8 +222,7 @@ def body_bodies(rb, x_p, turret_extra):
     items = {it.name: it for it in rb['L']['items'] if not it.keepout}
     out = []
     for r in rb['ledger']['rows']:
-        if r['group'] == 'legs' or r['name'] == 'turret' or r['name'].startswith('frame.bay_skid_') or r['name'] == 'frame.bay_floor':
-            # the pads are bodies of their own, and the bay's floor rides on them in the model (see build())
+        if r['group'] == 'legs' or r['name'] == 'turret':
             continue
         g, c = r['mass_g'] / 1000.0, tuple(v * M for v in r['com_mm'])
         name = r['name']
@@ -567,8 +570,48 @@ def export_rig(rb, lid, lid_at, turret_base, turret_groups_):
     return man
 
 
-def build():
-    """Write the MJCF and model.json (build/sim/v2/) and the 3D page's rig (exports/sim/v2/rig/). Returns the info."""
+def _configure_output(out):
+    """Never overwrite the archived rig/trajectories with a new body model."""
+    global OUT_BUILD, OUT_RIG
+    if out is None:
+        raise ValueError('The current end-pack model requires an explicit fresh --out outside the source checkout; archived v2 rig is preserved')
+    out = Path(out).resolve()
+    if out.exists() or out.is_relative_to(R.resolve()):
+        raise ValueError('Use a fresh output outside the source checkout')
+    out.mkdir(mode=0o700, parents=True, exist_ok=False)
+    OUT_BUILD, OUT_RIG = out / 'build', out / 'rig'
+
+
+def generated_file(out, relative):
+    """Resolve a returned candidate file without falling back to archived output."""
+    root = Path(out).resolve()
+    if not isinstance(relative, str) or not relative or Path(relative).is_absolute():
+        raise ValueError('Generated candidate paths must be nonempty relative paths')
+    path = root / relative
+    if not path.resolve().is_relative_to(root) or path.is_symlink() or not path.is_file():
+        raise ValueError('Generated candidate file is missing or outside its fresh output root')
+    return path
+
+
+def sensor_mounts(headlights, lidar):
+    """Presentation datums from their CAD owners, independent of battery bounds.
+
+    Eyes' decorative bezel straddles the outer shell face; the electrical board
+    front is retained separately behind its window. Camera points are glass faces
+    at the actual source Z centre. These are not optical-calibration claims.
+    """
+    from hardware.cad.body import body_shell as shell
+    z_camera = sum(shell.D435['z']) / 2
+    return {'eyes': [shell.XO, shell.EYES['y'], shell.EYES['z']],
+            'eyes_board_front': [shell.XI, shell.EYES['y'], shell.EYES['z']],
+            'camera_front': [shell.d435_face_x(True), 0.0, z_camera],
+            'camera_rear': [shell.d435_face_x(False), 0.0, z_camera],
+            'headlights': headlights, 'lidar': lidar}
+
+
+def build(out=None):
+    """Build a conditional current-model candidate into an explicit fresh directory."""
+    _configure_output(out)
     import software.simulation.turret as tu
     OUT_BUILD.mkdir(parents=True, exist_ok=True)
     design = json.loads(DESIGN.read_text())
@@ -577,9 +620,7 @@ def build():
     rb = real_body()
     wd69 = use_d69_wheel()                                           # after the ledger (it places the tyre's band itself)
     pad_boxes, PAD = pads()
-    pad_g = {r['name'].split('.', 1)[1].replace('bay_skid_', 'pad_'): r['mass_g'] / 1000.0
-             for r in rb['ledger']['rows'] if r['name'].startswith('frame.bay_skid_')}
-    floor_g = next(r['mass_g'] for r in rb['ledger']['rows'] if r['name'] == 'frame.bay_floor') / 1000.0   # rides on the pads (numerics)
+    pad_g, floor_g = {}, 0.0  # no old bay floor/pad masses or constitutive law
     B = rb['B']
     TOP = bp.TOP                                                     # the deck's top face (the lidar stands on it)
     T = tu.Turret({'bodyTop': tmd['face_z'] - 20.0 - tu.SADDLE_T})  # its TM face on the 30 mm riser (D41)
@@ -733,7 +774,7 @@ def build():
                          f'pos="{(b[0] + b[1]) / 2000:.4f} {(b[2] + b[3]) / 2000:.4f} {(b[4] + b[5]) / 2000:.4f}" contype="2" conaffinity="1" '
                          f'rgba="0 0 0 0" mass="0"/>' for n, b in rb['collide'])
     xml = f"""<mujoco model="gyropup_v2">
-  <compiler angle="radian" autolimits="true" meshdir="{OUT_RIG}"/>
+  <compiler angle="radian" autolimits="true" meshdir="../rig"/>
   <option timestep="0.001" gravity="0 0 -9.81" integrator="implicitfast"/>
   <visual><headlight diffuse="0.6 0.6 0.6" ambient="0.35 0.35 0.35"/><global offwidth="1280" offheight="720"/></visual>
   <asset>{asset_xml}
@@ -843,12 +884,12 @@ def build():
         'track_mm': round(2 * (wd69['y_mm'] + Y_OFF), 1),
         'wheel': {'decision': 'D69', 'key': WHEEL_KEY, 'od_mm': wd69['od_mm'], 'mass_g': wd69['mass_g'], 'tyre_width_mm': wd69['tyre_width_mm'],
                   'tyre_solref': lr.TYRE_SOLREF, 'peak_nm': wheel_peak, 'basis': 'sim/wheel_candidates.json hb10 at the ledger\'s mass'},
-        'pads': {'names': [n for n, _ in pad_boxes], 'k_n_per_mm_each': PAD['k_n_per_mm'], 'c_ns_per_m_each': PAD['c_ns_per_m'],
+        'pads': {'qualified': False, 'names': [n for n, _ in pad_boxes], 'k_n_per_mm_each': PAD['k_n_per_mm'], 'c_ns_per_m_each': PAD['c_ns_per_m'],
                  'plateau_n_each': PAD['plateau_n'], 'unload_ratio': PAD['unload_ratio'], 'body_kg_each_in_model': round(pad_each, 4),
                  'stroke_mm': PAD['stroke'], 'h_mm': PAD['h'], 'mass_kg': {n: round(g, 4) for n, g in pad_g.items()},
-                 'touch_leg_mm': round(-B['z'][0] - wr * 1000, 1), 'basis': 'cad/body_battery.py PAD (issue #19)'},
+                 'touch_leg_mm': round(-B['z'][0] - wr * 1000, 1), 'basis': PAD['basis']},
         'notes': [f'the body as built (M5): the P3 ledger, {led_kg:.2f} kg (cad/body_layout.py; the model {total:.2f} kg), the spine 40.5 mm wide '
-                  f'(track {2 * (wd69["y_mm"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, the battery bay\'s crush pads at z {lowest} (the lowest part)',
+                  f'(track {2 * (wd69["y_mm"] + Y_OFF):.1f} mm), the deck at z {TOP:.0f}, rigid WIP end feet at z {lowest}; no inherited bay-pad/drop qualification',
                   f'D69\'s wheels: 10 in hub motors, {wd69["mass_g"] / 1000:.2f} kg each, a pneumatic tyre (solref {lr.TYRE_SOLREF})',
                   f'the deck: the VLP-16 at x = {x_l:.1f} mm, the turret\'s pan axis {d_lp:.1f} mm behind it (x = {x_p:.1f} mm) on the 30 mm riser '
                   f'(TM face z {tmd["face_z"]:.0f}); the turret\'s clearance needs {max(need.values()):.1f} mm; its base overhangs the rear by {rear_overhang:.1f} mm',
@@ -857,18 +898,15 @@ def build():
                   'the lidar\'s lowest beam; the eyes alone on the face',
                   f'the motors\' speed lines at the 10S pair\'s {BUS_V} V nominal (D65)',
                   'RS-04 rotor inertia, the tyre stiffness, the harness, hardware and shell masses are estimates (the ledger says which)'],
-        'estimates': ['RS-04 rotor inertia (armature)', 'the 10 in tyre\'s stiffness (60 N/mm at 35 psi, a membrane model)', 'the crush pads\' k and c (the coupon test)', 'the harness, hardware and shell panels (the ledger\'s estimate rows)',
+        'estimates': ['RS-04 rotor inertia (armature)', 'the 10 in tyre\'s stiffness (60 N/mm at 35 psi, a membrane model)', 'Rigid end-foot stock collision boxes omit tool holes; compliance/drop qualification is absent', 'the harness, hardware and shell panels (the ledger\'s estimate rows)',
                       'the G48R cooler\'s mass (450 g est)'],
+        'files': {'model': 'build/robot.xml', 'model_info': 'build/model.json', 'rig_manifest': 'rig/manifest.json'},
     }
     (OUT_BUILD / 'model.json').write_text(json.dumps(info, indent=1) + '\n')
     hl = [[c[0] + s[0] / 2, c[1], c[2]] for n, s, c in sorted(ears, key=lambda e: -e[2][1])]
-    import hardware.cad.body.body_layout as bl
-    shell = {n: c for n, g, c, b in bl.SHELL_ITEMS}                 # the P3 ledger's eyes and front camera
     top = max(float(tpts['base'][:, 2].max()), T.mount_z + float(tpts['pan'][:, 2].max()), T.mount_z + T.G.tilt_t + float(tpts['tilt'][:, 2].max()))
     man.update({'fivebar': info['fivebar'], 'wheel_r_mm': wr * 1000, 'track_mm': info['track_mm'], 'body_top_mm': TOP,
-                'mounts': {'eyes': [B['x'][1] + 2.0, 0.0, shell['eyes'][2]],
-                           'headlights': hl, 'camera_front': [B['x'][1] + 2.0, 0.0, shell['depth_camera_front'][2]],
-                           'lidar': [x_l, 0.0, TOP]},
+                'mounts': sensor_mounts(hl, [x_l, 0.0, TOP]),
                 'turret': {**man['turret'], 'pan_mm': [x_p, 0.0, T.mount_z], 'tilt_mm': [x_p, 0.0, T.mount_z + T.G.tilt_t],
                            'muzzle_mm': [x_p + v if i == 0 else v for i, v in enumerate(T.point((T.G.barrel_x1, 0, 0), 'tilt', 0.0, 0.0))]},
                 'deck': {'tilt_max_forward_deg': fwd, 'lidar_hidden_deg': sum(a[2] for a in view['pan0_all']), 'tilt_max_deg': table},
@@ -878,7 +916,10 @@ def build():
 
 
 if __name__ == '__main__':
-    info = build()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--out', type=Path, required=True, help='Fresh candidate output outside the source checkout; preserves historical rig')
+    info = build(parser.parse_args().out)
     print(f"{info['name']}: {info['total_mass_kg']:.2f} kg  {info['mass_split_kg']}  track {info['track_mm']} mm  com {info['com_mm']} mm")
     for n in info['notes']:
         print(' -', n)

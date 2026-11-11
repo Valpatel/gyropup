@@ -1,0 +1,902 @@
+{
+  "limits": {
+    "simulationS": 3,
+    "wallMs": 30000,
+    "stalledMs": 10000
+  },
+  "scope": "Actual stage callbacks and real gamepad input; gated-frame positive and actualstage.stop negative. No copied curve or direct hop state resets.",
+  "errors": [],
+  "engine": "151.0.7922.71",
+  "harness_sha256": "e5ec474976aa2bde9649562202195c60ff2b533c6cbba2f1494ae21e277bc0b0",
+  "guard_sha256": "cee360b6e77d53e0d1b0ff4fc79bec88ddbf3386d3d57c247ac71864fc688949",
+  "gated": {
+    "old": {
+      "pass": false,
+      "error": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.",
+      "snapshot": {
+        "trace": {
+          "frames": 25,
+          "rows": [
+            {
+              "t": 1.5037999999523164,
+              "dt": 0.05,
+              "wall": 3051,
+              "jump": {
+                "t": 0,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 1.7616000000238419,
+              "dt": 0.05,
+              "wall": 3307.9000000953674,
+              "jump": {
+                "t": 0.05,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 1.9455,
+              "dt": 0.05,
+              "wall": 3491.7000000476837,
+              "jump": {
+                "t": 0.1,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 2.1361000000238417,
+              "dt": 0.05,
+              "wall": 3682.3000000715256,
+              "jump": {
+                "t": 0.15000000000000002,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 2.3232000000476836,
+              "dt": 0.05,
+              "wall": 3869.4000000953674,
+              "jump": {
+                "t": 0.2,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 2.5378999999761582,
+              "dt": 0.05,
+              "wall": 4084.100000023842,
+              "jump": {
+                "t": 0.25,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 2.720100000023842,
+              "dt": 0.05,
+              "wall": 4266.300000071526,
+              "jump": {
+                "t": 0.3,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 2.901799999952316,
+              "dt": 0.05,
+              "wall": 4447.900000095367,
+              "jump": {
+                "t": 0.35,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 3.089399999976158,
+              "dt": 0.05,
+              "wall": 4635.5,
+              "jump": {
+                "t": 0.39999999999999997,
+                "from": 0.6
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 3.279899999976158,
+              "dt": 0.05,
+              "wall": 4826,
+              "jump": {
+                "t": 0.44999999999999996,
+                "from": 0.6
+              },
+              "y": 0.04763870238120238,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 3.4863999999761583,
+              "dt": 0.05,
+              "wall": 5032.5,
+              "jump": {
+                "t": 0.49999999999999994,
+                "from": 0.6
+              },
+              "y": 0.1430697655761769,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 4.6795,
+              "dt": 0.05,
+              "wall": 6225.400000095367,
+              "jump": {
+                "t": 0.5499999999999999,
+                "from": 0.6
+              },
+              "y": 0.16848554045194025,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 5.699799999952316,
+              "dt": 0.05,
+              "wall": 7245.900000095367,
+              "jump": {
+                "t": 0.6,
+                "from": 0.6
+              },
+              "y": 0.14760420985653255,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 6.711399999976158,
+              "dt": 0.05,
+              "wall": 8257.400000095367,
+              "jump": {
+                "t": 0.65,
+                "from": 0.6
+              },
+              "y": 0.10219787926112495,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 7.728399999976158,
+              "dt": 0.05,
+              "wall": 9274.300000071526,
+              "jump": {
+                "t": 0.7000000000000001,
+                "from": 0.6
+              },
+              "y": 0.03226654866571732,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 8.743799999952316,
+              "dt": 0.05,
+              "wall": 10289.800000071526,
+              "jump": {
+                "t": 0.7500000000000001,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 9.753,
+              "dt": 0.05,
+              "wall": 11299,
+              "jump": {
+                "t": 0.8000000000000002,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 10.755399999976158,
+              "dt": 0.05,
+              "wall": 12301.600000023842,
+              "jump": {
+                "t": 0.8500000000000002,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 11.766200000047682,
+              "dt": 0.05,
+              "wall": 13312.400000095367,
+              "jump": {
+                "t": 0.9000000000000002,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 12.782200000047682,
+              "dt": 0.05,
+              "wall": 14328.400000095367,
+              "jump": {
+                "t": 0.9500000000000003,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 13.80660000002384,
+              "dt": 0.05,
+              "wall": 15352.5,
+              "jump": {
+                "t": 1.0000000000000002,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 14.816299999952314,
+              "dt": 0.05,
+              "wall": 16362.400000095367,
+              "jump": {
+                "t": 1.0500000000000003,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 15.830100000023839,
+              "dt": 0.05,
+              "wall": 17376.200000047684,
+              "jump": {
+                "t": 1.1000000000000003,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 16.834799999952313,
+              "dt": 0.05,
+              "wall": 18380.800000071526,
+              "jump": {
+                "t": 1.1500000000000004,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            },
+            {
+              "t": 17.837299999952315,
+              "dt": 0.05,
+              "wall": 19383.300000071526,
+              "jump": {
+                "t": 1.2000000000000004,
+                "from": 0.6,
+                "landedAt": 0.3300000000000001,
+                "landFrom": 0.52
+              },
+              "y": 0,
+              "paused": false,
+              "demoOn": false,
+              "playing": true,
+              "replay": false,
+              "visibility": "visible",
+              "stageError": null
+            }
+          ],
+          "started": true,
+          "simulatedS": 1.2500000000000004,
+          "maxY": 0.16848554045194025,
+          "startedAt": 3051,
+          "lastFrameAt": 19383.300000071526
+        },
+        "jump": {
+          "t": 1.2000000000000004,
+          "from": 0.6,
+          "landedAt": 0.3300000000000001,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "nowMs": 20041,
+        "stageError": null
+      }
+    },
+    "newPass": true,
+    "snapshot": {
+      "trace": {
+        "frames": 25,
+        "rows": [
+          {
+            "t": 1.5037999999523164,
+            "dt": 0.05,
+            "wall": 3051,
+            "jump": {
+              "t": 0,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 1.7616000000238419,
+            "dt": 0.05,
+            "wall": 3307.9000000953674,
+            "jump": {
+              "t": 0.05,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 1.9455,
+            "dt": 0.05,
+            "wall": 3491.7000000476837,
+            "jump": {
+              "t": 0.1,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 2.1361000000238417,
+            "dt": 0.05,
+            "wall": 3682.3000000715256,
+            "jump": {
+              "t": 0.15000000000000002,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 2.3232000000476836,
+            "dt": 0.05,
+            "wall": 3869.4000000953674,
+            "jump": {
+              "t": 0.2,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 2.5378999999761582,
+            "dt": 0.05,
+            "wall": 4084.100000023842,
+            "jump": {
+              "t": 0.25,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 2.720100000023842,
+            "dt": 0.05,
+            "wall": 4266.300000071526,
+            "jump": {
+              "t": 0.3,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 2.901799999952316,
+            "dt": 0.05,
+            "wall": 4447.900000095367,
+            "jump": {
+              "t": 0.35,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 3.089399999976158,
+            "dt": 0.05,
+            "wall": 4635.5,
+            "jump": {
+              "t": 0.39999999999999997,
+              "from": 0.6
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 3.279899999976158,
+            "dt": 0.05,
+            "wall": 4826,
+            "jump": {
+              "t": 0.44999999999999996,
+              "from": 0.6
+            },
+            "y": 0.04763870238120238,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 3.4863999999761583,
+            "dt": 0.05,
+            "wall": 5032.5,
+            "jump": {
+              "t": 0.49999999999999994,
+              "from": 0.6
+            },
+            "y": 0.1430697655761769,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 4.6795,
+            "dt": 0.05,
+            "wall": 6225.400000095367,
+            "jump": {
+              "t": 0.5499999999999999,
+              "from": 0.6
+            },
+            "y": 0.16848554045194025,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 5.699799999952316,
+            "dt": 0.05,
+            "wall": 7245.900000095367,
+            "jump": {
+              "t": 0.6,
+              "from": 0.6
+            },
+            "y": 0.14760420985653255,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 6.711399999976158,
+            "dt": 0.05,
+            "wall": 8257.400000095367,
+            "jump": {
+              "t": 0.65,
+              "from": 0.6
+            },
+            "y": 0.10219787926112495,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 7.728399999976158,
+            "dt": 0.05,
+            "wall": 9274.300000071526,
+            "jump": {
+              "t": 0.7000000000000001,
+              "from": 0.6
+            },
+            "y": 0.03226654866571732,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 8.743799999952316,
+            "dt": 0.05,
+            "wall": 10289.800000071526,
+            "jump": {
+              "t": 0.7500000000000001,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 9.753,
+            "dt": 0.05,
+            "wall": 11299,
+            "jump": {
+              "t": 0.8000000000000002,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 10.755399999976158,
+            "dt": 0.05,
+            "wall": 12301.600000023842,
+            "jump": {
+              "t": 0.8500000000000002,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 11.766200000047682,
+            "dt": 0.05,
+            "wall": 13312.400000095367,
+            "jump": {
+              "t": 0.9000000000000002,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 12.782200000047682,
+            "dt": 0.05,
+            "wall": 14328.400000095367,
+            "jump": {
+              "t": 0.9500000000000003,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 13.80660000002384,
+            "dt": 0.05,
+            "wall": 15352.5,
+            "jump": {
+              "t": 1.0000000000000002,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 14.816299999952314,
+            "dt": 0.05,
+            "wall": 16362.400000095367,
+            "jump": {
+              "t": 1.0500000000000003,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 15.830100000023839,
+            "dt": 0.05,
+            "wall": 17376.200000047684,
+            "jump": {
+              "t": 1.1000000000000003,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 16.834799999952313,
+            "dt": 0.05,
+            "wall": 18380.800000071526,
+            "jump": {
+              "t": 1.1500000000000004,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          },
+          {
+            "t": 17.837299999952315,
+            "dt": 0.05,
+            "wall": 19383.300000071526,
+            "jump": {
+              "t": 1.2000000000000004,
+              "from": 0.6,
+              "landedAt": 0.3300000000000001,
+              "landFrom": 0.52
+            },
+            "y": 0,
+            "paused": false,
+            "demoOn": false,
+            "playing": true,
+            "replay": false,
+            "visibility": "visible",
+            "stageError": null
+          }
+        ],
+        "started": true,
+        "simulatedS": 1.2500000000000004,
+        "maxY": 0.16848554045194025,
+        "startedAt": 3051,
+        "lastFrameAt": 19383.300000071526
+      },
+      "jump": {
+        "t": 1.2000000000000004,
+        "from": 0.6,
+        "landedAt": 0.3300000000000001,
+        "landFrom": 0.52
+      },
+      "y": 0,
+      "nowMs": 20047.700000047684,
+      "stageError": null
+    }
+  },
+  "error": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded."
+}

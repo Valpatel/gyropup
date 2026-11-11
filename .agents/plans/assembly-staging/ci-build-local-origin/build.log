@@ -1,0 +1,5 @@
+
+> build
+> node tools/site/build-site.mjs
+
+Built dist: landing page, simulator, portal, 152 documents, 362 Markdown pages and committed design assets. Revision ba89804dd441

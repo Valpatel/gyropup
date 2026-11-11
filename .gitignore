@@ -51,3 +51,6 @@ test-results/
 # Read-only pinned shared README tooling, checked out by the cheap CI job.
 /.readme-profile/
 /.readme-svg/
+
+# Independent pinned shared motion validator checkout used only by CI.
+/.cad-agent-motion/

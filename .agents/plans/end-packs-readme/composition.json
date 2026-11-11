@@ -1,0 +1,41 @@
+{
+  "schema": "gyropup.readme-composition/1",
+  "date": "2026-11-10",
+  "merge": "93892e09c013722594476b272fa686540925fb22",
+  "parents": [
+    "f4397d3ca5e65ce38af884ee12117052b1b72f21",
+    "1f813ab7ced8816955a40c4983548b3c239be03e"
+  ],
+  "resolution": "Only additive symptom-index rows conflicted; all three retained. No accepted renderer/product source, helper/config/test bytes or reviewed assets changed.",
+  "producer_code_sha256": {
+    "tools/engineering/robot/readme_design.py": "31067c2d5a2f0bf2bfafa1ffd230147c72ab344841418b8cd67498db1bcfcb1f",
+    "tools/engineering/robot/readme-design.json": "56d59eba324e244d554d2172a8c769e0c46faef3de65288e9a13ff520d1d877b",
+    "tests/evidence/media/test-readme-design.py": "29e5463bfaf386e8e37f0442e9eee6078f51dd8e61f72413246f10b0b15790e9",
+    "tests/evidence/media/test-readme-collection.py": "5d074f9ea8c5ce92f10b8133eb1177cd4b28c6bf9b0ef5fe6ff867c918a67faf",
+    "tests/evidence/media/fixtures/old-readme-body-membership.json": "15d48d4ade38a35b008e7958bb201ab13a8959fc73be7f0738274e15a639f6c6"
+  },
+  "assets_sha256": {
+    "tools/engineering/robot/current-design.scene.json": "8974cd187e1fb456b2a3a05ebcd8b4ab9a51ba616ec4db3c10ac69590061f9a8",
+    "docs/img/hero/current-design.svg": "a72fc3ad4d4ad74f90933ad30f023a6ad6ae48d0816040498a544a76917038e9",
+    "tools/engineering/robot/current-design.receipt.json": "8aa88ad4259c66cd443b02337fd422251e1fd0e7ec6855d0fe4f4952d4993af3"
+  },
+  "imported_product_hardware_site_tool_model_tests_identical_to": "1f813ab7ced8816955a40c4983548b3c239be03e",
+  "checks": {
+    "readme_tests": {
+      "pass": 22,
+      "skip": 0
+    },
+    "actual_adopted_parity": true,
+    "current_inputs": 95,
+    "diff_check": true
+  },
+  "logs_sha256": {
+    "composition-tests.log": "19a083219c41cc03d36f1282c34caff86c9cdc96756df6c9c3400d8a74fb8e9b",
+    "composition-parity.log": "f56066fc075df0050299e537b3a59451c8d41d6eae8d4d575bed1dce1bed7448"
+  },
+  "original_native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "projection_producer": "1abbe0d2aea9ac904c224f4db02faa29ca8d9bf8",
+  "regenerated_assets": false,
+  "new_browser_or_projection": false,
+  "limits": "Prior adoption build/privacy/Markdown and reviewed renderer evidence retain their source identities. This focused composition check is not a fresh browser/native run or final-CI/publication approval."
+}

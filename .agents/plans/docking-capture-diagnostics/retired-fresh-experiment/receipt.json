@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-10",
+  "source": "c7ac2e3a3c0ba4543b3d2cc1e995eb695bf6112e",
+  "same_docking_tree_as": "9c1422ecb7d143624c929e9253663055ba9288de",
+  "built_merge": "b9f56194442460104d542923c74a97e0d1d12133",
+  "run": 42907547040,
+  "fresh": {
+    "job": 130149384156,
+    "artifact": 13805743028,
+    "zip_sha256": "bf9d9e8c84ff69c2acbc49af7c71cd2b0ac59064fda2aca1f11862b0e63ba8e6",
+    "crc": "passed",
+    "members": 4,
+    "outcome": "failed3observations/errors0; requiredPNGabsent; catchPNGdiagnostic only",
+    "api_ms": 15006.139466,
+    "capture_phase": "No reply by15s deadline after preparation14.583ms/fonts1.501/layout0.489; cleanup4.250ms returned"
+  },
+  "full": {
+    "job": 130149384065,
+    "artifact": 13804949744,
+    "zip_sha256": "522cc11259447bb731717e44930433d839339c9a23fc171cb758b4f63d055786",
+    "crc": "passed",
+    "members": 61,
+    "pngs": 56,
+    "outcome": "passed132Chromium141+132WebKit26/errors0; requiredPNGs present",
+    "chromium_api_ms": 8560.521993,
+    "chromium_capture_ms": 8541.453306,
+    "webkit_api_ms": 535.384792
+  },
+  "earlier_fresh_pass": {
+    "source": "9c1422ecb7d143624c929e9253663055ba9288de",
+    "run": 42904099784,
+    "job": 130137439451,
+    "artifact": 13804042290,
+    "zip_sha256": "55488d3c30b95c79b40e5329078d69afb3861bcc07e45923c04d8f9f2d65b793",
+    "outcome": "passed3observations only; notfullcampaign",
+    "api_ms": 13714.008111
+  },
+  "retirement": "Remove only the additional3-state experimental matrix row; keep explicit fresh diagnostic mode, full required132case, all assertions/images15s deadlines. No cause fix or budget change.",
+  "reference_receipts": [
+    "https://github.com/Valpatel/gyropup/issues/292#issuecomment-6780310049",
+    "https://github.com/Valpatel/gyropup/issues/292#issuecomment-6779798378"
+  ],
+  "future_30s_control": "Proposal only, deferred until protected integration/current-model publication; notimplemented/run/authorizedhere. Separate source/action review required.",
+  "redaction": "Public CI checkout prefix removed from storedJSON error stacks; originalSHAretained. No report/source/version was relabeled.",
+  "files": {
+    "c7-fresh-failed.json": {
+      "original_sha256": "3787e5045a69682659b94b1692939638d8d9ef7d13ad2add0373832b5cae60db",
+      "stored_sha256": "71e5942cd41e7932ffa852a42a33a6ee51b2d433125e30b4ee40f0663abb0ce2"
+    },
+    "c7-fresh-phase.json": {
+      "original_sha256": "4c9f71ad11f72205d09d9bfe2f51f65604896176e491723b19233f0e2a74d904",
+      "stored_sha256": "4c9f71ad11f72205d09d9bfe2f51f65604896176e491723b19233f0e2a74d904"
+    },
+    "c7-fresh-diagnostic.png": {
+      "original_sha256": "041b75598ddcfb7f1de868fcbbd063e322177fdd605f07fc73d63e05ccb3ecbb",
+      "stored_sha256": "041b75598ddcfb7f1de868fcbbd063e322177fdd605f07fc73d63e05ccb3ecbb"
+    },
+    "c7-full-chromium.json": {
+      "original_sha256": "418bcfaa0fe675d11140e591032b22274bd413bdff14f0e30cf02c39e960644f",
+      "stored_sha256": "418bcfaa0fe675d11140e591032b22274bd413bdff14f0e30cf02c39e960644f"
+    },
+    "c7-full-webkit.json": {
+      "original_sha256": "9f79fcd1f17df72b915ba73deac8b0517469e0e130e6998955b146c3c5a27be0",
+      "stored_sha256": "9f79fcd1f17df72b915ba73deac8b0517469e0e130e6998955b146c3c5a27be0"
+    },
+    "c7-full-chromium-phase.json": {
+      "original_sha256": "09ef257e4dcfa0a05af27c9a185f4bc326f894404b867aeacee4e4a9da0f503e",
+      "stored_sha256": "09ef257e4dcfa0a05af27c9a185f4bc326f894404b867aeacee4e4a9da0f503e"
+    },
+    "c7-full-webkit-phase.json": {
+      "original_sha256": "12fa0c06db998f9915bb5a94d00fff74c29bcfb3a46a9e8a266d0b486d69adf5",
+      "stored_sha256": "12fa0c06db998f9915bb5a94d00fff74c29bcfb3a46a9e8a266d0b486d69adf5"
+    },
+    "c7-full-chromium-required.png": {
+      "original_sha256": "041b75598ddcfb7f1de868fcbbd063e322177fdd605f07fc73d63e05ccb3ecbb",
+      "stored_sha256": "041b75598ddcfb7f1de868fcbbd063e322177fdd605f07fc73d63e05ccb3ecbb"
+    },
+    "c7-full-webkit-required.png": {
+      "original_sha256": "cda835bfbcdc0ab5028965d3011c12cccc6e737a0a4315b1bab75be3a72dbef5",
+      "stored_sha256": "cda835bfbcdc0ab5028965d3011c12cccc6e737a0a4315b1bab75be3a72dbef5"
+    },
+    "9c-fresh-passed.json": {
+      "original_sha256": "d9a6e9e4b4979f738fb31e5cc1685bde5e3406d40e255fac743b8529cdffbe80",
+      "stored_sha256": "d9a6e9e4b4979f738fb31e5cc1685bde5e3406d40e255fac743b8529cdffbe80"
+    },
+    "9c-fresh-phase.json": {
+      "original_sha256": "4cb8d28e0d0a9c6ff59a9e7bc1e74186adbb41c01d479fa3ecab12d7026c71bd",
+      "stored_sha256": "4cb8d28e0d0a9c6ff59a9e7bc1e74186adbb41c01d479fa3ecab12d7026c71bd"
+    },
+    "c7-fresh-log-excerpt.txt": {
+      "original_full_log_sha256": "a481fde30e7b52dd65b6665bf797d8db279d0ada39fcab3f3f8d69d41ec2c55d"
+    },
+    "c7-full-log-excerpt.txt": {
+      "original_full_log_sha256": "c50909d48817595c7eba22632abc102913d3fa17992704c5d9ff7ae055736ad8"
+    }
+  }
+}

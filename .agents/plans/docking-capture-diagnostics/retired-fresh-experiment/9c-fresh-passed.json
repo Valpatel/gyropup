@@ -1,0 +1,374 @@
+{
+  "status": "passed",
+  "scope": "fresh-capture",
+  "completeCampaign": false,
+  "qualification": "Fresh pinned-browser control only; not the full132-state campaign or a root-cause result.",
+  "engine": "chromium",
+  "browser": "141.0.7390.37",
+  "version": {
+    "revision": "d1b330bb90e2a84a444515253f16dd8585900caa",
+    "assets": "a14dcd48ce545629b714",
+    "history": true,
+    "built": "2026-11-10T21:22:42.554Z"
+  },
+  "sources": {
+    "tests/site/assembly/test-instruction-docking.mjs": "7b232c00544f37c79c18b42e891106524ee01aa62342432c8b6e401c9f07b07a",
+    "tests/site/assembly/capture-diagnostics.mjs": "7807a25e41e0fb8b6a7a00ba028eb71841f66d28bbe42976f852b2e51a962a85",
+    "tests/site/assembly/test-capture-diagnostics.mjs": "1df4589b3ce4b1b1c9e559a384f6eccb15f2872dadc3280d497f3c53b77c68d5",
+    "software/site/designer/assembly/workspace.js": "ebfbe51e22164688add70084f92728b6e47de1f341a1976c513b24c09e0195f7",
+    "software/site/designer/assembly/guide.css": "e5c5c311f6e6efcbdfc100eab2c028716840f5faebdcfe0639b8a206015c085f",
+    "software/site/designer/build.html": "6d1056f618aaa9a3ebe15a3061d4cb9e38b7845fe385b6b0d6754fbca32e881e",
+    "software/site/designer/assembly/playback.js": "8a5c6e5930be6e05b38bb306731698c69f5eefaf39f9bfa96587bef5ac4990de"
+  },
+  "observations": [
+    {
+      "label": "stopped Robot Flip after closing hip details",
+      "before": {
+        "x": 1165,
+        "y": 665.421875,
+        "width": 109,
+        "height": 44
+      },
+      "trace": [
+        {
+          "type": "pointerdown",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1165,
+            665.421875,
+            109,
+            44
+          ],
+          "scroll": 235,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "z",
+            "flipped": false,
+            "depth": 1
+          }
+        },
+        {
+          "type": "pointerup",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1165,
+            665.421875,
+            109,
+            44
+          ],
+          "scroll": 235,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "z",
+            "flipped": false,
+            "depth": 1
+          }
+        },
+        {
+          "type": "click",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1165,
+            665.421875,
+            109,
+            44
+          ],
+          "scroll": 235,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "z",
+            "flipped": false,
+            "depth": 1
+          }
+        }
+      ],
+      "player": {
+        "status": "idle",
+        "stepId": "body-spine",
+        "partId": "cheek_left",
+        "operationIndex": 0,
+        "elapsedMs": 0,
+        "progress": 0,
+        "speed": 1,
+        "loop": false
+      },
+      "section": {
+        "axis": "z",
+        "flipped": true,
+        "depth": 1
+      },
+      "nodeIdentity": {
+        "status": true,
+        "loop": true,
+        "verb": true,
+        "icon": true
+      }
+    },
+    {
+      "label": "stopped Robot Rotate",
+      "before": {
+        "x": 1052,
+        "y": 665.421875,
+        "width": 109,
+        "height": 44
+      },
+      "trace": [
+        {
+          "type": "pointerdown",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1052,
+            665.421875,
+            109,
+            44
+          ],
+          "scroll": 235,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "z",
+            "flipped": true,
+            "depth": 0.4
+          }
+        },
+        {
+          "type": "pointerup",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1052,
+            665.421875,
+            109,
+            44
+          ],
+          "scroll": 235,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "z",
+            "flipped": true,
+            "depth": 0.4
+          }
+        },
+        {
+          "type": "click",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1052,
+            665.421875,
+            109,
+            44
+          ],
+          "scroll": 235,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "z",
+            "flipped": true,
+            "depth": 0.4
+          }
+        }
+      ],
+      "player": {
+        "status": "idle",
+        "stepId": "body-spine",
+        "partId": "cheek_left",
+        "operationIndex": 0,
+        "elapsedMs": 0,
+        "progress": 0,
+        "speed": 1,
+        "loop": false
+      },
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      },
+      "nodeIdentity": {
+        "status": true,
+        "loop": true,
+        "verb": true,
+        "icon": true
+      }
+    },
+    {
+      "label": "stopped Robot Loop",
+      "before": {
+        "x": 1052,
+        "y": 524.75,
+        "width": 222,
+        "height": 44
+      },
+      "trace": [
+        {
+          "type": "pointerdown",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1052,
+            524.75,
+            222,
+            44
+          ],
+          "scroll": 0,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "x",
+            "flipped": true,
+            "depth": 0.4
+          }
+        },
+        {
+          "type": "pointerup",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1052,
+            524.75,
+            222,
+            44
+          ],
+          "scroll": 0,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "x",
+            "flipped": true,
+            "depth": 0.4
+          }
+        },
+        {
+          "type": "click",
+          "target": true,
+          "trusted": true,
+          "pointerType": "mouse",
+          "box": [
+            1052,
+            524.75,
+            222,
+            44
+          ],
+          "scroll": 0,
+          "player": {
+            "status": "idle",
+            "stepId": "body-spine",
+            "partId": "cheek_left",
+            "operationIndex": 0,
+            "elapsedMs": 0,
+            "progress": 0,
+            "speed": 1,
+            "loop": false
+          },
+          "section": {
+            "axis": "x",
+            "flipped": true,
+            "depth": 0.4
+          }
+        }
+      ],
+      "player": {
+        "status": "idle",
+        "stepId": "body-spine",
+        "partId": "cheek_left",
+        "operationIndex": 0,
+        "elapsedMs": 0,
+        "progress": 0,
+        "speed": 1,
+        "loop": true
+      },
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      },
+      "nodeIdentity": {
+        "status": true,
+        "loop": true,
+        "verb": true,
+        "icon": true
+      }
+    }
+  ],
+  "errors": []
+}

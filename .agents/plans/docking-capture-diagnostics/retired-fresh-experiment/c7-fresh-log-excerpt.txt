@@ -1,0 +1,12 @@
+2026-11-10T21:45:49.7496112Z # tests 13
+2026-11-10T21:45:49.7496790Z # pass 13
+2026-11-10T21:45:49.7497138Z # fail 0
+2026-11-10T21:47:02.5333412Z Owned docking listener closed
+2026-11-10T21:47:02.5336986Z page.screenshot: Timeout 15000ms exceeded.
+2026-11-10T21:47:02.5337519Z   - taking page screenshot
+2026-11-10T21:47:02.5337806Z   - waiting for fonts to load...
+2026-11-10T21:47:02.5338063Z   - fonts loaded
+2026-11-10T21:47:02.5338549Z     at capture (tests/site/assembly/test-instruction-docking.mjs:111:53)
+2026-11-10T21:47:02.5340281Z     at observeScreenshot (tests/site/assembly/capture-diagnostics.mjs:57:18)
+2026-11-10T21:47:02.5341354Z     at async playbackActivationCases (tests/site/assembly/test-instruction-docking.mjs:111:6)
+2026-11-10T21:47:02.5566783Z ##[error]Process completed with exit code 1.

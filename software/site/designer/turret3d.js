@@ -66,22 +66,22 @@ export function ballMesh() {
   return { g, streak };
 }
 
-export function buildTurret(color = 0xe8892b) {
-  const group = new THREE.Group();                 // sits on the head plate, origin at the plate's top centre
+export function buildTurret(color = 0xe8892b, {frames,geometry=true} = {}) {
+  const group = frames?.group ?? new THREE.Group(); // sits on the head plate, origin at the plate's top centre
   const plate = new THREE.Mesh(new THREE.BoxGeometry(110 * M, 6 * M, 110 * M), mat(0x2a2d33));
   plate.position.y = 3 * M;
   const latch = new THREE.Mesh(new THREE.BoxGeometry(24 * M, 8 * M, 10 * M), mat(0xff2a6d));   // quick-release latch
   latch.position.set(0, 6 * M, 58 * M);
-  const pan = new THREE.Group();
-  pan.position.y = 6 * M;
+  const pan = frames?.pan ?? new THREE.Group();
+  if(!frames)pan.position.y = 6 * M;
   const ring = new THREE.Mesh(new THREE.CylinderGeometry(48 * M, 52 * M, 14 * M, 40), mat(0x3b3f46));
   ring.position.y = 7 * M;
   const yokeL = new THREE.Mesh(new THREE.BoxGeometry(8 * M, 60 * M, 40 * M), mat(color));
   const yokeR = yokeL.clone();
   yokeL.position.set(-52 * M, 44 * M, 0);
   yokeR.position.set(52 * M, 44 * M, 0);
-  const tilt = new THREE.Group();
-  tilt.position.y = 58 * M;
+  const tilt = frames?.tilt ?? new THREE.Group();
+  if(!frames)tilt.position.y = 58 * M;
   const body = new THREE.Mesh(new THREE.BoxGeometry(92 * M, 56 * M, 150 * M), mat(color));
   const cage = new THREE.Mesh(new THREE.CylinderGeometry(30 * M, 30 * M, 70 * M, 32), mat(0x1d2025));
   cage.rotation.z = Math.PI / 2;
@@ -138,6 +138,17 @@ export function buildTurret(color = 0xe8892b) {
   beam.frustumCulled = false;
   const laser = new THREE.Group();
   laser.add(beam, dot);
+  // The collected model supplies the same existing effect/control API while
+  // owning all CAD solids. Dispose only constructor-owned stand-ins; shared
+  // foam-ball geometry/materials and caller-owned eye textures are not ours.
+  const sharedGeometry=new Set(Object.values(ballGeo)),sharedMaterials=new Set(Object.values(ballMat));
+  const ownedGeometry=new Set(),ownedMaterials=new Set();
+  for(const root of [group,laser])root.traverse(o=>{if(o.isMesh){if(!sharedGeometry.has(o.geometry))ownedGeometry.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material])if(!sharedMaterials.has(m))ownedMaterials.add(m);}});
+  if(!geometry){
+    const removed=[];group.traverse(o=>{if(o.isMesh&&!o.userData.keep)removed.push(o);});
+    for(const mesh of removed){mesh.removeFromParent();if(ownedGeometry.delete(mesh.geometry))mesh.geometry.dispose();for(const m of Array.isArray(mesh.material)?mesh.material:[mesh.material])if(ownedMaterials.delete(m))m.dispose();}
+  }
+  let disposed=false;
   const ray = new THREE.Raycaster();
   ray.far = 25;
   const o = new THREE.Vector3(), dir = new THREE.Vector3(), q = new THREE.Quaternion();
@@ -145,6 +156,7 @@ export function buildTurret(color = 0xe8892b) {
   let flashT = 0;
   return {
     group, pan, tilt, muzzle, laser, laserOrigin, flashMesh: flash,
+    dispose(){if(disposed)return;disposed=true;laser.removeFromParent();for(const geometry of ownedGeometry)geometry.dispose();for(const material of ownedMaterials)material.dispose();ownedGeometry.clear();ownedMaterials.clear();},
     /** The older CAD snapshots have no laser datum. Their cylindrical laser mesh
      * points along page +z; attach the beam to its front face, in the tilt frame. */
     alignLaserToCAD(mesh) {

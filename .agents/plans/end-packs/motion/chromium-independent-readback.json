@@ -1,0 +1,31 @@
+{
+  "source": "6dd7944b895b7161ab6dccadfb879057c6a17a28",
+  "engine": "Chrome151.0.7922.71",
+  "capture_exit": 0,
+  "shared_validation_exit": 0,
+  "source_model_webroot_guards": true,
+  "outputs_rehashed": 27,
+  "shared_reports": 21,
+  "worst_point_mm": 1.8293285663834593e-05,
+  "faults_rejected": [
+    "right-rotation",
+    "wrong-pivot-home-preserved",
+    "axis-sign",
+    "units",
+    "lost-parent",
+    "stationary-owner",
+    "missing-part"
+  ],
+  "actual_desktop_mobile_pngs_inspected": true,
+  "engineering": {
+    "mechanical_ownership_complete": false,
+    "physics_current": false,
+    "continuous_clearance_qualified": false,
+    "manufacturing_released": false,
+    "physical_qualified": false
+  },
+  "limits": "A rendered presentation match does not qualify unresolved composite hub/motor internals, physical fastenings/interfaces, continuous paths/clearance, loads, support, drop/fall or print release. Original issue193 mechanical acceptance remains open. This is a frozen pre-capture corpus, not a capture or pass report.",
+  "capture_index_sha256": "d2201231048476688a315cb55e335f3089652b552a3e40421da7b739cebd9d71",
+  "validation_sha256": "bf2bb0d251a152077bd529bf568717c55619b285753f65c147a3c0e0bba289fa",
+  "first_attempt_still_failed": true
+}

@@ -1,5 +1,12 @@
 # RS04 unpowered fit-observation slice
 
+> **Retained pre-end-pack evidence:** this unchanged archive is checked against
+> its captured historical inputs, matching snapshot `f77fcde0`. That snapshot
+> is distinct from its recorded slice producer `017e1e03`. The current body's
+> full CAD closure changed; the default current-source verifier deliberately
+> rejects this old receipt. A separate current hip-to-original correspondence
+> supports geometry-only preparation and does not qualify the body or leg.
+
 This job prepares one parent-derived motor-ring coupon for dimensional and
 surface-quality observation. **It does not approve mounting, preload, tightening
 torque, strength or powered operation.** The source candidate still has eight
@@ -104,11 +111,16 @@ Keep input/work directories visible under home; the snap cannot read ordinary
 `/tmp` or hidden project directories.
 
 ```sh
-python tools/test-fit-job.py
-python tools/test-print-provenance.py
-timeout --kill-after=10s 300s python tools/package-fit-job.py --out build/new-rs04-fit-job
-python tools/package-fit-job.py --verify build/new-rs04-fit-job
+python tests/hardware/manufacturing/test-fit-job.py
+python tests/hardware/manufacturing/test-print-provenance.py
+python tools/evidence/manufacturing/verify-retained-fit-history.py
 ```
+
+The last command is explicit historical archive verification with the complete
+captured input data and unchanged strict verifier. It never executes old source,
+regenerates a slice or restamps the receipt. Current generation and the default
+`package-fit-job.py --verify` still require a genuinely current engineering
+receipt; they do not fall back to this historical route.
 
 Generation refuses an existing output directory and a stale source receipt.
 Verification does not run Bambu or CAD. It checks retained byte identities,

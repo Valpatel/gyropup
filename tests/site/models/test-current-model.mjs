@@ -1,3 +1,4 @@
+/** Explicit legacy interim-body/bench compatibility; actual266 current motion runs separately. */
 import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 /** Current presentation: independent CAD frames, cross-route geometry and archive isolation. */
@@ -21,6 +22,8 @@ const base=(process.env.SITE_URL||'http://127.0.0.1:8890').replace(/\/$/,''),out
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const context=await browser.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce'});
+// Deliberate test-only legacy authority. Never interpreted as the public current model.
+await context.route('**/designer/robot_current_source.js*',route=>route.fulfill({status:200,contentType:'text/javascript',body:'export const CURRENT_ROBOT_SOURCE = null;\n'}));
 await acknowledgePrototypeNotice(context);
 await context.addInitScript(()=>{localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');});
 const page=await context.newPage(),errors=[];page.setDefaultTimeout(60000);page.on('pageerror',e=>errors.push(e.message));
@@ -136,10 +139,10 @@ try{
   const sourceHashes=Object.fromEntries(await Promise.all(['designer/current_turret.js','designer/robot_v2.js','designer/turret3d.js','designer/kit/stage.js','designer/character/talk-demo.html','exports/sim/v2/rig/manifest.json'].map(async file=>{
     const response=await page.request.get(base+'/'+file);assert.ok(response.ok(),file);return[file,createHash('sha256').update(await response.body()).digest('hex')];
   })));
-  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`${base}; ${engine.name()}; robot free-body transform removed, independently pinned TM mount converted to reference box frame; actual STL vertices; revision=${version.revision}; manifest_sha256=${createHash('sha256').update(manifestBytes).digest('hex')}`,samples:[...samples,...connected.live]};
+  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`legacy interim-body bench compatibility; ${base}; ${engine.name()}; robot free-body transform removed, independently pinned TM mount converted to reference box frame; actual STL vertices; revision=${version.revision}; manifest_sha256=${createHash('sha256').update(manifestBytes).digest('hex')}`,samples:[...samples,...connected.live]};
   await writeFile(`${out}/capture-manifest.json`,manifestBytes);await writeFile(`${out}/capture-version.json`,JSON.stringify(version));
   await writeFile(`${out}/${engine.name()}-source-hashes.json`,JSON.stringify(sourceHashes,null,2));
   await writeFile(`${out}/contract.json`,JSON.stringify(contract));await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
-  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({components:names.length,poses:samples.length,operationFrames:connected.live.length,worst,negative:Object.fromEntries(Object.entries(negative).map(([k,v])=>[k,error(v)])),connected:connected.checks,rawOperationAngles:connected.rawOperationAngles,transitions,version},null,2));
-  console.log(`PASS ${engine.name()}: 48 actual current parts × ${samples.length} independent poses + ${connected.live.length} operating frames, max ${worst.max.toFixed(6)}mm; 5 negative controls; current/recorded frames and failures; hero/sim/talk geometry match`);
+  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({scope:'legacy-interim-body-bench-compatibility',components:names.length,poses:samples.length,operationFrames:connected.live.length,worst,negative:Object.fromEntries(Object.entries(negative).map(([k,v])=>[k,error(v)])),connected:connected.checks,rawOperationAngles:connected.rawOperationAngles,transitions,version},null,2));
+  console.log(`PASS legacy compatibility ${engine.name()}: 48 bench parts × ${samples.length} independent poses + ${connected.live.length} operating frames, max ${worst.max.toFixed(6)}mm; 5 negative controls; current/recorded frames and failures; hero/sim/talk geometry match`);
 }finally{await browser.close();}

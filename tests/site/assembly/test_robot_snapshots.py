@@ -2,67 +2,49 @@
 import hashlib
 import json
 from pathlib import Path
-import shutil
 import struct
 import sys
-import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT/'tools/site/assembly'))
-from export_robot_guide import generate
 from robot_data import sha
-from robot_manufacturing import mapping
 
 RECORDS=ROOT/'.agents/plans/robot-assembly'
 ASSETS=ROOT/'software/site/assets/build-guides'
 
 
-class CurrentRobotSnapshots(unittest.TestCase):
+class HistoricalRobotSnapshots(unittest.TestCase):
+    """Dated260/540 artifact integrity; never a current-source regeneration."""
     @classmethod
     def setUpClass(cls):
         cls.collection=json.loads((RECORDS/'collection-260.json').read_text())
         cls.entries=json.loads((RECORDS/'index-entries-260.json').read_text())
 
-    def test_real_snapshot_identity_current_inputs_and_manufacturing_boundary(self):
-        c=self.collection
-        for file,digest in c['inputs'].items():
-            self.assertEqual(sha(ROOT/file),digest,file)
+    def test_archived_bytes_and_manufacturing_remain_exact(self):
+        file=ROOT/'.agents/plans/end-packs/guide-adoption/historical-guide-seals.json'
+        self.assertEqual(sha(file),'f75342059c76b0126ca73e2cf8c702890d64066646c0bd96d90fc30c9321f4d7')
+        seals=json.loads(file.read_bytes())
+        self.assertEqual(len(seals),316)
+        for name,row in seals.items():
+            if name=='index.json':continue  # The new five-row index preserves these three old entries explicitly.
+            self.assertEqual(sha(ASSETS/name),row['sha256'],name)
+            self.assertEqual((ASSETS/name).stat().st_size,row['bytes'],name)
         for row in self.entries:
-            directory=ASSETS/row['id'];raw=(directory/'guide.json').read_bytes()
-            self.assertEqual(hashlib.sha256(raw).hexdigest(),row['sha256'])
-            g=json.loads(raw);model_raw=(directory/'view.json').read_bytes();model=json.loads(model_raw)
-            self.assertEqual(g['snapshot']['source_commit'],c['source_commit'])
-            self.assertEqual(g['model']['sha256'],hashlib.sha256(model_raw).hexdigest())
-            expected_mapping=mapping(ROOT,[p['name'] for p in model['parts']],c)
-            for p in model['parts']:
-                file=(directory/p['file']).resolve()
-                self.assertTrue(file.is_relative_to(ASSETS.resolve()))
-                self.assertEqual(sha(file),p['sha256'],p['name'])
-                manufacturing=g['source']['manufacturing_by_part'][p['name']]
-                expected=expected_mapping[p['name']]
-                self.assertEqual(manufacturing,expected)
+            directory=ASSETS/row['id'];g=json.loads((directory/'guide.json').read_bytes())
+            self.assertEqual(sha(directory/'guide.json'),row['sha256'])
+            self.assertEqual(g['snapshot']['source_commit'],self.collection['source_commit'])
+            model=json.loads((directory/'view.json').read_bytes())
+            self.assertEqual(sha(directory/'view.json'),g['model']['sha256'])
+            self.assertEqual(len(model['parts']),171 if row['assembly']=='robot' else 233)
+            prepared=[]
+            for part in model['parts']:
+                self.assertEqual(sha((directory/part['file']).resolve()),part['sha256'])
+                manufacturing=g['source']['manufacturing_by_part'][part['name']]
+                if manufacturing['geometry_match']['status']=='matched':prepared.append(part['name'])
                 for original in manufacturing['originals']:
                     self.assertEqual(sha(ROOT/original['source_file']),original['sha256'])
-                    self.assertNotIn('build-guides',original['source_file'])
-            self.assertEqual(len(model['parts']),171 if row['assembly']=='robot' else 233)
-
-    def test_real_export_is_reproducible_from_sealed_manifest_and_committed_meshes(self):
-        c=self.collection
-        with tempfile.TemporaryDirectory() as tmp:
-            folder=Path(tmp);(folder/'meshes').mkdir()
-            for part in c['parts']:
-                directory=ASSETS/next(r['id'] for r in self.entries
-                                     if r['assembly']==('combined' if part['name'].startswith('turret.') else 'robot'))
-                shutil.copyfile(directory/part['file'],folder/part['file'])
-            boms={f:sha(ROOT/f) for f in ('hardware/exports/body/bom.json','hardware/exports/leg/bom.json',
-                                         'hardware/exports/turret/bench/bom.json')}
-            outputs=generate(c,folder,sha(ROOT/'tools/site/assembly/robot_recipe.py'),boms,
-                             sha(RECORDS/'collection-260.json'),mapping(ROOT,[p['name'] for p in c['parts']],c))
-            self.assertEqual(len(outputs),242)
-            for name,data in outputs.items():
-                actual=RECORDS/'index-entries-260.json' if name=='index-entries.json' else ASSETS/name
-                self.assertEqual(actual.read_bytes(),data,name)
+            self.assertEqual(sorted(prepared),['L.hip_frame','R.hip_frame'])
 
     def test_actual_exported_vertices_confirm_both_physical_sides_and_detect_wrong_frames(self):
         c=self.collection;robot=ASSETS/next(r['id'] for r in self.entries if r['assembly']=='robot')

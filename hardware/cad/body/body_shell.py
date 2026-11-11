@@ -69,7 +69,8 @@ DOOR = (70.0, 125.0, 98.0, 192.0)         # the left front half's service door (
 EAR = {'x': (-6.0, 55.0), 'top': 193.0, 'pod': (61.0, 50.8, 66.0), 'foot': 28.0,
        'shelf_z': (115.0, 127.0), 'plate_z': (85.0, 127.0), 'plate_t': 6.0, 'bolts_z': (100.0, 120.0)}
 EYES = {'y': 0.0, 'z': 182.0, 'window': (46.0, 20.0, 4.0), 'board': (51.0, 20.0, 7.0)}
-D435 = {'size': (25.0, 90.0, 25.0), 'z': (40.0, 65.0), 'window': (92.0, 27.0, 3.0), 'back_m3': 45.0}
+D435 = {'size': (25.0, 90.0, 25.0), 'z': (130.0, 155.0), 'window': (92.0, 27.0, 3.0), 'back_m3': 45.0,
+        'stand_off': 30.0, 'basis': 'Conditional #193 upward/outward cradle; native collision, optical/cable and strength checks pending'}
 RP_SMA = {'d': 6.5, 'flat': 5.8, 'at': [(-40.0, 150.0), (-15.0, 150.0), (-40.0, 180.0), (-15.0, 180.0)], 'depth': 12.0}
 REAR_COLUMN_Y = -86.0                     # between the right rear post (|y| >= 98) and the turret's harness drop (y >= -72)
 BUTTON = {'d': 16.2, 'y': -88.0, 'z': 104.0, 'depth': 30.0}
@@ -375,11 +376,15 @@ def receiver_bay():
     return b.cut(box(-XI + 1.6, -XI + R_['x'] - 1.6, y - R_['y'] / 2 + 1.6, y + R_['y'] / 2 - 1.6, R_['z'][0] + 1.6, R_['z'][1] + 1))
 
 
+def d435_face_x(front):
+    return (1.0 if front else -1.0) * (XO + D435['stand_off'])
+
+
 def d435(front):
-    """The D435's envelope behind its apron window, its glass flush with the face's outside."""
+    """The unchanged camera envelope on the conditional outward cradle."""
     sx = 1.0 if front else -1.0
     L, W, H = D435['size']
-    xa, xb = sorted((sx * XO, sx * (XO - L)))
+    xa, xb = sorted((d435_face_x(front), d435_face_x(front) - sx * L))
     return box(xa, xb, -W / 2, W / 2, *D435['z'])
 
 
@@ -388,17 +393,17 @@ def d435_cradle(front):
     the apron's inside, so the camera's glass sits in the window."""
     sx = 1.0 if front else -1.0
     L, W, H = D435['size']
-    xb = sx * (XO - L)                                       # the camera's back face
+    xb = d435_face_x(front) - sx * L                         # the camera's back face
     pa, pb = sorted((xb, xb - sx * 4.0))
     z0, z1 = D435['z']
     plate = box(pa, pb, -W / 2 - 8, W / 2 + 8, z0 - 2, z1 + 2)
     for y in (-W / 2 - 4, W / 2 + 4):                         # feet forward to the apron
-        fa, fb = sorted((pb if sx > 0 else pa, sx * XI))
+        fa, fb = sorted((sx * XO, sx * max(XO + 8.5, XO + D435['stand_off'] - L)))
         plate = plate.union(box(fa, fb, y - 4, y + 4, z0 - 2, z0 + 6))
     for y in (-D435['back_m3'] / 2, D435['back_m3'] / 2):
         plate = plate.cut(_hole_x(y, (z0 + z1) / 2, SCREW_D, min(pa, pb) - 1, max(pa, pb) + 1))
     for y, z in cradle_screws():                              # M3 inserts in the feet's ends, from the apron
-        plate = plate.cut(_hole_x(y, z, 4.0, *sorted((sx * XI, sx * (XI - 7.5)))))
+        plate = plate.cut(_hole_x(y, z, 4.0, *sorted((sx * XO, sx * (XO + 7.5)))))
     return plate
 
 

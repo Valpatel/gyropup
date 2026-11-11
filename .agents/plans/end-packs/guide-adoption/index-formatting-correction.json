@@ -1,0 +1,10 @@
+{
+  "schema": "gyropup.guide-index-formatting-correction/1",
+  "accepted_original_sha256": "7e8a51f3743e154230e0882e8ac20641b79e74e657773acd22b13d0548231016",
+  "canonical_public_sha256": "16af1475fb58fdcc1eb6db939a6539044fea632916ce8fad6e6741df952e3244",
+  "encoder": "tools/site/assembly/export_turret_guide.py::snapshot_index",
+  "parsed_five_row_object_and_order_exact": true,
+  "all_guide_and_model_bytes_unchanged": true,
+  "original_acceptance_and_output_receipt_unchanged": true,
+  "reason": "Existing producer uses literal UTF-8 middot; initial candidate composition used escaped JSON Unicode. Canonicalize only the public index representation."
+}

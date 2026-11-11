@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<checkout>/tools/evidence/media/check-highlights.py", line 514, in <module>
+    print(json.dumps(current_robot_contract() if args.capture_contract else validate(args.output.resolve(), args.frames), indent=2))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/tools/evidence/media/check-highlights.py", line 112, in current_robot_contract
+    require(literal is not None and json.loads(literal[1]) == CURRENT_SOURCE,
+  File "<checkout>/tools/evidence/media/check-highlights.py", line 56, in require
+    raise ValueError(message)
+ValueError: Reviewed current robot authority must be adopted before capture

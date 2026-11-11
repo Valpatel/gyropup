@@ -1,0 +1,12 @@
+2026-11-10T20:36:15.1805817Z PHASE docking-windowed
+2026-11-10T20:37:29.5394657Z PHASE docking-native
+2026-11-10T20:38:54.3135241Z PHASE docking-denied
+2026-11-10T20:43:20.2053269Z Owned docking listener closed
+2026-11-10T20:43:20.2075177Z page.screenshot: Timeout 15000ms exceeded.
+2026-11-10T20:43:20.2076275Z   - taking page screenshot
+2026-11-10T20:43:20.2076818Z   - waiting for fonts to load...
+2026-11-10T20:43:20.2077327Z   - fonts loaded
+2026-11-10T20:43:20.2078548Z     at playbackActivationCases (tests/site/assembly/test-instruction-docking.mjs:103:13)
+2026-11-10T20:43:20.2079393Z     at async file://tests/site/assembly/test-instruction-docking.mjs:155:27 {
+2026-11-10T20:43:20.2080329Z Node.js v22.23.4
+2026-11-10T20:43:20.2342268Z ##[error]Process completed with exit code 1.

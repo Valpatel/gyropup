@@ -41,15 +41,14 @@ STANCE_MM = 300.0
 BODY_GROUPS = [
     ('shell', '#cdd1db', ('shell_', 'fan_duct', 'eyes_clip')),
     ('deck', '#33383f', ('deck',)),
-    ('bay_doors', '#d98c26', ('bay_door_',)),
     ('bus_bars', '#c8743a', ('bus_bar_', 'bus_insulator_')),
     ('ear_pods', '#3b4049', ('ear_pod_',)),
     ('cameras', '#2a2d33', ('d435_front', 'd435_rear', 'eyes_board')),
-    ('hardware', '#26282c', ('spacer', 'frame_screws_', 'cheek_nuts_', 'turret_plate_nuts', 'isolator_', 'bay_skid_')),
+    ('hardware', '#26282c', ('spacer', 'frame_screws_', 'cheek_nuts_', 'turret_plate_nuts', 'isolator_')),
     ('brackets', '#454a52', ('post_', 'riser', 'plate_post_', 'dcdc_bracket', 'bay_rail_', 'adapter_plate_', 'ear_bracket_',
                              'd435_cradle_')),
     ('frame_inner', '#b4bac4', ('floor_tray', 'compute_pallet', 'power_plate', 'turret_plate')),     # inside the shell
-    ('frame', '#b4bac4', ('cheek_', 'belly_plate', 'bay_')),
+    ('frame', '#b4bac4', ('cheek_', 'belly_plate', 'end_pack_holder_', 'end_foot_')),
     ('battery', '#fdb913', ('item.battery_front', 'item.battery_rear')),
     ('compute', '#5a6b7c', ('item.j501', 'item.agx', 'item.lidar_')),
     ('electronics', '#2b6cb0', ('item.plate_', 'item.power_', 'item.vn100', 'item.battery_adapter')),

@@ -149,7 +149,7 @@ def main(argv=None):
     for file,value in collection['inputs'].items():
         if sha(ROOT/file)!=value:raise ValueError('Actual source changed: '+file)
     boms={f:sha(ROOT/f) for f in ('hardware/exports/body/bom.json','hardware/exports/leg/bom.json','hardware/exports/turret/bench/bom.json')}
-    manufacturing=mapping(ROOT,[p['name'] for p in collection['parts']],collection)
+    manufacturing=mapping(ROOT,[p['name'] for p in collection['parts']],collection,collection_folder=folder)
     outputs=generate(collection,folder,sha(Path(__file__).with_name('robot_recipe.py')),boms,sha(args.collection),manufacturing)
     if not args.check and args.out.exists():raise ValueError('Use a fresh candidate output')
     for name,data in outputs.items():

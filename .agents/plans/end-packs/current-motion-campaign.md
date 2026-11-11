@@ -1,0 +1,158 @@
+# Current motion source and pre-capture campaign boundary
+
+2026-11-10. Renderer1f813ab7 passed the independent
+[source re-review](https://github.com/Valpatel/gyropup/pull/287#pullrequestreview-5848968169).
+The unchanged f0 conversion was independently accepted as
+[serialized data only](https://github.com/Valpatel/gyropup/issues/193#issuecomment-6778587517):
+manifest SHA3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3,
+226 files,224 exact original STLs and original collection. No reconversion follows
+the JS correction. The current authority remains null; no public asset adoption
+or browser campaign has run in this checkpoint.
+
+## Independent source reference and existing validator
+
+`tools/engineering/robot/current_motion.py` reads original accepted collection
+triangles and current CAD pure mechanical functions. It never takes expected
+ownership, pivots, reference angles or landmarks from the animation manifest.
+Its independent leg ownership table audits `assembly`, `bought_parts` and
+`screw_groups`; source-circle partitioning independently requires every triangle
+exactly once. The existing independently audited turret reference supplies frame
+intent, not bench geometry. All62 turret meshes still come from the same266
+collection. Original source95 and all7 conversion dependencies must match.
+
+The frozen15 live poses and0.02mm allowance predate capture. The shared
+`cadagent.mechanical.motion_trace` owns all generic transforms, loop solution,
+coverage and verdicts; there is no second validator. Two explicit scopes apply:
+
+- 128 actual mesh components in the supported two-five-bar hinge/loop graph,
+  including stationary supports and exact fastener partitions;51 required poses.
+- All228 displayed components (224 original parts, four split grouped parts) plus
+  eight distinct source-datum frame helpers, at each of15 source-FK live poses.
+  The full shared turret/separate-wheel range/interior/ancestor coverage gives
+  63 poses per live case,945 complete samples. Translate-only knee/apex envelopes
+  use independently derived source-FK positions; their internal mechanical
+  ownership is not promoted by matching these representations.
+
+Actual current `flash`, `reload`, zero-time stop/start,90 fixed display steps and
+explode/reset add91 operation samples. Full required coverage remains in the
+baseline when a real graph fault sample is substituted. Right rotation, units,
+home-compensated pivot, axis reversal, lost parent, stationary-case ownership and
+missing actual part must reject; preserved-home and restoration controls must
+pass where applicable. An incomplete one-sample trace cannot masquerade as a
+successful fault demonstration merely because coverage is absent.
+
+## Actual observer and preparation checks
+
+`current-motion-capture.mjs` reads real geometry attribute vertices through
+updated actual world matrices. Each common assembly-frame capture neutralizes
+only the explicit free-body position/orientation; scale stays observable. Live
+free-body control placement is checked before neutralization. All CAD meshes
+must be attached and visible through the complete selected holder. Frame markers
+for eyes/camera/lights/pan/tilt/muzzle/laser are separate from CAD geometry.
+
+Source/control preflights run without CAD or a browser:
+
+```text
+test-current-robot-motion.py --candidate <accepted-data> --toolkit <existing-clean-pin> ...
+4 PASS,1.669s:224originals/4partitions; independent home;15cases;51closed-loop
+poses agree with actual CAD source; explicit non-home/right-transform controls
+test-current-motion-observations.mjs with explicit candidate/runtime/toolkit identities
+1 PASS,11.167s:actual224triangles through real Three groups;15source-FK poses;
+existing shared validator on51hinge poses and all7faults; actual display-operation
+and shared full-home range coverage. No WebGL/browser/publication claim.
+```
+
+The existing interpreter is Python3.12.3 with NumPy2.5.4; its motion module is
+from clean immutable cad-agent c67149b0a35127f93a237d3083ac0b70fcf0d17d.
+Actual origins are verified before use. CAD/OCCT/VTK/MuJoCo are not imported.
+No install, slicing, sampling or native construction occurs.
+
+## Browser action still requires exact review
+
+The new `test-current-robot-motion.mjs` is source preparation, not an executed
+campaign. It owns an isolated existing site-test server and one browser, closes
+contexts/browser/listener in finally and checkpoints each complete pose file.
+The proposed cap is180s per engine, sequential native Chrome then existing
+WebKit, with no browser downloads or unreviewed retry.
+
+The webroot uses the existing publication contract:
+`software/site/assets/robot-current` publishes as `/web/robot-current`, never
+`/assets/robot-current`. Both public/source mapping directions are asserted.
+An explicitly recorded data-only candidate authority overlay selects the exact
+accepted manifest. No renderer algorithm or geometry is replaced; normal public
+authority remains null until separate atomic adoption. The served revision,
+binding bytes, manifest/reference hashes, original224mesh identity and actual
+capture file hashes accompany the observations.
+
+Beyond geometry, the source campaign exercises actual failed/held/superseded
+recorded loading, disposal during a held current load, full current/recorded
+qpos/mass/source/muzzle roundtrips, real bench-selector cached return and stable
+laser recovery, landing/talk same-source identities, and320×568 native error/
+retry recovery. Actual current browser/visual/frame acceptance remains pending.
+
+The first Chrome action at2e90 retained an incomplete47.340s failure after its
+18 observation outputs: the held-load request used a logical name as a filename.
+The [manifest request lesson](../../inbox/2026-11-10-mesh-request-controls-need-manifest-file-identities.md)
+preserves the cause and bounded controls. Both held-current and mobile503 stimuli
+now resolve the unique actual part file and verify its bytes before browser
+startup; the mobile result requires an actual interception. A separately reviewed
+new action must use fresh outputs. No prior partial capture is a passed campaign.
+
+The corrected6dd Chrome action completed and received independent acceptance in
+[PR #287](https://github.com/Valpatel/gyropup/pull/287#issuecomment-6779690799).
+The subsequent WebKit action failed44.331s at its final mobile retry wait because
+the observer accessed a temporarily absent document body. Its26 saved outputs
+remain incomplete and unvalidated. The [bodyless observer lesson](../../inbox/2026-11-10-readiness-observers-must-wait-through-bodyless-documents.md)
+records the narrow null-safe predicate correction and non-suppression controls.
+Product runtime, accepted data and independent reference remain unchanged. A new
+WebKit-only action needs separate review and fresh output; no qualification or
+publication follows the partial run.
+
+The da5 WebKit action completed its27 outputs and passed shared numerical
+validation, but its independently inspected mobile recovery PNG was blank.
+Numerical motion PASS and visual recovery INCOMPLETE remain separate outcomes.
+The [canvas readiness incident](../../inbox/2026-11-10-canvas-readiness-needs-observed-presentation.md)
+records the unchanged product's fade/first-draw race and the bounded actual-canvas
+observer now required before both screenshots. Actual state is retained; no fixed
+sleep, transition removal or error filtering is used. A new reviewed WebKit-only
+action must still pass complete controls and independent visual readback.
+
+The completed426f WebKit campaign is independently accepted alongside Chrome6dd.
+The [canonical outcomes](motion/outcomes.json) preserve all five attempts and
+scope limitations. Ordinary `npm run test:models` now runs the same full current
+observer and shared validator against the adopted default in both engines. The
+shell runner requires a clean pinned c671 shared toolkit checkout; normal CI
+provisions that exact source and NumPy2.5.4, no native CAD stack. The delivered
+authority, manifest and collection bytes are verified, and adopted mode does not
+replace the source module with a route fixture. Candidate mode remains separate.
+
+The old interim-body bench turret and40-attachment tests retain every original
+fixture/negative assertion under explicit legacy null-authority test contexts.
+They do not claim the adopted body, mount or grouped hardware are current.
+Legacy fixture output and current accepted224-part trace evidence remain separate.
+
+Campaign-local storage initialization runs only on HTTP(S) origins. The initial
+`about:blank` document is skipped before accessing either storage object; an
+HTTP-origin storage exception remains an observed page error. The historical
+prototype helper bytes are unchanged. This carries the independently reproduced
+opaque-origin storage lesson into this new campaign without resealing old media.
+
+## Disjoint current media and remaining aggregate ownership
+
+The media owner prepares existing highlight capture/encode/check and the
+fresh-output hero-poster seam. The retained22s promo binds source76f1e243;
+current drift is exactly robot_v2/sim/turret3d. Keep that receipt/old bytes as
+dated history. New current model shots must bind actual266, new module closure
+and224 meshes. Historical e7b5128 leg footage and failed static E1 insert retain
+their own sources/captions/limits; do not reseal them into current body evidence.
+The poster must use the actual hero hook at its exact300mm source home pose;
+only separately reviewed output is copied publicly.
+
+Current Build162/Combined224 adoption, explicit three-row historical index
+preservation, normal CI historical/current fit assertion ownership, final
+public/viewport checks and current media acceptance remain pending. Original
+retained-fit/context failures remain visible; do not restamp the receipt, relax
+its current guard or rerun protected leg CAD just to make CI green. All printed
+leg/STL/firmware and historical rig/pad bytes stay fixed. Original issue193
+retention, interface, physical fit, clearance, load/support/drop acceptance stays
+open after consumer publication.

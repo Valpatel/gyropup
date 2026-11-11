@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-10",
+  "original_ci": {
+    "gamepad": {
+      "head": "02d7fb71834481bfd2748244e35c7fe344e56987",
+      "run": 42877244400,
+      "job": 130043726706,
+      "artifact": 13792463727,
+      "zip_sha256": "c8edf005d2421d24740474ed2ddfca0c0437913a227acafb9d0457ac1d762e7c",
+      "log_sha256": "73c06f518df1ec5b8f47cd70ad1f7db0252ae4ccde3661d662cb2f7e363b2ebe",
+      "observed": {
+        "modelKey": "v2",
+        "jump": {
+          "t": 1.3500000000000005,
+          "from": 0.6799999999999997,
+          "landedAt": 0.3300000000000001,
+          "landFrom": 0.52
+        },
+        "y": 0,
+        "visibility": "visible"
+      },
+      "missing": "Actual frame/dt/paused/error trace was not recorded; exact original cause unproved."
+    },
+    "guide": {
+      "head": "e3401b0a6789c9a05daff8867f2348e114e2460b",
+      "run": 42877492001,
+      "job": 130045776406,
+      "artifact": 13792184566,
+      "zip_sha256": "85e9aa723098773214598967d1c4647e126c8e1c7fec0e06313eeb91efeb395d",
+      "log_sha256": "7784d8ca6cca1aa3fc9a1e031df2d333765650d637c2228f6206c4c06f38be19",
+      "engine": "WebKit",
+      "completed_groups": 15,
+      "error": "/127.0.0.1:8879/_cadagent/changes due to access control checks.",
+      "missing": "Error timing/page ownership not recorded; not reconstructed from later successful control.",
+      "raw_report_sha256": "d11b7a7e94afa027fcd0c05bd7450ed021c1b0bd4da69a6218ec936815a11ed4"
+    }
+  },
+  "new_contract": {
+    "old_wall_ms": 15000,
+    "old_was_generic_until_default": true,
+    "input_start_airborne_wall_ms": 15000,
+    "landing_simulation_s": 3,
+    "landing_hard_wall_ms": 30000,
+    "stalled_frame_ms": 10000,
+    "uses": "Sum of actual existing stage callback dt; actual rendered y and state.jump completion; no copied trajectory or direct jump state reset.",
+    "scope": "Test-only explicit contract change, not product responsiveness/hardware qualification."
+  },
+  "invalid_attempts": {
+    "async_combined": "INVALID: Promise-valued wait predicate accepted before false resolution; gated newPass claim is a false acceptance. Following hop precondition failed because prior recovery was unfinished.",
+    "async_frozen": "INVALID: actual stage.stop leaves active jump/airborne scene, but async predicate falsely accepted.",
+    "async_full_gamepad": "INVALID: following unchanged settings assertion catches jump.t.65 rather than null.",
+    "wrong_context_handles": "NO QUALIFICATION: private control created JSHandles before navigation; navigation invalidated handles. Main harness creates them after readiness. Pending old predicate errored during cleanup; actual listener closure independently checked."
+  },
+  "no_product_runtime_or_cad_changes": true,
+  "no_error_filtering": true
+}

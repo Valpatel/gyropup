@@ -1,0 +1,250 @@
+{
+  "schema": "gyropup.capture-diagnostic/1",
+  "metadata": {
+    "label": "robot-stopped-control-activation",
+    "scope": "fresh-capture",
+    "engine": "chromium",
+    "browser": "141.0.7390.37",
+    "version": {
+      "revision": "d1b330bb90e2a84a444515253f16dd8585900caa",
+      "assets": "a14dcd48ce545629b714",
+      "history": true,
+      "built": "2026-11-10T21:22:42.554Z"
+    },
+    "sources": {
+      "tests/site/assembly/test-instruction-docking.mjs": "7b232c00544f37c79c18b42e891106524ee01aa62342432c8b6e401c9f07b07a",
+      "tests/site/assembly/capture-diagnostics.mjs": "7807a25e41e0fb8b6a7a00ba028eb71841f66d28bbe42976f852b2e51a962a85",
+      "tests/site/assembly/test-capture-diagnostics.mjs": "1df4589b3ce4b1b1c9e559a384f6eccb15f2872dadc3280d497f3c53b77c68d5",
+      "software/site/designer/assembly/workspace.js": "ebfbe51e22164688add70084f92728b6e47de1f341a1976c513b24c09e0195f7",
+      "software/site/designer/assembly/guide.css": "e5c5c311f6e6efcbdfc100eab2c028716840f5faebdcfe0639b8a206015c085f",
+      "software/site/designer/build.html": "6d1056f618aaa9a3ebe15a3061d4cb9e38b7845fe385b6b0d6754fbca32e881e",
+      "software/site/designer/assembly/playback.js": "8a5c6e5930be6e05b38bb306731698c69f5eefaf39f9bfa96587bef5ac4990de"
+    },
+    "lifecycle": [
+      {
+        "phase": "fresh browser before Robot context",
+        "atMs": 623.367116,
+        "contexts": 0
+      },
+      {
+        "phase": "playback context created",
+        "atMs": 679.18095,
+        "contexts": 1
+      }
+    ],
+    "qualification": "Passive observation adds timing overhead; no render/focus/fullscreen/timeout changes or retry."
+  },
+  "options": {
+    "file": "robot-stopped-control-activation.png",
+    "timeout": 15000
+  },
+  "before": {
+    "status": "available",
+    "value": {
+      "documentId": 1794345763583.6,
+      "visibility": "visible",
+      "hasFocus": true,
+      "readyState": "complete",
+      "fullscreen": false,
+      "workspaceFullscreen": null,
+      "fonts": {
+        "status": "loaded",
+        "faces": [
+          {
+            "family": "Inter",
+            "status": "loaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "loaded"
+          }
+        ]
+      },
+      "renderer": {
+        "frame": 38,
+        "calls": 174,
+        "triangles": 267670,
+        "programs": 5,
+        "memory": {
+          "geometries": 174,
+          "textures": 2
+        },
+        "contextLost": false
+      },
+      "canvas": {
+        "width": 1300,
+        "height": 688
+      },
+      "contextEvents": [],
+      "stageError": null,
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      },
+      "player": {
+        "status": "idle",
+        "stepId": "body-spine",
+        "partId": "cheek_left",
+        "operationIndex": 0,
+        "elapsedMs": 0,
+        "progress": 0,
+        "speed": 1,
+        "loop": true
+      },
+      "scrollY": 109,
+      "pendingRequests": [],
+      "pageEvents": [
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 691.420016
+        },
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 4429.076839
+        },
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 4430.421767
+        }
+      ]
+    }
+  },
+  "capture": {
+    "startedMs": 34465.050971,
+    "status": "passed",
+    "completedMs": 48179.059082,
+    "durationMs": 13714.008111000003
+  },
+  "protocol": {
+    "supported": true,
+    "calls": [
+      {
+        "id": 333,
+        "method": "Runtime.callFunctionOn",
+        "phase": "prepare-screenshot",
+        "sentMs": 34466.306093,
+        "receivedMs": 34482.086625,
+        "durationMs": 15.780532000004314,
+        "errorCode": null
+      },
+      {
+        "id": 334,
+        "method": "Runtime.callFunctionOn",
+        "phase": "font-ready",
+        "sentMs": 34482.230898,
+        "receivedMs": 34483.518,
+        "durationMs": 1.2871019999947748,
+        "errorCode": null
+      },
+      {
+        "id": 335,
+        "method": "Page.getLayoutMetrics",
+        "phase": "Page.getLayoutMetrics",
+        "sentMs": 34483.952129,
+        "receivedMs": 34484.418399,
+        "durationMs": 0.4662700000044424,
+        "errorCode": null
+      },
+      {
+        "id": 336,
+        "method": "Page.captureScreenshot",
+        "phase": "Page.captureScreenshot",
+        "sentMs": 34484.510466,
+        "receivedMs": 48171.897191,
+        "durationMs": 13687.386724999997,
+        "errorCode": null,
+        "base64Length": 284720
+      },
+      {
+        "id": 337,
+        "method": "Runtime.callFunctionOn",
+        "phase": "restore-screenshot",
+        "sentMs": 48172.312201,
+        "receivedMs": 48177.566559,
+        "durationMs": 5.254357999998319,
+        "errorCode": null
+      }
+    ],
+    "observerErrors": [],
+    "droppedCalls": 0
+  },
+  "after": {
+    "status": "available",
+    "value": {
+      "documentId": 1794345763583.6,
+      "visibility": "visible",
+      "hasFocus": true,
+      "readyState": "complete",
+      "fullscreen": false,
+      "workspaceFullscreen": null,
+      "fonts": {
+        "status": "loaded",
+        "faces": [
+          {
+            "family": "Inter",
+            "status": "loaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "loaded"
+          }
+        ]
+      },
+      "renderer": {
+        "frame": 50,
+        "calls": 174,
+        "triangles": 267670,
+        "programs": 5,
+        "memory": {
+          "geometries": 174,
+          "textures": 2
+        },
+        "contextLost": false
+      },
+      "canvas": {
+        "width": 1300,
+        "height": 688
+      },
+      "contextEvents": [],
+      "stageError": null,
+      "section": {
+        "axis": "x",
+        "flipped": true,
+        "depth": 0.4
+      },
+      "player": {
+        "status": "idle",
+        "stepId": "body-spine",
+        "partId": "cheek_left",
+        "operationIndex": 0,
+        "elapsedMs": 0,
+        "progress": 0,
+        "speed": 1,
+        "loop": true
+      },
+      "scrollY": 109,
+      "pendingRequests": [],
+      "pageEvents": [
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 691.420016
+        },
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 4429.076839
+        },
+        {
+          "type": "navigation",
+          "path": "/designer/build.html",
+          "atMs": 4430.421767
+        }
+      ]
+    }
+  }
+}

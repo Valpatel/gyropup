@@ -1,0 +1,13 @@
+{
+  "limits": {
+    "simulationS": 3,
+    "wallMs": 30000,
+    "stalledMs": 10000
+  },
+  "scope": "Actual stage callbacks and real gamepad input; gated-frame positive and actualstage.stop negative. No copied curve or direct hop state resets.",
+  "errors": [],
+  "engine": "151.0.7922.71",
+  "harness_sha256": "02ff784731e65a58da0ee64f40e3ced69b561d199a400db7e292a565892067e5",
+  "guard_sha256": "dcac2480bd88620eaa5b633c575e4b046cd9999804c7b36ca658df96ba66ec1d",
+  "error": "Error: page.waitForFunction: JSHandles can be evaluated only in the context they were created!"
+}

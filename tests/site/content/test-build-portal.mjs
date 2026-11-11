@@ -53,6 +53,10 @@ try{
  const progressKeys=await page.locator('tr[data-part-key^="buy/"]').evaluateAll(rows=>rows.map(row=>row.dataset.partKey));
  assert.ok(progressKeys.length>20);assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
  phase('initial Build model actions');await page.goto(base+'/designer/build.html');await ready();await checkModelActions();
+ assert.match(await page.locator('[data-current-source-note]').innerText(),/original BotWheel leg prototype/);
+ assert.match(await page.locator('[data-current-source-note]').innerText(),/current-body order\/print plan and D69 procurement remain pending/);
+ assert.match(await page.locator('#streams .stream').filter({has:page.locator('[data-stream="leg"]')}).innerText(),/Original printed-leg files remain available/);
+ assert.match(await page.locator('#streams .stream').filter({has:page.locator('[data-stream="body"]')}).innerText(),/do not establish the current front\/rear holder/);
  assert.equal(await page.locator('table:not(.cad-part-table)').count(),0);
  assert.equal(await page.getByRole('button',{name:/^Picture: sort/}).count(),0,'Picture-only columns have no meaningless sort control');
  phase('workstream totals and source qualifications');const summaries=await page.evaluate(()=>({total:+document.querySelector('#sum-total').dataset.usd,sellers:[...document.querySelectorAll('#sellertable tbody tr[data-seller]')].reduce((sum,row)=>sum+ +row.dataset.usd,0),made:+document.querySelector('#sum-made').dataset.usd,hours:+document.querySelector('#sum-hours').dataset.h}));
@@ -116,9 +120,7 @@ try{
  assert.match(version.revision,/^[a-f0-9]{40}$/);
  const publishedRoots=['hardware','software','docs'];
  const committed=execFileSync('git',['ls-tree','-rz','--name-only',version.revision,'--',...publishedRoots],{cwd:new URL('../../../', import.meta.url)}).toString().split('\0').filter(Boolean);
- // Neutral guide meshes are presentation derivatives, not extra engineering originals.
- // Exclude only the exact immutable guide-declared set; an orphan or an omitted
- // engineering original still fails the complete inventory equality below.
+ // Only verified manifest members qualify for the presentation inventory.
  const gitBytes=published=>execFileSync('git',['show',version.revision+':'+sourceForPublic(published)],{cwd:new URL('../../../',import.meta.url),maxBuffer:16<<20});
  const digest=bytes=>createHash('sha256').update(bytes).digest('hex'),presentationModels=new Set();
  const guideIndex=JSON.parse(gitBytes('/web/build-guides/index.json'));
@@ -137,6 +139,52 @@ try{
   const response=await context.request.get(base+file);assert.equal(response.status(),200);assert.equal(digest(await response.body()),part.sha256,'Guide derivatives remain available at their exact public URL');presentationModels.add(file);
  }
  assert.ok(presentationModels.size>0);
+ const guidePresentationCount=presentationModels.size;
+ phase('exact adopted current presentation cache');
+ const authorityPath='/designer/robot_current_source.js';
+ const authorityBytes=gitBytes(authorityPath);
+ const authorityResponse=await context.request.get(base+authorityPath);
+ assert.equal(authorityResponse.status(),200);
+ assert.equal(digest(await authorityResponse.body()),digest(authorityBytes));
+ const literal=authorityBytes.toString('utf8').match(/^export const CURRENT_ROBOT_SOURCE = (\{.*\});$/m);
+ assert.ok(literal,'Current presentation uses the adopted source descriptor');
+ const authority=JSON.parse(literal[1]);
+ assert.deepEqual(authority,{file:'web/robot-current/manifest.json',sha256:'3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3'});
+ async function currentBytes(file,wanted){
+  const bytes=gitBytes(file);
+  assert.equal(digest(bytes),wanted,file+' matches the immutable served revision');
+  const response=await context.request.get(base+file);
+  assert.equal(response.status(),200,file);
+  const served=await response.body();
+  await response.dispose();
+  assert.equal(digest(served),wanted,file+' matches its public bytes');
+  return bytes;
+ }
+ const currentManifest=JSON.parse(await currentBytes('/'+authority.file,authority.sha256));
+ assert.equal(currentManifest.collection_sha256,'7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67');
+ const currentCollection=JSON.parse(await currentBytes('/web/robot-current/collection.json',currentManifest.collection_sha256));
+ assert.equal(currentCollection.source_commit,'3a40891962b0b0a04625e070700f1d130bea3c7b');
+ assert.equal(currentManifest.native_source,currentCollection.source_commit);
+ const collectedParts=new Map(currentCollection.parts.map(part=>[part.name,part]));
+ assert.equal(currentCollection.parts.length,224);
+ assert.equal(collectedParts.size,224);
+ assert.equal(currentManifest.parts.length,224);
+ const currentNames=new Set(),currentFiles=new Set();
+ for(const part of currentManifest.parts){
+  assert.ok(!currentNames.has(part.name),'Unique current instance: '+part.name);
+  currentNames.add(part.name);
+  const collected=collectedParts.get(part.name);
+  assert.ok(collected,'Current instance belongs to the native collection: '+part.name);
+  assert.equal(part.file,collected.file,part.name);
+  assert.equal(part.sha256,collected.sha256,part.name);
+  assert.match(part.file,/^meshes\/[A-Za-z0-9_-]+\.stl$/);
+  const file='/web/robot-current/'+part.file;
+  assert.ok(!currentFiles.has(file),'Unique current mesh file: '+file);
+  currentFiles.add(file);
+  await currentBytes(file,part.sha256);
+  presentationModels.add(file);
+ }
+ assert.equal(currentFiles.size,224);
  const preparedModels=new Set();
  for(const {guide}of boundGuides)for(const mapping of Object.values(guide.source?.manufacturing_by_part||{}))for(const project of mapping.prepared_projects||[]){
   validatePreparedProject(mapping,project);
@@ -147,7 +195,7 @@ try{
  assert.equal(preparedModels.size,1,'Only the reviewed content-addressed hip project is separate from engineering originals');
  phase('all original inventory and adjacent download links');const expectedModels=committed.filter(file=>/\.(stl|step|stp|3mf)$/i.test(file)).map(publicForSource).filter(Boolean).map(file=>'/'+file).filter(file=>!presentationModels.has(file)&&!preparedModels.has(file)).sort();
  assert.ok(expectedModels.length>0,'Served revision contains original CAD files');
- assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed engineering original appears exactly once; only hash-bound guide derivatives are separate');
+ assert.deepEqual(inventory.files.map(file=>file.path).sort(),expectedModels,'Every committed engineering original appears exactly once');
  for(const file of inventory.files)assert.equal(file.format,file.path.split('.').pop().toLowerCase());
  // Every published original has its own adjacent directory preview and unchanged download.
  const directories=new Map();for(const file of inventory.files){const dir=file.path.slice(0,file.path.lastIndexOf('/')+1);if(!directories.has(dir))directories.set(dir,[]);directories.get(dir).push(file);}
@@ -267,7 +315,7 @@ try{
   await deep.waitForFunction(n=>document.querySelectorAll('#print-now a[data-model-preview]').length>=n,card.downloads);
   await deepContext.close();
  }
- phase('complete');assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,phases,pagination,photoFailure,publishedModels:inventory.files.length,guidePresentationModels:presentationModels.size,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
+ phase('complete');assert.deepEqual(errors,[]);await writeFile(`${out}/${engine.name()}-report.json`,JSON.stringify({base,version,shared,printedKey,summaries,sticky,phases,pagination,photoFailure,publishedModels:inventory.files.length,guidePresentationModels:guidePresentationCount,currentPresentationModels:currentFiles.size,errors},null,2));console.log(`PASS ${engine.name()}: sortable semantic tables, fixed totals, shared persistent checklists, print status, atomic import/export, denied storage, ${inventory.files.length} original/preview mappings, real STL/STEP/3MF controls and stage disposal, and four phone layouts`);
 }catch(error){
  const failure={status:'failed',error:String(error),phases,pagination,photoFailure,navigation,state:null,errors};
  await writeFile(`${out}/${engine.name()}-failed.json`,JSON.stringify(failure,null,2));

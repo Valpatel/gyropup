@@ -28,9 +28,19 @@ BODY_FAMILIES={'cheek_left':'cheek','cheek_right':'cheek','bay_side_l':'bay_side
  'bus_bar_1':'bus_bar','bus_bar_2':'bus_bar','bus_insulator_1':'bus_insulator','bus_insulator_2':'bus_insulator'}
 
 
-def hip_geometry_match(root,collection,name):
+def hip_geometry_match(root,collection,name,*,collection_folder=None):
     """Only the independently reviewed hip correspondence may enable WIP prep."""
     if collection is None or name not in ('L.hip_frame','R.hip_frame'):return None
+    # Explicitly selected current contract. An old current-root guard failure
+    # never triggers a historical fallback; missing accepted proof stays pending.
+    if collection.get('source_commit')=='3a40891962b0b0a04625e070700f1d130bea3c7b':
+        import sys
+        sys.path.insert(0,str(Path(root)))
+        from robot_current_print_match import matched
+        if Path(sys.modules['robot_current_print_match'].__file__).resolve()!=Path(__file__).resolve().with_name('robot_current_print_match.py'):
+            return None
+        try:return matched(root,collection,collection_folder,name)
+        except (ValueError,KeyError,TypeError,OSError,EOFError):return None
     file='.agents/plans/robot-assembly/hip-print-match.json';root=Path(root)
     accepted='.agents/plans/robot-assembly/hip-print-match-acceptance.json'
     if not (root/file).is_file() or not (root/accepted).is_file():return None
@@ -65,7 +75,7 @@ def hip_geometry_match(root,collection,name):
     except (ValueError,KeyError,StopIteration,FileNotFoundError,TypeError):return None
 
 
-def mapping(root,names,collection=None):
+def mapping(root,names,collection=None,*,collection_folder=None):
     root=Path(root)
     def read(file):return json.loads((root/file).read_text())
     def binding(file):return {'source_file':file,'sha256':sha(root/file)}
@@ -89,6 +99,21 @@ def mapping(root,names,collection=None):
         if name.startswith('turret.'):
             row['reason']='Use the separately bound Turret guide mapping; module placement does not invent internal manufacturing links.';continue
         physical_leg=name.startswith(('L.','R.'));logical=name.split('.',1)[1] if physical_leg else name
+        if physical_leg and logical in ('wheel_hub','wheel_tyre') and collection is not None:
+            # The retained leg BOM describes the original BotWheel, whereas
+            # the body collector can apply the D69 envelope override. Neither
+            # a matching logical name nor the old BOM binds a purchased SKU to
+            # these actual collected triangles. Keep historical mappings intact
+            # when no collection is being mapped; never advertise that old SKU
+            # as procurement for a new collection.
+            row['component_of']=name[0]+'.wheel'
+            row['reason']='Hub and tyre belong to one modeled wheel. Current procurement is pending; the retained leg BOM describes a different wheel and does not bind an ordered SKU to this collection.'
+            if collection.get('source_commit')=='3a40891962b0b0a04625e070700f1d130bea3c7b':
+                file='hardware/cad/body/body_params.py'
+                row['design_reference']={**binding(file),'operation':'_fivebar / D69_WHEEL_CAD',
+                    'label':'D69 wheel envelope','nominal_diameter_mm':254.0,'tyre_band_width_mm':64.0,
+                    'ordered_sku_verified':False,'physical_measurements_verified':False}
+            continue
         family=('upper_link' if logical.startswith('upper_link_') else 'output_adapter' if logical.startswith('output_adapter_')
                 else 'stop_sleeve' if logical.startswith('stop_sleeve_') else logical) if physical_leg else BODY_FAMILIES.get(name,name)
         plan_key='leg' if physical_leg else 'body' if family in plans['body'][1] else 'shell'
@@ -101,9 +126,10 @@ def mapping(root,names,collection=None):
                 plan={**binding(plan_file),'material':value['material'],'qty':value['qty'],
                       'qty_scope':'per_leg' if physical_leg else 'body','infill':value.get('infill')})
             row['geometry_match']['basis']='Identified retained manufacturing original only. File identity and plan membership do not prove a match to the collected CAD instance.'
-            match=hip_geometry_match(root,collection,name)
+            match=hip_geometry_match(root,collection,name,collection_folder=collection_folder)
             if match:
                 row['geometry_match']=match
+                row['qualification']=match['qualification']
                 from robot_project import prepared
                 row['prepared_projects']=prepared(root,row['originals'][0]['sha256'])
             row.pop('reason');continue

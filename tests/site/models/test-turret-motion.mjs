@@ -1,5 +1,5 @@
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
-/** Validate actual rendered STL landmarks against independently audited CAD datums. */
+/** Validate the legacy interim-body laser and the bench STL landmarks against their CAD datums. */
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
@@ -75,10 +75,17 @@ function maxError(sample) {
   return {error,worst};
 }
 try {
+  let legacyBindings=0;
+  await page.route(url=>url.origin===new URL(base).origin&&url.pathname==='/designer/robot_current_source.js',route=>{
+    legacyBindings++;
+    return route.fulfill({status:200,contentType:'text/javascript',body:'export const CURRENT_ROBOT_SOURCE = null;\n'});
+  });
   await page.goto(base+'/designer/sim.html?sound=0',{waitUntil:'networkidle'});
   await page.waitForFunction(()=>document.body.dataset.ready==='1');
-  // Older CAD snapshots retain their own frames; their beam must still originate
-  // at their fitted laser rather than the procedural stand-in's old position.
+  assert.equal(legacyBindings,1,'The legacy test authority was requested');
+  const bodyPath=await page.evaluate(()=>new URL(window.__sim.state.robot.presentation.bodySource,location.href).pathname);
+  assert.equal(bodyPath,'/exports/sim/v2/rig/manifest.json');
+  // The interim-body fixture uses local positive Z for its fitted laser lens.
   const checkLaser=()=>page.evaluate(()=>{
     const t=window.__sim.state.robot.turret;
     let mesh;t.tilt.traverse(m=>{if(m.isMesh && /_laser$/.test(m.name))mesh=m;});
@@ -88,7 +95,7 @@ try {
     mesh.updateWorldMatrix(true,false);mesh.localToWorld(front);
     return front.distanceTo(t.laserOrigin.getWorldPosition(front.clone()))<1e-6;
   });
-  assert.ok(await checkLaser(),'V2 CAD laser origin is on its actual lens');
+  assert.ok(await checkLaser(),'Legacy interim-body laser origin is on its actual lens');
   await page.selectOption('#design-select','turret-box');
   await page.waitForFunction(()=>window.__sim.bench()?.active);
   const loadedParts=await page.evaluate(()=>window.__sim.bench().api.mechanism.parts.map(p=>({name:p.e.name,file:p.e.file,group:p.e.group,sha256:p.e.sha256})));
@@ -254,13 +261,13 @@ try {
   const requested=await page.evaluate(()=>performance.getEntriesByType('resource').map(e=>e.name));
   for(const p of manifest.parts) assert.ok(requested.some(u=>u.endsWith(`/turret_box/${p.file}?v=${p.sha256}`)),`Content-versioned mesh loaded: ${p.name}`);
   const manifestHash=createHash('sha256').update(manifestBytes).digest('hex');
-  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`${base}; ${engine.name()}; actual Three.js STL vertices; revision=${version.revision}; assets=${version.assets}; manifest_sha256=${manifestHash}; per-mesh hashes in capture-manifest.json`,samples};
+  const trace={schema_version:1,length_unit:'mm',frame:'assembly-home',capture_source:`Turret bench and legacy interim-body fixture; ${base}; ${engine.name()}; actual Three.js STL vertices; revision=${version.revision}; assets=${version.assets}; manifest_sha256=${manifestHash}; per-mesh hashes in capture-manifest.json`,samples};
   await writeFile(`${out}/capture-manifest.json`,manifestBytes);
   await writeFile(`${out}/capture-version.json`,JSON.stringify(version));
   await writeFile(`${out}/${engine.name()}-trace.json`,JSON.stringify(trace));
   await writeFile(`${out}/contract.json`,JSON.stringify(fixture.contract));
   await writeFile(`${out}/${engine.name()}-asset-bindings.json`,JSON.stringify(responses,null,2));
   await writeFile(`${out}/${engine.name()}-sensitivity.json`,JSON.stringify(sensitivities));
-  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({components:Object.keys(fixture.contract.components).length,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
+  await writeFile(`${out}/${engine.name()}-summary.json`,JSON.stringify({scope:'turret-bench-and-legacy-interim-body',legacyBindings,bodyPath,components:Object.keys(fixture.contract.components).length,poses:samples.length,liveFrames:live.length,maxErrorMm:worst.error,worst:worst.worst,speed,attachments},null,2));
   console.log(`PASS ${engine.name()}: ${Object.keys(fixture.contract.components).length} components × ${samples.length} poses; ${live.length} real firing frames; max ${worst.error.toFixed(6)}mm; negative pivot control rejected; CAD attachments, configured launch speed, 5 phone layouts`);
 } finally {await browser.close();}

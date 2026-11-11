@@ -26,6 +26,7 @@ const validPrint=value=>isRecord(value)&&isRecord(value.parts)&&isRecord(value.b
 const $ = (id) => document.getElementById(id);
 const partsUI=createPortalParts($('progress-tools'));
 $('progress-tools').insertAdjacentHTML('beforeend','<p class="media-note">Checklist boxes track parts, not purchased quantities. Required quantities continue to follow the selected design.</p>');
+$('progress-tools').insertAdjacentHTML('beforeend','<p class="media-note" data-current-source-note>These lists retain the original BotWheel leg prototype, rig, turret and earlier body workstreams. The current Robot and Combined guides show the accepted front/rear-pack CAD and D69 wheel envelope. A complete current-body order/print plan and D69 procurement remain pending. Per-part Prepare print offers only the separately verified WIP geometry files; it does not qualify a full robot or start printing.</p>');
 const R = '../';                                            // the project root, from designer/
 const round2 = (v) => Math.round(v * 100) / 100;            // cents: each line, then each seller, then the total
 const sum = (xs) => xs.reduce((a, b) => a + b, 0);
@@ -48,9 +49,9 @@ try {
 // ------------------------------------------------------------------------------------------------ the workstreams
 // The first prototype's three workstreams (the rig is the leg's, kept apart because its files come from its own branch).
 const STREAMS = [
-  { id: 'leg', title: 'One leg (milestone M3)', plan: 'docs/leg-prototype-plan.md', sec: '6.1', bom: 'exports/leg/bom.json',
+  { id: 'leg', title: 'Original leg prototype (milestone M3)', plan: 'docs/leg-prototype-plan.md', sec: '6.1', bom: 'exports/leg/bom.json',
     print: ['exports/leg/print-plan.json'], order62: true,
-    lists: { per_leg: 'leg' }, about: 'Leg v2: the hip frame, the links, two RS-04s and the BotWheel; qty for one leg.' },
+    lists: { per_leg: 'leg' }, about: 'Retained bench-leg source: the original hip and links, two RS-04s and BotWheel; qty for one prototype leg. The current collected D69 wheel envelope has separate, pending procurement. Original printed-leg files remain available.' },
   { id: 'rig', title: 'The single-leg test rig', plan: 'docs/leg-prototype-plan.md', sec: '6.1', bom: 'exports/rig/bom.json',
     print: ['exports/rig/print-plan.json', 'exports/rig/bench/print-plan.json'], order62: true, lists: {},
     about: 'The rail, post, base, carriage plate, bench fixtures and the electronics the leg is tested with.',
@@ -58,9 +59,9 @@ const STREAMS = [
   { id: 'turret', title: 'Turret v0 on its bench stand', plan: 'docs/turret-prototype-plan.md', sec: '3.3', bom: 'exports/turret/bench/bom.json',
     print: ['exports/turret/bench/print-plan.json'], lists: { bench_turret: 'turret', bench_stand: 'stand', tools: 'tools' },
     about: 'The turret with its stand, inlet, fuse, switch, USB-CAN and hold-to-run pendant; qty for one turret.' },
-  { id: 'body', title: "The body's first frame", plan: 'docs/body-plan.md', sec: '8', bom: 'exports/body/bom.json',
+  { id: 'body', title: 'Earlier body frame source', plan: 'docs/body-plan.md', sec: '8', bom: 'exports/body/bom.json',
     print: ['exports/body/print-plan.json'], lists: {},
-    about: 'The spine, floor tray, deck and belly plates, the battery and power parts (P0 the power skid, P1 the open frame).',
+    about: 'Retained body workstream: spine, floor tray, deck and belly plates, battery and power parts (P0 power skid, P1 open frame). These files do not establish the current front/rear holder, foot, adapter fit or a complete current-body manufacturing plan.',
     pending: 'exports/body/bom.json and print-plan.json come from the body workstream (plan section 5, T8).' },
 ];
 const SKIP_LIST = /^(v1|not_|no_|to_source|cad_pending|made_to_order|ordered_to_drawing)/;   // not bought for this build

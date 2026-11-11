@@ -1,0 +1,19 @@
+{
+  "schema": "gyropup.current-highlights-byte-preflight/1",
+  "scope": "Scratch-only accepted bytes/source check; authority exists only in deleted scratch. No public binding, browser, capture, encode, native work or adoption.",
+  "manifest": {
+    "file": "web/robot-current/manifest.json",
+    "sha256": "3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3"
+  },
+  "native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "collection_sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+  "originals": 224,
+  "turret_names": 62,
+  "browser_assets": 225,
+  "local_provenance_sources": 103,
+  "source_inputs": 95,
+  "conversion_inputs": 7,
+  "source_preserved": true,
+  "checker_sha256": "6e117a1278c478d5354900707bd226e88276cb76e87247ef4282d9d9d33dc865",
+  "harness_sha256": "6009001920752e7ee7a020cfa27b4db2b98c14fcac8947f8cccc3da56e5d5424"
+}

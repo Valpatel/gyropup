@@ -1,0 +1,14 @@
+{
+  "schema": "gyropup.origin-fixture-checkpoint/1",
+  "date": "2026-11-10",
+  "source_parent": "073693f9f738ccc7cfb2b4dec8c4432ba7f885fa",
+  "files": {
+    "README.md": "35d694cb6ae0c4f1be107d8086770ec5b70396ea4bb79c1cc4bc1fd8a93fd5d6",
+    "actual-controls.json": "f9be7fe56dcb99e9800ce93d7ff358a0efca867346beb64769ed179f616f3475",
+    "chromium-guide.json": "d54f6acc8b34f4e1f3ac630c7b92d0e9d22c2b2c96fcd71bce10e2d51929343b",
+    "original-failed.json": "0ba4f385c6a52f2e5ac87ce1c50d9d308f1a65c37087682acb57b444e0cdc15c",
+    "original.json": "e6feeeaa2654447777dcdbc8f4a73cf62bf2e86e0b3de37bd99a9bf150d91259",
+    "results.json": "c243730bd4e291aa5e0e71b2097230ad9cec8280af70468854da3561ec62ce43",
+    "webkit-guide.json": "6bc46d6981fa50f790a4cbddbdb4f1c3f4887b417935d60db74279fd8eb8317f"
+  }
+}

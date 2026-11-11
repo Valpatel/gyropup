@@ -1,0 +1,52 @@
+{
+  "schema": "gyropup.browser-observation-composition/1",
+  "date": "2026-11-10",
+  "tested_code_commit": "22df19170c966c62184355aab4f9d90dc6e2776c",
+  "accepted_cumulative_source": "1a291c666f22f17f22b955707dd327f88299130f",
+  "merge_method": "Normal merge with preserved parents and no conflicts; original27902d7 and280e340 heads untouched.",
+  "product_and_tools_tree_equal_to_accepted_source": true,
+  "hop_runtime_unchanged_since_original_controls": {
+    "software/site/designer/sim.js": "a0ea5a8681077935dcf79e01d3a060e9b702d31aee4a39725be430e7ed4dbae7",
+    "software/site/designer/sim_gamepad.js": "6c4867ed61d50e17e8a1fab6ebc46529ff9849dcecfdaf6c7f49ebb41f27af9d",
+    "software/site/designer/robot_v2.js": "6bda4adaf7d472a7ba7cc60a25c13a3f751ae7a6427fa1812732876ce187430a",
+    "software/site/designer/leg_limits.js": "81fd036758493d9f8a80a9ccc4c0986868a32dde1e3f4641dad82204ebb27d70",
+    "software/site/designer/kit/stage.js": "9c79a56096dc505b26ef35e990e4f04218ac40cceeaefd42ad958242ff38f3ac"
+  },
+  "guide_runtime_changed_since02": "Accepted assembly workspace/playback/CSS/HTML changed; reran only affected fullWebKitguide suite on immutable22df code.",
+  "guide": {
+    "engine": "26.0",
+    "groups": 15,
+    "errors": [],
+    "unsupported_development_requests": [],
+    "raw_report_sha256": "fe9ab84d31047d987693665c01a68c26006ec8fa00d1353804445f0586518ded",
+    "normalization": "Only actual local preview origin replaced with <preview-origin>",
+    "owned_listener": 41605,
+    "finally_closed_and_connection_refused": true
+  },
+  "source_sha256": {
+    "package.json": "28087e6e681c573151252deab7bb8aad2f9d46f6291ad5b297e5fd526a1e4998",
+    "tests/site/controls/hop-budget.mjs": "dcac2480bd88620eaa5b633c575e4b046cd9999804c7b36ca658df96ba66ec1d",
+    "tests/site/controls/test-hop-budget.mjs": "8074a3095d06dd5a1b335e6882a8bf1d723d66665ecaeb216a7677bf667aeab1",
+    "tests/site/controls/test-gamepad.mjs": "02ff784731e65a58da0ee64f40e3ced69b561d199a400db7e292a565892067e5",
+    "tests/site/assembly/test-build-guide.mjs": "6b9b7304eae2e8154b3c905f84681402343f8f5f0f4e1e7abbf7f4e7fc194383"
+  },
+  "checks": {
+    "pure_tests": 20,
+    "build": true,
+    "privacy": 11,
+    "markdown": 6,
+    "poster_contract": "PASS accepted1a twelve current posters; no visualinput change/recapture",
+    "additional_browser_runs": "Only composedWebKitguide; unchanged hopruntime controls/gamepad not repeated",
+    "native_queries": 0,
+    "final_metadata_commit_ci": "pending",
+    "independent_source_review": "pending"
+  },
+  "raw_logs_sha256": {
+    "gy288-composed-build.log": "508a9d33afe15a5110d0138799253f04decfa86b0674420c44e428469d3ba205",
+    "gy288-composed-guide.log": "1a488d1b596386b13f9720f4214d1451ad59eb33b513d53a70d8b2efa83b05bd",
+    "gy288-composed-pure.log": "307b77be77d9066b2b3004e4de26da8dc168389a5c5fa12fb8f342b833e4b407",
+    "gy288-composed-privacy.log": "d4fadcfc145f770e215911aa27f039e9d2c5f30e4c0e29c3868689e857b1a94e",
+    "gy288-composed-markdown.log": "85a24b972d315a0c3e08b33b443795755a0d5dc97e79fa088d01401cdd906728",
+    "gy288-composed-poster.log": "ad40accaf70fb284fffb153f2e54e93f32ff4bf21eb46699850e7603d0c22a61"
+  }
+}
