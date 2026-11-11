@@ -86,3 +86,41 @@ an additive matrix case preserve the normal full campaign and all failures. No
 control is run until source/action review; a different localChrome151 success is
 not that contrast. See `plans/docking-capture-fresh-control.md` for the bounded
 command, runtime guards and interpretation limits.
+
+## 2026-11-11 — distinguish an artifact budget from product readiness
+
+The completed follow-ups and original failures are recorded in issue292. The
+main `d694b3aa` run42938565751/job130254586945 again passed125 interaction
+observations with no page errors, then exceeded the original15s capture limit.
+Artifact13820361811 (ZIP SHA256
+`4299d5f8550bf1276ffbace38c0b7c87184181d44892d25d2a00b97fae508a9f`)
+records preparation31.47ms, fonts1.54ms and layout0.90ms. The native
+`Page.captureScreenshot` request received no reply before the deadline. This
+locates the pending operation; its internal cause remains unknown. A separate
+pinned141 prospective30s control completed in11.888s, inside the old window, so
+it did not reproduce or explain the slow attempts.
+
+The test-only candidate gives that one required screenshot a finite30s artifact
+budget, retaining15s as an explicit reference in its phase receipt. A returned
+image after15s is labeled `completed-after-reference-bound`; the original
+failures remain failed. Product readiness, interaction deadlines, pixels,
+fullscreen prehistory and required screenshots stay unchanged. There is one
+capture call, with no retry or fallback acceptance. This is an operational test
+budget decision, not a performance fix or a claim about physical hardware.
+
+Acceptance requires the full ordinary Chromium/WebKit campaign. At its end, an
+isolated empty page deliberately stalls font readiness and requests one native
+screenshot with a1s timeout. It must enter that wait, retain the identical
+Playwright timeout through the observer, make one attempt, produce no PNG and
+terminate within5s. This checks the actual deadline/error path without stalling
+the product or changing its prehistory. The negative exercises preparation, not
+an unresponsive native compositor; it cannot establish the cause of the delayed
+`Page.captureScreenshot` reply. A future30s timeout is still a failure requiring
+fresh evidence, not another automatic extension.
+
+The negative holds one observed font network request and requires the underlying
+font set to remain `loading`; its route is aborted in `finally` before closing
+the owned context. Playwright1.56.1 awaits fonts in its utility JavaScript world.
+A main-world property override of `document.fonts.ready` is therefore unsuitable:
+it need not affect the wrapper in the other world. Independent source review
+caught that distinction before the candidate was pushed or run in a browser.

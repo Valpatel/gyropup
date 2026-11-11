@@ -1,11 +1,11 @@
 /** Real desktop/right-dock and narrow sheet controls across native and denied fullscreen. */
 import assert from 'node:assert/strict';
 import {once} from 'node:events';
-import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {mkdir,writeFile,readFile,stat} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {createRequire} from 'node:module';
-import {chromium,webkit} from '@playwright/test';
+import {chromium,webkit,errors as playwrightErrors} from '@playwright/test';
 import {createSiteServer} from '../../../tools/site/serve-site.mjs';
 import {captureScope,requireFreshCaptureRuntime,observeCaptureProtocol,observeScreenshot,readCaptureDiagnostic,watchCapturePage} from './capture-diagnostics.mjs';
 import {acknowledgePrototypeNotice} from './build-prototype-session.mjs';
@@ -20,6 +20,9 @@ const sources=Object.fromEntries(await Promise.all(['tests/site/assembly/test-in
 console.log('Owned docking listener',base);
 let browser,page,builtVersion,captureProtocol;
 const captureLifecycle=[];
+// Artifact production has its own finite budget; product readiness/action limits stay unchanged.
+// Keep the former bound visible in the phase receipt rather than calling a late image a 15s pass.
+const referenceCaptureBoundMs=15000,stoppedCaptureBudgetMs=scope==='all'?30000:referenceCaptureBoundMs;
 const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
 async function clickState(selector,attribute,value){if(await page.locator(selector).getAttribute(attribute)!==String(value))await page.locator(selector).click();}
 async function inspect(label){
@@ -109,7 +112,7 @@ async function playbackActivationCases(){
  await clickState('[data-explorer-toggle]','aria-expanded',true);await clickState('[data-tools-toggle]','aria-expanded',true);await clickState('[data-instructions-toggle]','aria-expanded',true);await selectDesktopPart('L.hip_frame');await page.locator('[data-part-close]').click();
  assert.equal(await page.evaluate(()=>window.__buildGuide.active.player.getState().status),'idle');await page.getByLabel('Section plane',{exact:true}).selectOption('z');let result=await mouseControl('[data-guide-cut-flip]','stopped Robot Flip after closing hip details');assert.deepEqual(result.section,{axis:'z',flipped:true,depth:1});assert.equal(result.player.status,'idle');await page.locator('[data-guide-section]').fill('0.4');assert.deepEqual(await page.evaluate(()=>window.__buildGuide.active.viewer.getSectionState()),{axis:'z',flipped:true,depth:.4});
  result=await mouseControl('[data-guide-cut-rotate]','stopped Robot Rotate');assert.deepEqual(result.section,{axis:'x',flipped:true,depth:.4});let loop=result.player.loop;result=await mouseControl('[data-guide-loop]','stopped Robot Loop');assert.equal(result.player.loop,!loop);assert.equal(result.player.status,'idle');
- try{await observeScreenshot({capture:options=>page.screenshot(options),options:{path:out+'/robot-stopped-control-activation.png',timeout:15000},collect:()=>capturePage.snapshot(),protocol:captureProtocol,metadata:{label:'robot-stopped-control-activation',scope,engine:engine.name(),browser:browser.version(),version:builtVersion,sources,lifecycle:captureLifecycle,qualification:'Passive observation adds timing overhead; no render/focus/fullscreen/timeout changes or retry.'},writeReport:report=>writeFile(out+'/robot-stopped-capture-diagnostic.json',JSON.stringify(report,null,2)+'\n')});}finally{capturePage.dispose();}
+ try{await observeScreenshot({capture:options=>page.screenshot(options),options:{path:out+'/robot-stopped-control-activation.png',timeout:stoppedCaptureBudgetMs},collect:()=>capturePage.snapshot(),protocol:captureProtocol,metadata:{label:'robot-stopped-control-activation',scope,engine:engine.name(),browser:browser.version(),version:builtVersion,sources,lifecycle:captureLifecycle,referenceArtifactBoundMs:referenceCaptureBoundMs,qualification:'One required capture with an explicit artifact budget; original 15s failures remain failed. Passive observation adds timing overhead; no render/focus/fullscreen changes or retry.'},writeReport:report=>writeFile(out+'/robot-stopped-capture-diagnostic.json',JSON.stringify(report,null,2)+'\n')});}finally{capturePage.dispose();}
  if(scope==='fresh-capture'){await desktop.close();return;}
  await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForFunction(()=>!matchMedia('(prefers-reduced-motion: reduce)').matches&&!document.querySelector('[data-guide-play]').disabled);
  await page.locator('[data-guide-reset]').click();await page.locator('[data-guide-play]').click();await page.waitForFunction(()=>window.__buildGuide.active.player.getState().status==='playing'&&window.__buildGuide.active.player.getState().elapsedMs>100);await page.locator('[data-guide-play]').click();assert.equal(await page.evaluate(()=>window.__buildGuide.active.player.getState().status),'paused');
@@ -124,6 +127,35 @@ async function fullscreen(mode){
  await page.locator('[data-guide-fullscreen]').click();
  await page.waitForFunction(({mode,nativeRequired})=>{const l=document.querySelector('.assembly-layout');return mode==='denied'?l.dataset.fullscreen==='expanded':nativeRequired?document.fullscreenElement===l&&l.dataset.fullscreen==='native':['native','expanded'].includes(l.dataset.fullscreen);},{mode,nativeRequired:engine===chromium});
 }
+async function stalledCaptureNegative(){
+ // Separate empty page, after the unchanged product campaign. Exercise Playwright's real
+ // deadline without stalling a product page or relying on a naturally slow GPU capture.
+ const context=await browser.newContext(),image=out+'/stalled-capture-must-not-exist.png';
+ const timeout=1000;let attempts=0,original,returned=false,heldFont,markFontHeld;
+ const fontHeld=new Promise(resolve=>{markFontHeld=resolve;});
+ try{
+  await assert.rejects(stat(image),error=>error.code==='ENOENT');
+  const control=await context.newPage();
+  const fontUrl=base+'/__capture-deadline-control__.woff2';
+  await control.route(fontUrl,route=>{heldFont=route;markFontHeld();});
+  await control.setContent('<!doctype html><title>Bounded capture negative</title><style>@font-face{font-family:CaptureDeadline;src:url("'+fontUrl+'")}p{font-family:CaptureDeadline}</style><p>Controlled font wait</p>',{waitUntil:'domcontentloaded'});
+  // A real pending font load is shared with Playwright's utility world; a main-world
+  // document.fonts.ready property override would not reliably affect that world.
+  await control.evaluate(()=>{void document.fonts.load('16px CaptureDeadline').catch(()=>{});});
+  assert.equal((await readCaptureDiagnostic(()=>fontHeld,5000)).status,'available','The owned font request must actually be intercepted');
+  assert.equal(await control.evaluate(()=>document.fonts.status),'loading');
+  const started=performance.now();
+  await assert.rejects(async()=>{
+   await observeScreenshot({capture:async options=>{attempts++;try{return await control.screenshot(options);}catch(error){original=error;throw error;}},options:{path:image,timeout},collect:()=>control.evaluate(()=>({fontsStatus:document.fonts.status})),protocol:captureProtocol,metadata:{label:'controlled-stalled-font-capture',engine:engine.name(),browser:browser.version(),expectedFailure:true},writeReport:report=>writeFile(out+'/stalled-capture-diagnostic.json',JSON.stringify(report,null,2)+'\n')});
+   returned=true;
+  },error=>error===original&&error instanceof playwrightErrors.TimeoutError);
+  const elapsedMs=performance.now()-started;
+  assert.equal(attempts,1);assert.equal(returned,false);assert.equal(await control.evaluate(()=>document.fonts.status),'loading');
+  assert.ok(elapsedMs<5000,'The native short deadline must terminate the stalled operation');
+  await assert.rejects(stat(image),error=>error.code==='ENOENT');
+  observations.push({label:'one stalled artifact capture fails bounded with original error and no image',expectedFailure:true,timeoutMs:timeout,elapsedMs,attempts,error:original.name});
+ }finally{try{await heldFont?.abort('failed');}finally{await context.close();}}
+}
 try{
  const require=createRequire(import.meta.url);assert.equal(require('playwright-core/package.json').version,'1.56.1','Review pinned screenshot internals before upgrading the diagnostic observer');
  const Connection=engine===chromium?require(path.join(path.dirname(require.resolve('playwright-core/package.json')),'lib/server/chromium/crConnection.js')).CRConnection:null;
@@ -134,7 +166,7 @@ try{
   requireFreshCaptureRuntime({engine:engine.name(),channel:process.env.PLAYWRIGHT_CHANNEL,version:browser.version()});assert.equal(browser.contexts().length,0,'Fresh control starts before any browser context or WebGL scene');
   builtVersion=await(await fetch(base+'/version.json')).json();captureLifecycle.push({phase:'fresh browser before Robot context',atMs:performance.now(),contexts:0});
   await playbackActivationCases();assert.deepEqual(errors,[]);assert.equal(observations.length,3,'Exactly the original stopped Flip/Rotate/Loop observations');
-  await writeFile(out+'/report.json',JSON.stringify({status:'passed',scope,completeCampaign:false,qualification:'Fresh pinned-browser control only; not the full132-state campaign or a root-cause result.',engine:engine.name(),browser:browser.version(),version:builtVersion,sources,observations,errors},null,2)+'\n');console.log('PASS fresh-capture diagnostic only; full campaign not run by this separate control');
+  await writeFile(out+'/report.json',JSON.stringify({status:'passed',scope,completeCampaign:false,qualification:'Fresh pinned-browser control only; not the complete required campaign or a root-cause result.',engine:engine.name(),browser:browser.version(),version:builtVersion,sources,observations,errors},null,2)+'\n');console.log('PASS fresh-capture diagnostic only; full campaign not run by this separate control');
  }else{
  const context=await browser.newContext({viewport:{width:1440,height:1000},hasTouch:true,isMobile:true,reducedMotion:'reduce'});
  await context.addInitScript(()=>sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1'));
@@ -186,6 +218,7 @@ try{
  } finally {
   await archiveContext.close();
  }
+ await stalledCaptureNegative();
  assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
  }
 }catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',scope,completeCampaign:false,sources,observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
