@@ -209,5 +209,13 @@
     "policy_rationale": "Playwright recommends one CI worker for reproducibility/stability and separate jobs for wider parallelism; retain all five existing matrix jobs. This is a harness scheduling policy, not proof that every failure has the same cause.",
     "reference": "https://playwright.dev/docs/ci#workers",
     "preserved": "All route/theme coverage, 30-second readiness predicate, 20-minute job bound, spatial thresholds, production code, visual/transitive dependencies and accepted receipts."
+  },
+  "owned_css_cleanup_review": {
+    "blocked_source": "648b9a91033b86ce55d9e17ec20e6645d20b0c25",
+    "finding": "https://github.com/Valpatel/gyropup/pull/315#issuecomment-6793958443",
+    "actual_reproducer": "Two owned routes in actual checkFreshLayout; original timeout and context close retained but only newest route continued. Older JS gate stayed pending. Earlier control hid this with an external resolver.",
+    "correction": "Retain every releaser in an owned Set, keep ordinary primary release, drain actual finally, and bound allSettled/context close under one 2-second cleanup fence before the separately bounded report write. Routes entering during cleanup release immediately.",
+    "controls": "Actual caller success/failure with two routes, continuation rejection/stall, original error plus continuation/close failures, failed/stalled close, late route and report failure. No external gate access.",
+    "limits": "No claim of multiple CSS requests in original CI; pending native commands or context close are reported incomplete and cannot pass. Original 30-second predicates/response wait and all CSS/layout assertions remain."
   }
 }

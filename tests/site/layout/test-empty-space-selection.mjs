@@ -224,7 +224,7 @@ test('actual CI permutation retains every dynamic route/theme tuple once and rej
 });
 
 
-test('owned talk CSS receipts preserve request identities, bounded outcomes and sanitized errors',async()=>{
+test('owned talk CSS serializer retains identities, caps and sanitized event fields',()=>{
   const source=readFileSync(new URL('../controls/test-robot-controls.mjs',import.meta.url),'utf8');
   const definition=source.match(/^function observeTalkCss\(page,origin\) \{[^]*?^}/m);assert.ok(definition);
   const observe=new Function('safeReadinessURL','safeReadinessText','return ('+definition[0]+');')(safeReadinessURL,safeReadinessText);
@@ -233,15 +233,8 @@ test('owned talk CSS receipts preserve request identities, bounded outcomes and 
   const observation=observe(page,origin);
   const request=token=>({url:()=>origin+'/designer/character/talk.css?v='+token,timing:()=>({startTime:100,requestStart:2,responseStart:4,responseEnd:5,headers:'secret'}),failure:()=>({errorText:'failed at /tmp/private-session/key.json'})});
   const first=request('secret'),second=request('hidden');
-  const handler=source.match(/await p.route\('\*\*\/character\/talk\.css\*',(async route=>\{[^]*?^ \})\);/m);assert.ok(handler);
-  const gates=[];function GatePromise(executor){return new Promise(resolve=>{gates.push(resolve);executor(resolve);});}
-  const fixture=new Function('evidence','Promise','let releaseCss,heldCss;return {route:'+handler[1]+',release:()=>releaseCss?.()};')(observation,GatePromise);
-  for(const req of [first,second])page.emit('request',req);
-  const firstHeld=fixture.route({request:()=>first,continue:async()=>{}});
-  const secondHeld=fixture.route({request:()=>second,continue:async()=>{throw Error('ws://private-host/stream?token=secret');}});
-  fixture.release();await assert.rejects(secondHeld,/private-host/);
-  // Quiesce the deliberately superseded synthetic gate without changing the producer.
-  gates[0]();await firstHeld;
+  for(const req of [first,second]){page.emit('request',req);observation.record('route-enter',{request:req});}
+  observation.record('held-resolver-replaced',{request:first});observation.record('continue-failed',{request:second,error:Error('ws://private-host/stream?token=secret')});
 
   page.emit('response',{request:()=>second,status:()=>200});page.emit('requestfailed',first);
   const navigation={url:page.url,isNavigationRequest:()=>true,frame:()=>frame,timing:()=>({startTime:90,requestStart:1,responseStart:3,responseEnd:4})};
@@ -255,7 +248,6 @@ test('owned talk CSS receipts preserve request identities, bounded outcomes and 
   for(let i=0;i<100;i++)page.emit('request',request(String(i)));
   value=observation.snapshot();assert.equal(value.events.length,64);assert.ok(value.dropped>0);assert.equal(value.matchingRequests,102);assert.equal(value.counts.request,102);
   const clear=source.indexOf("localStorage.removeItem('gyropup-sfx')"),blank=source.indexOf("await page.goto('about:blank')"),fresh=source.indexOf('await checkFreshLayout();');assert.ok(clear<blank&&blank<fresh,'Saved state clears precede retiring the completed availability page');
-  assert.match(source,/catch\(error\)\{failure=error;throw error;}/);assert.match(source,/if\(!failure\)errors.push/,'Secondary evidence errors cannot replace the original failure');
 });
 
 test('talk CSS evidence writes retain original failures and have one finite write bound',async()=>{
@@ -284,4 +276,58 @@ test('actual robot fixture callbacks avoid opaque/foreign storage and retain int
   run('about:','null',true);run('https:','https://other.fixture',true);assert.equal(writes,0);
   run('https:',origin);assert.equal(writes,1);
   assert.throws(()=>run('https:',origin,true),/intended storage denied/);assert.equal(writes,2);
+});
+
+
+test('actual fresh CSS caller drains every owned route under success, failure and bounded cleanup', {timeout:15000},async()=>{
+  const source=readFileSync(new URL('../controls/test-robot-controls.mjs',import.meta.url),'utf8');
+  const extract=pattern=>{const match=source.match(pattern);assert.ok(match);return match[0];};
+  const observe=new Function('safeReadinessURL','safeReadinessText','return ('+extract(/^function observeTalkCss\(page,origin\) \{[^]*?^}/m)+');')(safeReadinessURL,safeReadinessText);
+  const retain=new Function('return ('+extract(/^async function retainTalkCssReport\(observation,error,write\) \{[^]*?^}/m)+');')();
+  const caller=extract(/^async function checkFreshLayout\(\) \{[^]*?^}/m);
+  for(const mode of ['success','primary-failure','continue-failure','primary-continue-failure','close-failure','primary-close-failure','close-stall','continue-stall','late-route','write-failure']){
+    const original=Error('original30s timeout'),secondary=Error(mode),page=new EventEmitter(),origin='https://site.fixture';
+    const primary=['primary-failure','primary-continue-failure','primary-close-failure','close-stall','continue-stall','write-failure'].includes(mode);
+    let handler,closeCalls=0,settled=0,saved,registered=false;
+    const callbacks=[],continued=[],actions=[];
+    page.url=()=>origin+'/designer/sim.html';const frame={url:page.url};page.mainFrame=()=>frame;
+    const startRoute=id=>{
+      const request={url:()=>origin+'/designer/character/talk.css?v='+id,timing:()=>({startTime:id})};page.emit('request',request);
+      const callback=handler({request:()=>request,continue:()=>{
+        continued.push(id);actions.push('continue'+id);
+        if(id===1&&['continue-failure','primary-continue-failure'].includes(mode))return Promise.reject(secondary);
+        if(id===1&&mode==='continue-stall')return new Promise(()=>{});
+        return Promise.resolve();
+      }});callbacks.push(callback);callback.then(()=>settled++,()=>settled++);
+    };
+    Object.assign(page,{
+      route:async(_,callback)=>{handler=callback;},goto:async()=>{startRoute(1);startRoute(2);},
+      waitForFunction:async()=>{if(primary)throw original;},
+      waitForResponse:()=>{registered=true;actions.push('response-listener');return Promise.resolve({finished:async()=>{}});},
+      evaluate:async fn=>fn.toString().includes('const THREE')?{top:0,bottom:1,left:0,right:1,freeTop:0,freeBottom:2,freeRight:2}:fn.toString().includes('projectionMatrix')?[1]:undefined,
+      locator:()=>({click:async()=>{}}),screenshot:async()=>{},
+    });
+    const fresh={addInitScript:async()=>{},newPage:async()=>page,close:async()=>{
+      closeCalls++;if(mode==='late-route')startRoute(3);
+      if(['close-failure','primary-close-failure'].includes(mode))throw secondary;if(mode==='close-stall')await new Promise(()=>{});
+    }};
+    const run=new Function('browser','acknowledgePrototypeNotice','disableAutomaticProbe','base','errors','out','engine','observeTalkCss','retainTalkCssReport','writeFile','assert','safeReadinessText','return ('+caller+');')(
+      {newContext:async()=>fresh},async()=>{},()=>{},origin,[],'.',{name:()=> 'fixture'},observe,retain,async(_,data)=>{if(mode==='write-failure')throw secondary;saved=JSON.parse(data);},assert,safeReadinessText);
+    let actual;try{await run();}catch(error){actual=error;}
+    await Promise.allSettled(callbacks);
+    const count=mode==='late-route'?3:2;
+    assert.equal(closeCalls,1,mode);assert.equal(settled,count,mode);assert.equal(continued.length,count,mode);assert.equal(new Set(continued).size,count,mode);
+    if(primary)assert.equal(actual,original,mode);
+    else if(['continue-failure','close-failure'].includes(mode))assert.equal(actual,secondary,mode);
+    else assert.equal(actual,undefined,mode);
+    if(!primary){assert.equal(registered,true,mode);assert.ok(actions.indexOf('response-listener')<actions.indexOf('continue2'),mode);}
+    if(mode!=='write-failure'){
+      assert.equal(saved.cleanup.pendingRoutes,0,mode);assert.equal(saved.cleanup.heldReleasers,0,mode);
+      assert.equal(saved.error?.message??null,primary?original.message:null,mode);
+      assert.equal(saved.cleanup.context,mode==='close-stall'?'pending':['close-failure','primary-close-failure'].includes(mode)?'failed':'closed',mode);
+      assert.equal(saved.cleanup.timedOut,['close-stall','continue-stall'].includes(mode),mode);
+      assert.equal(saved.cleanup.pendingNativeContinues,mode==='continue-stall'?1:0,mode);
+      assert.equal(saved.cleanup.routeErrors,['continue-failure','primary-continue-failure','continue-stall'].includes(mode)?1:0,mode);
+    }
+  }
 });

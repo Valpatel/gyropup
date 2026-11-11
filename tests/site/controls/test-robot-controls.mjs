@@ -67,16 +67,27 @@ await acknowledgePrototypeNotice(fresh,base);
  await fresh.addInitScript(disableAutomaticProbe,new URL(base).origin);
  const p=await fresh.newPage();p.on('pageerror',e=>errors.push(e.message));
  const evidence=observeTalkCss(p,new URL(base).origin);let failure=null;
- let releaseCss,heldCss;
- await p.route('**/character/talk.css*',async route=>{
-  const request=route.request();evidence.record('route-enter',{request});
-  await new Promise(resolve=>{
-   if(heldCss)evidence.record('held-resolver-replaced',{request:heldCss});
-   heldCss=request;releaseCss=()=>{evidence.record('release',{request});if(heldCss===request)heldCss=null;resolve();};
-  });
-  evidence.record('continue-start',{request});
-  try{await route.continue();evidence.record('continue-complete',{request});}
-  catch(error){evidence.record('continue-failed',{request,error});throw error;}
+ let releaseCss,heldCss,closing=false,routeFailure=null,routeErrors=0,nativePending=0;
+ const releasers=new Set(),routes=new Set();let expireCleanup;
+ const cleanupLimit=new Promise(resolve=>{expireCleanup=resolve;});
+ await p.route('**/character/talk.css*',route=>{
+  const task=(async()=>{
+   const request=route.request();evidence.record('route-enter',{request});
+   await new Promise(resolve=>{
+    if(heldCss)evidence.record('held-resolver-replaced',{request:heldCss});
+    const release=()=>{if(!releasers.delete(release))return;if(heldCss===request)heldCss=null;resolve();evidence.record('release',{request});};
+    releasers.add(release);heldCss=request;releaseCss=release;
+    if(closing)release();
+   });
+   evidence.record('continue-start',{request});
+   try{
+    const continued=route.continue();nativePending++;
+    const completed=Promise.resolve(continued).then(()=>{nativePending--;return null;},error=>{nativePending--;return error;});
+    const error=await Promise.race([completed,cleanupLimit]);if(error)throw error;
+    evidence.record('continue-complete',{request});
+   }catch(error){evidence.record('continue-failed',{request,error});throw error;}
+  })().catch(error=>{routeErrors++;routeFailure??=error;});
+  routes.add(task);task.then(()=>routes.delete(task));return task;
  });
  try {
   await p.goto(base+'/designer/sim.html?run=none&demo=0&sound=0',{waitUntil:'domcontentloaded'});
@@ -110,11 +121,24 @@ await acknowledgePrototypeNotice(fresh,base);
   await p.screenshot({path:`${out}/${engine.name()}-fresh-manual.png`});
  } catch(error){failure=error;throw error;}
  finally {
-  releaseCss?.();
-  try{await fresh.close();evidence.record('context-closed');}
-  catch(error){evidence.record('context-close-failed',{error});if(!failure)errors.push('Fresh context cleanup: '+safeReadinessText(error.message,new URL(base).origin));}
-  const secondary=await retainTalkCssReport(evidence,failure,report=>writeFile(`${out}/${engine.name()}-fresh-talk-css.json`,JSON.stringify(report,null,2)));
-  if(secondary){const message=safeReadinessText(secondary.message,new URL(base).origin);console.error('Talk CSS evidence: '+message);if(!failure)errors.push('Talk CSS evidence: '+message);}
+  closing=true;let closeState='pending',cleanupFailure=null,timedOut=false;
+  const timer=setTimeout(()=>{timedOut=true;expireCleanup(Error('Talk CSS cleanup exceeded 2000 ms'));},2000);
+  try{
+   for(const release of [...releasers]){try{release();}catch(error){cleanupFailure??=error;}}
+   // Queue each released continuation before closing its owned context.
+   await Promise.resolve();
+   const closed=fresh.close().then(()=>{closeState='closed';evidence.record('context-closed');},error=>{closeState='failed';cleanupFailure=error;evidence.record('context-close-failed',{error});});
+   const complete=(async()=>{await closed;while(routes.size)await Promise.allSettled([...routes]);return null;})();
+   const bound=await Promise.race([complete,cleanupLimit]);cleanupFailure??=bound;
+   // Expiry settles the owned callbacks even if a native command never answers.
+   if(bound)await Promise.allSettled([...routes]);
+  }catch(error){cleanupFailure??=error;expireCleanup(error);await Promise.allSettled([...routes]);}
+  finally{clearTimeout(timer);}
+  cleanupFailure??=routeFailure;
+  const observation={snapshot:error=>({...evidence.snapshot(error),cleanup:{context:closeState,timedOut,pendingRoutes:routes.size,pendingNativeContinues:nativePending,heldReleasers:releasers.size,routeErrors}})};
+  const secondary=await retainTalkCssReport(observation,failure,report=>writeFile(`${out}/${engine.name()}-fresh-talk-css.json`,JSON.stringify(report,null,2)));
+  if(secondary)console.error('Talk CSS evidence: '+safeReadinessText(secondary.message,new URL(base).origin));
+  if(!failure&&(cleanupFailure||secondary))throw cleanupFailure||secondary;
  }
 }
 async function playChecks() {

@@ -41,3 +41,25 @@ Preserve the original error if evidence or cleanup fails; retain actual CSS
 continuation, all geometry/overlay assertions and original response deadline.
 Pure controls cover identities, redaction, caps and stalled/failed writes.
 Actual new CI is still required; diagnostics are not a successful interaction.
+
+
+### Review recurrence: observation did not establish owned cleanup
+
+[Independent local-source BLOCK](https://github.com/Valpatel/gyropup/pull/315#issuecomment-6793958443)
+at `648b9a91` executed the actual fresh-layout caller with two held CSS requests
+and an original timeout. Context close ran, but only the newest request
+continued; the older JavaScript gate remained pending. The twenty passing
+controls had missed this because one control released that gate externally.
+This was a demonstrated test-ownership defect, not proof of the original CI
+response-timeout cause.
+
+Keep the primary release unchanged, retain every owned releaser in a Set, and
+drain the Set in actual cleanup. Observe all owned callbacks with bounded
+`allSettled` before the final receipt, including routes entering during teardown.
+A two-second cleanup fence bounds native continuation/context-close waits only
+once teardown starts; it does not change the original response/readiness waits.
+Record pending native commands or a pending/failed close as incomplete rather
+than claiming termination. Preserve the identical original error across cleanup
+and report failures. Actual-caller controls now own every gate themselves and
+cover success, original failure, continuation rejection/stall, failed/stalled
+close, late routes and report failure without external resolver access.
