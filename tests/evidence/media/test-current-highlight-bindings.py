@@ -107,6 +107,22 @@ class CurrentHighlightBindings(unittest.TestCase):
         self.m.git_sha = fixture_git
         return current, capture, hashes
 
+    def test_capture_location_inventory_binds_the_actual_guarded_helper(self):
+        expected = ('tools/site/source-layout.mjs', 'tools/site/source-layout.json',
+                    'tests/site/assembly/build-prototype-session.mjs')
+        self.assertEqual(self.m.CAPTURE_LOCATIONS, expected)
+        recorder = (ROOT / self.m.CAPTURE_SCRIPT).read_text()
+        import ast
+        import re
+        match = re.search(r"^const locationFiles=(\[.*?\]);$", recorder, re.MULTILINE)
+        self.assertIsNotNone(match)
+        self.assertEqual(tuple(ast.literal_eval(match.group(1))), expected)
+        current, capture, hashes = self.capture_fixture()
+        self.m.validate_source_bindings('a'*40, hashes, capture, current)
+        capture['locationContracts']['tests/site/content/test-prototype-session.mjs'] = capture['locationContracts'].pop(expected[-1])
+        with self.assertRaisesRegex(ValueError, 'Incomplete capture location inputs'):
+            self.m.validate_source_bindings('a'*40, hashes, capture, current)
+
     def test_exact_original_mesh_and_source_closure(self):
         c = self.contract()
         self.assertEqual(len(c['parts']), 224)

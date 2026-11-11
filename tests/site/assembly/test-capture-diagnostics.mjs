@@ -28,6 +28,17 @@ test('capture rejection remains the identical failure; no retry or later phase c
  assert.equal(attempts,1);assert.equal(later,false);assert.equal(f.reports.length,1);assert.equal(f.reports[0].capture.status,'failed');assert.equal(f.reports[0].capture.error.name,'TimeoutError');
 });
 
+test('artifact allowance retains the reference bound and distinguishes late success from failure',async()=>{
+ for(const [elapsed,outcome]of [[14900,'completed-within-reference-bound'],[15000,'completed-within-reference-bound'],[16000,'completed-after-reference-bound']]){
+  let clock=0;const f=fixture({options:{path:'/capture/required.png',timeout:30000},metadata:{referenceArtifactBoundMs:15000},now:()=>clock++?elapsed:0});
+  assert.strictEqual(await observeScreenshot(f.input),f.value);assert.equal(f.calls.length,1);assert.equal(f.reports[0].options.timeout,30000);assert.equal(f.reports[0].metadata.referenceArtifactBoundMs,15000);assert.equal(f.reports[0].capture.completionComparedWithReference,outcome);
+ }
+ const original=Error('bounded capture failed'),f=fixture({metadata:{referenceArtifactBoundMs:15000},capture:()=>{throw original;},now:()=>0});
+ await assert.rejects(observeScreenshot(f.input),error=>error===original);assert.equal(f.reports[0].capture.completionComparedWithReference,'capture-failed');
+ const unknown=fixture({metadata:{referenceArtifactBoundMs:15000},now:()=>{throw Error('clock unavailable');}});
+ await observeScreenshot(unknown.input);assert.equal(unknown.reports[0].capture.completionComparedWithReference,'duration-unavailable');
+});
+
 test('collection, protocol observation, timing and report-write errors cannot replace capture failure',async()=>{
  const original=Error('required capture failed'),diagnostic=Error('diagnostic failed');let attempts=0;
  const f=fixture({capture:()=>{attempts++;throw original;},collect:()=>{throw diagnostic;},protocol:{begin(){throw diagnostic;},finish(){throw diagnostic;}},now:()=>{throw diagnostic;},writeReport:()=>{throw diagnostic;}});

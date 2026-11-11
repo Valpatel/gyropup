@@ -1,0 +1,282 @@
+{
+  "schema": "gyropup.archive-retry-media-adoption/1",
+  "date": "2026-11-11",
+  "capture_source": "acd084a690d33957d047bd8bace7d03672aa7552",
+  "adoption_base": "acd084a690d33957d047bd8bace7d03672aa7552",
+  "source_review": "https://github.com/Valpatel/gyropup/pull/307#pullrequestreview-5852657787",
+  "artifact_acceptance": "https://github.com/Valpatel/gyropup/issues/306#issuecomment-6785342621",
+  "root_acceptance": "Exact seven-file map accepted after independent artifact PASS and root inspection of landing poster and four raw segments.",
+  "native_source": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+  "original_collection_sha256": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+  "current_source": {
+    "file": "web/robot-current/manifest.json",
+    "sha256": "3183870617a7ca3182c4a79a2afd8890a546ac2a3353cacc98e5295a63e64fe3"
+  },
+  "assets": {
+    "software/site/assets/robot-poster.png": {
+      "sha256": "80d0d880f6425103da66c21d72f46d14065146fdf8caf1bd18d3830dfe3ba5c5",
+      "bytes": 145492
+    },
+    "software/site/assets/highlights/gyropup-highlights.mp4": {
+      "sha256": "bf3b269134b764bfe5882725a10cc86897d3d72a4804adc107fd1f8272c0fb7b",
+      "bytes": 1952337
+    },
+    "software/site/assets/highlights/gyropup-highlights.webm": {
+      "sha256": "d569ef1ad19ad2d63ca4c8a25981cb496d171ba9ecad04623442d1d6bfa60c84",
+      "bytes": 1621471
+    },
+    "software/site/assets/highlights/gyropup-highlights.webp": {
+      "sha256": "ed07ba42a3e8be3e488b81c7d723d3883465bcf2c9080ca3b7879be445b69c09",
+      "bytes": 33044
+    },
+    "software/site/assets/highlights/receipt.json": {
+      "sha256": "384c7001f5a03bf68508c2dd6ce6d67b96c0aa9e06537041be6d3c5c2915e22b",
+      "bytes": 68174
+    },
+    "software/site/assets/highlights/capture-receipt.json": {
+      "sha256": "0f108e70daa85af6fd29f99b5ffa1ac4a2791ec718b15262bd2dc4aff731f6e5",
+      "bytes": 259599
+    },
+    "software/site/assets/highlights/capture-frames.json": {
+      "sha256": "233cf7bc373afc38d0d6044f2f9e7882859200f0b6fc1c985135df96d96cc152",
+      "bytes": 100989
+    }
+  },
+  "preserved_pre_adoption_snapshot": {
+    "revision": "acd084a690d33957d047bd8bace7d03672aa7552",
+    "members": {
+      "software/site/assets/highlights/receipt.json": "4e9ba968649be0d4b71f149463c3c5bbef2d16c09c3df8095dff396c27dc206a",
+      "software/site/assets/highlights/capture-receipt.json": "19cabfafc2988956c81762f9acc54a009c528785cdc68ebd1518f8f8cdd8bb2a",
+      "software/site/assets/highlights/capture-frames.json": "9f63d60326f3ff67719b8ee389fd68338ded06796d221b2d07fb7ac0827c5532",
+      "software/site/assets/highlights/gyropup-highlights.mp4": "5b431013fa8f2fe91488ebe9a2a5f88594e86200170a5d20524d60ce55f15520",
+      "software/site/assets/highlights/gyropup-highlights.webm": "3bd9f0a9ec8da397fdefa198c26f89f4b16fb5c292a350286cd62439a3f30c87",
+      "software/site/assets/highlights/gyropup-highlights.webp": "aa260dc1304fe1d9fe4c11792e3ca6ae03d6e5b24abf3afeacd78044be24b164",
+      "tests/site/content/test-prototype-session.mjs": "997a39297102005095ee42adc9c6397552e3dc550f0f42494ad554eccf4ecefb",
+      "hardware/exports/leg/rig_jump.mp4": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+      "hardware/exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+      "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581",
+      "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "2eeeb29e4c635607c1f107e433cac0cb82fe4e7b8d88ced127d9ded116b21f1e",
+      "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": "c0e3a6c73a8d31107dd6e71a420ca40b20734064f2283340b0346edd07bbc684",
+      "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "70f1d67fe40a03eeb181e741e9674d9e2f5bbbee7a431494db382ef9e2ff3d1f",
+      "software/site/assets/robot-poster.png": "d06bd35083784582d8e70e0969b341983d00963694c419b7ff798fa96c684c7f"
+    },
+    "unchanged_nonadopted_members": {
+      "tests/site/content/test-prototype-session.mjs": "997a39297102005095ee42adc9c6397552e3dc550f0f42494ad554eccf4ecefb",
+      "hardware/exports/leg/rig_jump.mp4": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+      "hardware/exports/leg/rig-results.json": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+      "hardware/exports/leg/fea/hip-frame-e1-media/hip-frame-e1.mp4": "76518421335431320a7a60c58f66cb817c0f4b5b1b0e9993a62f68d87d065581",
+      "hardware/exports/leg/fea/hip-frame-e1-media/field-receipt.json": "2eeeb29e4c635607c1f107e433cac0cb82fe4e7b8d88ced127d9ded116b21f1e",
+      "hardware/exports/leg/fea/hip-frame-e1-media/video-receipt.json": "c0e3a6c73a8d31107dd6e71a420ca40b20734064f2283340b0346edd07bbc684",
+      "hardware/exports/leg/fea/hip-frame-e1-media/hip_frame-E1.json": "70f1d67fe40a03eeb181e741e9674d9e2f5bbbee7a431494db382ef9e2ff3d1f"
+    },
+    "previous_adoption_receipt": ".agents/plans/end-packs-highlights/adoption.json",
+    "hardware_tree": "346f5a5623560177390ad8cf207e5b8331ab5bae"
+  },
+  "failed_attempt": {
+    "invocation": "91136f1a39864ad2a50bcb0e28cd36f5",
+    "plan_sha256": "000fb1563c6276d2911b5e5a27eacbcd0670e6bfd025325bfcf5925e0a1b8d0c",
+    "status": "FAILED_OR_INCOMPLETE",
+    "exit": 1,
+    "media_capture_started": false,
+    "first_error": "init-control.mjs:13 dynamically constructed regex under-escaped opening parenthesis; SyntaxError before any actual callback case.",
+    "collector_error": "Original byte auditor required RUN-DONE as last line; worker printed original error afterward. Original collector remained failed.",
+    "evidence_archive_sha256": "b55c4f566de1d957b0e31554a288843014c03b9169f0c2d51e156d1e9d4b9747",
+    "packet_archive_sha256": "f39afc14215fee76f309122ae6d94400dcf8656b688f33c26e0afa35e26fce6f",
+    "checkpoint": "https://github.com/Valpatel/gyropup/issues/306#issuecomment-6784963025",
+    "retained": true
+  },
+  "corrected_run": {
+    "invocation": "50934010b0284917b609939912cdc135",
+    "start_utc": "2026-11-11T02:21:37Z",
+    "exit_utc": "2026-11-11T02:32:04Z",
+    "plan_sha256": "399dd267f90d5d7088cd3dd1f96b90d5d52f246297cd68c602f47c9bbb91ad83",
+    "packet_manifest_sha256": "1a22597d9551d0e433a22c8faca3a4322ab2ab066561239debd41ef28fb74eec",
+    "operator_sha256": "72f7563e5e444d751b3760186f95cc9a2621fcb792a52c4ae7ff159bef8daad6",
+    "action_review": "https://github.com/Valpatel/gyropup/issues/306#issuecomment-6785085780",
+    "start_authorization": "https://github.com/Valpatel/gyropup/issues/306#issuecomment-6785100498",
+    "status": "COMPLETE_CANDIDATES_NOT_ADOPTED",
+    "exit": 0,
+    "phases": 12,
+    "all_phase_exits": 0,
+    "guards": {
+      "runtime": true,
+      "source": true,
+      "dist": true,
+      "overlay": true,
+      "clean_source": true,
+      "originals": true
+    },
+    "native_chrome": "155.0.8059.39",
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "provider_hashes_unchanged": true,
+    "dependency_snapshot": {
+      "files": 4616,
+      "bytes": 578653211,
+      "manifest_sha256": "56da42a0059f8c5418b15b8b3ebf73efe19ce4a1b6e2f79f4686692bd8d7e885",
+      "tree_sha256": "4b31afe2dbdc789821c42d26fde1d6d37ef8493e322108c2e5af42d92969cea2"
+    },
+    "output_members_sha256": "e2562f0bdfb2df962f2d78decf660dc292c470585367e16a4032bf9ad3985c80",
+    "final_result_sha256": "830af2aa842f97de99820b885e54cc4231cecedbc14eaf6b8e9dd6f390e675c8",
+    "byte_audit_sha256": "961b3e6c85ffc1c57dd7b06ca4dfd6285e545aaa0278b5063bcb88a8ad45827c",
+    "verified_members": 549,
+    "out_files": 551,
+    "out_bytes": 184381687,
+    "evidence_archive_sha256": "763ac90c9f800d2603a101bf362697b6bea2c22f1ed466c5710842cc2d3c9825",
+    "all_files_manifest_sha256": "3155431d15bc9e6bbaf3c24ee24e8db7284173822b6e91e9435b8cf016f20d69",
+    "archive_files": 561,
+    "archive_verified_hashes": 560,
+    "processes_quiescent": true,
+    "unit_stopped": true,
+    "unit_final_state": "inactive/dead, MainPID0, cgroup absent",
+    "three_prior_failed_units_preserved": true
+  },
+  "poster": {
+    "sha256": "80d0d880f6425103da66c21d72f46d14065146fdf8caf1bd18d3830dfe3ba5c5",
+    "bytes": 145492,
+    "width": 1024,
+    "height": 1024,
+    "browser": "155.0.8059.39",
+    "basePositionM": [
+      0,
+      0.427,
+      0
+    ],
+    "response_byte_matches": 243,
+    "complete_response_byte_matches": true,
+    "receipt_sha256": "ebd293437ec80bfd6d66bd164a5d5462d894abafb560f9121427861db21d358e",
+    "home_leg_mm": 300,
+    "parts": 224
+  },
+  "hero_parity": {
+    "cases": 12,
+    "handoffs": 2,
+    "minimum_iou": 0.9923790686174699,
+    "maximum_color_error": 2.069890721067153,
+    "pageerrors": []
+  },
+  "reel": {
+    "frames": {
+      "turret": 120,
+      "mechanism": 90,
+      "battle": 180,
+      "character": 90
+    },
+    "served_input_bindings": 368,
+    "encoding_source_bindings": 485,
+    "movies": {
+      "gyropup-highlights.mp4": {
+        "bytes": 1952337,
+        "frames": 660,
+        "seconds": 22
+      },
+      "gyropup-highlights.webm": {
+        "bytes": 1621471,
+        "frames": 660,
+        "seconds": 22
+      }
+    },
+    "strict_report_sha256": "1c590038e6be46e0a030b8abafe43791f6a9c016ab72d00fd9fffc38f66494aa",
+    "rejected_controls": [
+      "source hash",
+      "source omission",
+      "self-consistent required mesh omission",
+      "self-consistent required renderer omission",
+      "self-consistent current input omission: web/robot-current/manifest.json",
+      "self-consistent current input omission: web/robot-current/meshes/cheek_left.stl",
+      "self-consistent current input omission: designer/current_robot.js",
+      "self-consistent current input omission: designer/kit/assembly/playback.js",
+      "served current manifest",
+      "current authority",
+      "self-consistent firing limits omission",
+      "served firing limits",
+      "capture location contract",
+      "captured artifact revision",
+      "wrong encoding source revision",
+      "wrong capture source revision with matching served metadata",
+      "capture recipe",
+      "served simulator",
+      "stage instrumentation",
+      "frame count",
+      "wrong original name with unchanged part count",
+      "wrong current holder despite current mode",
+      "presentation changes during capture",
+      "historical load baseline",
+      "leg report drift on disk",
+      "static animation label",
+      "media bytes",
+      "frozen turret",
+      "frozen mechanism",
+      "frozen battle",
+      "frozen leg",
+      "frozen e1",
+      "frozen character"
+    ],
+    "binding_tests_passed": 25,
+    "historical_leg": {
+      "revision": "e7b512870a39259a04a4930e2908af84001bc84e",
+      "video_sha256": "3e5188b87059d75c23e5eb48f32510aa5b4e4c5726e66ef3c43e86b15d28bc9c",
+      "report_sha256": "171a1d4f2195468a235313fce29e5dde1272499b0d0934e22ad2bab5564ba902",
+      "half_mass_kg": 18.75,
+      "bus_v": 36.0,
+      "wheel": "10in-hub-motor"
+    },
+    "historical_e1": {
+      "source_start_seconds": 1,
+      "source_duration_seconds": 3,
+      "transient_simulation": false,
+      "deformation_exaggeration": 16,
+      "safety_factor": 1.6,
+      "required": 2,
+      "baseline_kg": 37.5
+    }
+  },
+  "browser_observations": {
+    "poster": {
+      "pageerrors": [],
+      "contexts": 1,
+      "browser_closed": true,
+      "listener_closed": true,
+      "livepoll_requests": 0
+    },
+    "hero-parity": {
+      "pageerrors": [],
+      "contexts": 7,
+      "browser_closed": true,
+      "listener_closed": true,
+      "livepoll_requests": 0
+    },
+    "reel-capture": {
+      "pageerrors": [],
+      "contexts": 4,
+      "browser_closed": true,
+      "listener_closed": true,
+      "livepoll_requests": 0
+    }
+  },
+  "initialization_controls": {
+    "cases": 10,
+    "pass": true,
+    "expected_negative_cases_remain_separate_from_production_errors": true
+  },
+  "recovery": {
+    "host_role": "rendering compute",
+    "service": "gy306-retry-media-extractfix-acd-20261111.service",
+    "log_roles": [
+      "run.log",
+      "out/phases.jsonl"
+    ],
+    "terminal_roles": [
+      "done",
+      "unique RUN-DONE plus matching original error",
+      "exact service exit/invocation"
+    ],
+    "collect": "Fetch terminal output into a fresh directory, verify the owned cgroup empty, compare all output-members hashes and retain the actual worker exit separately from byte-verification success. Raw frames and sealed packets are retained privately by role."
+  },
+  "limits": [
+    "No CAD/native export/FEA run, new geometry, timeline or observer change. Twelve guide posters and original hardware/history remain unchanged.",
+    "Fourteen original snapshot members remain in the recorded Git revision and prior receipts; only the explicit seven current media destinations are superseded.",
+    "Native Chrome candidate generation does not establish WebKit parity, full final CI, publication, physical fit/strength, or download performance.",
+    "Historical leg and failed static E1 inserts retain their original qualification. Prior failed and qualified 22-error attempts remain their original outcomes."
+  ]
+}
