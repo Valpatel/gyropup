@@ -199,3 +199,33 @@ in 595 ms / 12,726 ms for context/browser with terminal owned cgroup empty and n
 collector errors; overall B is still failed, and V3's failed close remains failed.
 No made/mobile/scope/status/reload/PDF acceptance, new browser or replay is claimed
 while authoring this repair.
+
+
+## A sent native capture without an observed reply localizes only a boundary
+
+2026-11-11, #281 full attempt C, report SHA-256
+f51a584a1ad5ff1ee607299e18b134a31977846b71e263057ecdfff6deae80ed;
+made phase SHA-256
+0380e895b9c60630bc0614c7a0215a3ffb0b6b57726d83af80e046a4f2a9bc57.
+[The selected receipt](../plans/printable-parts/public-observation/attempt-C.json)
+retains timings and original limits. Seven delivered identities and real Combined
+224/30 passed. The coherent selected Buy plus actual made target satisfied the
+reviewed zero-click contract, and native framing/clip/hit/column proofs succeeded.
+This real observation supports that contract, not a full public pass or cause
+claim for B. Queue/orders PNGs returned; the one made screenshot exceeded its
+unchanged 30-second budget and produced no image.
+
+The passive observer recorded screenshot preparation 7.836 ms, fonts 90.773 ms,
+layout 0.371 ms and restoration 7.045 ms, all with replies. Page.captureScreenshot
+was sent with no reply observed before observer detach. Capture failed after
+30,099 ms. This separates the observed pending native capture from a font wait;
+it does not identify an app, compositor, GPU or environment defect, prove no late
+reply occurred, or justify changing timeout/render/focus/scene/font state. The
+application/environment cause remains unproven. Keep the original timeout and
+phase report; do not retry or manufacture a pass from successful prior steps.
+
+Context/browser close returned in 591 / 2,717 ms and all other settlement returned;
+terminal owned-cgroup emptiness had no collector errors. Those cleanup successes
+do not waive C's screenshot failure or clear V3's distinct close failure. No made
+or mobile image, scope/status/reload check or public PDF was produced. No browser
+replay or functional change was used to publish this evidence.

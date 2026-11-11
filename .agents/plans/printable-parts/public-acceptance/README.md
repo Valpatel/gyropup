@@ -9,12 +9,15 @@ flowchart LR
 ```
 
 This is a recoverable procedure for #281, not an execution approval or a public
-pass. [Actual A/V2/V3/B observations](../public-observation/README.md) remain failed:
+pass. [Actual A/V2/V3/B/C observations](../public-observation/README.md) remain failed:
 A framed the wrong content and never admitted HTML; V2 failed before capture;
 V3 produced two correct desktop captures but exceeded graceful browser-close's
 15-second bound. B returned the same two desktop images, then failed a redundant
-Buy click before made visibility was inspected; its successful cleanup does not
-clear any earlier failed attempt. Full public/PDF acceptance is still outstanding. Source-fixture
+Buy click before made visibility was inspected. C verified coherent selected-panel
+reuse and native made framing, then failed its 30-second screenshot after fonts/
+layout returned, with no native capture reply observed. Successful cleanup does
+not clear either failed attempt or establish its cause. Full public/PDF acceptance
+is still outstanding. Source-fixture
 PDFs in [the parent evidence](../README.md) remain separate. No printer or purchase
 is operated by this procedure.
 

@@ -23,3 +23,16 @@ not clear later B failure. Preserve read-only preflight failures separately from
 actual execution receipts so recovery does not replay work or miscount attempts.
 This lesson records the operator mistake; it adds no new approval format or
 runtime waiver to the acceptance harness.
+
+
+## Read the manifest schema before iterating its file hashes
+
+2026-11-11, preparation for full attempt C. A separate read-only arming check
+raised FileNotFoundError for schema because the coordinator treated the versioned
+preparation envelope as the older bare file map. The [original safe receipt](../plans/printable-parts/public-observation/coordinator-manifest-preflight-failure.json)
+records schema gyropup.private-acceptance-preparation/1 and 75 entries under
+files_sha256. Require the actual schema and source head, then verify those file
+entries; do not interpret envelope metadata as paths or change a valid payload to
+fit a stale consumer. The correction changed no runtime/input/schema bytes and
+preceded arming: contract false, no seal/marker/unit/browser/output. It was not
+another attempt, and it does not explain or clear C's later screenshot failure.

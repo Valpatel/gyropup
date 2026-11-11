@@ -56,3 +56,13 @@ existing visibility wait. Bounded passive receipts keep native errors unchanged.
 This is a helper-contract correction, not an app/environment cause or performance
 fix, and it cannot retroactively turn B into a pass. Failing-state controls and
 independent source review/normal CI precede any separately reviewed future action.
+
+## C preserves a measured failure without a speculative repair
+
+The [selected C receipt](../public-observation/attempt-C.json) records actual
+selected Buy/made target reuse, native framing and visible grid proof on reviewed
+`9f42715f`. Queue/orders captures returned; made exceeded 30 seconds. Preparation,
+fonts/layout and restoration returned, while no native capture reply was observed
+before detach. All cleanup returned and the exact owned cgroup was empty. Overall
+C remains failed, with no made/mobile/PDF/state result or established cause.
+This update adds only evidence/lessons, not a helper change or another attempt.

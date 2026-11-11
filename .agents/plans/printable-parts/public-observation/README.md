@@ -1,6 +1,6 @@
 # Actual public observation remains incomplete
 
-All four actual attempts below failed. This retained selection contains public
+All five actual attempts below failed. This retained selection contains public
 measurements/images, not private contracts/providers or a new execution approval.
 The immutable original report/cleanup hashes are in [outcomes.json](outcomes.json).
 All used actual main `b894a51c`, assets `f84a162790b9e916fa39` and the real Combined
@@ -13,6 +13,7 @@ was used. Printed legs, CAD and product assets did not change.
 | V2 | Seven exact identities admitted | Zero captures/PDFs | Native-scroll wrapper exceeded about five seconds; geometry also mixed root coordinates |
 | V3 | Seven exact identities admitted | Two correctly framed desktop PNGs; zero PDFs | Graceful browser close exceeded its unchanged 15-second bound |
 | B | Seven exact identities admitted | Queue/orders desktop PNGs; zero PDFs | Redundant Buy click timed out before made target visibility was inspected |
+| C | Seven exact identities admitted | Queue/orders desktop PNGs; zero PDFs | Made screenshot exceeded 30 seconds after verified panel state and native framing |
 
 [Original A image](attempt-A-queue-misframed.png) shows coupon tail/footer rather
 than the queue header. Positive horizontal alignment/widths alone did not establish
@@ -75,3 +76,37 @@ exact-head COMMENTED PASS review. Correcting the repository-specific predicate
 changed no runtime input and started no earlier browser/unit/marker. Its original
 SHA-256 is c9aea9211c131fa538b0f734d5e73dc43a501842fc3f3bd3e65147b081f605ff.
 That preflight is not an additional public attempt.
+
+## Full attempt C localizes a capture boundary, not its cause
+
+[The selected C receipt](attempt-C.json) and [independent read-only disposition](https://github.com/Valpatel/gyropup/pull/320#issuecomment-6808815918) bind original report, made-capture phase,
+cleanup and 92-file backup hashes. Reviewed procedure source `9f42715f` had all 37
+exact-head CI checks green before this one full attempt. The actual seven served
+identities and Combined 224-part/30-step assembly passed. C recorded coherent
+selected Buy state and the actual connected CSS-rendered made target before and
+after zero-click reuse. Native framing, two sampled geometry proofs, clip/hit and
+column checks succeeded. This supplies real evidence for that narrow helper
+contract; it does not complete acceptance or explain B's stalled action.
+
+Queue/orders desktop captures returned once in 11.797 / 22.498 seconds with the
+same V3 pixel hashes, so their images are reused without duplicate binaries. Made
+then exceeded the unchanged 30-second screenshot bound and produced no PNG. Its
+passive protocol receipt records preparation, font readiness and layout replies;
+Page.captureScreenshot was sent but had no reply observed before observer detach.
+Restoration returned. This localizes the outstanding observed boundary; it does
+not establish app, compositor, GPU or environment cause. Do not turn missing reply
+telemetry into a claim that Chrome never replied or that a specific fix is known.
+
+C context/browser close returned in 591 / 2,717 ms; all settlement phases returned,
+and the exact owned cgroup was empty without collector errors. Overall C remains
+failed. No made/mobile images, scope/status/reload checks or public PDFs passed.
+Earlier A/V2/V3/B and the Waveshare failure remain retained; no replay or functional
+repair was performed to record this evidence. Any future action needs separately
+supported cause evidence and the normal source/action gates, not a new timeout.
+
+A separate [manifest-envelope preflight receipt](coordinator-manifest-preflight-failure.json)
+records an operator readback error before arming: the versioned preparation
+manifest was treated as a bare file map. Reading its actual schema/source head
+and files_sha256 corrected the predicate without changing runtime bytes or the
+contract, which was still false. No earlier seal/marker/unit/browser/output
+existed. This was a read-only preflight failure, not another public attempt.
