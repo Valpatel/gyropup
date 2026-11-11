@@ -11,7 +11,7 @@
   "parents": {
     "base": "2011e4f3b67ba52c17e535ef642a648fc855c5b9",
     "simulator": "daddda25dabe541b287a84d1391738b91496cf0d",
-    "home": "605e080f7b35aea2029cc48ebf2f8d32fc09c09b"
+    "home": "2066e779761cc43bebf66efa3ca2048a039f09c8"
   },
   "normal_merge_commits": [
     "ec6befba46a98e075ad50dbbaea70c97a4e05d3c",
@@ -86,18 +86,102 @@
   },
   "reviews": {
     "simulator_source": "https://github.com/Valpatel/gyropup/pull/312#pullrequestreview-5853654941",
-    "home_source": "https://github.com/Valpatel/gyropup/pull/314#pullrequestreview-5853738862"
+    "home_source": "https://github.com/Valpatel/gyropup/pull/314#pullrequestreview-5853738862",
+    "home_followup_source": "https://github.com/Valpatel/gyropup/pull/314#pullrequestreview-5853921303",
+    "prior_aggregate_source": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5853816992"
   },
   "next": [
-    "Finish remaining independently reviewed homepage focused browser checks. Root owns their lane.",
-    "Build and run pure/source/privacy checks on composed source, then independent composed source review.",
-    "Prepare newly namespaced media plan/operator with read-only existing provider. Seal only after homepage focused acceptance and exact source freeze.",
-    "Independent exact packet review, then explicit root START for one fresh remote capture. No previous operator or unit resubmission.",
+    "Build and run exact composed pure/source/privacy checks, then independent current source review.",
+    "Freeze the final pushed aggregate and seal a new namespace/source-bound media plan and operator. No remote preflight or launch in preparation.",
+    "Independent exact packet review, then explicit root START for one fresh remote capture. Preserve all previous operators/units/results.",
     "Independent artifact review, seven-file adoption, normal final CI and normal dev/main closeout."
   ],
   "limits": [
     "Composition is not browser, media, mechanical or release acceptance.",
     "No local browser/native/remote media run or shared-preview mutation in this composition task.",
     "Retain original accepted source acd084a and all failed runs as historical evidence."
-  ]
+  ],
+  "initial_home": "605e080f7b35aea2029cc48ebf2f8d32fc09c09b",
+  "followup_merge": "16cbc29e0c4cdfe970d33961a5bdf446832233a3",
+  "focused_browser_evidence": {
+    "simulator": "Topic availability Chrome/WebKit, loading Chrome and corrected transitions Chrome/WebKit accepted by root; original failures retained.",
+    "home_functional": "Four original 605e hero/stories engine cases passed and cleaned; 2066 typography two-engine/four-width positive and actual DOM negative passed.",
+    "resting_capture_action_review": "https://github.com/Valpatel/gyropup/pull/314#pullrequestreview-5853978777",
+    "resting_captures": {
+      "chromium": {
+        "source": "2066e779761cc43bebf66efa3ca2048a039f09c8",
+        "report_sha256": "4862b4ab60c5acdea908109bd7c188272313872f6ded43cd5d8ead637f91d7c5",
+        "invocation": "b04ab1520aa44cc0a5ff801060c9cc3b",
+        "unit_result": "success",
+        "exit": 0,
+        "main_pid": 0,
+        "cgroup_absent": true,
+        "tcp_connection_refused": true,
+        "rows": [
+          {
+            "width": 320,
+            "scroll_y": 0,
+            "focus": "BODY",
+            "skip_bottom": -32,
+            "frames": [
+              3,
+              4
+            ],
+            "triangles": 347051,
+            "opaque_pixels": 15429
+          },
+          {
+            "width": 1440,
+            "scroll_y": 0,
+            "focus": "BODY",
+            "skip_bottom": -32,
+            "frames": [
+              7,
+              8
+            ],
+            "triangles": 347051,
+            "opaque_pixels": 28424
+          }
+        ]
+      },
+      "webkit": {
+        "source": "2066e779761cc43bebf66efa3ca2048a039f09c8",
+        "report_sha256": "2a94b369bb8637c812e7367fd1d5c0bf2b7820db390fff7d6b37c790339925d9",
+        "invocation": "f6700e254c0f47b79804a0b7def18766",
+        "unit_result": "success",
+        "exit": 0,
+        "main_pid": 0,
+        "cgroup_absent": true,
+        "tcp_connection_refused": true,
+        "rows": [
+          {
+            "width": 320,
+            "scroll_y": 0,
+            "focus": "BODY",
+            "skip_bottom": -32,
+            "frames": [
+              2,
+              3
+            ],
+            "triangles": 347051,
+            "opaque_pixels": 15434
+          },
+          {
+            "width": 1440,
+            "scroll_y": 0,
+            "focus": "BODY",
+            "skip_bottom": -32,
+            "frames": [
+              5,
+              6
+            ],
+            "triangles": 347051,
+            "opaque_pixels": 28423
+          }
+        ]
+      }
+    },
+    "root_visual_acceptance": "Root separately inspected all eight resting full-page and actual-renderer PNGs and accepted corrected text/current robot presentation.",
+    "limit": "Top-rest phone full-page screenshot leaves an offscreen lazy reel poster unhydrated; it does not establish reel visual acceptance. Existing functional reel/story evidence is separate."
+  }
 }

@@ -4,6 +4,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A functional homepage check passes but a resting capture shows a displaced skip link, blank canvas or lazy offscreen picture | [Landing capture preconditions and claim limits](domains/landing-preview.md) |
 | A first-load failure route sees no request after a model round trip, and the selection never reverts | [Loading fixture cache ownership](domains/loading-readiness.md) |
 | A cached CAD illustration has new source headers but old body membership, or native and projection runtimes are conflated | [Bind original collection and new projection consumer separately](inbox/2026-11-10-cached-projections-need-separate-consumer-provenance.md) |
 | Small mode-switch doubles pass but recorded-only model construction fails or metadata remains on the previous body | [Exercise the real archived constructor and atomic holder](inbox/2026-11-10-atomic-model-switches-need-real-archive-construction.md) |

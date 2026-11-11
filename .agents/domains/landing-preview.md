@@ -23,3 +23,5 @@ files, not a rendered image. The source authority remains null until separate
 reviewed data adoption, and actual model motion, capture action, image inspection
 and final parity still precede public adoption. The poster's fixed300mm home is
 not a requirement that authored video motion remain at that height.
+
+For a resting homepage screenshot, record document-top scroll, BODY focus and an unfocused skip-link box above the viewport before and after capture. Prove keyboard accessibility separately, then explicitly end that interaction before preparing the resting state. Retain actual renderer-frame/triangle/decoded-pixel evidence when using the existing export hook; disclose that it explicitly renders rather than proving natural offscreen animation. A full-page screenshot does not hydrate an offscreen lazy reel or establish playback/visual acceptance for it. Keep those claims tied to actual exercised reel/media evidence.
