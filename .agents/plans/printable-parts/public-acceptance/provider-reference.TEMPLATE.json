@@ -17,5 +17,9 @@
     "expected_browser_version": "TODO_ACTUAL_BROWSER_VERSION",
     "sha256": "TODO_CHROME_64_HEX"
   },
-  "limits": "Bind installed providers without installing or replacing them. This template is not execution evidence."
+  "limits": "Bind installed providers without installing or replacing them. This template is not execution evidence.",
+  "capture_protocol": {
+    "path": "TODO_SAME_PLAYWRIGHT_CRCONNECTION_FILE",
+    "sha256": "TODO_ACTUAL_CRCONNECTION_SHA256"
+  }
 }

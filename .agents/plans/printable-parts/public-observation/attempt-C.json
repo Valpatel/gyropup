@@ -1,0 +1,416 @@
+{
+  "attempt": "C",
+  "pass": false,
+  "report_sha256": "f51a584a1ad5ff1ee607299e18b134a31977846b71e263057ecdfff6deae80ed",
+  "terminal_receipt_sha256": "bed1c388948ca153a24ac3406c48a4e4197478b9774d7673e96d38bfb16902ed",
+  "made_capture_phase_sha256": "0380e895b9c60630bc0614c7a0215a3ffb0b6b57726d83af80e046a4f2a9bc57",
+  "backup_manifest_sha256": "65914020135346bbf30923e6ceff1392499cc8fdf7ac46d0f85134f54b00671d",
+  "backup_members": 92,
+  "runtime_source": "9f42715ff26480cc5e17717acacb9634cabb706a",
+  "runtime_source_review": "https://github.com/Valpatel/gyropup/pull/320#pullrequestreview-5865996009",
+  "runtime_source_ci": "All 37 exact-head checks passed before C execution, including required aggregates. This does not cover later evidence-only commits.",
+  "main": "b894a51c3cb0a7394df467d826c4624a38fdaafe",
+  "assets": "f84a162790b9e916fa39",
+  "guide": {
+    "assembly": "combined",
+    "snapshot": "combined-wip-3a40891962b0",
+    "native": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+    "collection": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+    "model": "fd40d4b43beb93b7ef3e6ac7bc1798a804e195a31062748cd23d87cac9ac28ca",
+    "parts": 224,
+    "steps": 30
+  },
+  "phase": "made observed screenshot",
+  "error_excerpt": "page.screenshot: Timeout 30000ms exceeded.\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n  - fonts loaded",
+  "elapsed_ms": 115810,
+  "admitted_sources": [
+    {
+      "url": "/designer/build.html",
+      "pathname": "/designer/build",
+      "identity": "exact bound deployment response",
+      "sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+      "compiled_sha256": "ced95b7eafb90cb99f63c7a9b71ce85d94e9e43eb04653f25786ccac4c7993a5",
+      "served_sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+      "transformation": "one exact byte insertion",
+      "insertion_offset": 41928,
+      "insertion_sha256": "788159bec5be034f2413739258f81670e634b355a229f81a02372df9f4b931c2",
+      "insertion_bytes": 367
+    },
+    {
+      "url": "/designer/portal-parts.css",
+      "pathname": "/designer/portal-parts.css",
+      "identity": "unchanged source/build bytes",
+      "sha256": "c8db9ec625155c87647f5c66744619f68f1f8edb3d439ec2cbf0ca477b7bf2f4",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/kit/part-table.css",
+      "pathname": "/designer/kit/part-table.css",
+      "identity": "unchanged source/build bytes",
+      "sha256": "381d5cd4d2453905f356ef37a90c5e723780bffae3b9cb5b3fe4a048ab72aa68",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/assembly/build-guide.js",
+      "pathname": "/designer/assembly/build-guide.js",
+      "identity": "unchanged source/build bytes",
+      "sha256": "893000351e387541696bfb7110e446551b0240f91fff97e3a0169ded3f38d99a",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/build.js",
+      "pathname": "/designer/build.js",
+      "identity": "unchanged source/build bytes",
+      "sha256": "2ff18334faa3515a33641167110ecd8cf2d17855d4966b2d6955142161186976",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/kit/part-table.js",
+      "pathname": "/designer/kit/part-table.js",
+      "identity": "unchanged source/build bytes",
+      "sha256": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/portal-parts.js",
+      "pathname": "/designer/portal-parts.js",
+      "identity": "unchanged source/build bytes",
+      "sha256": "fc026d4152b1ebc8ccc39d60f3ed2e98a2bc55f2d393b17588ff8e2689802c24",
+      "v": "f84a162790b9e916fa39"
+    }
+  ],
+  "captures": [
+    {
+      "name": "queue-1280",
+      "elapsedMs": 11797.250246000003,
+      "artifactBoundMs": 30000
+    },
+    {
+      "name": "orders-1280",
+      "elapsedMs": 22498.055555999992,
+      "artifactBoundMs": 30000
+    }
+  ],
+  "captureAttempts": {
+    "queue-1280": 1,
+    "orders-1280": 1,
+    "made-1280": 1
+  },
+  "png_sha256": {
+    "queue": "c97c8819227d65db5435e4e59c690bc69ee5c44bc9e3817a15af15af7e0b084f",
+    "orders": "c529b787afb610c045547c5f09db05e04f7aa69b1cf020b7cf2be82a4381cc2d"
+  },
+  "shared_pngs": {
+    "queue": "V3-queue-1280.png",
+    "orders": "V3-orders-1280.png"
+  },
+  "made_panel": {
+    "decision": "already-selected",
+    "clickAttempts": 0,
+    "status": "passed",
+    "before": {
+      "atMs": 38282.79999999702,
+      "documentId": 1794436455712.1,
+      "requested": "buy",
+      "scrollX": 0,
+      "scrollY": 643,
+      "visibility": "visible",
+      "tabs": [
+        {
+          "key": "print",
+          "pressed": "false",
+          "disabled": false,
+          "rendered": true
+        },
+        {
+          "key": "buy",
+          "pressed": "true",
+          "disabled": false,
+          "rendered": true
+        },
+        {
+          "key": "setup",
+          "pressed": "false",
+          "disabled": false,
+          "rendered": true
+        }
+      ],
+      "panels": [
+        {
+          "key": "setup",
+          "hidden": true,
+          "rendered": false
+        },
+        {
+          "key": "buy",
+          "hidden": false,
+          "rendered": true
+        },
+        {
+          "key": "print",
+          "hidden": true,
+          "rendered": false
+        }
+      ],
+      "target": {
+        "exists": true,
+        "connected": true,
+        "panel": "buy",
+        "rendered": true,
+        "rect": {
+          "left": 36,
+          "top": 2501.96875,
+          "right": 1311,
+          "bottom": 3905.96875,
+          "width": 1275,
+          "height": 1404
+        },
+        "dataRows": 12,
+        "firstId": "made/leg/output_adapter"
+      }
+    },
+    "after": {
+      "atMs": 38370.199999999255,
+      "documentId": 1794436455712.1,
+      "requested": "buy",
+      "scrollX": 0,
+      "scrollY": 643,
+      "visibility": "visible",
+      "tabs": [
+        {
+          "key": "print",
+          "pressed": "false",
+          "disabled": false,
+          "rendered": true
+        },
+        {
+          "key": "buy",
+          "pressed": "true",
+          "disabled": false,
+          "rendered": true
+        },
+        {
+          "key": "setup",
+          "pressed": "false",
+          "disabled": false,
+          "rendered": true
+        }
+      ],
+      "panels": [
+        {
+          "key": "setup",
+          "hidden": true,
+          "rendered": false
+        },
+        {
+          "key": "buy",
+          "hidden": false,
+          "rendered": true
+        },
+        {
+          "key": "print",
+          "hidden": true,
+          "rendered": false
+        }
+      ],
+      "target": {
+        "exists": true,
+        "connected": true,
+        "panel": "buy",
+        "rendered": true,
+        "rect": {
+          "left": 36,
+          "top": 2501.96875,
+          "right": 1311,
+          "bottom": 3905.96875,
+          "width": 1275,
+          "height": 1404
+        },
+        "dataRows": 12,
+        "firstId": "made/leg/output_adapter"
+      }
+    }
+  },
+  "made_framing": {
+    "totalBoundMs": 5000,
+    "status": "available",
+    "steps": [
+      {
+        "phase": "resolve pinned table/header",
+        "status": "available",
+        "startedMs": 82720.041858,
+        "completedMs": 82824.081749
+      },
+      {
+        "phase": "before native scroll",
+        "status": "available",
+        "startedMs": 82824.086858,
+        "completedMs": 82831.980904
+      },
+      {
+        "phase": "one native Element.scrollIntoView",
+        "status": "available",
+        "startedMs": 82831.996042,
+        "completedMs": 82920.477462
+      },
+      {
+        "phase": "passive sample 1",
+        "status": "available",
+        "startedMs": 82920.483674,
+        "completedMs": 82927.561098
+      },
+      {
+        "phase": "100 ms passive gap",
+        "status": "available",
+        "startedMs": 82927.575916,
+        "completedMs": 83028.083392
+      },
+      {
+        "phase": "passive sample 2",
+        "status": "available",
+        "startedMs": 83028.092859,
+        "completedMs": 83125.309995
+      }
+    ],
+    "stability": {
+      "pass": true,
+      "maxDelta": 0,
+      "reasons": []
+    }
+  },
+  "made_capture": {
+    "metadata": {
+      "scope": "required full-acceptance screenshot",
+      "table": "made",
+      "main": "b894a51c3cb0a7394df467d826c4624a38fdaafe",
+      "assets": "f84a162790b9e916fa39",
+      "provider": "151.0.7922.71",
+      "helper_sha256": "2015a3357781889f2679da44a89c451787f24ce91dd70fcf657de2bc3aa98f79",
+      "referenceArtifactBoundMs": 30000,
+      "qualification": "One required screenshot after native framing; historical failed attempts remain failed."
+    },
+    "options": {
+      "file": "made-1280.png",
+      "timeout": 30000
+    },
+    "capture": {
+      "startedMs": 83222.159521,
+      "status": "failed",
+      "error": {
+        "name": "TimeoutError",
+        "message": "page.screenshot: Timeout 30000ms exceeded.\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n"
+      },
+      "completedMs": 113321.432087,
+      "durationMs": 30099.272566,
+      "completionComparedWithReference": "capture-failed"
+    },
+    "protocol": {
+      "supported": true,
+      "calls": [
+        {
+          "id": 347,
+          "method": "Runtime.callFunctionOn",
+          "phase": "prepare-screenshot",
+          "sentMs": 83222.517463,
+          "receivedMs": 83230.35388,
+          "durationMs": 7.836416999998619,
+          "errorCode": null
+        },
+        {
+          "id": 348,
+          "method": "Runtime.callFunctionOn",
+          "phase": "font-ready",
+          "sentMs": 83230.494694,
+          "receivedMs": 83321.267844,
+          "durationMs": 90.77315000000817,
+          "errorCode": null
+        },
+        {
+          "id": 349,
+          "method": "Page.getLayoutMetrics",
+          "phase": "Page.getLayoutMetrics",
+          "sentMs": 83321.355789,
+          "receivedMs": 83321.726674,
+          "durationMs": 0.3708850000111852,
+          "errorCode": null
+        },
+        {
+          "id": 350,
+          "method": "Page.captureScreenshot",
+          "phase": "Page.captureScreenshot",
+          "sentMs": 83321.763353
+        },
+        {
+          "id": 351,
+          "method": "Runtime.callFunctionOn",
+          "phase": "restore-screenshot",
+          "sentMs": 113222.668522,
+          "receivedMs": 113229.713395,
+          "durationMs": 7.0448729999916395,
+          "errorCode": null
+        }
+      ],
+      "observerErrors": [],
+      "droppedCalls": 0
+    },
+    "before_status": "available",
+    "after_status": "available"
+  },
+  "pdf_count": 0,
+  "errors": [],
+  "failures": [],
+  "cleanup": {
+    "contextClosed": true,
+    "browserClosed": true,
+    "workSettled": true,
+    "deliveriesSettled": true,
+    "positioningSettled": true
+  },
+  "cleanup_phases": [
+    {
+      "label": "context close",
+      "status": "returned",
+      "timeoutMs": 5000,
+      "durationMs": 591.3698240000085,
+      "operationSettled": true,
+      "observerErrors": []
+    },
+    {
+      "label": "browser close",
+      "status": "returned",
+      "timeoutMs": 15000,
+      "durationMs": 2716.8375849999866,
+      "operationSettled": true,
+      "observerErrors": []
+    },
+    {
+      "label": "work settle",
+      "status": "returned",
+      "timeoutMs": 2000,
+      "durationMs": 0.03828199999406934,
+      "operationSettled": true,
+      "observerErrors": []
+    },
+    {
+      "label": "deliveries settle",
+      "status": "returned",
+      "timeoutMs": 2000,
+      "durationMs": 0.031379000007291324,
+      "operationSettled": true,
+      "observerErrors": []
+    },
+    {
+      "label": "positioning settle",
+      "status": "returned",
+      "timeoutMs": 2000,
+      "durationMs": 0.027361000000382774,
+      "operationSettled": true,
+      "observerErrors": []
+    }
+  ],
+  "terminal_empty": true,
+  "collector_errors": [],
+  "limits": "Seven source/deployment identities and actual Combined 224/30 verified. Coherent selected Buy plus actual made target qualified zero-click reuse; real native framing/clip/hit proof succeeded. This is panel-contract evidence only. Queue/orders desktop captures completed; made screenshot exceeded unchanged 30 seconds. Font readiness and layout returned; native Page.captureScreenshot was sent with no reply observed before observer detach; restoration returned. No app, GPU, compositor, environment or root cause established. No made PNG, mobile, scope/status/reload/PDF outputs. Successful cleanup does not erase this or prior failed attempts. No repair/replay/new browser was performed to record this receipt.",
+  "independent_disposition": "https://github.com/Valpatel/gyropup/pull/320#issuecomment-6808815918",
+  "issue_disposition": "https://github.com/Valpatel/gyropup/issues/281#issuecomment-6808819350"
+}

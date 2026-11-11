@@ -147,3 +147,85 @@ screenshot limit; the explicit fresh Chromium diagnostic also stays15s. Pure
 observer error-propagation tests remain engine-independent. A future WebKit
 native timeout control needs its own demonstrated stall; do not weaken the
 rejection assertion or infer shared behavior from one browser's result.
+
+
+## Root viewport coordinates and nested clips are different evidence
+
+2026-11-11, #281 public A/V2/V3. [Selected immutable observations](../plans/printable-parts/public-observation/README.md) retain original report/cleanup hashes and actual PNGs. A's one queue image showed coupon tail/footer, although widths and horizontal header/cell deltas passed. Its harness scrolled only the window and never checked vertical visibility through the planner/table scrollers. A admitted only six JS/CSS assets: local compiled HTML and the deployed response differed by Cloudflare's exact beacon insertion, so HTML was never admitted. Await all seven explicit source/deployment checks before capture; bind the full response and exact byte difference, never strip arbitrary HTML.
+
+V2 admitted seven identities but made zero screenshots. Its five-second Playwright scroll wrapper ended with an untimed waiting-for-stable log; that does not separate stable-state waiting from native scroll delegation. The collector also combined HTML's document-relative rect.top with root clientHeight, a viewport measurement. At scrollY 643 it invented clip bottom 257; at 1890, -990. Per [CSSOM View](https://drafts.csswg.org/cssom-view/#dom-element-clientheight) and [Overflow viewport propagation](https://drafts.csswg.org/css-overflow-3/#overflow-propagation), model the standards root viewport in viewport coordinates and retain its raw document box only as telemetry. Keep ordinary BODY/planner/table clips; do not blanket-skip HTML/BODY. Explicitly reject unsupported mode/zoom/propagation profiles. Retained V2 rows still fail real nested clipping after correcting only the root.
+
+V3 used one native instant/center/nearest scroll and two time-separated passive samples, with the same connected header/document, unchanged horizontal offsets and hit proofs. It returned correct desktop queue/orders PNGs. This is prospective sampled geometry evidence, not consecutive-frame cadence, a renderer fix or an explanation of A's timeout. Pure controls use actual retained geometry plus clipped/occluded/shifted/unsupported negatives. No focus, font, scene or render workaround follows. V2's blocked Waveshare request remains retained; V3's empty failures do not erase it.
+
+## A completed capture does not establish graceful shutdown
+
+V3 queue capture took 8.293 seconds total, including 8.101 seconds native capture; orders took 15.894 / 15.792 seconds. Preparation, fonts and layout returned separately. The overall run still failed: graceful browser.close did not return within its unchanged 15-second bound. Context/work/response/positioning settlement completed, and the independent collector found the exact owned cgroup empty without errors. That proves terminal emptiness, not graceful-close success. Original screenshot and V2 wrapper timeouts remain unlocalized at their own unobserved boundaries; no further browser was run while authoring the canonical follow-up.
+
+Record passive local-client counts/connection state, close events, and each cleanup phase's start/end/result at the original limits. Preserve the identical operation error, pending state and overall failed result even after a late return/disconnect. Do not retry/extend close, force rendering, or waive failure because the cgroup is empty. The repaired procedure's pure controls cover late completion, unknown snapshots, timeout and error identity. A new full public campaign remains separately bound/reviewed work, including phone, scope/status and twelve actual PDFs; two successful diagnostic PNGs cannot supply it.
+
+
+## Panel selection must verify state instead of repeating a selected action
+
+2026-11-11, full public B, immutable report SHA-256
+38cda6166111781566ad119aee41ab0968cceb843d2f98e3fb003581813132be.
+[The canonical B receipt](../plans/printable-parts/public-observation/attempt-B.json)
+and [independent disposition](https://github.com/Valpatel/gyropup/pull/320#issuecomment-6807901966)
+retain the failed result. All seven identities and actual Combined 224/30 passed;
+queue/orders desktop PNGs returned once with V3-identical bytes. The helper then
+clicked Buy unconditionally for made, although the resolved Buy tab was already
+aria-pressed=true. Native click exceeded the original 15-second action limit
+while waiting for visible/enabled/stable. Orders and made share Buy; queue is Print.
+No made-target visibility or button-motion observation was recorded at failure.
+This identifies a redundant action in source, not its stalled cause or proof a
+zero-click path will complete the full campaign. No app/environment cause follows.
+
+Build's actual panel function only toggles panel hidden and tab aria-pressed state.
+A test helper whose contract is ensure-state may reuse an already selected panel
+only when the actual connected target has positive CSS-rendered bounds, all tab/
+panel identities and selected/hidden states agree, and a second read confirms it.
+CSS-rendered does not mean in the viewport; existing root/nested clipping/hit and
+alignment checks remain mandatory. Missing/hidden/disconnected/disabled/empty/
+inconsistent targets fail, never receive a failed-action waiver. A genuinely
+unselected Print/Buy request still uses one real native click and original target
+visibility wait with post-state proof. Neither programmatic setters nor forced
+input replace those transitions. Keep original errors and bounded passive before/
+after action receipts; a failed diagnostic cannot replace the native failure.
+
+Pure controls reject B's pressed flag without the missing target evidence and
+cover both real transition directions, zero-click valid reuse, failing states,
+failed native actions/collection, document changes and ineffective transitions.
+The complete source/paper/lifetime requirements are unchanged. B cleanup returned
+in 595 ms / 12,726 ms for context/browser with terminal owned cgroup empty and no
+collector errors; overall B is still failed, and V3's failed close remains failed.
+No made/mobile/scope/status/reload/PDF acceptance, new browser or replay is claimed
+while authoring this repair.
+
+
+## A sent native capture without an observed reply localizes only a boundary
+
+2026-11-11, #281 full attempt C, report SHA-256
+f51a584a1ad5ff1ee607299e18b134a31977846b71e263057ecdfff6deae80ed;
+made phase SHA-256
+0380e895b9c60630bc0614c7a0215a3ffb0b6b57726d83af80e046a4f2a9bc57.
+[The selected receipt](../plans/printable-parts/public-observation/attempt-C.json)
+retains timings and original limits. Seven delivered identities and real Combined
+224/30 passed. The coherent selected Buy plus actual made target satisfied the
+reviewed zero-click contract, and native framing/clip/hit/column proofs succeeded.
+This real observation supports that contract, not a full public pass or cause
+claim for B. Queue/orders PNGs returned; the one made screenshot exceeded its
+unchanged 30-second budget and produced no image.
+
+The passive observer recorded screenshot preparation 7.836 ms, fonts 90.773 ms,
+layout 0.371 ms and restoration 7.045 ms, all with replies. Page.captureScreenshot
+was sent with no reply observed before observer detach. Capture failed after
+30,099 ms. This separates the observed pending native capture from a font wait;
+it does not identify an app, compositor, GPU or environment defect, prove no late
+reply occurred, or justify changing timeout/render/focus/scene/font state. The
+application/environment cause remains unproven. Keep the original timeout and
+phase report; do not retry or manufacture a pass from successful prior steps.
+
+Context/browser close returned in 591 / 2,717 ms and all other settlement returned;
+terminal owned-cgroup emptiness had no collector errors. Those cleanup successes
+do not waive C's screenshot failure or clear V3's distinct close failure. No made
+or mobile image, scope/status/reload check or public PDF was produced. No browser
+replay or functional change was used to publish this evidence.

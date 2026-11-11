@@ -1,0 +1,380 @@
+{
+  "schema": "gyropup.public-checklist-observations/1",
+  "date": "2026-11-11",
+  "scope": "Public-safe selected measurements; original private reports/receipts remain immutable and are identified by full-byte hashes. No contract/provider paths are copied.",
+  "runs": [
+    {
+      "attempt": "A",
+      "report_sha256": "19e1b8987959f92deb7c90397ffa03764b59140592e958668e86e2a4792aa5c0",
+      "terminal_receipt_sha256": "7c88e0442eb28ad15964650c1b00d9cbf807b2d2663d3a7cf32d2434cc74388f",
+      "pass": false,
+      "error_excerpt": "page.screenshot: Timeout 30000ms exceeded.",
+      "elapsed_ms": 108464,
+      "main": "b894a51c3cb0a7394df467d826c4624a38fdaafe",
+      "assets": "f84a162790b9e916fa39",
+      "guide": {
+        "assembly": "combined",
+        "snapshot": "combined-wip-3a40891962b0",
+        "native": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+        "collection": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+        "model": "fd40d4b43beb93b7ef3e6ac7bc1798a804e195a31062748cd23d87cac9ac28ca",
+        "parts": 224,
+        "steps": 30
+      },
+      "admitted_sources": [
+        "/designer/assembly/build-guide.js",
+        "/designer/build.js",
+        "/designer/kit/part-table.css",
+        "/designer/kit/part-table.js",
+        "/designer/portal-parts.css",
+        "/designer/portal-parts.js"
+      ],
+      "captures": [
+        {
+          "name": "queue-1280",
+          "elapsedMs": 8909,
+          "artifactBoundMs": 30000
+        }
+      ],
+      "pdf_count": 0,
+      "errors": [],
+      "failures": [],
+      "browser_cleanup": {
+        "contextClosed": true,
+        "browserClosed": true,
+        "workSettled": true
+      },
+      "owned_terminal_empty": true,
+      "collector_errors": [],
+      "observed_live_caps": {
+        "CPUQuotaPerSecUSec": "2s",
+        "MemoryMax": "3221225472",
+        "MemorySwapMax": "0",
+        "TasksMax": "512",
+        "RuntimeMaxUSec": "8min",
+        "TimeoutStopUSec": "5s",
+        "KillMode": "control-group"
+      },
+      "limit": "HTML was never admitted. Queue PNG shows coupon tail/footer; positive horizontal widths/deltas do not prove visible table headers. No later screenshots/PDFs.",
+      "report_phase": "orders visible 1280",
+      "failed_operation": "orders page.screenshot",
+      "delivered_identities": [
+        {
+          "url": "/designer/kit/part-table.css",
+          "pathname": "/designer/kit/part-table.css",
+          "sha256": "381d5cd4d2453905f356ef37a90c5e723780bffae3b9cb5b3fe4a048ab72aa68",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/portal-parts.css",
+          "pathname": "/designer/portal-parts.css",
+          "sha256": "c8db9ec625155c87647f5c66744619f68f1f8edb3d439ec2cbf0ca477b7bf2f4",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/assembly/build-guide.js",
+          "pathname": "/designer/assembly/build-guide.js",
+          "sha256": "893000351e387541696bfb7110e446551b0240f91fff97e3a0169ded3f38d99a",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/build.js",
+          "pathname": "/designer/build.js",
+          "sha256": "2ff18334faa3515a33641167110ecd8cf2d17855d4966b2d6955142161186976",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/kit/part-table.js",
+          "pathname": "/designer/kit/part-table.js",
+          "sha256": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/portal-parts.js",
+          "pathname": "/designer/portal-parts.js",
+          "sha256": "fc026d4152b1ebc8ccc39d60f3ed2e98a2bc55f2d393b17588ff8e2689802c24",
+          "v": "f84a162790b9e916fa39"
+        }
+      ],
+      "recorded_inventories": []
+    },
+    {
+      "attempt": "V2",
+      "report_sha256": "e28ddec6ee9be25df874d084b7fd2bb898298fdc748f629eafcb08b37400e6ba",
+      "terminal_receipt_sha256": "6acd0d731f49963a78c0775a869119976abd8dc6bc64951da30275a2c3cfaa10",
+      "pass": false,
+      "error_excerpt": "locator.scrollIntoViewIfNeeded: Timeout 4906ms exceeded.",
+      "elapsed_ms": 73953,
+      "main": "b894a51c3cb0a7394df467d826c4624a38fdaafe",
+      "assets": "f84a162790b9e916fa39",
+      "guide": {
+        "assembly": "combined",
+        "snapshot": "combined-wip-3a40891962b0",
+        "native": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+        "collection": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+        "model": "fd40d4b43beb93b7ef3e6ac7bc1798a804e195a31062748cd23d87cac9ac28ca",
+        "parts": 224,
+        "steps": 30
+      },
+      "admitted_sources": [
+        "/designer/assembly/build-guide.js",
+        "/designer/build.html",
+        "/designer/build.js",
+        "/designer/kit/part-table.css",
+        "/designer/kit/part-table.js",
+        "/designer/portal-parts.css",
+        "/designer/portal-parts.js"
+      ],
+      "captures": [],
+      "pdf_count": 0,
+      "errors": [],
+      "failures": [
+        {
+          "phase": "real Build integration",
+          "url": "https://www.waveshare.com/media/catalog/product/cache/1/image/560x560/9df78eab33525d08d6e5fb8d27136e95/s/t/st3215-servo-1_5.jpg",
+          "error": "net::ERR_BLOCKED_BY_RESPONSE.NotSameOrigin"
+        }
+      ],
+      "browser_cleanup": {
+        "contextClosed": true,
+        "browserClosed": true,
+        "workSettled": true,
+        "deliveriesSettled": true
+      },
+      "owned_terminal_empty": true,
+      "collector_errors": [],
+      "observed_live_caps": {
+        "CPUQuotaPerSecUSec": "2s",
+        "MemoryMax": "3221225472",
+        "MemorySwapMax": "0",
+        "TasksMax": "512",
+        "RuntimeMaxUSec": "4min",
+        "TimeoutStopUSec": "5s",
+        "KillMode": "control-group"
+      },
+      "limit": "All seven source identities admitted. Zero screenshot calls: Playwright scroll/stability wrapper failed. Root collector also used wrong coordinate system; original screenshot deadline remains unlocalized.",
+      "report_phase": "queue native header reveal",
+      "failed_operation": "locator scroll/stability wrapper",
+      "delivered_identities": [
+        {
+          "url": "/designer/build.html",
+          "pathname": "/designer/build",
+          "identity": "exact bound deployment response",
+          "sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+          "compiled_sha256": "ced95b7eafb90cb99f63c7a9b71ce85d94e9e43eb04653f25786ccac4c7993a5",
+          "served_sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+          "transformation": "one exact byte insertion",
+          "insertion_offset": 41928,
+          "insertion_sha256": "788159bec5be034f2413739258f81670e634b355a229f81a02372df9f4b931c2",
+          "insertion_bytes": 367
+        },
+        {
+          "url": "/designer/kit/part-table.css",
+          "pathname": "/designer/kit/part-table.css",
+          "identity": "unchanged source/build bytes",
+          "sha256": "381d5cd4d2453905f356ef37a90c5e723780bffae3b9cb5b3fe4a048ab72aa68",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/portal-parts.css",
+          "pathname": "/designer/portal-parts.css",
+          "identity": "unchanged source/build bytes",
+          "sha256": "c8db9ec625155c87647f5c66744619f68f1f8edb3d439ec2cbf0ca477b7bf2f4",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/assembly/build-guide.js",
+          "pathname": "/designer/assembly/build-guide.js",
+          "identity": "unchanged source/build bytes",
+          "sha256": "893000351e387541696bfb7110e446551b0240f91fff97e3a0169ded3f38d99a",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/build.js",
+          "pathname": "/designer/build.js",
+          "identity": "unchanged source/build bytes",
+          "sha256": "2ff18334faa3515a33641167110ecd8cf2d17855d4966b2d6955142161186976",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/kit/part-table.js",
+          "pathname": "/designer/kit/part-table.js",
+          "identity": "unchanged source/build bytes",
+          "sha256": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/portal-parts.js",
+          "pathname": "/designer/portal-parts.js",
+          "identity": "unchanged source/build bytes",
+          "sha256": "fc026d4152b1ebc8ccc39d60f3ed2e98a2bc55f2d393b17588ff8e2689802c24",
+          "v": "f84a162790b9e916fa39"
+        }
+      ],
+      "recorded_inventories": [
+        {
+          "case": "source table inventory",
+          "table": "queue",
+          "count": 54
+        },
+        {
+          "case": "source table inventory",
+          "table": "orders",
+          "count": 279
+        },
+        {
+          "case": "source table inventory",
+          "table": "made",
+          "count": 16
+        },
+        {
+          "case": "source table inventory",
+          "table": "pending",
+          "count": 23
+        }
+      ]
+    },
+    {
+      "attempt": "V3",
+      "report_sha256": "7f3c5d7ff2b53fafdd456c881a3ed0be2204677f876486a2c8ca185447452e0d",
+      "terminal_receipt_sha256": "c1ae0fd7fa1ad7abe506e5da4eaf5bbbeebbc07acf671595e36f00ae111fe327",
+      "pass": false,
+      "error_excerpt": "Error: browser close exceeded 15000 ms",
+      "elapsed_ms": 107932,
+      "main": "b894a51c3cb0a7394df467d826c4624a38fdaafe",
+      "assets": "f84a162790b9e916fa39",
+      "guide": {
+        "assembly": "combined",
+        "snapshot": "combined-wip-3a40891962b0",
+        "native": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+        "collection": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+        "model": "fd40d4b43beb93b7ef3e6ac7bc1798a804e195a31062748cd23d87cac9ac28ca",
+        "parts": 224,
+        "steps": 30
+      },
+      "admitted_sources": [
+        "/designer/assembly/build-guide.js",
+        "/designer/build.html",
+        "/designer/build.js",
+        "/designer/kit/part-table.css",
+        "/designer/kit/part-table.js",
+        "/designer/portal-parts.css",
+        "/designer/portal-parts.js"
+      ],
+      "captures": [
+        {
+          "name": "queue-1280",
+          "elapsedMs": 8293.458165000004,
+          "artifactBoundMs": 30000
+        },
+        {
+          "name": "orders-1280",
+          "elapsedMs": 15894.253259999998,
+          "artifactBoundMs": 30000
+        }
+      ],
+      "pdf_count": 0,
+      "errors": [],
+      "failures": [],
+      "browser_cleanup": {
+        "contextClosed": true,
+        "browserClosed": false,
+        "workSettled": true,
+        "deliveriesSettled": true,
+        "positioningSettled": true
+      },
+      "owned_terminal_empty": true,
+      "collector_errors": [],
+      "observed_live_caps": {
+        "CPUQuotaPerSecUSec": "2s",
+        "MemoryMax": "3221225472",
+        "MemorySwapMax": "0",
+        "TasksMax": "512",
+        "RuntimeMaxUSec": "4min",
+        "TimeoutStopUSec": "5s",
+        "KillMode": "control-group"
+      },
+      "limit": "Correctly framed desktop queue/orders captures only; graceful browser close exceeded unchanged 15 seconds. No phone/state/PDF/full acceptance; terminal cgroup emptiness does not waive graceful-close failure.",
+      "report_phase": "final identity",
+      "failed_operation": "graceful browser.close",
+      "delivered_identities": [
+        {
+          "url": "/designer/build.html",
+          "pathname": "/designer/build",
+          "identity": "exact bound deployment response",
+          "sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+          "compiled_sha256": "ced95b7eafb90cb99f63c7a9b71ce85d94e9e43eb04653f25786ccac4c7993a5",
+          "served_sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+          "transformation": "one exact byte insertion",
+          "insertion_offset": 41928,
+          "insertion_sha256": "788159bec5be034f2413739258f81670e634b355a229f81a02372df9f4b931c2",
+          "insertion_bytes": 367
+        },
+        {
+          "url": "/designer/kit/part-table.css",
+          "pathname": "/designer/kit/part-table.css",
+          "identity": "unchanged source/build bytes",
+          "sha256": "381d5cd4d2453905f356ef37a90c5e723780bffae3b9cb5b3fe4a048ab72aa68",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/portal-parts.css",
+          "pathname": "/designer/portal-parts.css",
+          "identity": "unchanged source/build bytes",
+          "sha256": "c8db9ec625155c87647f5c66744619f68f1f8edb3d439ec2cbf0ca477b7bf2f4",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/assembly/build-guide.js",
+          "pathname": "/designer/assembly/build-guide.js",
+          "identity": "unchanged source/build bytes",
+          "sha256": "893000351e387541696bfb7110e446551b0240f91fff97e3a0169ded3f38d99a",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/build.js",
+          "pathname": "/designer/build.js",
+          "identity": "unchanged source/build bytes",
+          "sha256": "2ff18334faa3515a33641167110ecd8cf2d17855d4966b2d6955142161186976",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/kit/part-table.js",
+          "pathname": "/designer/kit/part-table.js",
+          "identity": "unchanged source/build bytes",
+          "sha256": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+          "v": "f84a162790b9e916fa39"
+        },
+        {
+          "url": "/designer/portal-parts.js",
+          "pathname": "/designer/portal-parts.js",
+          "identity": "unchanged source/build bytes",
+          "sha256": "fc026d4152b1ebc8ccc39d60f3ed2e98a2bc55f2d393b17588ff8e2689802c24",
+          "v": "f84a162790b9e916fa39"
+        }
+      ],
+      "recorded_inventories": [
+        {
+          "case": "source table inventory",
+          "table": "queue",
+          "count": 54
+        },
+        {
+          "case": "source table inventory",
+          "table": "orders",
+          "count": 279
+        },
+        {
+          "case": "source table inventory",
+          "table": "made",
+          "count": 16
+        },
+        {
+          "case": "source table inventory",
+          "table": "pending",
+          "count": 23
+        }
+      ]
+    }
+  ]
+}

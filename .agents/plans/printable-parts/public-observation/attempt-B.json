@@ -1,0 +1,277 @@
+{
+  "attempt": "B",
+  "pass": false,
+  "report_sha256": "38cda6166111781566ad119aee41ab0968cceb843d2f98e3fb003581813132be",
+  "terminal_receipt_sha256": "8bd319272a7b38bb646fe5164d74112a7c199851ee9417bd1e29e93fd6b9c997",
+  "backup_manifest_sha256": "196d1bae834de50990ab0caa18c834827f5df69b1c6bc4a0d1b1228756ae3a2d",
+  "backup_members": 57,
+  "independent_disposition": "https://github.com/Valpatel/gyropup/pull/320#issuecomment-6807901966",
+  "main": "b894a51c3cb0a7394df467d826c4624a38fdaafe",
+  "assets": "f84a162790b9e916fa39",
+  "guide": {
+    "assembly": "combined",
+    "snapshot": "combined-wip-3a40891962b0",
+    "native": "3a40891962b0b0a04625e070700f1d130bea3c7b",
+    "collection": "7c2f1905474a8c89bdc477ea472f5c826e57c674aa222f2134f6a0a4138d5a67",
+    "model": "fd40d4b43beb93b7ef3e6ac7bc1798a804e195a31062748cd23d87cac9ac28ca",
+    "parts": 224,
+    "steps": 30
+  },
+  "phase": "made visible 1280",
+  "error_excerpt": "locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator('[data-build-tab=buy]')\n    - locator resolved to <button type=\"button\" aria-pressed=\"true\" data-build-tab=\"buy\">Buy</button>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable",
+  "admitted_sources": [
+    {
+      "url": "/designer/build.html",
+      "pathname": "/designer/build",
+      "identity": "exact bound deployment response",
+      "sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+      "compiled_sha256": "ced95b7eafb90cb99f63c7a9b71ce85d94e9e43eb04653f25786ccac4c7993a5",
+      "served_sha256": "775d4094fbc673bfacc1a9daadea1dad6468e466bd8b29b8040a3e9db80aa1e5",
+      "transformation": "one exact byte insertion",
+      "insertion_offset": 41928,
+      "insertion_sha256": "788159bec5be034f2413739258f81670e634b355a229f81a02372df9f4b931c2",
+      "insertion_bytes": 367
+    },
+    {
+      "url": "/designer/portal-parts.css",
+      "pathname": "/designer/portal-parts.css",
+      "identity": "unchanged source/build bytes",
+      "sha256": "c8db9ec625155c87647f5c66744619f68f1f8edb3d439ec2cbf0ca477b7bf2f4",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/kit/part-table.css",
+      "pathname": "/designer/kit/part-table.css",
+      "identity": "unchanged source/build bytes",
+      "sha256": "381d5cd4d2453905f356ef37a90c5e723780bffae3b9cb5b3fe4a048ab72aa68",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/assembly/build-guide.js",
+      "pathname": "/designer/assembly/build-guide.js",
+      "identity": "unchanged source/build bytes",
+      "sha256": "893000351e387541696bfb7110e446551b0240f91fff97e3a0169ded3f38d99a",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/build.js",
+      "pathname": "/designer/build.js",
+      "identity": "unchanged source/build bytes",
+      "sha256": "2ff18334faa3515a33641167110ecd8cf2d17855d4966b2d6955142161186976",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/portal-parts.js",
+      "pathname": "/designer/portal-parts.js",
+      "identity": "unchanged source/build bytes",
+      "sha256": "fc026d4152b1ebc8ccc39d60f3ed2e98a2bc55f2d393b17588ff8e2689802c24",
+      "v": "f84a162790b9e916fa39"
+    },
+    {
+      "url": "/designer/kit/part-table.js",
+      "pathname": "/designer/kit/part-table.js",
+      "identity": "unchanged source/build bytes",
+      "sha256": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+      "v": "f84a162790b9e916fa39"
+    }
+  ],
+  "captures": [
+    {
+      "name": "queue-1280",
+      "elapsedMs": 8402.639760999999,
+      "artifactBoundMs": 30000
+    },
+    {
+      "name": "orders-1280",
+      "elapsedMs": 14395.297617999997,
+      "artifactBoundMs": 30000
+    }
+  ],
+  "captureAttempts": {
+    "queue-1280": 1,
+    "orders-1280": 1
+  },
+  "shared_pngs": {
+    "queue": "V3-queue-1280.png",
+    "orders": "V3-orders-1280.png"
+  },
+  "png_sha256": {
+    "queue": "c97c8819227d65db5435e4e59c690bc69ee5c44bc9e3817a15af15af7e0b084f",
+    "orders": "c529b787afb610c045547c5f09db05e04f7aa69b1cf020b7cf2be82a4381cc2d"
+  },
+  "pdf_count": 0,
+  "made_state_at_failed_click": null,
+  "errors": [],
+  "failures": [],
+  "cleanup": {
+    "contextClosed": true,
+    "browserClosed": true,
+    "workSettled": true,
+    "deliveriesSettled": true,
+    "positioningSettled": true
+  },
+  "cleanup_phases": [
+    {
+      "label": "context close",
+      "timeoutMs": 5000,
+      "status": "returned",
+      "operationSettled": true,
+      "observerErrors": [],
+      "before": {
+        "status": "available",
+        "value": {
+          "browserConnected": true,
+          "contexts": 1,
+          "contextPages": 1,
+          "pageClosed": false
+        }
+      },
+      "startedMs": 108813.989334,
+      "operationReturnedMs": 109409.168393,
+      "completedMs": 109409.193831,
+      "durationMs": 595.2044969999988,
+      "after": {
+        "status": "available",
+        "value": {
+          "browserConnected": true,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      }
+    },
+    {
+      "label": "browser close",
+      "timeoutMs": 15000,
+      "status": "returned",
+      "operationSettled": true,
+      "observerErrors": [],
+      "before": {
+        "status": "available",
+        "value": {
+          "browserConnected": true,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      },
+      "startedMs": 109409.268972,
+      "operationReturnedMs": 122135.063958,
+      "completedMs": 122135.073425,
+      "durationMs": 12725.80445299999,
+      "after": {
+        "status": "available",
+        "value": {
+          "browserConnected": false,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      }
+    },
+    {
+      "label": "work settle",
+      "timeoutMs": 2000,
+      "status": "returned",
+      "operationSettled": true,
+      "observerErrors": [],
+      "before": {
+        "status": "available",
+        "value": {
+          "browserConnected": false,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      },
+      "startedMs": 122135.176989,
+      "operationReturnedMs": 122135.250848,
+      "completedMs": 122135.259404,
+      "durationMs": 0.08241499999712687,
+      "after": {
+        "status": "available",
+        "value": {
+          "browserConnected": false,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      }
+    },
+    {
+      "label": "deliveries settle",
+      "timeoutMs": 2000,
+      "status": "returned",
+      "operationSettled": true,
+      "observerErrors": [],
+      "before": {
+        "status": "available",
+        "value": {
+          "browserConnected": false,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      },
+      "startedMs": 122135.331098,
+      "operationReturnedMs": 122135.398735,
+      "completedMs": 122135.406018,
+      "durationMs": 0.07491999999911059,
+      "after": {
+        "status": "available",
+        "value": {
+          "browserConnected": false,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      }
+    },
+    {
+      "label": "positioning settle",
+      "timeoutMs": 2000,
+      "status": "returned",
+      "operationSettled": true,
+      "observerErrors": [],
+      "before": {
+        "status": "available",
+        "value": {
+          "browserConnected": false,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      },
+      "startedMs": 122135.571709,
+      "operationReturnedMs": 122135.642251,
+      "completedMs": 122135.65222,
+      "durationMs": 0.08051100000739098,
+      "after": {
+        "status": "available",
+        "value": {
+          "browserConnected": false,
+          "contexts": 0,
+          "contextPages": 0,
+          "pageClosed": true
+        }
+      }
+    }
+  ],
+  "cleanup_events": [
+    {
+      "type": "page closed",
+      "atMs": 109406.860389
+    },
+    {
+      "type": "context closed",
+      "atMs": 109409.076531
+    },
+    {
+      "type": "browser disconnected",
+      "atMs": 122016.270275
+    }
+  ],
+  "terminal_empty": true,
+  "collector_errors": [],
+  "limits": "Only queue/orders desktop captures completed. No made/phone/scope/status/reload/PDF acceptance. Selected Buy flag was logged, but made visibility or tab-motion state was not recorded. App/environment cause remains unproven. Successful B cleanup does not explain or clear V3 failure."
+}

@@ -2,36 +2,138 @@
 
 ```mermaid
 flowchart LR
-    R[Reviewed release and main] --> B[Bind real source and providers]
-    B --> G[Independent review of exact packet]
-    G --> P[One bounded public Build check]
-    P --> A[PDF and image review]
+    S[Reviewed main and source] --> B[Bind exact build and deployment bytes]
+    B --> R[Independent concrete-packet review]
+    R --> E[One bounded full acceptance]
+    E --> A[Images, twelve PDFs and cleanup audit]
 ```
 
-This is a recoverable procedure for #281, **not a record of a public run**. Source fixtures and their failures remain in [the parent packet](../README.md); the [source-fidelity packet](../source-fidelity/) contains the producer-DOM oracle and corrected PDFs. Main delivery, actual toolkit provenance, normal CI and public acceptance are separate requirements. This procedure never operates a printer or purchases parts.
+This is a recoverable procedure for #281, not an execution approval or a public
+pass. [Actual A/V2/V3/B/C observations](../public-observation/README.md) remain failed:
+A framed the wrong content and never admitted HTML; V2 failed before capture;
+V3 produced two correct desktop captures but exceeded graceful browser-close's
+15-second bound. B returned the same two desktop images, then failed a redundant
+Buy click before made visibility was inspected. C verified coherent selected-panel
+reuse and native made framing, then failed its 30-second screenshot after fonts/
+layout returned, with no native capture reply observed. Successful cleanup does
+not clear either failed attempt or establish its cause. Full public/PDF acceptance
+is still outstanding. Source-fixture
+PDFs in [the parent evidence](../README.md) remain separate. No printer or purchase
+is operated by this procedure.
 
-## Prepare privately
+## Prepare and test without a browser
 
-Copy the three execution/audit scripts and the offline recovery test into an exclusive private packet directory. Copy the canonical `../source-fidelity/pdf-id-extractor.py` beside them unchanged. Copy each `.TEMPLATE.json` to its unsuffixed name. Keep machine paths and provider inventories out of the public repository. Templates deliberately have disabled execution, TODO identities and no review seal.
+From the repository root, run only the offline controls:
 
-Bind the actual final main commit/tree, published asset key, real toolkit release tag/commit and component digest. Derive the four JS hashes from immutable Git objects, and the three transformed HTML/CSS hashes from the final built artifact. Bind the guide identity and all four tables from independently checked source: exact IDs, matching IDs, long notes, meaningful field fragments and final PDF page counts. Do not copy an old page count after restoring source text. Record actual installed Node, Playwright and Chrome identities; no installation is part of this procedure.
+```sh
+node --test .agents/plans/printable-parts/public-acceptance/test-*.mjs tests/site/assembly/test-capture-diagnostics.mjs
+python3 -I -B .agents/plans/printable-parts/public-acceptance/test-runner-recovery.py
+python3 -I -B .agents/plans/printable-parts/public-acceptance/test-admission.py
+```
 
-The final packet needs independent GPT-6 review under the repository review workflow. Set `approved_for_execution` to true only for that concrete review. Afterwards write `review-seal.json` with the review URL and `files_sha256` mapping for `run.py`, `public-checklists.mjs`, `audit-pdfs.py`, `pdf-id-extractor.py`, `contract.json`, `provider-reference.json` and `release-binding.json`. The seal records reviewed bytes; it is not an authentication mechanism. Any input change needs renewed review.
+These exercise pure root/nested clipping, actual retained V2 geometry, one native
+scroll with fake elements, drift/occlusion/horizontal-motion rejection, exact HTML
+byte comparisons, passive observer identity/error behavior and bounded cleanup
+failure. Collector tests AST-extract only the existing lifecycle function with
+mocked subprocesses. Admission tests use an isolated disabled temporary contract;
+Python optimization is rejected before inputs or unit admission. No test launches
+a browser/unit or fetches a network resource. Historical HTML fixtures are test
+evidence, never the future live binding.
 
-## Execute and inspect once
+Recover the scripts/modules into a fresh exclusive private packet directory.
+Copy public-checklists.mjs, run.py, audit-pdfs.py, clip-geometry.mjs,
+position-header.mjs, deployment-html.mjs, cleanup-observer.mjs and panel-selection.mjs. Copy the canonical
+`../source-fidelity/pdf-id-extractor.py` beside them unchanged. Copy the canonical
+`tests/site/assembly/capture-diagnostics.mjs` beside them unchanged; bind its exact
+Git source and SHA-256 in helper. Do not duplicate either canonical helper in Git.
+Copy each TEMPLATE JSON to its unsuffixed name and privately bind real providers.
+Do not commit machine paths, provider inventories, armed contracts or review seals.
+Templates remain false/TODO and have no execution artifacts.
 
-From the private packet, the reviewed command is `python3 run.py --execute-reviewed`. Admission validates bindings before creating its exclusive attempt marker. An existing marker/output/unit or changed input is rejected. Never repeat a completed browser run merely to repair an evidence collector.
+## Bind source and delivered identity separately
 
-One isolated browser loads the canonical `https://gyropup.com/designer/build` route, uses the actual notice and assembly viewer, and checks source-bound Combined geometry. It activates the real Print/Buy tables at desktop and phone widths, checks positive header/cell alignment, sorting, filtering, all-page printing and saved-status identity. Only disposable browser-local checkboxes/storage change. There is no route interception or injected application fixture.
+Bind final main/tree/assets, guide/model/source identity, actual toolkit release,
+four raw JS hashes and three final-built HTML/CSS hashes. The built root must be
+from exact final main, explicitly labelled a local expected rebuild or an actual
+CI artifact. A build timestamp is not source identity. Freeze it through acceptance.
+Require an unchanged final source checkout. Independently derive table IDs, matching
+IDs, long notes, source-field fragments and final page counts; never derive expected
+membership from the enhanced renderer or reuse an incomplete old PDF count.
 
-The run retains six screenshots and twelve PDFs: queue and orders full/matching A4/Letter, plus Made and pending-turret full A4/Letter. Printed row order is checked against current live order; independent source ID membership remains fixed. Field fragments must appear in the correct column/note. The offline auditor requires the exact case matrix, unique IDs, repeated headers, page bounds, whole queue quantities, warnings and complete notes/source fragments in their own part segment and page. The known-ID extractor has positive wrapped-prefix controls and rejects real duplicates or missing IDs.
+Navigate directly to `https://gyropup.com/designer/build`; its response corresponds
+to built designer/build.html. The old .html route redirects. Deployment may insert
+Cloudflare's beacon: bind the full compiled HTML hash, full actual response hash,
+exact insertion offset/length/hash and complete insertion bytes. Privately retain
+compiled-build.html, served-build.html and deployment-beacon.html. Admission must
+reconstruct the complete response by that one exact byte insertion, without DOM
+serialization, stripping, regex tolerance or normalization. Any other difference
+fails closed and needs new evidence/review. The six JS/CSS assets still require
+unchanged bytes. All seven actual identities must pass before framing/capture.
 
-The owned transient unit caps CPU at two cores, memory at 3 GiB with no swap, tasks at 512 and runtime at 480 seconds. Browser work has a 420-second bound; actions, navigation, artifacts, PDFs and cleanup have separate limits. Live unit properties are captured before browser work; terminal empty/absent descendants are checked separately. A collected unit's default properties are never treated as its historical limits. Only the exact owned unit may be stopped.
+Bind existing Node/Playwright/Chrome bytes and version, plus the same Playwright
+CRConnection implementation used by the passive observer. No install is part of
+recovery. The final concrete packet needs independent GPT-6 review under the repo
+workflow. Only afterwards enable its concrete contract and seal the final reviewed
+bytes. review-seal.json records review_url and files_sha256 for all sixteen runtime
+files explicitly listed in run.py, including exact HTML/insertion inputs and both
+canonical copied helpers. It is a byte binding, not an authentication mechanism.
+Any changed input requires renewed review.
 
-Inspect `run.log`, `live-unit.json`, `report.json`, `terminal-cleanup.json` and `pdf-audit.json`, then actually view representative PDFs and screenshots. Retain failures, source identities and cleanup evidence. Publish a privacy-safe issue receipt with exact main/release bindings and independent review; close the issue only after every acceptance condition is met. These checks do not establish physical fit, manufacturing readiness or printer output.
+## Run once and inspect the complete result
 
-## Collector failure controls
+Only from that reviewed private packet, run `python3 -I -B run.py --execute-reviewed`.
+Admission validates everything before the atomic exclusive attempt marker. Existing
+output/unit/marker or changed bindings are rejected. Never reuse a spent namespace
+or replay browser work to repair a collector, screenshot or close failure.
 
-Run `python3 test-runner-recovery.py` before binding. Its six offline controls extract only the runner function and replace subprocess calls: no unit, browser, network or campaign is launched. Launch errors, stop timeouts/nonzero exits, terminal-query failures, malformed live receipts and wrong-unit cgroups must leave an honest terminal receipt without claiming cleanup success. The runner makes a best-effort finally-style collection even after launch/stop failure. If a receipt cannot be written, it emits the failure record to stderr; preserve that output and recover read-only. A retained error never authorizes a repeated browser campaign.
+One installed Chrome context uses the real notice, planner and source-bound
+Combined assembly; no route interception or injected app-data fixture is used.
+The owned unit remains capped at two CPU cores, 3 GiB, zero swap, 512 tasks and
+480 seconds. Work remains 420 seconds. Readiness/actions retain their old limits;
+required screenshots remain 30 seconds and PDFs 20 seconds. Live effective limits
+are captured before browser work; terminal owned-cgroup emptiness is independently
+collected afterwards. Collected-unit defaults are not historical limit evidence.
 
-The public document route and built file have distinct names: on 2026-11-11, read-only GETs returned `308` from `/designer/build.html` to `/designer/build`, then `200` HTML at the canonical route. Navigate directly to the canonical route and bind its response bytes to the final built `designer/build.html` file. A redirect body is not HTML artifact evidence. These metadata requests did not launch a browser or execute acceptance.
+At 1280 and 320 px, ensure the actual Print/Buy panel state. Zero-click reuse
+requires a coherent sole selected tab and CSS-rendered panel, plus the correct
+connected, positive CSS-rendered target table, confirmed before and after. CSS
+rendering is not viewport visibility: the full grid clip/hit proof still follows.
+An unselected request retains one genuine native click and the existing target
+visibility wait (15 seconds each), then verifies the selected/target state. Hidden,
+disconnected, disabled, inconsistent, missing, changed-document or failed-transition
+states fail; there is no failed-action skip, force-click or app-state setter.
+Bounded 500 ms passive snapshots and action timings preserve original click/wait
+errors without replacing them when collection fails. Attempt B's logged pressed
+flag alone is insufficient; its made-target state was not captured. Root clipping uses standards
+viewport coordinates; ordinary BODY/planner/table padding clips remain. The
+observed HTML hidden/auto overflow, CSS1Compat, HTML scrollingElement, scale-one
+zero-offset visual viewport profile is explicit; unsupported cases fail.
+Within one total five-second stage, pin the same connected real table/header/
+document, call one native instant/center/nearest scroll, and record pre-scroll plus
+two passive samples 100 ms apart. They must agree within one pixel after scrolling,
+retain header/identity hits and preserve every horizontal offset. This is sampled
+geometry agreement, not a render-cadence claim. Keep positive-width/header-edge
+alignment checks and reject the seeded shift. No scroll/capture retry, focus/render/
+font/scene trick or screenshot fallback is accepted.
+
+Six required screenshots use the existing passive capture-phase observer; record
+before/after geometry and protocol timing without changing the capture operation.
+The twelve PDFs remain queue/orders full and matching A4/Letter, plus Made/pending
+full A4/Letter. Preserve source-derived membership/current live order, same-part
+notes/fields/status identity, isolated checkbox persistence, whole queue values,
+all warnings, repeated headers, bounds and independent PDF matrix/page audits.
+
+Context close remains five seconds; graceful browser close remains 15 seconds.
+Passive local-client before/after state, phase timing and bounded close events
+record whether each operation returned/rejected/timed out. They do not issue CDP,
+focus, render, extra close or kill calls. A late disconnect or terminal empty cgroup
+never relabels a failed graceful close as success. Retain original errors and all
+cleanup failures; missing observations are explicit. Browser/context/work/response/
+positioning cleanup must settle under existing bounds. The overall attempt stays
+failed when any required work or lifetime contract fails.
+
+Inspect run.log, live-unit.json, report.json, capture phase files,
+terminal-cleanup.json and pdf-audit.json; actually view screenshots and representative
+PDFs. Keep failures and immutable identities. Publish a privacy-safe issue receipt,
+then close #281 only after all full acceptance conditions pass. These checks do not
+establish physical printer output, current procurement quotes or manufacturing fit.

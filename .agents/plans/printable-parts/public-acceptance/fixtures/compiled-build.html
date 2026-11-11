@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script src="/web/theme.js?v=f84a162790b9e916fa39"></script>
+<link rel="stylesheet" href="/web/theme.css?v=f84a162790b9e916fa39">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gyropup Build</title>
+<link rel="stylesheet" href="/designer/kit/hud.css?v=f84a162790b9e916fa39">
+<link rel="stylesheet" href="/designer/kit/part-table.css?v=f84a162790b9e916fa39">
+<link rel="stylesheet" href="/designer/portal-parts.css?v=f84a162790b9e916fa39">
+<link rel="stylesheet" href="/designer/assembly/guide.css?v=f84a162790b9e916fa39">
+
+<link rel="stylesheet" href="/designer/kit/loading.css?v=f84a162790b9e916fa39" data-gyropup-loading="">
+<style>
+  /* the progress page's look (designer/progress.html): the same variables, fonts, cards, tags and part rows */
+  html, body { overflow-x: hidden; overflow-y: auto; height: auto; }
+  body.has-appnav main.prog { padding-top: var(--appnav-h, 64px); }
+  main.prog { position: relative; z-index: 3; padding: 0 32px 60px; max-width: 1500px; }
+  main.prog h1 { font-size: 24px; margin: 26px 0 4px; letter-spacing: -0.01em; }
+  .lede { color: var(--muted); margin: 0 0 18px; max-width: 90ch; }
+  .lede b { color: var(--text); }
+  .sec { display: flex; align-items: center; gap: 8px; margin: 34px 0 12px; font: 600 12px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
+  .sec::before { content: ""; width: 12px; height: 2px; background: var(--cyan); box-shadow: 0 0 6px var(--glow-30); flex: none; }
+  .card { background: rgb(var(--gp-card-rgb) / 0.94); border: 1px solid var(--hairline); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+  .status { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+  .status .card { margin: 0; }
+  .status .card b { display: block; font-size: 13px; margin-bottom: 4px; }
+  .status .card span, .status .card p { color: var(--muted); font-size: 13px; }
+  .status .card p { margin: 6px 0 0; }
+  .k { font: 600 22px var(--font-mono); color: var(--text); }
+  a { color: var(--cyan); }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 99px; font: 600 11px var(--font-mono); letter-spacing: .08em; white-space: nowrap; }
+  .tag.pass { color: var(--mint); background: rgba(5,255,161,.08); } .tag.fail { color: var(--magenta); background: rgba(255,42,109,.1); }
+  .tag.warn { color: var(--gp-warn); background: rgba(255,176,32,.1); } .tag.info { color: var(--cyan); background: var(--glow-06); }
+  table.cmp { width: 100%; border-collapse: collapse; font: 12px var(--font-mono); background: rgb(var(--gp-card-rgb) / 0.94); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
+  table.cmp th, table.cmp td { padding: 7px 10px; border-bottom: 1px solid var(--hairline); text-align: left; vertical-align: top; }
+  table.cmp th { color: var(--muted); font-weight: 500; }
+  table.cmp td.n, table.cmp th.n { text-align: right; white-space: nowrap; }
+  table.cmp tr.tot td { color: var(--text); font-weight: 600; border-bottom: 0; }
+  .tablewrap { overflow-x: auto; }
+  /* pictures (catalog/images.json), as on the progress page */
+  .thumb { display: block; width: 72px; height: 72px; border-radius: 8px; background: var(--gp-card); overflow: hidden; flex: none; }
+  .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .thumb.sm { width: 48px; height: 48px; border-radius: 6px; }
+  .thumb.missing { background: repeating-linear-gradient(135deg, rgba(255,42,109,.10) 0 6px, transparent 6px 12px); border: 2px dashed var(--magenta);
+    display: flex; align-items: center; justify-content: center; text-align: center; color: var(--magenta); font: 700 10px/1.2 var(--font-mono); letter-spacing: .06em; }
+  .thumb.missing::after { content: "NO\A PICTURE"; white-space: pre; }
+  .thumb.sm.missing { font-size: 8px; letter-spacing: 0; }
+  .mediasum { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+  .alts summary { cursor: pointer; color: var(--text-dim); font: 12px var(--font-mono); }
+  .alts ul { list-style: none; margin: 6px 0 0; padding: 0; } .alts li { margin: 0 0 8px; font-size: 12px; overflow-wrap: anywhere; }
+  .alts .chg { color: var(--muted); margin-top: 2px; } .alts .chk { color: var(--dim); font: 10px var(--font-mono); margin-top: 1px; }
+  .risk { margin-top: 5px; font-size: 12px; color: var(--text-dim); } .risk .chk { color: var(--dim); font: 10px var(--font-mono); }
+  .key { font: 11px var(--font-mono); color: var(--dim); overflow-wrap: anywhere; }
+  .dim { color: var(--muted); } .small { font-size: 12px; }
+
+  /* the one-line summary and the workstream cards */
+  .summary { font-size: 16px; margin: 4px 0 18px; padding: 12px 16px; border: 1px solid var(--cyan-dim); border-radius: 10px; background: var(--glow-06); max-width: 120ch; }
+  .summary b { font-family: var(--font-mono); color: var(--text); }
+  .stream.off { opacity: .55; }
+  .stream .inc { display: flex; align-items: center; gap: 8px; margin-top: 8px; font: 12px var(--font-mono); color: var(--text-dim); cursor: pointer; }
+  .stream .inc input { accent-color: var(--cyan); width: 16px; height: 16px; }
+  .stream ul.files { margin: 6px 0 0; padding-left: 16px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+
+  /* the order list: one row per part to buy, grouped by seller */
+  .seller { margin: 0 0 18px; }
+  .seller > header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; padding: 10px 14px; background: rgb(var(--gp-ink-rgb) / 0.92);
+    border: 1px solid var(--hairline); border-bottom: 0; border-radius: 8px 8px 0 0; }
+  .seller > header h3 { margin: 0; font-size: 15px; }
+  .seller > header .why { color: var(--muted); font-size: 12px; }
+  .seller > header .sub { margin-left: auto; font: 600 14px var(--font-mono); color: var(--text); white-space: nowrap; }
+  .olist { background: rgb(var(--gp-card-rgb) / 0.94); border: 1px solid var(--hairline); border-radius: 0 0 8px 8px; overflow: hidden; font-size: 13px; }
+  .orow { display: grid; grid-template-columns: 72px minmax(0, 2.2fr) minmax(0, 1.5fr) 92px 112px 104px minmax(0, 1.9fr);
+    grid-template-areas: "thumb main pn qty unit line alts"; gap: 6px 14px; align-items: start; padding: 10px 12px; border-bottom: 1px solid var(--hairline); }
+  .orow:last-child { border-bottom: 0; }
+  .orow.head { color: var(--muted); font: 500 11px var(--font-mono); letter-spacing: .06em; padding: 7px 12px; align-items: end; }
+  .orow > .t { grid-area: thumb; } .orow > .m { grid-area: main; } .orow > .p { grid-area: pn; } .orow > .q { grid-area: qty; }
+  .orow > .u { grid-area: unit; } .orow > .l { grid-area: line; } .orow > .a { grid-area: alts; }
+  .orow .m b { display: block; color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
+  .orow .for { color: var(--muted); font-size: 12px; margin-top: 2px; } .orow .for i { font-style: normal; color: var(--text-dim); }
+  .orow .p, .orow .q, .orow .u, .orow .l { font: 12px var(--font-mono); } .orow .p { overflow-wrap: anywhere; }
+  .stats { display: contents; }               /* the numbers: cells of the row's grid here, one wrapping line on a phone */
+  .orow .l b { color: var(--text); font-size: 13px; }
+  .orow small { display: block; color: var(--muted); font: 11px var(--font-mono); margin-top: 2px; }
+  .orow .avail { display: block; color: var(--mint); font: 11px var(--font-mono); margin-top: 3px; }
+  .orow .avail.bad { color: var(--gp-warn); }
+  .orow .flags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .seller > footer { display: flex; justify-content: flex-end; padding: 6px 4px 0; }
+  .paste summary { cursor: pointer; color: var(--text-dim); font: 12px var(--font-mono); }
+  .paste textarea { display: block; width: min(420px, 100%); margin-top: 6px; background: var(--surface-2); color: var(--text); border: 1px solid var(--hairline);
+    border-radius: 6px; font: 12px var(--font-mono); padding: 8px; }
+  .grand { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; padding: 12px 16px; border: 1px solid var(--cyan-dim); border-radius: 10px; background: var(--glow-06); }
+  .grand b { font: 600 18px var(--font-mono); }
+
+  /* made to order, the day-1 list and the print queue: the same row idea */
+  .grow { display: grid; gap: 6px 14px; align-items: start; padding: 10px 12px; border-bottom: 1px solid var(--hairline); font-size: 13px; }
+  .grow:last-child { border-bottom: 0; }
+  .grow.head { color: var(--muted); font: 500 11px var(--font-mono); letter-spacing: .06em; padding: 7px 12px; align-items: end; }
+  .grow .mono { font: 12px var(--font-mono); overflow-wrap: anywhere; }
+  .grow b { color: var(--text); }
+  .glist { background: rgb(var(--gp-card-rgb) / 0.94); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; }
+  .mrow { grid-template-columns: 72px minmax(0, 1.7fr) minmax(0, 1.1fr) 44px minmax(0, 1fr) minmax(0, 1.6fr); }
+  .drow { grid-template-columns: 34px 48px minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, 2.2fr); }
+  .prow { grid-template-columns: 30px 48px minmax(0, 1.6fr) 72px 40px 70px 64px minmax(0, 1.3fr) 66px; }
+  .est { font: 12px var(--font-mono); } .est .note { color: var(--muted); font: 12px var(--font-ui); margin-top: 4px; }
+  .prow .how { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .num { font: 600 12px var(--font-mono); color: var(--cyan); }
+  .callouts summary { cursor: pointer; color: var(--text-dim); font: 12px var(--font-mono); margin-top: 6px; }
+  .callouts ol { margin: 6px 0 0; padding-left: 18px; color: var(--text-dim); font-size: 12px; } .callouts li { margin-bottom: 3px; }
+  .lead { font: 12px var(--font-mono); color: var(--text); } .lead.none { color: var(--muted); }
+  .print-history-note { margin:12px 0 18px; padding:16px 18px; border:1px solid var(--gp-line-yellow); border-left:4px solid #a45b12; border-radius:10px; background:var(--gp-cream); color:var(--gp-ink); font-size:14px; line-height:1.6; overflow-wrap:anywhere; }
+  .print-history-note p { margin:8px 0 0; } .print-history-note a { color:var(--gp-brown); text-decoration:underline; }
+  .print-now { margin: 6px 0 22px; }
+  .print-now-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 10px; font-size: 14px; }
+  .print-now-list { list-style: none; margin: 0; padding: 0; background: rgb(var(--gp-card-rgb) / 0.94); border: 1px solid var(--hairline); border-radius: 8px; font-size: 13px; }
+  .print-now-list li { display: grid; grid-template-columns: 30px minmax(0, 2fr) 64px 96px minmax(0, 1.6fr); gap: 4px 12px; padding: 7px 12px; border-bottom: 1px solid var(--hairline); align-items: baseline; }
+  .print-now-list li:last-child { border-bottom: 0; }
+  .print-now-list .pn-t, .print-now-list .pn-g { font-family: var(--font-mono); text-align: right; white-space: nowrap; }
+  .print-now-list .pn-tot { font-weight: 600; }
+  .print-now-list .pn-f a { overflow-wrap: anywhere; } .print-now-list summary { cursor: pointer; color: var(--text-dim); }
+  @media (max-width: 760px) { .print-now-list li { grid-template-columns: 26px minmax(0, 1fr) auto; } .print-now-list .pn-g { grid-column: 3; } .print-now-list .pn-t { grid-column: 3; grid-row: 1; } .print-now-list .pn-f { grid-column: 2 / -1; } }
+  .print-history-total { display:block; color:var(--text); margin:12px 0 0; font-size:14px; line-height:1.6; }
+  .queue h3 { font-size: 14px; margin: 18px 0 8px; } .queue h3 .dim { font-weight: 400; font-size: 12px; }
+  .lbl { display: none; color: var(--muted); font: 10px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; margin-right: 4px; }
+  br.narrow { display: none; }
+
+  @media (max-width: 900px) { main.prog { padding: 0 16px 60px; } }
+  @media (max-width: 760px) {
+    .orow { grid-template-columns: 64px minmax(0, 1fr); grid-template-areas: "thumb main" "thumb pn" "stats stats" "alts alts"; }
+    .orow .stats { grid-area: stats; display: flex; flex-wrap: wrap; gap: 8px 22px; }
+    .orow .stats > div { min-width: 84px; }
+    .orow.head, .grow.head { display: none; }
+    .orow .thumb { width: 64px; height: 64px; }
+    .lbl { display: block; margin: 0 0 1px; }
+    .mrow { grid-template-columns: 64px minmax(0, 1fr); } .mrow > :nth-child(n+3) { grid-column: 1 / -1; }
+    .mrow .thumb { width: 64px; height: 64px; }
+    .mrow .lbl, .drow .lbl { display: inline; }
+    .drow { grid-template-columns: 26px 48px minmax(0, 1fr); } .drow > :nth-child(n+4) { grid-column: 2 / -1; }
+    .prow { grid-template-columns: 26px 48px minmax(0, 1fr); }
+    .prow .stats { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+    .seller > header .sub { margin-left: 0; }
+    .summary { font-size: 14px; }
+    table.cmp th, table.cmp td { padding: 6px 6px; }
+    table.cmp .wide { display: none; } br.narrow { display: inline; }
+  }
+</style>
+<link href="/web/favicon.svg?v=f84a162790b9e916fa39" type="image/svg+xml" rel="icon"><link rel="stylesheet" href="/web/prototype-notice.css?v=f84a162790b9e916fa39"><link rel="stylesheet" href="/web/model-links.css?v=f84a162790b9e916fa39"><script type="importmap">{"imports":{"/designer/assembly/build-guide.js":"/designer/assembly/build-guide.js?v=f84a162790b9e916fa39","/designer/assembly/part-inspector.js":"/designer/assembly/part-inspector.js?v=f84a162790b9e916fa39","/designer/assembly/playback.js":"/designer/assembly/playback.js?v=f84a162790b9e916fa39","/designer/assembly/print-selection.js":"/designer/assembly/print-selection.js?v=f84a162790b9e916fa39","/designer/assembly/state.js":"/designer/assembly/state.js?v=f84a162790b9e916fa39","/designer/assembly/workspace.js":"/designer/assembly/workspace.js?v=f84a162790b9e916fa39","/designer/build.js":"/designer/build.js?v=f84a162790b9e916fa39","/designer/cadrig.js":"/designer/cadrig.js?v=f84a162790b9e916fa39","/designer/character/eyes.js":"/designer/character/eyes.js?v=f84a162790b9e916fa39","/designer/character/lines.js":"/designer/character/lines.js?v=f84a162790b9e916fa39","/designer/character/pronounce.js":"/designer/character/pronounce.js?v=f84a162790b9e916fa39","/designer/character/talk.js":"/designer/character/talk.js?v=f84a162790b9e916fa39","/designer/current_robot.js":"/designer/current_robot.js?v=f84a162790b9e916fa39","/designer/current_turret.js":"/designer/current_turret.js?v=f84a162790b9e916fa39","/designer/kit/appnav.js":"/designer/kit/appnav.js?v=f84a162790b9e916fa39","/designer/kit/assembly/guide.js":"/designer/kit/assembly/guide.js?v=f84a162790b9e916fa39","/designer/kit/assembly/playback.js":"/designer/kit/assembly/playback.js?v=f84a162790b9e916fa39","/designer/kit/diagrams.js":"/designer/kit/diagrams.js?v=f84a162790b9e916fa39","/designer/kit/fea-viewer.js":"/designer/kit/fea-viewer.js?v=f84a162790b9e916fa39","/designer/kit/file-geometry.js":"/designer/kit/file-geometry.js?v=f84a162790b9e916fa39","/designer/kit/file-loader.js":"/designer/kit/file-loader.js?v=f84a162790b9e916fa39","/designer/kit/file-mesh-worker.js":"/designer/kit/file-mesh-worker.js?v=f84a162790b9e916fa39","/designer/kit/file-step-worker.js":"/designer/kit/file-step-worker.js?v=f84a162790b9e916fa39","/designer/kit/file-viewer-theme.js":"/designer/kit/file-viewer-theme.js?v=f84a162790b9e916fa39","/designer/kit/file-viewer.js":"/designer/kit/file-viewer.js?v=f84a162790b9e916fa39","/designer/kit/gamepad/bindings.js":"/designer/kit/gamepad/bindings.js?v=f84a162790b9e916fa39","/designer/kit/gamepad/config-ui.js":"/designer/kit/gamepad/config-ui.js?v=f84a162790b9e916fa39","/designer/kit/gamepad/control.js":"/designer/kit/gamepad/control.js?v=f84a162790b9e916fa39","/designer/kit/gamepad/diagram.js":"/designer/kit/gamepad/diagram.js?v=f84a162790b9e916fa39","/designer/kit/gamepad/gamepad.js":"/designer/kit/gamepad/gamepad.js?v=f84a162790b9e916fa39","/designer/kit/gamepad/gamepad.test.mjs":"/designer/kit/gamepad/gamepad.test.mjs?v=f84a162790b9e916fa39","/designer/kit/gamepad/index.js":"/designer/kit/gamepad/index.js?v=f84a162790b9e916fa39","/designer/kit/loading.js":"/designer/kit/loading.js?v=f84a162790b9e916fa39","/designer/kit/panel.js":"/designer/kit/panel.js?v=f84a162790b9e916fa39","/designer/kit/part-table.js":"/designer/kit/part-table.js?v=f84a162790b9e916fa39","/designer/kit/part-tracker.js":"/designer/kit/part-tracker.js?v=f84a162790b9e916fa39","/designer/kit/portal-data.js":"/designer/kit/portal-data.js?v=f84a162790b9e916fa39","/designer/kit/rs04/client.js":"/designer/kit/rs04/client.js?v=f84a162790b9e916fa39","/designer/kit/rs04/emulator.js":"/designer/kit/rs04/emulator.js?v=f84a162790b9e916fa39","/designer/kit/rs04/guard.js":"/designer/kit/rs04/guard.js?v=f84a162790b9e916fa39","/designer/kit/rs04/index.js":"/designer/kit/rs04/index.js?v=f84a162790b9e916fa39","/designer/kit/rs04/plot.js":"/designer/kit/rs04/plot.js?v=f84a162790b9e916fa39","/designer/kit/rs04/protocol.js":"/designer/kit/rs04/protocol.js?v=f84a162790b9e916fa39","/designer/kit/rs04/rs04.test.mjs":"/designer/kit/rs04/rs04.test.mjs?v=f84a162790b9e916fa39","/designer/kit/rs04/tool.js":"/designer/kit/rs04/tool.js?v=f84a162790b9e916fa39","/designer/kit/rs04/transports.js":"/designer/kit/rs04/transports.js?v=f84a162790b9e916fa39","/designer/kit/smooth_zoom.js":"/designer/kit/smooth_zoom.js?v=f84a162790b9e916fa39","/designer/kit/stage.js":"/designer/kit/stage.js?v=f84a162790b9e916fa39","/designer/kit/study-media.js":"/designer/kit/study-media.js?v=f84a162790b9e916fa39","/designer/kit/vendor/file-parsers/3MFLoader.js":"/designer/kit/vendor/file-parsers/3MFLoader.js?v=f84a162790b9e916fa39","/designer/kit/vendor/file-parsers/STLLoader.js":"/designer/kit/vendor/file-parsers/STLLoader.js?v=f84a162790b9e916fa39","/designer/kit/vendor/file-parsers/fflate.module.js":"/designer/kit/vendor/file-parsers/fflate.module.js?v=f84a162790b9e916fa39","/designer/kit/vendor/linkedom/worker.js":"/designer/kit/vendor/linkedom/worker.js?v=f84a162790b9e916fa39","/designer/kit/vendor/mermaid/mermaid.min.js":"/designer/kit/vendor/mermaid/mermaid.min.js?v=f84a162790b9e916fa39","/designer/kit/vendor/occt-import-js/occt-import-js.js":"/designer/kit/vendor/occt-import-js/occt-import-js.js?v=f84a162790b9e916fa39","/designer/kit/vendor/three/addons/controls/OrbitControls.js":"/designer/kit/vendor/three/addons/controls/OrbitControls.js?v=f84a162790b9e916fa39","/designer/kit/vendor/three/addons/geometries/RoundedBoxGeometry.js":"/designer/kit/vendor/three/addons/geometries/RoundedBoxGeometry.js?v=f84a162790b9e916fa39","/designer/kit/vendor/three/addons/loaders/STLLoader.js":"/designer/kit/vendor/three/addons/loaders/STLLoader.js?v=f84a162790b9e916fa39","/designer/kit/vendor/three/addons/utils/BufferGeometryUtils.js":"/designer/kit/vendor/three/addons/utils/BufferGeometryUtils.js?v=f84a162790b9e916fa39","/designer/kit/vendor/three/three.module.min.js":"/designer/kit/vendor/three/three.module.min.js?v=f84a162790b9e916fa39","/designer/kit/viewer.js":"/designer/kit/viewer.js?v=f84a162790b9e916fa39","/designer/leg_limits.js":"/designer/leg_limits.js?v=f84a162790b9e916fa39","/designer/model.js":"/designer/model.js?v=f84a162790b9e916fa39","/designer/motor-tool.js":"/designer/motor-tool.js?v=f84a162790b9e916fa39","/designer/portal-parts.js":"/designer/portal-parts.js?v=f84a162790b9e916fa39","/designer/print-now.js":"/designer/print-now.js?v=f84a162790b9e916fa39","/designer/progress.js":"/designer/progress.js?v=f84a162790b9e916fa39","/designer/rig-media.js":"/designer/rig-media.js?v=f84a162790b9e916fa39","/designer/robot3d.js":"/designer/robot3d.js?v=f84a162790b9e916fa39","/designer/robot_actions.js":"/designer/robot_actions.js?v=f84a162790b9e916fa39","/designer/robot_current_source.js":"/designer/robot_current_source.js?v=f84a162790b9e916fa39","/designer/robot_identity.js":"/designer/robot_identity.js?v=f84a162790b9e916fa39","/designer/robot_kinematics.js":"/designer/robot_kinematics.js?v=f84a162790b9e916fa39","/designer/robot_presentations.js":"/designer/robot_presentations.js?v=f84a162790b9e916fa39","/designer/robot_sensors.js":"/designer/robot_sensors.js?v=f84a162790b9e916fa39","/designer/robot_v2.js":"/designer/robot_v2.js?v=f84a162790b9e916fa39","/designer/sfx.js":"/designer/sfx.js?v=f84a162790b9e916fa39","/designer/sim.js":"/designer/sim.js?v=f84a162790b9e916fa39","/designer/sim_designs.js":"/designer/sim_designs.js?v=f84a162790b9e916fa39","/designer/sim_gamepad.js":"/designer/sim_gamepad.js?v=f84a162790b9e916fa39","/designer/turret3d.js":"/designer/turret3d.js?v=f84a162790b9e916fa39","/designer/turret_bench.js":"/designer/turret_bench.js?v=f84a162790b9e916fa39","/designer/turret_reload.js":"/designer/turret_reload.js?v=f84a162790b9e916fa39","/web/cad-agent-live.js":"/web/cad-agent-live.js?v=f84a162790b9e916fa39","/web/highlight-video.js":"/web/highlight-video.js?v=f84a162790b9e916fa39","/web/landing-nav.js":"/web/landing-nav.js?v=f84a162790b9e916fa39","/web/landing.js":"/web/landing.js?v=f84a162790b9e916fa39","/web/model-links.js":"/web/model-links.js?v=f84a162790b9e916fa39","/web/prototype-notice.js":"/web/prototype-notice.js?v=f84a162790b9e916fa39","/web/status-board.js":"/web/status-board.js?v=f84a162790b9e916fa39","/web/theme.js":"/web/theme.js?v=f84a162790b9e916fa39","/web/timeline.js":"/web/timeline.js?v=f84a162790b9e916fa39","three":"/designer/kit/vendor/three/three.module.min.js?v=f84a162790b9e916fa39","three/addons/":"./kit/vendor/three/addons/","three/addons/controls/OrbitControls.js":"/designer/kit/vendor/three/addons/controls/OrbitControls.js?v=f84a162790b9e916fa39","three/addons/geometries/RoundedBoxGeometry.js":"/designer/kit/vendor/three/addons/geometries/RoundedBoxGeometry.js?v=f84a162790b9e916fa39","three/addons/loaders/STLLoader.js":"/designer/kit/vendor/three/addons/loaders/STLLoader.js?v=f84a162790b9e916fa39","three/addons/utils/BufferGeometryUtils.js":"/designer/kit/vendor/three/addons/utils/BufferGeometryUtils.js?v=f84a162790b9e916fa39"}}</script><link rel="alternate" type="text/markdown" href="/designer/build.md" title="Markdown"></head>
+<body>
+<main class="prog">
+  <div class="portal-intro"><strong>Built by autonomous systems · work in progress</strong>You're inside the Gyropup workshop. These are evolving design files and simulation reports; physical testing is still ahead. <a href="../#built">About the project ↗</a></div>
+  <h1 class="assembly-page-title">Build Gyropup</h1>
+  <section id="assembly" class="assembly-guide" aria-labelledby="assembly-title">
+    <div class="assembly-heading"><div><span class="eyebrow">THE WORKSHOP / BUILD</span><h2 id="assembly-title">Build Gyropup</h2></div><span class="tag warn">DESIGN WIP</span></div>
+    <p class="assembly-intro">Choose an assembly, explore its model, then follow the authored steps.</p>
+    <div class="assembly-layout" data-overview="true">
+      <div data-guide-visual=""><div data-guide-model="" class="assembly-model" aria-busy="true" aria-label="Interactive assembly model"></div></div><div class="assembly-loading" data-guide-loading=""><strong data-loading-phase="" role="status" aria-live="polite">Opening the assembly workshop…</strong><progress aria-label="Model parts loaded" max="1"></progress><span data-loading-count="">Checking the selected build files…</span></div>
+      <div class="assembly-topbar">
+        <button type="button" data-explorer-toggle="" aria-expanded="false" aria-controls="assembly-explorer" title="Assembly explorer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16" /></svg><span>Explore</span></button>
+        <div class="assembly-choice" role="group" aria-label="Choose assembly"><button type="button" data-assembly="robot" aria-pressed="false">Robot</button><button type="button" data-assembly="turret" aria-pressed="false">Turret</button><button type="button" data-assembly="combined" aria-pressed="true">Combined</button></div>
+        <span class="assembly-topbar-space"></span>
+        <button type="button" data-guide-play="" aria-label="Play assembly" title="Play assembly" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z" /></svg><span>Play</span></button>
+        <button type="button" data-guide-fit="" title="Fit model to view (recenter)" aria-label="Fit model to view"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" /><path d="M12 2v4m0 12v4M2 12h4m12 0h4" /><circle cx="12" cy="12" r="1" /></svg></button>
+        <button type="button" data-guide-fullscreen="" aria-pressed="false" title="Enter full screen" aria-label="Enter full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6" /></svg></button>
+        <button type="button" data-tools-toggle="" aria-expanded="false" aria-controls="assembly-tools" title="View tools"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M8 4v6m8 4v6" /></svg><span>View</span></button>
+      </div>
+      <nav class="assembly-nav" aria-label="Instruction navigation"><button type="button" data-guide-prev="" aria-label="Previous step" title="Previous step"><span aria-hidden="true">←</span><span class="assembly-nav-word"> Previous</span></button><label class="assembly-step-jump"><select data-guide-step="" aria-label="Instruction step" title="Jump to step in this assembly"></select></label><label class="assembly-progress"><input type="checkbox" data-guide-complete=""><span>Complete</span></label><button type="button" data-guide-next="" aria-label="Next step" title="Next step"><span class="assembly-nav-word">Next </span><span aria-hidden="true">→</span></button></nav>
+      <div class="assembly-panels" data-workspace-sheet=""><nav class="assembly-sheet-tabs" aria-label="Workspace panels"><button type="button" data-sheet-tab="instructions" aria-pressed="true">Instructions</button><button type="button" data-sheet-tab="parts" aria-pressed="false">Parts</button><button type="button" data-sheet-tab="tools" aria-pressed="false">Tools</button><button type="button" data-sheet-resize="" aria-label="Expand panel" title="Expand panel">↗</button><button type="button" data-sheet-close="" aria-label="Collapse panel" title="Collapse panel">⌄</button></nav>
+      <aside id="assembly-explorer" class="assembly-explorer assembly-overlay" hidden aria-label="Assembly explorer"><div class="assembly-panel-heading"><b>Assembly explorer</b><button type="button" data-explorer-close="" aria-label="Close assembly explorer">×</button></div><nav data-guide-chapters="" data-guide-parts="" class="assembly-chapters" aria-label="Assembly hierarchy"></nav></aside>
+      <aside id="assembly-tools" class="assembly-views assembly-overlay" hidden aria-label="View tools"><div class="assembly-panel-heading"><b>View tools</b><button type="button" data-tools-close="" aria-label="Close view tools">×</button></div><div class="assembly-tool-content"><p data-context-tools="" hidden>Orbit and zoom the current robot. Choose a turret step for assembly controls.</p><div data-step-tools=""><section class="assembly-playback-options" aria-label="Assembly playback"><b>Auto assembly</b><label>Speed<select data-guide-speed="" aria-label="Assembly playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></label><button type="button" data-guide-loop="" aria-pressed="false">Loop off</button><p data-playback-status="" role="status">Choose Play to install one modeled instance at a time.</p></section><label>Appearance <select data-guide-mode="" aria-label="Appearance"><option value="ghost">Ghost fitted parts</option><option value="solid">Solid</option><option value="wireframe">Wireframe</option></select></label><label>Explode <input data-guide-explode="" type="range" min="0" max="1" step="0.01" value="1"></label><div data-section-orientation="" hidden><label>Cut plane <select data-guide-cut-axis="" aria-label="Section plane"><option value="x">Front · CAD X</option><option value="y">Side · CAD Y</option><option value="z">Top · CAD Z</option></select></label><div class="assembly-cut-actions"><button type="button" data-guide-cut-rotate="" title="Rotate cut plane to the next orthogonal axis">Rotate 90°</button><button type="button" data-guide-cut-flip="" aria-pressed="false">Flip side</button></div></div><label>Section depth <input data-guide-section="" type="range" min="0" max="1" step="0.01" value="1"></label></div></div><div class="assembly-tool-actions" data-step-actions=""><button data-guide-reset="" type="button">Assembled reset</button></div></aside>
+      <article class="assembly-step assembly-overlay"><div class="assembly-instruction-heading"><span>Instructions</span><button type="button" data-instructions-toggle="" aria-expanded="false" aria-controls="assembly-instruction-body">Expand ↗</button></div>
+        <div id="assembly-instruction-body" class="assembly-step-body"><p data-guide-count="" class="assembly-count"></p><h3 data-guide-title="">Loading the workshop…</h3><img data-guide-poster="" class="assembly-poster" alt="" hidden><p data-guide-text="">Plain instructions remain available without interactive 3D.</p></div>
+      </article></div><aside class="assembly-part-popup assembly-overlay" data-part-popup="" role="dialog" aria-label="Selected part details" hidden><div class="assembly-panel-heading"><b>Selected part</b><button type="button" data-part-close="" aria-label="Close part details">×</button></div><div class="assembly-part-content"><div data-part-details=""></div><div data-part-downloads=""></div><p data-guide-selection="" class="small dim"></p><label>Appearance<select data-guide-part-mode="" aria-label="Selected part appearance" disabled><option value="automatic">Automatic</option><option value="solid">Solid</option><option value="transparent">Transparent</option><option value="wireframe">Wireframe</option></select></label><p data-part-file-status="" class="small dim"></p></div><div class="assembly-part-actions"><button data-guide-isolate="" type="button" disabled aria-pressed="false">Isolate selected</button><button type="button" data-part-print="" hidden>Prepare print</button></div></aside><div class="assembly-hover" data-part-tooltip="" role="tooltip" hidden></div>
+    </div>
+    <div class="assembly-foot"><p data-guide-status="" role="status" aria-live="polite">Loading the source-bound assembly guide…</p><button type="button" data-guide-retry="" hidden>Retry guide</button><details class="assembly-evidence"><summary>Source, scope &amp; instructions</summary><label data-turret-snapshot="">Turret snapshot <select data-snapshot="" data-assembly-snapshot="turret" aria-label="Design snapshot"><option>Loading current WIP…</option></select></label><label data-robot-snapshot="">Robot snapshot <select data-assembly-snapshot="robot" aria-label="Robot snapshot"><option value="current-wip">Current WIP · committed playground model</option></select></label><label data-combined-snapshot="">Combined snapshot <select data-assembly-snapshot="combined" aria-label="Combined snapshot"><option value="current-wip">Current WIP · mounted playground model</option></select></label><p data-guide-source="" class="assembly-source"></p><p class="assembly-source" data-context-provenance="" hidden>Interim reference only: <a href="../exports/sim/v2/rig/manifest.json">body and legs manifest</a> · <a href="../exports/sim/v2/leg-attachments/manifest.json">current leg attachments</a> · <a href="../exports/sim/turret_box/manifest.json">mounted current turret</a>. These current playground assets are independent from the immutable turret guide snapshot.</p><p data-guide-warning="" class="assembly-warning">No print, fabrication or operating release.</p><p data-guide-scope-description="">Source-bound assembly guides describe their exact authored stages. Interim playground references remain separate.</p><ul data-guide-scope=""></ul><p><a data-guide-plain="" href="../web/build-guides/turret-wip-4866459e2abd/instructions.html">All twelve instructions in plain HTML</a> · <a data-guide-manifest="" href="../web/build-guides/turret-wip-4866459e2abd/guide.json">Bound guide manifest</a> · <a href="../exports/turret/bench/bom.json">Original turret BOM</a></p></details><a href="#build-details">Parts &amp; prints ↓</a></div>
+    <noscript><style>#assembly .assembly-toolbar,#assembly .assembly-chapters,#assembly .assembly-layout,#assembly [data-guide-status],#assembly [data-guide-retry]{display:none!important}</style><p>JavaScript is off. <a href="../web/build-guides/turret-wip-4866459e2abd/instructions.html">All twelve instructions in plain HTML</a> open the default WIP snapshot, with its own step links. Version and step selection on this page require JavaScript.</p></noscript>
+  </section>
+  <details id="build-details" class="build-details"><summary>Buy, print and full parts lists</summary>
+  <div id="build-loading"><div class="gp-loading" role="status" aria-live="polite" aria-busy="true" data-state="loading"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">Loading parts lists and print plans…</span></div></div>
+  <div class="summary" id="summary">Parts and print totals appear after the published data is ready.</div>
+  <p class="lede">Plan the first prototype: choose workstreams, compare suppliers, and follow the print queues. Prices are recorded estimates before shipping and tax. Design files and quantities update as the project progresses.</p>
+  <nav class="build-panel-tabs" aria-label="Parts planner views"><button type="button" data-build-tab="print" aria-pressed="true">Print</button><button type="button" data-build-tab="buy" aria-pressed="false">Buy</button><button type="button" data-build-tab="setup" aria-pressed="false">Workstreams &amp; progress</button></nav><nav class="portal-jumps" aria-label="Build sections"><a href="#print-now">Print now</a><a href="#streams">Workstreams</a><a href="#sellers">Suppliers</a><a href="#made">Made parts</a><a href="#materials">Filament</a><a href="#queue">Print queues</a></nav>
+  <div data-build-panel="setup" hidden><div class="status" id="streams"></div>
+
+  <div id="progress-tools"></div>
+</div><div data-build-panel="buy" hidden><div class="sec">Order on day 1: longest lead times first</div>
+  <p class="lede" id="daylede"></p>
+  <div id="day1"></div>
+
+  <div class="sec">Parts to buy</div>
+  <div class="lede" id="orderlede"></div>
+  <div id="sellers"></div>
+  <div id="orders"></div>
+
+  <div class="sec">Machined and cut to order</div>
+  <p class="lede" id="madelede"></p>
+  <div id="made"></div>
+
+  </div><div data-build-panel="print"><section id="print-selection" class="print-selection" hidden></section><section id="print-now" class="print-now" aria-label="Print these now"></section><div class="sec">Print queue</div>
+  <p class="lede" id="printlede"></p>
+  <div id="materials"></div>
+  <div class="queue" id="queue"></div></div>
+  </details>
+<footer class="portal-footer">Created by <a href="https://valpatel.com">Valpatel Software LLC</a>. © 2026. All rights reserved. Repository materials retain their stated licenses.</footer>
+</main>
+<script type="module">
+  const details=document.getElementById('build-details');
+  function openTarget(){const id=location.hash.slice(1);const target=document.getElementById(id);if(target&&details.contains(target)){details.open=true;const panel=target.closest('[data-build-panel]');if(panel)window.selectBuildPanel?.(panel.dataset.buildPanel);requestAnimationFrame(()=>target.scrollIntoView());}}
+  addEventListener('hashchange',openTarget);openTarget();
+  import('./assembly/build-guide.js').catch(error=>{document.querySelector('[data-guide-loading]').hidden=true;document.querySelector('[data-guide-model]').setAttribute('aria-busy','false');document.querySelector('[data-guide-status]').textContent='Interactive guide unavailable. Use the plain HTML instructions below.';console.warn('Build guide:',error.message);});
+</script>
+<script type="module">
+  import('./assembly/print-selection.js').then(m=>m.mountPrintSelection(document.getElementById('print-selection'))).catch(error=>console.warn('Print selection:',error.message));
+  import('./print-now.js').then((m)=>m.mountPrintNow(document.getElementById('print-now'))).catch((e)=>console.warn('Print list failed:',e.message));
+  try{await import('./build.js');}catch(error){
+    console.warn('Page startup failed:',error.message);
+    // Only a failed bootstrap reloads. Data/model retries above retain the existing scene.
+    if(document.body.dataset.ready!=='1'){
+      const host=document.getElementById('build-loading');host.hidden=false;
+      host.innerHTML='<div class="gp-loading" data-bootstrap-error data-state="error" role="status" aria-live="polite" aria-busy="false"><span class="gp-loading-icon" aria-hidden="true"></span><span class="gp-loading-message">The build planner could not start. Reload the page to try again.</span><span class="gp-loading-actions"><button type="button" data-bootstrap-retry>Reload page</button></span></div>';
+      host.querySelector('[data-bootstrap-retry]').onclick=()=>location.reload();
+    }
+  }
+</script>
+<section id="prototype-notice-footer" class="prototype-notice-footer" aria-labelledby="prototype-footer-title">
+  <div class="prototype-notice-footer-inner">
+    <h2 id="prototype-footer-title">Warning: unsafe research prototypes</h2>
+    <p><strong>Robots are dangerous. Do not build or operate these machines without proper training.</strong> Unexpected movement, falling robots, pinch and crush points, projectiles, high-power motors and batteries can cause serious injury or death and damage property. Electrical and fire hazards are also present.</p>
+    <p><strong>Gyropup prototypes are unsafe and will not be offered for sale.</strong> They are not intended for general public use. Designs are provided for research purposes only. Research work requires appropriate engineering and safety training, a controlled environment, and validated safeguards.</p>
+    <p>Adult supervision alone does not make these prototypes safe. Supervised child and family play is a future goal requiring proven, validated designs. The browser simulation does not establish hardware safety.</p>
+    <button type="button" data-prototype-notice-open="" hidden>Read the prototype safety notice</button>
+  </div>
+</section>
+<dialog id="prototype-notice-dialog" class="prototype-notice-dialog" aria-labelledby="prototype-notice-title" aria-describedby="prototype-notice-intro">
+  <div class="prototype-notice-heading">
+    <div class="prototype-notice-signal" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M27.7 8.5a5 5 0 0 1 8.6 0l25 43a5 5 0 0 1-4.3 7.5H7a5 5 0 0 1-4.3-7.5Z" fill="currentColor" /><path d="M32 23v15" stroke="#152a33" stroke-width="6" stroke-linecap="round" /><circle cx="32" cy="47" r="3.4" fill="#152a33" /></svg></div>
+    <div class="prototype-notice-heading-copy">
+      <p class="prototype-notice-kicker">Warning / experimental robotics</p>
+      <h2 id="prototype-notice-title" tabindex="-1">High-power robots.<br>Real-world risks.</h2>
+      <p class="prototype-notice-status">Unsafe research prototypes</p>
+    </div>
+  </div>
+  <div class="prototype-notice-content" tabindex="0" aria-label="Prototype risks and intended use">
+    <p id="prototype-notice-intro"><strong>Robots are dangerous. Do not build or operate these machines without proper training.</strong></p>
+    <ul>
+      <li><svg class="prototype-notice-risk-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h6l3 4-3 4H3m18-8h-6l-3 4 3 4h6M12 3v3m0 12v3" /></svg><div><strong class="prototype-notice-risk-label">Movement &amp; impact</strong>Unexpected movement, falling robots, pinch and crush points, and launched projectiles can cause serious injury or death and damage property.</div></li>
+      <li><svg class="prototype-notice-risk-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8L21 9h-8Z" /></svg><div><strong class="prototype-notice-risk-label">Power &amp; heat</strong>High-power motors, batteries and electrical systems introduce additional electrical and fire hazards.</div></li>
+      <li><svg class="prototype-notice-risk-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5Z M12 7v6m0 3h.01" /></svg><div><strong class="prototype-notice-risk-label">Trained research only</strong>Research work requires appropriate engineering and safety training, a controlled environment, and validated safeguards. Adult supervision alone does not make these prototypes safe.</div></li>
+    </ul>
+    <p class="prototype-notice-research"><strong>Gyropup prototypes are unsafe and will not be offered for sale.</strong> They are not intended for general public use. Designs are provided for research purposes only.</p>
+    <p class="prototype-notice-future">Supervised child and family play is a future goal requiring proven, validated designs. A working browser simulation, CAD model or test report does not establish hardware safety.</p>
+  </div>
+  <div class="prototype-notice-actions">
+    <a href="https://valpatel.com">Leave this site ↗</a>
+    <button id="prototype-notice-ack" type="button">I understand <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></button>
+  </div>
+</dialog>
+<noscript><style>html,body{overflow:auto!important;height:auto!important}</style></noscript>
+<script type="module" src="/web/prototype-notice.js?v=f84a162790b9e916fa39"></script><script type="module" src="/web/model-links.js?v=f84a162790b9e916fa39"></script></body>
+</html>

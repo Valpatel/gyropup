@@ -1,0 +1,958 @@
+{
+  "source_report_sha256": "e28ddec6ee9be25df874d084b7fd2bb898298fdc748f629eafcb08b37400e6ba",
+  "document_mode_source": "Compiled final-main HTML has HTML5 doctype; V3 requires CSS1Compat at runtime. V2 did not record compatMode.",
+  "snapshots": [
+    {
+      "case": "before positioning",
+      "geometry": {
+        "atMs": 60878.5,
+        "documentId": 1794428283790.3,
+        "url": "https://gyropup.com/designer/build?snapshot=combined-wip-3a40891962b0&chapter=overview&step=overview&assembly=combined#assembly",
+        "viewport": {
+          "width": 1280,
+          "height": 900,
+          "scrollX": 0,
+          "scrollY": 643,
+          "visualViewport": {
+            "left": 0,
+            "top": 0,
+            "width": 1280,
+            "height": 900,
+            "scale": 1
+          }
+        },
+        "navBottom": 64,
+        "root": {
+          "rect": {
+            "left": 0,
+            "right": 1280,
+            "top": -643,
+            "bottom": 2146.765625,
+            "width": 1280,
+            "height": 2789.765625
+          },
+          "scrollTop": 643,
+          "scrollLeft": 0,
+          "scrollHeight": 2790,
+          "clientHeight": 900
+        },
+        "body": {
+          "rect": {
+            "left": 0,
+            "right": 1280,
+            "top": -643,
+            "bottom": 2146.765625,
+            "width": 1280,
+            "height": 2789.765625
+          },
+          "scrollTop": 0,
+          "scrollLeft": 0,
+          "scrollHeight": 2790,
+          "clientHeight": 2790
+        },
+        "scrollingElement": "HTML",
+        "detailsOpen": true,
+        "panel": "print",
+        "table": {
+          "left": 36,
+          "right": 1244,
+          "top": 2487.875,
+          "bottom": 3197.875,
+          "width": 1208,
+          "height": 710
+        },
+        "header": {
+          "left": 223.203125,
+          "right": 478.828125,
+          "top": 2488.375,
+          "bottom": 2547.375,
+          "width": 255.625,
+          "height": 59
+        },
+        "identity": {
+          "id": "print/rig/pod",
+          "rect": {
+            "left": 223.203125,
+            "right": 478.828125,
+            "top": 2547.375,
+            "bottom": 2612.375,
+            "width": 255.625,
+            "height": 65
+          },
+          "textRects": [
+            {
+              "left": 233.203125,
+              "right": 254.8125,
+              "top": 2571.671875,
+              "bottom": 2587.671875,
+              "width": 21.609375,
+              "height": 16
+            },
+            {
+              "left": 233.203125,
+              "right": 254.8125,
+              "top": 2571.671875,
+              "bottom": 2587.671875,
+              "width": 21.609375,
+              "height": 16
+            },
+            {
+              "left": 259.8125,
+              "right": 347.890625,
+              "top": 2557.875,
+              "bottom": 2601.875,
+              "width": 88.078125,
+              "height": 44
+            },
+            {
+              "left": 270.8125,
+              "right": 336.890625,
+              "top": 2570.671875,
+              "bottom": 2587.671875,
+              "width": 66.078125,
+              "height": 17
+            }
+          ]
+        },
+        "firstRows": [
+          {
+            "id": "print/rig/pod",
+            "rect": {
+              "left": 223.203125,
+              "right": 478.828125,
+              "top": 2547.375,
+              "bottom": 2612.375,
+              "width": 255.625,
+              "height": 65
+            },
+            "textRects": [
+              {
+                "left": 233.203125,
+                "right": 254.8125,
+                "top": 2571.671875,
+                "bottom": 2587.671875,
+                "width": 21.609375,
+                "height": 16
+              },
+              {
+                "left": 233.203125,
+                "right": 254.8125,
+                "top": 2571.671875,
+                "bottom": 2587.671875,
+                "width": 21.609375,
+                "height": 16
+              },
+              {
+                "left": 259.8125,
+                "right": 347.890625,
+                "top": 2557.875,
+                "bottom": 2601.875,
+                "width": 88.078125,
+                "height": 44
+              },
+              {
+                "left": 270.8125,
+                "right": 336.890625,
+                "top": 2570.671875,
+                "bottom": 2587.671875,
+                "width": 66.078125,
+                "height": 17
+              }
+            ]
+          },
+          {
+            "id": "print/rig/dyno_lug_plate",
+            "rect": {
+              "left": 223.203125,
+              "right": 478.828125,
+              "top": 2612.375,
+              "bottom": 2677.375,
+              "width": 255.625,
+              "height": 65
+            },
+            "textRects": [
+              {
+                "left": 233.203125,
+                "right": 334.015625,
+                "top": 2636.671875,
+                "bottom": 2652.671875,
+                "width": 100.8125,
+                "height": 16
+              },
+              {
+                "left": 233.203125,
+                "right": 334.015625,
+                "top": 2636.671875,
+                "bottom": 2652.671875,
+                "width": 100.8125,
+                "height": 16
+              },
+              {
+                "left": 339.015625,
+                "right": 427.09375,
+                "top": 2622.875,
+                "bottom": 2666.875,
+                "width": 88.078125,
+                "height": 44
+              },
+              {
+                "left": 350.015625,
+                "right": 416.09375,
+                "top": 2635.671875,
+                "bottom": 2652.671875,
+                "width": 66.078125,
+                "height": 17
+              }
+            ]
+          },
+          {
+            "id": "print/leg/stop_sleeve",
+            "rect": {
+              "left": 223.203125,
+              "right": 478.828125,
+              "top": 2677.375,
+              "bottom": 2742.375,
+              "width": 255.625,
+              "height": 65
+            },
+            "textRects": [
+              {
+                "left": 233.203125,
+                "right": 312.40625,
+                "top": 2701.671875,
+                "bottom": 2717.671875,
+                "width": 79.203125,
+                "height": 16
+              },
+              {
+                "left": 233.203125,
+                "right": 312.40625,
+                "top": 2701.671875,
+                "bottom": 2717.671875,
+                "width": 79.203125,
+                "height": 16
+              },
+              {
+                "left": 317.40625,
+                "right": 405.484375,
+                "top": 2687.875,
+                "bottom": 2731.875,
+                "width": 88.078125,
+                "height": 44
+              },
+              {
+                "left": 328.40625,
+                "right": 394.484375,
+                "top": 2700.671875,
+                "bottom": 2717.671875,
+                "width": 66.078125,
+                "height": 17
+              }
+            ]
+          }
+        ],
+        "ancestors": [
+          {
+            "key": "0:DIV#.cad-table-scroll",
+            "rect": {
+              "left": 35,
+              "right": 1245,
+              "top": 2486.875,
+              "bottom": 2966.875,
+              "width": 1210,
+              "height": 480
+            },
+            "clip": {
+              "left": 36,
+              "top": 2487.875,
+              "right": 1244,
+              "bottom": 2965.875
+            },
+            "clipX": true,
+            "clipY": true,
+            "overflowX": "auto",
+            "overflowY": "auto",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 710,
+            "clientHeight": 478,
+            "scrollWidth": 1208,
+            "clientWidth": 1208
+          },
+          {
+            "key": "1:DIV#queue.queue",
+            "rect": {
+              "left": 35,
+              "right": 1245,
+              "top": 2339.28125,
+              "bottom": 4645.234375,
+              "width": 1210,
+              "height": 2305.953125
+            },
+            "clip": {
+              "left": 35,
+              "top": 2339.28125,
+              "right": 1245,
+              "bottom": 4645.28125
+            },
+            "clipX": false,
+            "clipY": false,
+            "overflowX": "visible",
+            "overflowY": "visible",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 2306,
+            "clientHeight": 2306,
+            "scrollWidth": 1210,
+            "clientWidth": 1210
+          },
+          {
+            "key": "2:DIV#.",
+            "rect": {
+              "left": 32,
+              "right": 1248,
+              "top": 941.8125,
+              "bottom": 1701.8125,
+              "width": 1216,
+              "height": 760
+            },
+            "clip": {
+              "left": 32,
+              "top": 941.8125,
+              "right": 1248,
+              "bottom": 1701.8125
+            },
+            "clipX": true,
+            "clipY": true,
+            "overflowX": "auto",
+            "overflowY": "auto",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 3721,
+            "clientHeight": 760,
+            "scrollWidth": 1216,
+            "clientWidth": 1216
+          },
+          {
+            "key": "3:DETAILS#build-details.build-details",
+            "rect": {
+              "left": 32,
+              "right": 1248,
+              "top": 449.96875,
+              "bottom": 1701.8125,
+              "width": 1216,
+              "height": 1251.84375
+            },
+            "clip": {
+              "left": 32,
+              "top": 449.96875,
+              "right": 1248,
+              "bottom": 1701.96875
+            },
+            "clipX": false,
+            "clipY": false,
+            "overflowX": "visible",
+            "overflowY": "visible",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 1252,
+            "clientHeight": 1252,
+            "scrollWidth": 1216,
+            "clientWidth": 1216
+          },
+          {
+            "key": "4:MAIN#.prog",
+            "rect": {
+              "left": 0,
+              "right": 1280,
+              "top": -643,
+              "bottom": 1840.75,
+              "width": 1280,
+              "height": 2483.75
+            },
+            "clip": {
+              "left": 0,
+              "top": -643,
+              "right": 1280,
+              "bottom": 1841
+            },
+            "clipX": false,
+            "clipY": false,
+            "overflowX": "visible",
+            "overflowY": "visible",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 2484,
+            "clientHeight": 2484,
+            "scrollWidth": 1280,
+            "clientWidth": 1280
+          },
+          {
+            "key": "5:BODY#.has-appnav",
+            "rect": {
+              "left": 0,
+              "right": 1280,
+              "top": -643,
+              "bottom": 2146.765625,
+              "width": 1280,
+              "height": 2789.765625
+            },
+            "clip": {
+              "left": 0,
+              "top": -643,
+              "right": 1280,
+              "bottom": 2147
+            },
+            "clipX": true,
+            "clipY": true,
+            "overflowX": "hidden",
+            "overflowY": "auto",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 2790,
+            "clientHeight": 2790,
+            "scrollWidth": 1280,
+            "clientWidth": 1280
+          },
+          {
+            "key": "6:HTML#.",
+            "rect": {
+              "left": 0,
+              "right": 1280,
+              "top": -643,
+              "bottom": 2146.765625,
+              "width": 1280,
+              "height": 2789.765625
+            },
+            "clip": {
+              "left": 0,
+              "top": -643,
+              "right": 1280,
+              "bottom": 257
+            },
+            "clipX": true,
+            "clipY": true,
+            "overflowX": "hidden",
+            "overflowY": "auto",
+            "scrollTop": 643,
+            "scrollLeft": 0,
+            "scrollHeight": 2790,
+            "clientHeight": 900,
+            "scrollWidth": 1280,
+            "clientWidth": 1280
+          }
+        ],
+        "headerHit": false,
+        "identityHit": false,
+        "headerProbe": {
+          "pass": false,
+          "point": null
+        },
+        "identityProbe": {
+          "pass": false
+        }
+      },
+      "oldFraming": {
+        "pass": false,
+        "reasons": [
+          "empty clipped viewport",
+          "identity header outside clipped viewport",
+          "no main-part identity text visible",
+          "header hit test is occluded",
+          "identity hit test is occluded"
+        ],
+        "region": {
+          "left": 36,
+          "right": 1244,
+          "top": 2487.875,
+          "bottom": 257
+        }
+      }
+    },
+    {
+      "case": "after original window-only positioning",
+      "geometry": {
+        "atMs": 61175.60000000149,
+        "documentId": 1794428283790.3,
+        "url": "https://gyropup.com/designer/build?snapshot=combined-wip-3a40891962b0&chapter=overview&step=overview&assembly=combined#assembly",
+        "viewport": {
+          "width": 1280,
+          "height": 900,
+          "scrollX": 0,
+          "scrollY": 1890,
+          "visualViewport": {
+            "left": 0,
+            "top": 0,
+            "width": 1280,
+            "height": 900,
+            "scale": 1
+          }
+        },
+        "navBottom": 64,
+        "root": {
+          "rect": {
+            "left": 0,
+            "right": 1280,
+            "top": -1890,
+            "bottom": 899.765625,
+            "width": 1280,
+            "height": 2789.765625
+          },
+          "scrollTop": 1890,
+          "scrollLeft": 0,
+          "scrollHeight": 2790,
+          "clientHeight": 900
+        },
+        "body": {
+          "rect": {
+            "left": 0,
+            "right": 1280,
+            "top": -1890,
+            "bottom": 899.765625,
+            "width": 1280,
+            "height": 2789.765625
+          },
+          "scrollTop": 0,
+          "scrollLeft": 0,
+          "scrollHeight": 2790,
+          "clientHeight": 2790
+        },
+        "scrollingElement": "HTML",
+        "detailsOpen": true,
+        "panel": "print",
+        "table": {
+          "left": 36,
+          "right": 1244,
+          "top": 1240.875,
+          "bottom": 1950.875,
+          "width": 1208,
+          "height": 710
+        },
+        "header": {
+          "left": 223.203125,
+          "right": 478.828125,
+          "top": 1241.375,
+          "bottom": 1300.375,
+          "width": 255.625,
+          "height": 59
+        },
+        "identity": {
+          "id": "print/rig/pod",
+          "rect": {
+            "left": 223.203125,
+            "right": 478.828125,
+            "top": 1300.375,
+            "bottom": 1365.375,
+            "width": 255.625,
+            "height": 65
+          },
+          "textRects": [
+            {
+              "left": 233.203125,
+              "right": 254.8125,
+              "top": 1324.671875,
+              "bottom": 1340.671875,
+              "width": 21.609375,
+              "height": 16
+            },
+            {
+              "left": 233.203125,
+              "right": 254.8125,
+              "top": 1324.671875,
+              "bottom": 1340.671875,
+              "width": 21.609375,
+              "height": 16
+            },
+            {
+              "left": 259.8125,
+              "right": 347.890625,
+              "top": 1310.875,
+              "bottom": 1354.875,
+              "width": 88.078125,
+              "height": 44
+            },
+            {
+              "left": 270.8125,
+              "right": 336.890625,
+              "top": 1323.671875,
+              "bottom": 1340.671875,
+              "width": 66.078125,
+              "height": 17
+            }
+          ]
+        },
+        "firstRows": [
+          {
+            "id": "print/rig/pod",
+            "rect": {
+              "left": 223.203125,
+              "right": 478.828125,
+              "top": 1300.375,
+              "bottom": 1365.375,
+              "width": 255.625,
+              "height": 65
+            },
+            "textRects": [
+              {
+                "left": 233.203125,
+                "right": 254.8125,
+                "top": 1324.671875,
+                "bottom": 1340.671875,
+                "width": 21.609375,
+                "height": 16
+              },
+              {
+                "left": 233.203125,
+                "right": 254.8125,
+                "top": 1324.671875,
+                "bottom": 1340.671875,
+                "width": 21.609375,
+                "height": 16
+              },
+              {
+                "left": 259.8125,
+                "right": 347.890625,
+                "top": 1310.875,
+                "bottom": 1354.875,
+                "width": 88.078125,
+                "height": 44
+              },
+              {
+                "left": 270.8125,
+                "right": 336.890625,
+                "top": 1323.671875,
+                "bottom": 1340.671875,
+                "width": 66.078125,
+                "height": 17
+              }
+            ]
+          },
+          {
+            "id": "print/rig/dyno_lug_plate",
+            "rect": {
+              "left": 223.203125,
+              "right": 478.828125,
+              "top": 1365.375,
+              "bottom": 1430.375,
+              "width": 255.625,
+              "height": 65
+            },
+            "textRects": [
+              {
+                "left": 233.203125,
+                "right": 334.015625,
+                "top": 1389.671875,
+                "bottom": 1405.671875,
+                "width": 100.8125,
+                "height": 16
+              },
+              {
+                "left": 233.203125,
+                "right": 334.015625,
+                "top": 1389.671875,
+                "bottom": 1405.671875,
+                "width": 100.8125,
+                "height": 16
+              },
+              {
+                "left": 339.015625,
+                "right": 427.09375,
+                "top": 1375.875,
+                "bottom": 1419.875,
+                "width": 88.078125,
+                "height": 44
+              },
+              {
+                "left": 350.015625,
+                "right": 416.09375,
+                "top": 1388.671875,
+                "bottom": 1405.671875,
+                "width": 66.078125,
+                "height": 17
+              }
+            ]
+          },
+          {
+            "id": "print/leg/stop_sleeve",
+            "rect": {
+              "left": 223.203125,
+              "right": 478.828125,
+              "top": 1430.375,
+              "bottom": 1495.375,
+              "width": 255.625,
+              "height": 65
+            },
+            "textRects": [
+              {
+                "left": 233.203125,
+                "right": 312.40625,
+                "top": 1454.671875,
+                "bottom": 1470.671875,
+                "width": 79.203125,
+                "height": 16
+              },
+              {
+                "left": 233.203125,
+                "right": 312.40625,
+                "top": 1454.671875,
+                "bottom": 1470.671875,
+                "width": 79.203125,
+                "height": 16
+              },
+              {
+                "left": 317.40625,
+                "right": 405.484375,
+                "top": 1440.875,
+                "bottom": 1484.875,
+                "width": 88.078125,
+                "height": 44
+              },
+              {
+                "left": 328.40625,
+                "right": 394.484375,
+                "top": 1453.671875,
+                "bottom": 1470.671875,
+                "width": 66.078125,
+                "height": 17
+              }
+            ]
+          }
+        ],
+        "ancestors": [
+          {
+            "key": "0:DIV#.cad-table-scroll",
+            "rect": {
+              "left": 35,
+              "right": 1245,
+              "top": 1239.875,
+              "bottom": 1719.875,
+              "width": 1210,
+              "height": 480
+            },
+            "clip": {
+              "left": 36,
+              "top": 1240.875,
+              "right": 1244,
+              "bottom": 1718.875
+            },
+            "clipX": true,
+            "clipY": true,
+            "overflowX": "auto",
+            "overflowY": "auto",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 710,
+            "clientHeight": 478,
+            "scrollWidth": 1208,
+            "clientWidth": 1208
+          },
+          {
+            "key": "1:DIV#queue.queue",
+            "rect": {
+              "left": 35,
+              "right": 1245,
+              "top": 1092.28125,
+              "bottom": 3398.234375,
+              "width": 1210,
+              "height": 2305.953125
+            },
+            "clip": {
+              "left": 35,
+              "top": 1092.28125,
+              "right": 1245,
+              "bottom": 3398.28125
+            },
+            "clipX": false,
+            "clipY": false,
+            "overflowX": "visible",
+            "overflowY": "visible",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 2306,
+            "clientHeight": 2306,
+            "scrollWidth": 1210,
+            "clientWidth": 1210
+          },
+          {
+            "key": "2:DIV#.",
+            "rect": {
+              "left": 32,
+              "right": 1248,
+              "top": -305.1875,
+              "bottom": 454.8125,
+              "width": 1216,
+              "height": 760
+            },
+            "clip": {
+              "left": 32,
+              "top": -305.1875,
+              "right": 1248,
+              "bottom": 454.8125
+            },
+            "clipX": true,
+            "clipY": true,
+            "overflowX": "auto",
+            "overflowY": "auto",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 3721,
+            "clientHeight": 760,
+            "scrollWidth": 1216,
+            "clientWidth": 1216
+          },
+          {
+            "key": "3:DETAILS#build-details.build-details",
+            "rect": {
+              "left": 32,
+              "right": 1248,
+              "top": -797.03125,
+              "bottom": 454.8125,
+              "width": 1216,
+              "height": 1251.84375
+            },
+            "clip": {
+              "left": 32,
+              "top": -797.03125,
+              "right": 1248,
+              "bottom": 454.96875
+            },
+            "clipX": false,
+            "clipY": false,
+            "overflowX": "visible",
+            "overflowY": "visible",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 1252,
+            "clientHeight": 1252,
+            "scrollWidth": 1216,
+            "clientWidth": 1216
+          },
+          {
+            "key": "4:MAIN#.prog",
+            "rect": {
+              "left": 0,
+              "right": 1280,
+              "top": -1890,
+              "bottom": 593.75,
+              "width": 1280,
+              "height": 2483.75
+            },
+            "clip": {
+              "left": 0,
+              "top": -1890,
+              "right": 1280,
+              "bottom": 594
+            },
+            "clipX": false,
+            "clipY": false,
+            "overflowX": "visible",
+            "overflowY": "visible",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 2484,
+            "clientHeight": 2484,
+            "scrollWidth": 1280,
+            "clientWidth": 1280
+          },
+          {
+            "key": "5:BODY#.has-appnav",
+            "rect": {
+              "left": 0,
+              "right": 1280,
+              "top": -1890,
+              "bottom": 899.765625,
+              "width": 1280,
+              "height": 2789.765625
+            },
+            "clip": {
+              "left": 0,
+              "top": -1890,
+              "right": 1280,
+              "bottom": 900
+            },
+            "clipX": true,
+            "clipY": true,
+            "overflowX": "hidden",
+            "overflowY": "auto",
+            "scrollTop": 0,
+            "scrollLeft": 0,
+            "scrollHeight": 2790,
+            "clientHeight": 2790,
+            "scrollWidth": 1280,
+            "clientWidth": 1280
+          },
+          {
+            "key": "6:HTML#.",
+            "rect": {
+              "left": 0,
+              "right": 1280,
+              "top": -1890,
+              "bottom": 899.765625,
+              "width": 1280,
+              "height": 2789.765625
+            },
+            "clip": {
+              "left": 0,
+              "top": -1890,
+              "right": 1280,
+              "bottom": -990
+            },
+            "clipX": true,
+            "clipY": true,
+            "overflowX": "hidden",
+            "overflowY": "auto",
+            "scrollTop": 1890,
+            "scrollLeft": 0,
+            "scrollHeight": 2790,
+            "clientHeight": 900,
+            "scrollWidth": 1280,
+            "clientWidth": 1280
+          }
+        ],
+        "headerHit": false,
+        "identityHit": false,
+        "headerProbe": {
+          "pass": false,
+          "point": null
+        },
+        "identityProbe": {
+          "pass": false
+        }
+      },
+      "oldFraming": {
+        "pass": false,
+        "reasons": [
+          "empty clipped viewport",
+          "identity header outside clipped viewport",
+          "no main-part identity text visible",
+          "header hit test is occluded",
+          "identity hit test is occluded"
+        ],
+        "region": {
+          "left": 36,
+          "right": 1244,
+          "top": 1240.875,
+          "bottom": -990
+        }
+      }
+    }
+  ],
+  "v2_failure": {
+    "name": "TimeoutError",
+    "message": "locator.scrollIntoViewIfNeeded: Timeout 4906ms exceeded",
+    "last_log": "waiting for element to be stable",
+    "limits": "Untimed wrapper log does not identify the pending stable-state check versus native scroll delegation."
+  },
+  "failures": [
+    {
+      "phase": "real Build integration",
+      "url": "https://www.waveshare.com/media/catalog/product/cache/1/image/560x560/9df78eab33525d08d6e5fb8d27136e95/s/t/st3215-servo-1_5.jpg",
+      "error": "net::ERR_BLOCKED_BY_RESPONSE.NotSameOrigin"
+    }
+  ],
+  "captureAttempts": {
+    "queue": 0,
+    "orders": 0
+  },
+  "scope": "Retained original geometry; raw values unchanged. Any root-role annotation in controls is explicit test metadata, not measured V2 compatMode."
+}
