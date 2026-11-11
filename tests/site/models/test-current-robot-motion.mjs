@@ -9,6 +9,7 @@ import {publicForSource,sourceForPublic} from '../../../tools/site/source-layout
 import {installCurrentMotion,captureMotionFaults,captureMotionOperation} from './current-motion-capture.mjs';
 import {requiredMeshRequestTarget} from './current-motion-target.mjs';
 import {currentRobotReady,currentRobotCanvasReady} from './current-motion-ready.mjs';
+import {prepareStaticMotionDocument,isStaticMotionChangeRequest} from './current-motion-static.mjs';
 
 const root=new URL('../../../',import.meta.url),sha=b=>createHash('sha256').update(b).digest('hex');
 const referenceFile=process.env.CURRENT_MOTION_REFERENCE,referenceHash=process.env.CURRENT_MOTION_REFERENCE_SHA256;
@@ -46,12 +47,12 @@ const progress=async phase=>{report.phases.push(phase);await writeFile(path.join
 const stop=()=>{aborted=true;void browser?.close().catch(()=>{});server.closeAllConnections();server.close();};
 process.once('SIGTERM',stop);process.once('SIGINT',stop);
 async function save(name,value){const data=JSON.stringify(value)+'\n';await writeFile(path.join(out,name),data,{flag:'wx'});report.outputs[name]={sha256:sha(data),bytes:Buffer.byteLength(data)};}
-async function context(viewport={width:1280,height:900}){
+async function context(base,viewport={width:1280,height:900}){
   const c=await browser.newContext({viewport,reducedMotion:'reduce'});contexts.push(c);
-  await c.addInitScript(()=>{
-    if(!/^https?:$/.test(location.protocol))return;
-    sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');
-    localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');
+  await c.addInitScript(prepareStaticMotionDocument,base);
+  c.on('request',request=>{
+    if(isStaticMotionChangeRequest(request.url(),base))
+      report.staticFixture.unsupportedChangeRequests.push({url:request.url(),phase:report.phases.at(-1)});
   });
   if(candidateOverlay)await c.route('**/designer/robot_current_source.js*',async route=>{
     const response=await route.fetch();assert.equal(sha(await response.body()),sha(originalBinding));
@@ -63,10 +64,11 @@ async function context(viewport={width:1280,height:900}){
 try{
   await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
   const base='http://127.0.0.1:'+server.address().port;report.port=server.address().port;
+  report.staticFixture={origin:base,developmentPollerDisabled:true,unsupportedChangeRequests:[]};
   deadline=setTimeout(stop,180000);await progress('launch');
   browser=await engine.launch(selected==='chromium'?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
   if(aborted)throw new Error('Capture cancelled during browser launch');report.browserVersion=browser.version();
-  const c=await context(),page=await c.newPage();page.setDefaultTimeout(45000);
+  const c=await context(base),page=await c.newPage();page.setDefaultTimeout(45000);
   const version=await(await c.request.get(base+'/version.json')).json();assert.equal(version.revision,sourceRevision);report.servedVersion=version;
   report.deliveredSource={};
   if(!candidateOverlay){const response=await c.request.get(base+'/designer/robot_current_source.js');assert.ok(response.ok());assert.equal(sha(await response.body()),sha(originalBinding));report.deliveredSource['designer/robot_current_source.js']={sha256:sha(originalBinding),bytes:originalBinding.length};}
@@ -160,7 +162,7 @@ try{
   }
   await save('current-route-identities.json',routeIdentities);
   await c.close();
-  const mobile=await context({width:320,height:568}),phone=await mobile.newPage();phone.setDefaultTimeout(45000);
+  const mobile=await context(base,{width:320,height:568}),phone=await mobile.newPage();phone.setDefaultTimeout(45000);
   let mobileInterceptions=0;
   await phone.route(currentPart,route=>{mobileInterceptions++;return route.fulfill({status:503,body:'Deliberate candidate required-part failure'});});
   await phone.goto(base+'/designer/sim.html?run=none&demo=0&sound=0',{waitUntil:'domcontentloaded'});
@@ -175,6 +177,8 @@ try{
   const mobileCanvas=await phone.waitForFunction(currentRobotCanvasReady,reference.collection_sha256,{timeout:10000,polling:'raf'});
   report.visibleCanvas.mobile=await mobileCanvas.jsonValue();await mobileCanvas.dispose();mobileFailure.recoveredCanvas=report.visibleCanvas.mobile;
   await save('mobile-error-recovery.json',mobileFailure);await phone.screenshot({path:path.join(out,'mobile-current-recovered.png'),timeout:15000});
+  await mobile.close();
+  assert.deepEqual(report.staticFixture.unsupportedChangeRequests,[],'Static motion contexts must not start the development poller');
   assert.deepEqual(errors,[]);report.status='CAPTURED_AWAITING_INDEPENDENT_SHARED_VALIDATION';await progress('browser observations complete; not a validation/qualification verdict');
 }catch(error){report.error=error.stack??String(error);throw error;}
 finally{
