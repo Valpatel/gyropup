@@ -38,3 +38,19 @@ reads/writes and a stalled bounded snapshot. Diagnostic failure still retains
 the original timeout and never retries it. Normal CI must provide the next actual
 result: this records an unreproduced failure, not a product fix, readiness waiver,
 timeout increase or rendering/physical qualification.
+
+## 2026-11-11 — passing controls missed private path and non-HTTP URL forms
+
+Independent review [5854558025](https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5854558025), [thread4534565407](https://github.com/Valpatel/gyropup/pull/315#discussion_r4534565407), found a concrete privacy blocker at `d0dfd096`. The existing nine controls passed while three synthetic calls still leaked their input:
+
+```text
+safeReadinessText('failed at /tmp/private-session/key.json', origin) -> same private path
+safeReadinessText('ws://private-host:1234/stream?token=secret', origin) -> same endpoint/query
+safeReadinessURL('about:blank?token=secret', origin) -> same query
+```
+
+These are synthetic examples, not real machine paths or credentials. A pure evaluation of the actual old Git blob reproduced all three. The original sanitizer covered HTTP(S) and two home-directory roots, then treated about URLs as safe wholesale. Its test coverage did not justify the broader redaction claim. Preserve that failed review and old evidence rather than narrowing the claimed requirement afterward.
+
+The same serializer now normalizes common percent/escaped forms, keeps only known about document labels without query/fragment, redacts external authority and opaque URL schemes, and removes filesystem paths beyond home directories. It retains sanitized owned-site paths, normal relative source/replay names and numeric scene state. The existing control harness adds the actual three repros, adjacent schemes, malformed/encoded endpoints, POSIX/Windows/file error forms and full written error/console/state serialization. Header/body collection remains absent; the original30s wait,2s read bound and failure behavior are unchanged.
+
+Diagnostic privacy is a separate gate from diagnosing the simulator timeout. These controls exercise known diagnostic formats and preserve the old coverage gap; they are not a generic arbitrary-secret detector or evidence that loading is repaired. The source CI timeout and its original artifacts remain unresolved until actual evidence supports a correction.

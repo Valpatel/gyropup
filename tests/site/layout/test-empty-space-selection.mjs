@@ -6,7 +6,7 @@ import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {EventEmitter} from 'node:events';
 import vm from 'node:vm';
-import {observeReadiness,readReadinessState,retainReadinessFailure,safeReadinessText} from './readiness-diagnostics.mjs';
+import {observeReadiness,readReadinessState,retainReadinessFailure,safeReadinessText,safeReadinessURL} from './readiness-diagnostics.mjs';
 import {SIZES,SCHEMES} from '../../../tools/site/site-empty-space.mjs';
 
 const root=new URL('../../../',import.meta.url),harness=fileURLToPath(new URL('tests/site/layout/test-empty-space.mjs',root));
@@ -92,4 +92,60 @@ test('a stalled diagnostic state read is bounded and does not replace the origin
   let written;
   const report=await retainReadinessFailure({error:Error('original core failure'),observer:{snapshot:()=>({route:'/designer/sim.html'})},readState:()=>new Promise(()=>{}),write:async value=>{written=value;},ownedOrigin:'https://site.fixture',boundMs:1});
   assert.equal(report.error.message,'original core failure');assert.equal(report.diagnosticErrors[0].phase,'state');assert.match(report.diagnosticErrors[0].message,/exceeded/);assert.equal(written.error.message,report.error.message);
+});
+
+
+test('independent privacy reproductions redact temp paths, WebSockets and about queries',()=>{
+  const origin='https://site.fixture';
+  assert.equal(safeReadinessText('failed at /tmp/private-session/key.json',origin),'failed at <private-path>');
+  assert.equal(safeReadinessText('ws://private-host:1234/stream?token=secret',origin),'<external-url>');
+  assert.equal(safeReadinessURL('about:blank?token=secret',origin),'about:blank');
+  assert.equal(safeReadinessURL('about:srcdoc#secret',origin),'about:srcdoc');
+});
+
+test('adjacent schemes and encoded or malformed endpoints do not survive text or URL serialization',()=>{
+  const origin='https://site.fixture';
+  const values=[
+    'wss://private-host/stream?token=secret','WS://user:secret@private-host/stream#secret',
+    'ftp://private-host/key.json?token=secret','file:///tmp/private-session/key.json','file:/tmp/private-session/key.json',
+    'blob:https://private-host/private-session?token=secret','data:text/plain,secret','mailto:secret@private-host',
+    'chrome-error://private-host/private-session?token=secret','//private-host/stream?token=secret',
+    'ws://[malformed/stream?token=secret',encodeURIComponent('wss://private-host/stream?token=secret'),
+    encodeURIComponent(encodeURIComponent('file:///tmp/private-session/key.json')),
+    String.raw`wss:\/\/private-host/stream?token=secret`,
+    String.raw`\u0077\u0073\u003a\u002f\u002fprivate-host/stream?token=secret`,
+    '%77%73%3a%e0%a4private-host/stream?token=secret',
+  ];
+  for(const input of values){
+    for(const output of [safeReadinessText('failed '+input,origin),safeReadinessURL(input,origin)])
+      assert.doesNotMatch(output,/private-host|private-session|key\.json|secret|token=/,input);
+  }
+  assert.equal(safeReadinessURL('HTTPS://site.fixture/designer/sim.js?token=secret#secret',origin),'/designer/sim.js');
+  assert.equal(safeReadinessText('Timeout 30000ms at HTTPS://site.fixture/designer/sim.js?token=secret; frame 7',origin),'Timeout 30000ms at /designer/sim.js frame 7');
+});
+
+test('filesystem error forms are redacted while ordinary public source paths stay useful',()=>{
+  const origin='https://site.fixture';
+  const paths=[
+    '/tmp/private-session/key.json','/var/tmp/private-session/key.json','/private/var/private-session/key.json',
+    '/custom-root/private-session/key.json',String.raw`C:\temp\private-session\key.json`,String.raw`\\private-host\share\key.json`,
+    encodeURIComponent('/tmp/private-session/key.json'),encodeURIComponent(encodeURIComponent('/tmp/private-session/key.json')),
+    String.raw`\u002ftmp\u002fprivate-session\u002fkey.json`,"'/tmp/private session/key.json'",'/tmp/private session/key.json',
+    '/designer/../../tmp/private-session/key.json',
+  ];
+  for(const path of paths)assert.doesNotMatch(safeReadinessText('failed at '+path,origin),/private.session|key\.json|private-host/,path);
+  assert.equal(safeReadinessText('failed at /designer/sim.js:80:5',origin),'failed at /designer/sim.js:80:5');
+  assert.equal(safeReadinessText('model v2, frame 7, triangles 100',origin),'model v2, frame 7, triangles 100');
+  assert.equal(safeReadinessText('replay v2/targets, exports/sim/v2/drive.json',origin),'replay v2/targets, exports/sim/v2/drive.json');
+});
+
+test('the full written timeout report sanitizes error, console and state strings without losing safe scene evidence',async()=>{
+  const origin='https://site.fixture',page=new EventEmitter();page.url=()=> 'about:blank?token=secret';
+  const observer=observeReadiness(page,origin);observer.begin('/designer/sim.html?token=secret');
+  page.emit('pageerror',Object.assign(Error('failed at /tmp/private-session/key.json'),{name:'Error ws://private-host/stream?token=secret'}));
+  page.emit('console',{type:()=> 'error',text:()=> 'failed file:///var/tmp/private-session/key.json'});
+  const error=Object.assign(Error('Timeout 30000ms; wss://private-host/stream?token=secret'),{name:'TimeoutError'});let saved;
+  await retainReadinessFailure({error,observer,ownedOrigin:origin,readState:async()=>({bodyReady:null,selectedDesign:'v2',startupText:'failed at /tmp/private-session/key.json',statusText:'about:blank?token=secret',scene:{frame:7,triangles:100,presentation:'current'},source:'https://site.fixture/designer/sim.js?token=secret'}),write:async report=>{saved=JSON.parse(JSON.stringify(report));}});
+  assert.doesNotMatch(JSON.stringify(saved),/private-host|private-session|key\.json|secret|token=/);
+  assert.equal(saved.error.name,'TimeoutError');assert.equal(saved.coreDeadline,30000);assert.equal(saved.state.selectedDesign,'v2');assert.equal(saved.state.scene.frame,7);assert.equal(saved.state.source,'/designer/sim.js');assert.equal(saved.observation.errors.length,1);assert.equal(saved.observation.consoleErrors.length,1);
 });

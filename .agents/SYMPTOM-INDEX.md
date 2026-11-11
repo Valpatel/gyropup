@@ -4,6 +4,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| Diagnostic controls pass but temporary paths, WebSocket endpoints or about-query values survive serialization | [Diagnostic redaction formats](domains/loading-readiness.md) |
 | Layout completes its views but simulator readiness times out with no current scene or request evidence | [Readiness failure observations](domains/loading-readiness.md) |
 | HTML has a deep evidence link but generated Markdown drops it after a semantic nav change | [Content navigation conversion](domains/static-build.md) |
 | A capture packet pins the new source but a live phase still accepts an archived served revision | [Live phase source binding](domains/structural-media.md) |
