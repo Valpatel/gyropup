@@ -105,7 +105,7 @@ try {
   await early.goto(base+'/',{waitUntil:'domcontentloaded'});
   const before=await early.locator('.site-header').evaluate(h=>h.getBoundingClientRect().height);
   assert.ok(await early.getByRole('button',{name:'Menu'}).isVisible(),'Without its script the landing shows no Menu button');
-  assert.ok(!(await early.getByRole('link',{name:'Design notes'}).isVisible()),'Without its script the landing shows the phone links inline');
+  assert.ok(!(await early.locator('.landing-nav').getByRole('link',{name:'Design notes',exact:true}).isVisible()),'Without its script the landing shows the phone links inline');
   await page.goto(base+'/',{waitUntil:'networkidle'});
   await page.setViewportSize({width:390,height:844});
   await page.waitForSelector('.landing-nav.has-menu');
