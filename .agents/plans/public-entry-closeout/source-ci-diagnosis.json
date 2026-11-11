@@ -217,5 +217,47 @@
     "correction": "Retain every releaser in an owned Set, keep ordinary primary release, drain actual finally, and bound allSettled/context close under one 2-second cleanup fence before the separately bounded report write. Routes entering during cleanup release immediately.",
     "controls": "Actual caller success/failure with two routes, continuation rejection/stall, original error plus continuation/close failures, failed/stalled close, late route and report failure. No external gate access.",
     "limits": "No claim of multiple CSS requests in original CI; pending native commands or context close are reported incomplete and cannot pass. Original 30-second predicates/response wait and all CSS/layout assertions remain."
+  },
+  "promotion_316_print": {
+    "date": "2026-11-11",
+    "promotion_pr": 316,
+    "publication_context_issue": 193,
+    "accepted_dev_source": "3b9934e6f840e593647f4bd51973673d5e05ffac",
+    "accepted_dev_ci": "All 37 PR315 checks passed before normal merge into dev; the later promotion failure remains a distinct failed outcome.",
+    "run": 43012402891,
+    "job": 130495039157,
+    "actual_served_revision": "39c1cc003a722b0400d7dc7de6d8319dcc8babda",
+    "synthetic_merge_parents": [
+      "d694b3aac914d8f87d8de67a67cc7981f0d4788d",
+      "3b9934e6f840e593647f4bd51973673d5e05ffac"
+    ],
+    "source_tree": "bb601d5ed27e17610901fea5b8f3bd0cd3c3feed",
+    "assets": "daef89968ce03bc56a9d",
+    "artifact": {
+      "id": 13852100096,
+      "bytes": 1901462,
+      "sha256": "743f346b211e1f850d4a985b520706492ff3cf9092058cb324f7a1d4b780848f",
+      "regular_members": 9,
+      "current_failed_json_sha256": "0690cfa9d785e107b761e851c9b84a3f85f96773f757a286a183db3045ee3125",
+      "failure_png_sha256": "2b575d6612ee5fc1384a1bb475be1e582693f9f5cd2209f00600b2cf034c6439"
+    },
+    "passed_partial_coverage": "Chromium historical four groups passed. Current L/R original STL and geometry-only 3MF downloads/readbacks passed. The L iteration pending-part selection and context close succeeded.",
+    "failure": "Original 30-second native click timeout opening Left leg / Modeled context for L.upper_link_front after the R-hip downloads; current cases remained empty and the later corrupt-current-project and WebKit commands were not reached.",
+    "observed_state": "120 samples over 30006.9 ms, no drops; constant rect [62,561.8125,237,44], connected/visible/enabled, same document/path, focused visible document, Explorer open and no page errors. Target parent stayed closed. Timer samples do not measure RAF progress; native actionability did not advance past its stability check.",
+    "cause": "Unknown. No hidden-drawer, selector-order, GPU/CPU/scheduling or product-source cause established. Actual synthetic merge tree equals the accepted dev tree; no product correction or original failure waiver is claimed.",
+    "input_coverage_policy": "Preselect pointer for L pending-part disclosure and keyboard for R pending-part disclosure. Both initial hip selections remain pointer. Keyboard captures the exact summary/parent before activation, requires visible/enabled/connected state and same-summary focus, sends real Enter, then verifies the same parent closed-to-open. No post-failure fallback, forced click, open mutation, retry, deadline relief or dropped case.",
+    "controls": "Actual keyboard helper rejects wrong focus, unfocused document, hidden/disabled/disconnected summary, no toggle, wrong parent and exact native activation error. Actual pickList pointer error never falls back; actual keyboard path runs before native part Enter. Four historical/current Chromium/WebKit workflow commands remain.",
+    "acceptance_remaining": "Independent source review, one authorized normal push and follow-up PR into dev, full normal CI, normal dev/main promotion and public verification. No new capture is required while accepted visual/transitive and media bindings remain unchanged.",
+    "terminal_rollup": {
+      "checks": 37,
+      "success": 34,
+      "failure": 3,
+      "only_direct_failure": 130495039157,
+      "aggregate_failures": [
+        "layout",
+        "presentation"
+      ],
+      "other_direct_checks": "Passed, including Playground and docking; original Print failure retained."
+    }
   }
 }

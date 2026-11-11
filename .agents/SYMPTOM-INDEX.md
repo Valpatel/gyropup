@@ -4,6 +4,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A current Print disclosure stalls at native actionability despite stationary visible samples | [Explicit pointer and keyboard coverage with exact-target checks](inbox/2026-11-10-browser-harnesses-need-current-and-archive-bindings.md#2026-11-11--diversify-redundant-print-disclosure-input-coverage) |
 | A container build stops at Git dubious ownership before browser arms start | [Mounted workspace Git identity](inbox/2026-11-11-mounted-workspaces-need-git-identity.md) |
 | Instructions are delivered to a completed worker but no new turn or progress follows | [Wake completed workers explicitly](inbox/2026-11-11-handoffs-must-wake-idle-workers.md) |
 | Diagnostic controls pass but temporary paths, WebSocket endpoints or about-query values survive serialization | [Diagnostic redaction formats](domains/loading-readiness.md) |
