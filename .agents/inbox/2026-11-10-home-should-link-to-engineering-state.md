@@ -24,3 +24,10 @@ Initial PR314 CI at `ebdc45c615547b22604b5f82dc27cad1b38c5899` retained two real
 
 
 The browser-candidate prototype line was shortened to an evergreen experimental-hardware boundary rather than copying a changing physical-testing stage. The complete safety notice is unchanged. Relocated static Progress fixtures reuse the existing exact-origin static-document opt-out and assert zero unsupported changes-endpoint requests after cleanup; no browser errors are filtered and the historical prototype helper is unchanged. These fixture helpers retain their existing wrong-origin and storage-failure controls. Browser checks have not run locally at this source checkpoint.
+
+
+## A responsive hidden break still needs a word separator
+
+All four original source605e browser units passed their functional assertions and cleanup guards. Root's actual Chromium320px full-page image nevertheless showed “scrolling.More” joined together. The new heading had dropped the literal space before its `<br>`, while the existing mobile CSS hides that break. This is a real typography regression; the focused Skip-to-content overlay in that test image is separately recorded test focus, not an assumed product defect.
+
+The minimal correction restores the existing separator. The ordinary hero viewport test now reads the actual rendered `innerText` and computed break state across mobile/desktop. Its mobile DOM negative temporarily removes that separator, requires the actual joined rendered phrase and a synchronous validator rejection, then restores and rechecks the real heading. Source regexes alone cannot establish the visible result. Original605e screenshots/functional receipts remain unchanged; a separately reviewed bounded typography check must inspect the corrected candidate and record keyboard focus before deliberately clearing it for a resting screenshot. No hero/model runtime, CSS or geometry change is part of this correction.

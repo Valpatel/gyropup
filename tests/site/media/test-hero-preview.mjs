@@ -1,4 +1,5 @@
 import { acknowledgePrototypeNotice } from '../assembly/build-prototype-session.mjs';
+import {checkPlayHeading,rejectMissingPlaySeparator} from './home-typography.mjs';
 /** Exercise the visible poster-to-WebGL handoff, not merely matching CSS boxes. */
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
@@ -112,11 +113,13 @@ await acknowledgePrototypeNotice(context,base);
    });
    assert.deepEqual(entrance.outside,[],`Homepage entrances fit at${width}dpr${dpr}`);
    assert.equal(entrance.doors.length,3);for(const door of entrance.doors)assert.ok(door.width>=44&&door.height>=44,'Primary route cards are touch targets');
+   const playHeading=await checkPlayHeading(page,width<=760);
+   if(dpr===1&&width===320)await rejectMissingPlaySeparator(page);
    const controls=await page.locator('.hero-controls').evaluate(e=>[...e.querySelectorAll('button,summary')].map(b=>{const r=b.getBoundingClientRect();return{w:r.width,h:r.height,x:r.x,right:r.right};}));
    for(const b of controls)assert.ok(b.w>=44&&b.h>=44&&b.x>=0&&b.right<=width,`Reachable control ${width}: ${JSON.stringify(b)}`);
    if(width===320||width===844||width===1440)await page.locator('.hero-scene').screenshot({path:`${out}/${engine.name()}-ready-${width}-dpr${dpr}.png`});
    if(dpr===1&&(width===320||width===1440))await page.screenshot({path:`${out}/${engine.name()}-home-${width}.png`,fullPage:true});
-   cases.push({width,height,dpr,...c});
+   cases.push({width,height,dpr,...c,playHeading});
   }
   assert.equal(await page.evaluate(()=>window.__heroPreview.controls.autoRotate),false,'Reduced motion disables automatic rotation');
   await context.close();
