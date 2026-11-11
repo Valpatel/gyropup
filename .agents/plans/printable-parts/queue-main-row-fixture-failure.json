@@ -1,0 +1,268 @@
+{
+  "error": "locator.textContent: Error: strict mode violation: locator('tbody') resolved to 3 elements:\n    1) <tbody data-print-key=\"print/rig/pod\">\u2026</tbody> aka getByRole('rowgroup').filter({ hasText: '\u2610print/rig/pod1podpetg149319.' })\n    2) <tbody data-print-key=\"print/rig/pod_lid\">\u2026</tbody> aka getByRole('rowgroup').filter({ hasText: '\u2610print/rig/pod_lid24pod_lidpetg1652.6\u2610' })\n    3) <tbody data-print-key=\"print/rig/pendant_clip\">\u2026</tbody> aka getByRole('rowgroup').filter({ hasText: '\u2610print/rig/pendant_clip50pendant_clippetg1180.7\u2610' })\n\nCall log:\n\u001b[2m  - waiting for locator('tbody')\u001b[22m\n\n    at tests/site/content/test-print-checklist.mjs:63:71",
+  "errors": [],
+  "observations": [
+    {
+      "label": "Print queue",
+      "width": 1280,
+      "bounds": [
+        {
+          "column": "Order\u2195",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Picture",
+          "headerWidth": 75.5625,
+          "cellWidth": 75.5625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part\u2195",
+          "headerWidth": 255.625,
+          "cellWidth": 255.625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Material\u2195",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity\u2195",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Grams\u2195",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Hours\u2195",
+          "headerWidth": 111.140625,
+          "cellWidth": 111.140625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Print setup\u2195",
+          "headerWidth": 222.28125,
+          "cellWidth": 222.28125,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Printed",
+          "headerWidth": 97.828125,
+          "cellWidth": 97.828125,
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Find a part",
+      "width": 1280,
+      "bounds": [
+        {
+          "column": "Picture",
+          "headerWidth": 76.40625,
+          "cellWidth": 76.40625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part\u2195",
+          "headerWidth": 258.46875,
+          "cellWidth": 258.46875,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Design files\u2195",
+          "headerWidth": 224.765625,
+          "cellWidth": 224.765625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity\u2195",
+          "headerWidth": 112.375,
+          "cellWidth": 112.375,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Supplier\u2195",
+          "headerWidth": 224.765625,
+          "cellWidth": 224.765625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Estimate\u2195",
+          "headerWidth": 112.375,
+          "cellWidth": 112.375,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Ordered",
+          "headerWidth": 98.890625,
+          "cellWidth": 98.890625,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "In hand",
+          "headerWidth": 98.953125,
+          "cellWidth": 98.953125,
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Print queue",
+      "width": 320,
+      "bounds": [
+        {
+          "column": "Order\u2195",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Picture",
+          "headerWidth": 68,
+          "cellWidth": 68,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part\u2195",
+          "headerWidth": 120,
+          "cellWidth": 120,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Material\u2195",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity\u2195",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Grams\u2195",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Hours\u2195",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Print setup\u2195",
+          "headerWidth": 200,
+          "cellWidth": 200,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Printed",
+          "headerWidth": 84,
+          "cellWidth": 84,
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Find a part",
+      "width": 320,
+      "bounds": [
+        {
+          "column": "Picture",
+          "headerWidth": 68,
+          "cellWidth": 68,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part\u2195",
+          "headerWidth": 120,
+          "cellWidth": 120,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Design files\u2195",
+          "headerWidth": 200,
+          "cellWidth": 200,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity\u2195",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Supplier\u2195",
+          "headerWidth": 200,
+          "cellWidth": 200,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Estimate\u2195",
+          "headerWidth": 100,
+          "cellWidth": 100,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Ordered",
+          "headerWidth": 84,
+          "cellWidth": 84,
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "In hand",
+          "headerWidth": 84,
+          "cellWidth": 84,
+          "left": 0,
+          "right": 0
+        }
+      ]
+    }
+  ]
+}

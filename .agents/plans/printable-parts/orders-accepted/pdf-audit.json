@@ -1,0 +1,484 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "file": "orders-all-A4.pdf",
+      "sha256": "cbad1e909a27a5f238912db381a6a0e7083ac34a2ef116ca4b8925a3b0245a98",
+      "pages": 45,
+      "unique_ids": 279,
+      "part_order_preserved": true,
+      "repeated_header_pages": 45,
+      "out_of_page_words": 0,
+      "numeric_currency_text_same_page": true,
+      "long_note_same_part_page_associations": [
+        {
+          "id": "buy/circlip_50",
+          "column": "Alternates",
+          "page": 1,
+          "characters": 669
+        },
+        {
+          "id": "buy/circlip_60",
+          "column": "Alternates",
+          "page": 1,
+          "characters": 571
+        },
+        {
+          "id": "buy/dowel_5x16",
+          "column": "Alternates",
+          "page": 2,
+          "characters": 386
+        },
+        {
+          "id": "buy/eye_sleeve",
+          "column": "Alternates",
+          "page": 2,
+          "characters": 676
+        },
+        {
+          "id": "buy/insert_m3",
+          "column": "Alternates",
+          "page": 2,
+          "characters": 564
+        },
+        {
+          "id": "buy/insert_m5",
+          "column": "Alternates",
+          "page": 3,
+          "characters": 1196
+        },
+        {
+          "id": "buy/knee_pin",
+          "column": "Alternates",
+          "page": 3,
+          "characters": 264
+        },
+        {
+          "id": "buy/knee_spacer",
+          "column": "Alternates",
+          "page": 3,
+          "characters": 531
+        },
+        {
+          "id": "buy/screw_m4x12_socket",
+          "column": "Alternates",
+          "page": 5,
+          "characters": 262
+        },
+        {
+          "id": "buy/screw_m5x40",
+          "column": "Alternates",
+          "page": 7,
+          "characters": 441
+        },
+        {
+          "id": "buy/shoulder_6x12_m5",
+          "column": "Alternates",
+          "page": 8,
+          "characters": 417
+        },
+        {
+          "id": "buy/stop_pin",
+          "column": "Alternates",
+          "page": 8,
+          "characters": 619
+        },
+        {
+          "id": "buy/tool-insert-tips",
+          "column": "Alternates",
+          "page": 9,
+          "characters": 259
+        },
+        {
+          "id": "buy/turret_insert_m4",
+          "column": "Alternates",
+          "page": 9,
+          "characters": 529
+        },
+        {
+          "id": "buy/turret_screw_m2_5x8",
+          "column": "Alternates",
+          "page": 10,
+          "characters": 245
+        },
+        {
+          "id": "buy/washer_m3_large",
+          "column": "Alternates",
+          "page": 13,
+          "characters": 351
+        },
+        {
+          "id": "buy/washer_m6_large",
+          "column": "Alternates",
+          "page": 14,
+          "characters": 284
+        },
+        {
+          "id": "buy/robstride-rs-04",
+          "column": "Alternates",
+          "page": 14,
+          "characters": 2990
+        },
+        {
+          "id": "buy/odrive-botwheel",
+          "column": "Alternates",
+          "page": 15,
+          "characters": 1341
+        },
+        {
+          "id": "buy/feetech-sts3215-c018-12v",
+          "column": "Alternates",
+          "page": 16,
+          "characters": 2230
+        },
+        {
+          "id": "buy/repeat-robotics-am32-35a-esc",
+          "column": "Alternates",
+          "page": 17,
+          "characters": 770
+        },
+        {
+          "id": "buy/xt60e_f_panel",
+          "column": "Alternates",
+          "page": 17,
+          "characters": 309
+        },
+        {
+          "id": "buy/bearing_61812",
+          "column": "Alternates",
+          "page": 17,
+          "characters": 437
+        },
+        {
+          "id": "buy/bearing_mr126",
+          "column": "Alternates",
+          "page": 17,
+          "characters": 421
+        },
+        {
+          "id": "buy/rail_hgr15_kit",
+          "column": "Alternates",
+          "page": 19,
+          "characters": 285
+        },
+        {
+          "id": "buy/quarton-vlm-650-03-lpt",
+          "column": "Alternates",
+          "page": 21,
+          "characters": 477
+        },
+        {
+          "id": "buy/te-dt06-12sa-kit",
+          "column": "Alternates",
+          "page": 21,
+          "characters": 468
+        },
+        {
+          "id": "buy/fuse_holder_5x20",
+          "column": "Alternates",
+          "page": 22,
+          "characters": 241
+        },
+        {
+          "id": "buy/fuse-holder-5x20-panel",
+          "column": "Alternates",
+          "page": 22,
+          "characters": 866
+        },
+        {
+          "id": "buy/pololu-2815",
+          "column": "Alternates",
+          "page": 26,
+          "characters": 290
+        },
+        {
+          "id": "buy/pendant-hold-to-run",
+          "column": "Alternates",
+          "page": 26,
+          "characters": 790
+        },
+        {
+          "id": "buy/proto-board-70x50",
+          "column": "Alternates",
+          "page": 30,
+          "characters": 907
+        },
+        {
+          "id": "buy/te-dt04-12pa-l012",
+          "column": "Alternates",
+          "page": 31,
+          "characters": 1009
+        },
+        {
+          "id": "buy/bumper-feet-12.7",
+          "column": "Alternates",
+          "page": 35,
+          "characters": 705
+        },
+        {
+          "id": "buy/sunnysky-x2216-1400kv-v3",
+          "column": "Alternates",
+          "page": 36,
+          "characters": 292
+        },
+        {
+          "id": "buy/usb-can-canable2",
+          "column": "Alternates",
+          "page": 43,
+          "characters": 1375
+        }
+      ]
+    },
+    {
+      "file": "orders-all-Letter.pdf",
+      "sha256": "88a2363f40da8d4f082f771e27d8f48dba96bd77e231b98715e7f854013500b1",
+      "pages": 50,
+      "unique_ids": 279,
+      "part_order_preserved": true,
+      "repeated_header_pages": 50,
+      "out_of_page_words": 0,
+      "numeric_currency_text_same_page": true,
+      "long_note_same_part_page_associations": [
+        {
+          "id": "buy/circlip_50",
+          "column": "Alternates",
+          "page": 1,
+          "characters": 669
+        },
+        {
+          "id": "buy/circlip_60",
+          "column": "Alternates",
+          "page": 1,
+          "characters": 571
+        },
+        {
+          "id": "buy/dowel_5x16",
+          "column": "Alternates",
+          "page": 2,
+          "characters": 386
+        },
+        {
+          "id": "buy/eye_sleeve",
+          "column": "Alternates",
+          "page": 2,
+          "characters": 676
+        },
+        {
+          "id": "buy/insert_m3",
+          "column": "Alternates",
+          "page": 2,
+          "characters": 564
+        },
+        {
+          "id": "buy/insert_m5",
+          "column": "Alternates",
+          "page": 3,
+          "characters": 1196
+        },
+        {
+          "id": "buy/knee_pin",
+          "column": "Alternates",
+          "page": 3,
+          "characters": 264
+        },
+        {
+          "id": "buy/knee_spacer",
+          "column": "Alternates",
+          "page": 3,
+          "characters": 531
+        },
+        {
+          "id": "buy/screw_m4x12_socket",
+          "column": "Alternates",
+          "page": 6,
+          "characters": 262
+        },
+        {
+          "id": "buy/screw_m5x40",
+          "column": "Alternates",
+          "page": 7,
+          "characters": 441
+        },
+        {
+          "id": "buy/shoulder_6x12_m5",
+          "column": "Alternates",
+          "page": 8,
+          "characters": 417
+        },
+        {
+          "id": "buy/stop_pin",
+          "column": "Alternates",
+          "page": 9,
+          "characters": 619
+        },
+        {
+          "id": "buy/tool-insert-tips",
+          "column": "Alternates",
+          "page": 9,
+          "characters": 259
+        },
+        {
+          "id": "buy/turret_insert_m4",
+          "column": "Alternates",
+          "page": 10,
+          "characters": 529
+        },
+        {
+          "id": "buy/turret_screw_m2_5x8",
+          "column": "Alternates",
+          "page": 10,
+          "characters": 245
+        },
+        {
+          "id": "buy/washer_m3_large",
+          "column": "Alternates",
+          "page": 14,
+          "characters": 351
+        },
+        {
+          "id": "buy/washer_m6_large",
+          "column": "Alternates",
+          "page": 14,
+          "characters": 284
+        },
+        {
+          "id": "buy/robstride-rs-04",
+          "column": "Alternates",
+          "page": 15,
+          "characters": 2990
+        },
+        {
+          "id": "buy/odrive-botwheel",
+          "column": "Alternates",
+          "page": 15,
+          "characters": 1341
+        },
+        {
+          "id": "buy/feetech-sts3215-c018-12v",
+          "column": "Alternates",
+          "page": 17,
+          "characters": 2230
+        },
+        {
+          "id": "buy/repeat-robotics-am32-35a-esc",
+          "column": "Alternates",
+          "page": 18,
+          "characters": 770
+        },
+        {
+          "id": "buy/xt60e_f_panel",
+          "column": "Alternates",
+          "page": 18,
+          "characters": 309
+        },
+        {
+          "id": "buy/bearing_61812",
+          "column": "Alternates",
+          "page": 18,
+          "characters": 437
+        },
+        {
+          "id": "buy/bearing_mr126",
+          "column": "Alternates",
+          "page": 18,
+          "characters": 421
+        },
+        {
+          "id": "buy/rail_hgr15_kit",
+          "column": "Alternates",
+          "page": 20,
+          "characters": 285
+        },
+        {
+          "id": "buy/quarton-vlm-650-03-lpt",
+          "column": "Alternates",
+          "page": 22,
+          "characters": 477
+        },
+        {
+          "id": "buy/te-dt06-12sa-kit",
+          "column": "Alternates",
+          "page": 23,
+          "characters": 468
+        },
+        {
+          "id": "buy/fuse_holder_5x20",
+          "column": "Alternates",
+          "page": 23,
+          "characters": 241
+        },
+        {
+          "id": "buy/fuse-holder-5x20-panel",
+          "column": "Alternates",
+          "page": 23,
+          "characters": 866
+        },
+        {
+          "id": "buy/pololu-2815",
+          "column": "Alternates",
+          "page": 28,
+          "characters": 290
+        },
+        {
+          "id": "buy/pendant-hold-to-run",
+          "column": "Alternates",
+          "page": 29,
+          "characters": 790
+        },
+        {
+          "id": "buy/proto-board-70x50",
+          "column": "Alternates",
+          "page": 33,
+          "characters": 907
+        },
+        {
+          "id": "buy/te-dt04-12pa-l012",
+          "column": "Alternates",
+          "page": 35,
+          "characters": 1009
+        },
+        {
+          "id": "buy/bumper-feet-12.7",
+          "column": "Alternates",
+          "page": 39,
+          "characters": 705
+        },
+        {
+          "id": "buy/sunnysky-x2216-1400kv-v3",
+          "column": "Alternates",
+          "page": 41,
+          "characters": 292
+        },
+        {
+          "id": "buy/usb-can-canable2",
+          "column": "Alternates",
+          "page": 48,
+          "characters": 1375
+        }
+      ]
+    },
+    {
+      "file": "orders-matched-A4.pdf",
+      "sha256": "32ecc801da45b55a22f352566df451a7f802d14a88da4fab73166ff5179dbdde",
+      "pages": 1,
+      "unique_ids": 1,
+      "part_order_preserved": true,
+      "repeated_header_pages": 1,
+      "out_of_page_words": 0,
+      "numeric_currency_text_same_page": true,
+      "long_note_same_part_page_associations": []
+    },
+    {
+      "file": "orders-matched-Letter.pdf",
+      "sha256": "aa8cb9db8b81b307c96c8fec03017445a66c46d99a1a4fd2c20fdd6ff992be7c",
+      "pages": 1,
+      "unique_ids": 1,
+      "part_order_preserved": true,
+      "repeated_header_pages": 1,
+      "out_of_page_words": 0,
+      "numeric_currency_text_same_page": true,
+      "long_note_same_part_page_associations": []
+    }
+  ],
+  "limits": "All expected source IDs/order, numeric/currency text and >240-character supporting notes checked on same part page. Complete source-fixture text was separately compared by the browser test. Public/full assembly and physical printers remain separate."
+}

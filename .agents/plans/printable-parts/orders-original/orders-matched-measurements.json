@@ -1,0 +1,192 @@
+[
+  {
+    "format": "A4",
+    "cells": [
+      {
+        "text": "Done",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Part ID",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Part",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Supplier part number",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Quantity needed",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Unit price",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Order cost",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Alternates",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Ordered",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "In hand",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☐",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "qty2",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "each$52.94",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "line$105.88",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☑",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☐",
+        "lines": 1,
+        "within": true
+      }
+    ],
+    "documentBounds": {
+      "width": 1031,
+      "scroll": 1031,
+      "rows": [
+        {
+          "id": "buy/ballast_shaft",
+          "height": 79
+        }
+      ]
+    }
+  },
+  {
+    "format": "Letter",
+    "cells": [
+      {
+        "text": "Done",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Part ID",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Part",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Supplier part number",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Quantity needed",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Unit price",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Order cost",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Alternates",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "Ordered",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "In hand",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☐",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "qty2",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "each$52.94",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "line$105.88",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☑",
+        "lines": 1,
+        "within": true
+      },
+      {
+        "text": "☐",
+        "lines": 1,
+        "within": true
+      }
+    ],
+    "documentBounds": {
+      "width": 965,
+      "scroll": 965,
+      "rows": [
+        {
+          "id": "buy/ballast_shaft",
+          "height": 79
+        }
+      ]
+    }
+  }
+]

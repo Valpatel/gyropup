@@ -1,0 +1,21 @@
+{
+  "schema": "gyropup.public-smoke-provider/1",
+  "prepared_at": "TODO_PREPARATION_DATE",
+  "node": {
+    "path": "TODO_INSTALLED_NODE_BINARY",
+    "version": "TODO_ACTUAL_NODE_VERSION",
+    "sha256": "TODO_NODE_64_HEX"
+  },
+  "playwright": {
+    "path": "TODO_INSTALLED_PLAYWRIGHT_INDEX_MODULE",
+    "version": "TODO_ACTUAL_PLAYWRIGHT_VERSION",
+    "sha256": "TODO_PLAYWRIGHT_INDEX_64_HEX"
+  },
+  "chrome": {
+    "path": "TODO_INSTALLED_CHROME_BINARY",
+    "package_version": "TODO_ACTUAL_PACKAGE_VERSION",
+    "expected_browser_version": "TODO_ACTUAL_BROWSER_VERSION",
+    "sha256": "TODO_CHROME_64_HEX"
+  },
+  "limits": "Bind installed providers without installing or replacing them. This template is not execution evidence."
+}

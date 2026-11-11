@@ -36,7 +36,7 @@
     "test:loading-portal": "node tests/site/loading/test-loading-portal.mjs",
     "test:loading-hero": "node tests/site/loading/test-loading-hero.mjs",
     "test:part-media": "node --test tests/site/media/test-part-media.mjs",
-    "test:build-portal": "node --test tests/site/platform/test-model-links.mjs tests/site/content/test-print-now.mjs && node tests/site/content/test-build-portal.mjs",
+    "test:build-portal": "node --test tests/site/platform/test-model-links.mjs tests/site/content/test-print-now.mjs && node tests/site/content/test-build-portal.mjs && node tests/site/content/test-print-checklist.mjs",
     "test:study-media": "python3 tests/evidence/test-study-media.py && node tests/site/media/test-study-media.mjs",
     "test:diagrams": "node tests/site/layout/test-diagrams.mjs",
     "test:carrier-inspection": "node --test tests/site/platform/test-hosted-navigation.mjs && node tests/site/models/test-carrier-inspection.mjs && CARRIER_INSPECTION_CASE=c3-support node tests/site/models/test-carrier-inspection.mjs",

@@ -1,0 +1,21 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "file": "rich-A4.pdf",
+      "sha256": "8780d18325260e1cf441f5edbf99b4b29720404f92d7eff6ec6c242c0b227534",
+      "pages": 14,
+      "unique_part_ids": 40,
+      "unique_note_record_same_page": 40,
+      "page_order_preserved": true
+    },
+    {
+      "file": "rich-Letter.pdf",
+      "sha256": "6c0692023774d6d9d8da1db7713dfe72c24307e64bfac3bf111b867c93f0860e",
+      "pages": 14,
+      "unique_part_ids": 40,
+      "unique_note_record_same_page": 40,
+      "page_order_preserved": true
+    }
+  ]
+}

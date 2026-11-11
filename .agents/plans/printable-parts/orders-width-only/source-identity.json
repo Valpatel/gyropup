@@ -1,0 +1,9 @@
+{
+  "shared_renderer_sha256": "84cd069e66b55302d1d4d754fb6aa75f7913d4c867b03248fbe4ecd98fbbe354",
+  "adapter_sha256": "fa9dcc4c6e838d46728351f825f9fd8236dd53172aacef492778a9a7425a558b",
+  "outcome": "FAILED row-height gate; width correction alone is insufficient",
+  "full_pdf_pages": {
+    "A4": 72,
+    "Letter": 75
+  }
+}

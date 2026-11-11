@@ -247,3 +247,12 @@
 
 - A retired simulator option remains reachable through old queries or restored form state: [gate public availability at the actual loader and preserve historical fixtures](inbox/2026-11-11-public-retirement-needs-loader-enforcement.md).
 - A dynamically constructed probe regex passes syntax checking but fails before capture, or collection mistakes a retained worker error for a missing terminal marker: [exercise actual extraction and separate byte verification from worker success](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#compile-the-actual-extractor-and-keep-byte-collection-separate-from-worker-success).
+
+- A shared table adoption loses pagination/filtering despite syntax checks: [compare consumer extensions before replacement](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md).
+- Header/cell alignment passes on a hidden table: [activate the actual panel and require positive box widths](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#compare-real-visible-boxes-not-equal-zero-size-deltas).
+- A PDF fits the page but splits numbers/short headers, or printable labels omit pending exports: [check actual token readability and retain row warnings](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#staying-inside-pdf-bounds-does-not-establish-readable-numeric-cells).
+- A successful transient job loses property readback after completion (`LoadState=not-found`, default infinity limits): [capture effective properties while loaded and preserve collector failure](inbox/2026-11-11-successful-transient-units-can-lose-readback.md).
+
+- A BOM has complete IDs but hundreds of pages or one-character names: [budget annotated numbers and same-part sourcing notes](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#rich-procurement-notes-need-their-own-printable-space).
+
+- Complete IDs/layout pass while setup, uses or fabrication details disappear: [bind fidelity before adapter enhancement](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#source-fidelity-must-be-measured-before-the-adapter-can-discard-it).
