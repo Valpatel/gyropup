@@ -258,6 +258,12 @@
         "presentation"
       ],
       "other_direct_checks": "Passed, including Playground and docking; original Print failure retained."
+    },
+    "related_owner_review": {
+      "blocked_source": "038c8f8339c22143dc02fbfd05edc6fced67266e",
+      "finding": "https://github.com/Valpatel/gyropup/pull/316#issuecomment-6795132926",
+      "original_pure_result": "25 passed, 1 failed: existing diagnostic owner still expected the old inline click callback. Failure retained separately from the original native CI outcome.",
+      "correction": "Keep the existing owner assertion on observedSummaryClick, validate actual preselected pointer/keyboard delegation, and retain scope, original deadlines, native part Enter and no-force contracts. Full Print/diagnostic/visual pure groups are required on the corrected head."
     }
   }
 }

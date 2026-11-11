@@ -121,3 +121,14 @@ project rejection, historical/current campaigns, both engines and deadlines.
 Never switch modality after a failure, force clicks, write the open property or
 claim this policy explains the original timeout. Pure failure controls and new
 normal CI are separate gates; no manual rerun or new renderer capture follows.
+
+
+The first local policy candidate `038c8f83` passed the new Print helper controls,
+but [independent review](https://github.com/Valpatel/gyropup/pull/316#issuecomment-6795132926)
+found a stale assertion in the existing diagnostic owner: Print plus diagnostic
+controls returned 25 passed and one failed because it required the old inline
+click callback. Keep this failure. Update the existing owner to execute the
+actual preselected pointer/keyboard delegation and still require the observed
+action wrapper, original scope/deadlines, native part Enter and no-force checks.
+Run the complete related pure groups when changing a shared harness callback;
+new helper controls alone do not certify its existing owners.
