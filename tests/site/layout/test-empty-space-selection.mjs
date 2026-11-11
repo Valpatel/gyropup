@@ -9,6 +9,7 @@ import vm from 'node:vm';
 import {observeReadiness,readReadinessState,retainReadinessFailure,safeReadinessText,safeReadinessURL} from './readiness-diagnostics.mjs';
 import {acknowledgePrototypeNotice as guardedAcknowledgement} from '../assembly/build-prototype-session.mjs';
 import {installRenderedReadiness} from './test-rendered-readiness.mjs';
+import {installSetupProbe,setupDiagnosticScope} from '../diagnostic-probes.mjs';
 import {SIZES,SCHEMES} from '../../../tools/site/site-empty-space.mjs';
 
 const root=new URL('../../../',import.meta.url),harness=fileURLToPath(new URL('tests/site/layout/test-empty-space.mjs',root));
@@ -157,9 +158,10 @@ test('the actual layout context calls the existing origin-guarded acknowledgemen
   const source=readFileSync(harness,'utf8');assert.ok(source.includes("from '../assembly/build-prototype-session.mjs'"));
   const actual=source.match(/^async function contextFor\(size\) \{[^]*?^}/m);assert.ok(actual);
   const scripts=[],context={addInitScript(fn,arg){scripts.push({fn,arg});},on(){},async route(){}};
-  const make=new Function('browser','devices','acknowledgePrototypeNotice','installRenderedReadiness','observeReadiness','base','return ('+actual[0]+');');
-  const configure=make({async newContext(){return context;}},{},guardedAcknowledgement,installRenderedReadiness,observeReadiness,'https://site.fixture.test');
-  await configure({context:{viewport:{width:360,height:780}}});
+  const make=new Function('browser','devices','acknowledgePrototypeNotice','installRenderedReadiness','observeReadiness','base','setupDiagnosticScope','installSetupProbe','sizes','process','return ('+actual[0]+');');
+  const configure=make({async newContext(){return context;}},{},guardedAcknowledgement,installRenderedReadiness,observeReadiness,'https://site.fixture.test',setupDiagnosticScope,installSetupProbe,[{name:'phone-360'}],{env:{GITHUB_ACTIONS:'true'}});
+  await configure({name:'phone-360',context:{viewport:{width:360,height:780}}});
+  assert.ok(scripts.some(item=>item.fn===installSetupProbe&&item.arg===true),'Actual CI caller installs the exact scoped setup probe');
   const script=scripts.find(item=>item.arg==='https://site.fixture.test');assert.ok(script,'Actual caller supplies its explicit owned origin');
   const run=state=>{const scope={expected:script.arg};Object.defineProperties(scope,Object.getOwnPropertyDescriptors(state));return vm.runInNewContext('('+script.fn.toString()+')(expected)',scope);};
   for(const state of [{location:{protocol:'about:'},origin:'null'},{location:{protocol:'https:'},origin:'https://wrong.fixture.test'}]){
@@ -167,6 +169,8 @@ test('the actual layout context calls the existing origin-guarded acknowledgemen
   }
   const writes=[];run({location:{protocol:'https:'},origin:'https://site.fixture.test',sessionStorage:{setItem(...args){writes.push(args);}}});assert.deepEqual(writes,[['gyropup.prototype-notice','2026-10-29-v1']]);
   assert.throws(()=>run({location:{protocol:'https:'},origin:'https://site.fixture.test',sessionStorage:{setItem(){throw Error('denied matching origin');}}}),/denied matching origin/);
+  context.addInitScript=(fn,arg)=>{if(fn===installSetupProbe)throw Error('synthetic probe registration failure');scripts.push({fn,arg});};
+  await assert.doesNotReject(configure({name:'phone-360',context:{viewport:{width:360,height:780}}}),'Optional diagnostic registration cannot replace the actual test');
 });
 
 test('navigation and resource clocks retain successful and pending timing without relabeling Node event receipt as network start',()=>{

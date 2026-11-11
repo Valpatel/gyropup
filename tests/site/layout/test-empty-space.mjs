@@ -23,6 +23,7 @@ import { createSiteServer } from '../../../tools/site/serve-site.mjs';
 import { acknowledgePrototypeNotice } from '../assembly/build-prototype-session.mjs';
 import { installRenderedReadiness, waitForRenderedText } from './test-rendered-readiness.mjs';
 import { observeReadiness, readReadinessState, retainReadinessFailure } from './readiness-diagnostics.mjs';
+import {installSetupProbe, setupDiagnosticScope, startSetupDiagnostic} from '../diagnostic-probes.mjs';
 import { sitePages } from '../../../tools/site/site-walls.mjs';
 import {
   BUSY_EDGES, EDGE_STEP, FLAT_SHARE, RULE_RUN, FLAT_TOLERANCE, MEDIA_MIN, MIN_THICKNESS, NARROW_SHARE, SCHEMES, SIZES, WORDS_PER_LINE,
@@ -69,6 +70,10 @@ async function contextFor(size) {
   const context = await browser.newContext({ ...device, ...size.context, colorScheme: 'light', reducedMotion: 'reduce' });
   await acknowledgePrototypeNotice(context,base);
   await installRenderedReadiness(context);
+  if (setupDiagnosticScope(process.env.GITHUB_ACTIONS, sizes.length === 1 ? size.name : '', '/designer/sim.html')) {
+    try { await context.addInitScript(installSetupProbe, true); }
+    catch { console.error('sim setup diagnostic: probe registration unavailable'); }
+  }
   context.on('page',page=>observeReadiness(page,new URL(base).origin));
   await context.route('https://cad-agent.gyropup.com/**', route => route.abort());
   return context;
@@ -78,6 +83,9 @@ async function contextFor(size) {
 let readinessFailure=0;
 async function load(page, route) {
   const observation=observeReadiness(page,new URL(base).origin);observation.begin(route);
+  const setup=setupDiagnosticScope(process.env.GITHUB_ACTIONS,sizes.length===1?sizes[0].name:'',route)
+    ?await startSetupDiagnostic(page,new URL(base).origin):null;
+  try {
   await page.goto(base + route, { waitUntil: 'domcontentloaded' });
   observation.mark('domcontentloaded-return');observation.mark('core-wait-start');
   await page.waitForFunction(() => !document.querySelector('pre.mermaid, pre > code.language-mermaid') &&
@@ -90,10 +98,21 @@ async function load(page, route) {
       problems.push(`empty-space ${route}: diagrams or reports did not finish loading`);
       observation.mark('core-wait-rejected');
       const viewport=page.viewportSize(),file=`readiness-${slug(route)}-${viewport?.width}x${viewport?.height}-${++readinessFailure}.json`;
-      const report=await retainReadinessFailure({error,observer:observation,readState:()=>page.evaluate(readReadinessState),ownedOrigin:new URL(base).origin,
+      const diagnostic=setup?.finish();
+      const report=await retainReadinessFailure({error,observer:observation,readState:async()=>{
+        const [state,setupDiagnostics]=await Promise.all([page.evaluate(readReadinessState),diagnostic]);
+        return setup?{...state,setupDiagnostics}:state;
+      },ownedOrigin:new URL(base).origin,
         write:report=>writeFile(path.join(out,file),JSON.stringify(report,null,2),{flag:'wx'})});
       console.error(`empty-space readiness evidence ${file}: ${report.error.name}; diagnostic errors ${report.diagnosticErrors.length}`);
     });
+  } finally {
+    if(setup){
+      const diagnostic=await setup.finish();
+      // Also retain the aggregate if the shared state read or report write failed.
+      console.log('sim setup diagnostic '+JSON.stringify(diagnostic));
+    }
+  }
   await waitForRenderedText(page);
 }
 
