@@ -254,3 +254,5 @@
 - A successful transient job loses property readback after completion (`LoadState=not-found`, default infinity limits): [capture effective properties while loaded and preserve collector failure](inbox/2026-11-11-successful-transient-units-can-lose-readback.md).
 
 - A BOM has complete IDs but hundreds of pages or one-character names: [budget annotated numbers and same-part sourcing notes](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#rich-procurement-notes-need-their-own-printable-space).
+
+- Complete IDs/layout pass while setup, uses or fabrication details disappear: [bind fidelity before adapter enhancement](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#source-fidelity-must-be-measured-before-the-adapter-can-discard-it).

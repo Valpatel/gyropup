@@ -13,7 +13,7 @@ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 let browser;const errors=[],observations=[];
 try{
- browser=await engine.launch(engine===chromium?{channel:'chrome',headless:true}:{headless:true});
+ browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true}:{headless:true});
  const context=await browser.newContext({viewport:{width:1280,height:900}});
  await context.addInitScript(()=>{if(location.protocol==='http:')sessionStorage.setItem('gyropup.prototype-notice','2026-10-29-v1');});
  // Observe the producer's original HTML synchronously, before the adapter can
