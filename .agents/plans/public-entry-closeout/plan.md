@@ -7,7 +7,7 @@ parents, preserved trees and the preceding seven media identities.
 The existing media remains bound to its accepted earlier source. The composed
 loader/policy changes require one new source-bound capture; the homepage and its
 build/parity changes must also be part of that frozen source before capture.
-Root coordinates completion of the separately reviewed homepage browser checks.
+Root accepted the four original homepage functional cases, the two-engine rendered-text follow-up and the separate resting captures after inspecting all eight actual PNGs. The typography follow-up is normally merged; prior functional and rejected visual evidence remain historical.
 The new media packet must use a fresh source/run/unit/output/intent namespace and
 the existing rendering provider read only. Never resubmit a previous operator.
 
@@ -19,7 +19,7 @@ worker exit even when byte collection succeeds. Historical failed-run audit
 controls must use their own sealed historical plan alongside the exact auditor
 code, rather than treating old bytes as the new composed source.
 
-No capture has started. Independent composed source review and a separate exact
+No aggregate media capture has started. The earlier composed source review covered `46eb1104`; the normally merged typography follow-up and capture-scope documentation require current independent source review. Independent composed source review and a separate exact
 media action review precede root's explicit start. Artifact review and acceptance
 precede seven-file adoption; normal final CI and normal dev/main promotion remain
 required. Hardware, original current geometry, printed legs, historical sources
