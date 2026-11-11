@@ -23,6 +23,8 @@ function checkHome(html,progressHTML=progress){
     assert.equal(d.querySelector(`a#${id}`).getAttribute('href'),`/designer/progress.html#${id}`);
     assert.ok(p.getElementById(id),`Progress resolves #${id}`);
   }
+  assert.equal(d.querySelector('section#changes'),null,'Home links to history instead of embedding a timeline section');
+  assert.ok(p.querySelector('section#changes'),'Progress owns the real timeline section');
   assert.ok(main.querySelector('a[href="/designer/progress.html#loop"]'));
   assert.ok(p.querySelector('#workshop-stories #loop .loop-cards'),'Dated evidence remains on Progress');
   assert.equal(p.querySelector('#workshop-stories').hasAttribute('open'),false,'Stories stay one deliberate click away');
@@ -50,4 +52,9 @@ test('broken legacy anchors and deep destinations are rejected',()=>{
 test('removing a primary route or the concise prototype boundary is rejected',()=>{
   const d=doc(home);d.querySelector('.home-door[href="/designer/build.html"]').remove();assert.throws(()=>checkHome(d.toString()),/Clear entrance/);
   const unsafe=doc(home);unsafe.querySelector('.home-prototype').textContent='Ready for backyard battles.';assert.throws(()=>checkHome(unsafe.toString()),/prototype/i);
+});
+
+test('the history destination cannot be replaced by an empty anchor',()=>{
+  const p=doc(progress),anchor=p.createElement('a');anchor.id='changes';p.querySelector('section#changes').replaceWith(anchor);
+  assert.throws(()=>checkHome(home,p.toString()),/Progress owns the real timeline section/);
 });

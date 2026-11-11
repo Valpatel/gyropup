@@ -7,6 +7,8 @@ import {fileURLToPath} from 'node:url';
 import {EventEmitter} from 'node:events';
 import vm from 'node:vm';
 import {observeReadiness,readReadinessState,retainReadinessFailure,safeReadinessText,safeReadinessURL} from './readiness-diagnostics.mjs';
+import {acknowledgePrototypeNotice as guardedAcknowledgement} from '../assembly/build-prototype-session.mjs';
+import {installRenderedReadiness} from './test-rendered-readiness.mjs';
 import {SIZES,SCHEMES} from '../../../tools/site/site-empty-space.mjs';
 
 const root=new URL('../../../',import.meta.url),harness=fileURLToPath(new URL('tests/site/layout/test-empty-space.mjs',root));
@@ -56,15 +58,15 @@ test('the browser image is immutable and matches the locked Playwright release',
 test('timeout state serializes actual current design and partial scene without inventing readiness',()=>{
   const elements={'#app canvas':{width:360,height:780},'#sim-startup':{innerText:'Loading current robot'},'#design-select':{value:'v2'}};
   const fixture={
-    location:{pathname:'/designer/sim.html'},getComputedStyle:()=>({opacity:'0'}),
-    document:{readyState:'complete',body:{dataset:{}},querySelector:selector=>elements[selector]??null,querySelectorAll:()=>[]},
+    location:{pathname:'/designer/sim.html'},performance:{timeOrigin:1000,getEntriesByType:()=>[{domContentLoadedEventEnd:12,responseEnd:5}]},getComputedStyle:()=>({opacity:'0'}),
+    document:{readyState:'complete',visibilityState:'visible',hasFocus:()=>false,body:{dataset:{}},querySelector:selector=>elements[selector]??null,querySelectorAll:()=>[]},
     window:{__sim:{
       state:{modelKey:'v2',robot:{presentation:{mode:'current',robotId:'collection266'}},bench:false},
       stage:{renderer:{info:{render:{frame:7,triangles:100}},getContext:()=>({isContextLost:()=>false})}},
     }},
   };
   const read=()=>vm.runInNewContext('('+readReadinessState.toString()+')()',fixture);
-  const value=read();assert.equal(value.bodyReady,null);assert.equal(value.selectedDesign,'v2');assert.equal(value.startupText,'Loading current robot');assert.equal(value.scene.frame,7);assert.equal(value.scene.presentation,'current');
+  const value=read();assert.equal(value.bodyReady,null);assert.equal(value.selectedDesign,'v2');assert.equal(value.startupText,'Loading current robot');assert.equal(value.scene.frame,7);assert.equal(value.scene.presentation,'current');assert.equal(value.documentTimeOrigin,1000);assert.equal(value.navigationTiming.domContentLoadedEventEnd,12);assert.equal(value.visibility,'visible');assert.equal(value.focused,false);
   fixture.window.__sim=undefined;assert.equal(read().scene,null,'A startup failure can precede scene construction');
 });
 
@@ -148,4 +150,34 @@ test('the full written timeout report sanitizes error, console and state strings
   await retainReadinessFailure({error,observer,ownedOrigin:origin,readState:async()=>({bodyReady:null,selectedDesign:'v2',startupText:'failed at /tmp/private-session/key.json',statusText:'about:blank?token=secret',scene:{frame:7,triangles:100,presentation:'current'},source:'https://site.fixture/designer/sim.js?token=secret'}),write:async report=>{saved=JSON.parse(JSON.stringify(report));}});
   assert.doesNotMatch(JSON.stringify(saved),/private-host|private-session|key\.json|secret|token=/);
   assert.equal(saved.error.name,'TimeoutError');assert.equal(saved.coreDeadline,30000);assert.equal(saved.state.selectedDesign,'v2');assert.equal(saved.state.scene.frame,7);assert.equal(saved.state.source,'/designer/sim.js');assert.equal(saved.observation.errors.length,1);assert.equal(saved.observation.consoleErrors.length,1);
+});
+
+
+test('the actual layout context calls the existing origin-guarded acknowledgement without hiding matching-origin failure',async()=>{
+  const source=readFileSync(harness,'utf8');assert.ok(source.includes("from '../assembly/build-prototype-session.mjs'"));
+  const actual=source.match(/^async function contextFor\(size\) \{[^]*?^}/m);assert.ok(actual);
+  const scripts=[],context={addInitScript(fn,arg){scripts.push({fn,arg});},on(){},async route(){}};
+  const make=new Function('browser','devices','acknowledgePrototypeNotice','installRenderedReadiness','observeReadiness','base','return ('+actual[0]+');');
+  const configure=make({async newContext(){return context;}},{},guardedAcknowledgement,installRenderedReadiness,observeReadiness,'https://site.fixture.test');
+  await configure({context:{viewport:{width:360,height:780}}});
+  const script=scripts.find(item=>item.arg==='https://site.fixture.test');assert.ok(script,'Actual caller supplies its explicit owned origin');
+  const run=state=>{const scope={expected:script.arg};Object.defineProperties(scope,Object.getOwnPropertyDescriptors(state));return vm.runInNewContext('('+script.fn.toString()+')(expected)',scope);};
+  for(const state of [{location:{protocol:'about:'},origin:'null'},{location:{protocol:'https:'},origin:'https://wrong.fixture.test'}]){
+    let read=false;Object.defineProperty(state,'sessionStorage',{enumerable:true,get(){read=true;throw Error('not readable');}});assert.doesNotThrow(()=>run(state));assert.equal(read,false);
+  }
+  const writes=[];run({location:{protocol:'https:'},origin:'https://site.fixture.test',sessionStorage:{setItem(...args){writes.push(args);}}});assert.deepEqual(writes,[['gyropup.prototype-notice','2026-10-29-v1']]);
+  assert.throws(()=>run({location:{protocol:'https:'},origin:'https://site.fixture.test',sessionStorage:{setItem(){throw Error('denied matching origin');}}}),/denied matching origin/);
+});
+
+test('navigation and resource clocks retain successful and pending timing without relabeling Node event receipt as network start',()=>{
+  const context={},page=new EventEmitter();let url='https://site.fixture/site/previous.html';page.url=()=>url;page.context=()=>context;page.viewportSize=()=>({width:360,height:780});
+  const observer=observeReadiness(page,'https://site.fixture');observer.begin('/site/previous.html?token=secret');observer.mark('core-wait-accepted');
+  url='https://site.fixture/designer/sim.html';observer.begin('/designer/sim.html');page.emit('domcontentloaded');observer.mark('domcontentloaded-return');observer.mark('core-wait-start');
+  const request={url:()=> 'https://site.fixture/designer/sim.js?token=secret',method:()=> 'GET',resourceType:()=> 'script',timing:()=>({startTime:1000,requestStart:2,responseStart:10,responseEnd:20,privateEndpoint:'ws://private-host/?token=secret'})};
+  page.emit('request',request);page.emit('response',{url:request.url,status:()=>200,request:()=>request});page.emit('requestfinished',request);
+  const pending={url:()=> 'https://site.fixture/web/robot-current/manifest.json',method:()=> 'GET',resourceType:()=> 'fetch',timing:()=>({startTime:2000,responseEnd:-1})};page.emit('request',pending);observer.mark('core-wait-rejected');
+  const value=observer.snapshot();assert.equal(value.previousRoute,'/site/previous.html');assert.equal(value.history.length,2);assert.equal(value.history[1].route,'/designer/sim.html');assert.ok(Number.isInteger(value.contextId));assert.ok(Number.isInteger(value.pageId));
+  assert.deepEqual(value.events.map(row=>row.event),['navigation-start','domcontentloaded-event','domcontentloaded-return','core-wait-start','core-wait-rejected']);
+  assert.equal(value.completed[0].status,200);assert.equal(value.completed[0].browserTiming.startTime,1000);assert.equal(value.completed[0].browserTiming.responseEnd,20);assert.notEqual(value.completed[0].nodeRequestObservedAt,1000);assert.equal(value.pending[0].browserTiming.startTime,2000);assert.equal(value.pending[0].browserTiming.responseEnd,-1);assert.match(value.timingClocks.node,/not network start/);
+  assert.doesNotMatch(JSON.stringify(value),/private-host|secret|token=/);pending.timing=()=>{throw Error('timing unavailable');};assert.equal(observer.snapshot().pending[0].browserTiming,null);
 });

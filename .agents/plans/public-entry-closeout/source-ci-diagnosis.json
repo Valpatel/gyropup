@@ -59,9 +59,42 @@
       "body/startup/status/design",
       "current scene/render/context state",
       "page and console errors",
-      "failed/pending requests with privacy redaction"
+      "failed/pending requests with privacy redaction",
+      "separate Node event and browser network clocks",
+      "route/page/context and previous-route identity",
+      "document navigation time origin, visibility/focus"
     ],
     "pure_control_home": "tests/site/layout/test-empty-space-selection.mjs",
     "cause": "Unreproduced and unclassified until new actual CI evidence."
+  },
+  "subsequent_d0_ci": {
+    "run": 42969242638,
+    "source": "d0dfd096d07267af225417ee999cc872435609ff",
+    "iphone": "success",
+    "tablet": "success",
+    "phone": "30s readiness failure; zero layout findings",
+    "phone_artifact": {
+      "id": 13833176477,
+      "zip_sha256": "3eac6cff94cf0004a3cbe46fba1ca68b00b8eca6d44667cf77b429f23402cd44",
+      "zip_bytes": 324131
+    },
+    "phone_snapshot": {
+      "bodyReady": null,
+      "selectedDesign": "v2",
+      "robot": false,
+      "frame": 0,
+      "contextLost": false,
+      "pending": "Current manifest and nonawaited robot-actions CSS; old at fields are Node handler clocks, not network start."
+    },
+    "privacy_finding": "Review5854558025/thread4534565407; fixed09a08542, original evidence preserved, recheck pending.",
+    "new_content_failure": "Stale Home timeline-planting target; plant the adversarial timeline at actual Progress owner, retaining all-page/Home budgets and all thresholds.",
+    "readiness_cause": "Unclassified; neither pending assets nor initial opaque storage error establish the timeout cause."
+  },
+  "fixture_correction": {
+    "caller": "tests/site/layout/test-empty-space.mjs",
+    "reuse": "Existing tests/site/assembly/build-prototype-session.mjs with explicit base",
+    "old_helper_bytes_preserved": true,
+    "controls": "Actual caller opaque/wrong/current/denied-origin callback execution",
+    "limit": "Demonstrated fixture correction only; timeout cause remains unproven."
   }
 }

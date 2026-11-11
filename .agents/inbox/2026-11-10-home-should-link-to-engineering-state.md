@@ -31,3 +31,14 @@ The browser-candidate prototype line was shortened to an evergreen experimental-
 All four original source605e browser units passed their functional assertions and cleanup guards. Root's actual Chromium320px full-page image nevertheless showed “scrolling.More” joined together. The new heading had dropped the literal space before its `<br>`, while the existing mobile CSS hides that break. This is a real typography regression; the focused Skip-to-content overlay in that test image is separately recorded test focus, not an assumed product defect.
 
 The minimal correction restores the existing separator. The ordinary hero viewport test now reads the actual rendered `innerText` and computed break state across mobile/desktop. Its mobile DOM negative temporarily removes that separator, requires the actual joined rendered phrase and a synchronous validator rejection, then restores and rechecks the real heading. Source regexes alone cannot establish the visible result. Original605e screenshots/functional receipts remain unchanged; a separately reviewed bounded typography check must inspect the corrected candidate and record keyboard focus before deliberately clearing it for a resting screenshot. No hero/model runtime, CSS or geometry change is part of this correction.
+
+## 2026-11-11 — plant history cases in the actual owner
+
+The d0 source CI [content job](https://github.com/Valpatel/gyropup/actions/runs/42969242638/job/130353665374) advanced beyond the corrected Markdown checks and exposed another old owner assumption:
+
+```text
+2026-11-11T06:04:31Z walls index.html: no <section id="changes"> to plant a text-only timeline into
+walls:157pages measured at1366x800;4over1200px,5on the backlog
+```
+
+Home now offers a deep-link anchor, while Progress owns the real history section. The adversarial newest-five-text-only timeline belongs on Progress. Keep Home in the unchanged normal all-page wall scan, keep the generic planted wall geometry/readiness controls and the1200px/shrink-only backlog rules, and require a real Progress section rather than accepting a dummy destination anchor. The existing pure Home contract now rejects that dummy owner. No browser was run for this correction; normal CI still establishes measured wall acceptance.
