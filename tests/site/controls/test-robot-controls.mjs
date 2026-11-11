@@ -1,6 +1,7 @@
-import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../assembly/build-prototype-session.mjs';
 /** Real vehicle controls must remain useful while the default demo is playing. */
 import assert from 'node:assert/strict';
+import {safeReadinessURL,safeReadinessText} from '../layout/readiness-diagnostics.mjs';
 import { checkPublicAvailability } from './sim-availability.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
@@ -8,9 +9,13 @@ const base = (process.env.SITE_URL || 'http://127.0.0.1:8882').replace(/\/$/, ''
 const engine = process.env.PLAYWRIGHT_BROWSER === 'webkit' ? webkit : chromium;
 const browser = await engine.launch(engine === chromium ? { channel:process.env.PLAYWRIGHT_CHANNEL === 'chromium' ? undefined : 'chrome', headless:true,
   args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] } : {headless:true});
+function disableAutomaticProbe(expectedOrigin) {
+ if(!/^https?:$/.test(location.protocol)||globalThis.origin!==expectedOrigin)return;
+ localStorage.setItem('gyropup.probe','off');
+}
 const context = await browser.newContext({viewport:{width:1440,height:1000},hasTouch:true});
-await acknowledgePrototypeNotice(context);
-await context.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));
+await acknowledgePrototypeNotice(context,base);
+await context.addInitScript(disableAutomaticProbe,new URL(base).origin);
 const page = await context.newPage(), errors=[];
 page.on('pageerror',e=>errors.push(e.message));
 const out=process.env.TEST_OUTPUT || '/tmp/gyropup-robot-controls'; await mkdir(out,{recursive:true});
@@ -26,13 +31,53 @@ async function model(value) {
    && ['drive','targets'].every(activity=>options.includes(`${stem}/${activity}`));
  },value);
 }
+// Bounded observations of this owned fixture only; no readiness decision or retry.
+function observeTalkCss(page,origin) {
+ const events=[],counts={},requests=new WeakMap(),started=Date.now();let dropped=0,nextRequest=0;
+ const record=(event,{request,url,error,status,timing}={})=>{
+  const row={event,nodeElapsedMs:Date.now()-started,url:safeReadinessURL(url??request?.url()??page.url(),origin)};
+  counts[event]=(counts[event]??0)+1;
+  if(request){if(!requests.has(request))requests.set(request,++nextRequest);row.requestId=requests.get(request);}
+  if(error)row.error=safeReadinessText(error.message??error,origin);
+  if(Number.isFinite(status))row.status=status;
+  if(timing)row.browserTiming=Object.fromEntries(['startTime','requestStart','responseStart','responseEnd'].filter(key=>Number.isFinite(timing[key])).map(key=>[key,timing[key]]));
+  if(events.length===64){events.shift();dropped++;}events.push(row);
+ };
+ const relevant=request=>{const url=new URL(request.url()),matches=url.origin===origin&&url.pathname==='/designer/character/talk.css';if(matches&&!requests.has(request))requests.set(request,++nextRequest);return matches;};
+ const mainNavigation=request=>request.isNavigationRequest?.()&&request.frame()===page.mainFrame();
+ const watch=(event,handler)=>page.on(event,(...args)=>{try{handler(...args);}catch(error){record('observer-error',{error});}});
+ watch('request',request=>{if(relevant(request))record('request',{request,timing:request.timing()});else if(mainNavigation(request))record('navigation-request',{url:request.url(),timing:request.timing()});});
+ watch('response',response=>{if(relevant(response.request()))record('response',{request:response.request(),status:response.status(),timing:response.request().timing()});else if(mainNavigation(response.request()))record('navigation-response',{url:response.url(),status:response.status(),timing:response.request().timing()});});
+ watch('requestfinished',request=>{if(relevant(request))record('requestfinished',{request,timing:request.timing()});else if(mainNavigation(request))record('navigation-requestfinished',{url:request.url(),timing:request.timing()});});
+ watch('requestfailed',request=>{if(relevant(request))record('requestfailed',{request,error:request.failure()?.errorText,timing:request.timing()});else if(mainNavigation(request))record('navigation-requestfailed',{url:request.url(),error:request.failure()?.errorText,timing:request.timing()});});
+ watch('pageerror',error=>record('pageerror',{error}));
+ watch('framenavigated',frame=>{if(frame===page.mainFrame())record('navigation',{url:frame.url()});});
+ watch('domcontentloaded',()=>record('domcontentloaded'));
+ return {record,snapshot:error=>({schema:'gyropup.fresh-talk-css/1',observerPerturbation:true,events:[...events],counts:{...counts},matchingRequests:nextRequest,dropped,error:error?{name:safeReadinessText(error.name,origin),message:safeReadinessText(error.message,origin)}:null})};
+}
+async function retainTalkCssReport(observation,error,write) {
+ let timer;
+ try {await Promise.race([Promise.resolve().then(()=>write(observation.snapshot(error))),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Talk CSS evidence write exceeded 2000 ms')),2000);})]);return null;}
+ catch(failure){return failure;}
+ finally {clearTimeout(timer);}
+}
 async function checkFreshLayout() {
  const fresh=await browser.newContext({viewport:{width:1280,height:900}});
-await acknowledgePrototypeNotice(fresh);
- await fresh.addInitScript(()=>localStorage.setItem('gyropup.probe','off'));
+await acknowledgePrototypeNotice(fresh,base);
+ await fresh.addInitScript(disableAutomaticProbe,new URL(base).origin);
  const p=await fresh.newPage();p.on('pageerror',e=>errors.push(e.message));
- let releaseCss;
- await p.route('**/character/talk.css*',async route=>{await new Promise(resolve=>{releaseCss=resolve;});await route.continue();});
+ const evidence=observeTalkCss(p,new URL(base).origin);let failure=null;
+ let releaseCss,heldCss;
+ await p.route('**/character/talk.css*',async route=>{
+  const request=route.request();evidence.record('route-enter',{request});
+  await new Promise(resolve=>{
+   if(heldCss)evidence.record('held-resolver-replaced',{request:heldCss});
+   heldCss=request;releaseCss=()=>{evidence.record('release',{request});if(heldCss===request)heldCss=null;resolve();};
+  });
+  evidence.record('continue-start',{request});
+  try{await route.continue();evidence.record('continue-complete',{request});}
+  catch(error){evidence.record('continue-failed',{request,error});throw error;}
+ });
  try {
   await p.goto(base+'/designer/sim.html?run=none&demo=0&sound=0',{waitUntil:'domcontentloaded'});
   await p.waitForFunction(()=>document.body.dataset.ready==='1'&&!!window.__sim.talk);
@@ -63,7 +108,14 @@ await acknowledgePrototypeNotice(fresh);
   await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   assert.deepEqual(await p.evaluate(()=>window.__sim.stage.camera.projectionMatrix.toArray()),projection,'Stats remains an overlay after late dock layout');
   await p.screenshot({path:`${out}/${engine.name()}-fresh-manual.png`});
- } finally {releaseCss?.();await fresh.close();}
+ } catch(error){failure=error;throw error;}
+ finally {
+  releaseCss?.();
+  try{await fresh.close();evidence.record('context-closed');}
+  catch(error){evidence.record('context-close-failed',{error});if(!failure)errors.push('Fresh context cleanup: '+safeReadinessText(error.message,new URL(base).origin));}
+  const secondary=await retainTalkCssReport(evidence,failure,report=>writeFile(`${out}/${engine.name()}-fresh-talk-css.json`,JSON.stringify(report,null,2)));
+  if(secondary){const message=safeReadinessText(secondary.message,new URL(base).origin);console.error('Talk CSS evidence: '+message);if(!failure)errors.push('Talk CSS evidence: '+message);}
+ }
 }
 async function playChecks() {
  await activity('targets');await page.waitForFunction(()=>window.__sim.state.replay?.key.endsWith('/targets'));
@@ -97,6 +149,8 @@ try {
  await writeFile(`${out}/${engine.name()}-availability.json`, JSON.stringify({ availability, errors }, null, 2));
  if (process.env.ROBOT_CONTROL_CASE !== 'availability') {
  await page.evaluate(() => { localStorage.removeItem('gyropup-sfx'); localStorage.removeItem('gyropup-design-v1'); });
+ // Availability is complete; retain its evidence and retire its independent rendered scene.
+ await page.goto('about:blank');
  await checkFreshLayout();
  await page.goto(base+'/designer/sim.html',{waitUntil:'networkidle'});await ready();
  assert.equal(await page.evaluate(()=>window.__sim.demo.on && window.__sim.sfx.enabled && !window.__sim.state.replay && window.__sim.state.robot.presentation.mode==='current'),true,'Fresh visitors start with current-model live demo and sound enabled');

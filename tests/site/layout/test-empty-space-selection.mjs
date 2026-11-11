@@ -187,35 +187,101 @@ test('navigation and resource clocks retain successful and pending timing withou
 });
 
 
-test('full tablet CI defaults to one worker and Home-to-Sim without changing explicit or other partitions',()=>{
+test('each full single-size CI partition defaults to one worker and Home-to-Sim without changing explicit modes',()=>{
   const source=readFileSync(harness,'utf8');
-  const declarations=source.match(/^const tabletDefault =[^]*?^const workers =[^]*?;/m);assert.ok(declarations);
-  const evaluate=new Function('arg','process','sizes','report',declarations[0]+';return {tabletDefault,workers};');
-  const run=({ci='true',selected=['tablet-768'],args={},env={},report=false,argv=[]}={})=>evaluate(name=>args[name],{env:{GITHUB_ACTIONS:ci,...env},argv},selected.map(name=>({name})),report);
-  assert.deepEqual(run(),{tabletDefault:true,workers:1});
-  for(const options of [{ci:'false'},{selected:['phone-360']},{selected:['iphone-13']},{selected:['laptop-1024']},{selected:['desktop-1440']},{selected:['phone-360','tablet-768']},{args:{pages:'/'}},{args:{schemes:'light,dark'}},{report:true},{argv:['--controls']},{env:{EMPTY_SPACE_WORKERS:''}}])
-    assert.deepEqual(run(options),{tabletDefault:false,workers:3},JSON.stringify(options));
-  assert.deepEqual(run({args:{workers:'2'}}),{tabletDefault:false,workers:2});
-  assert.deepEqual(run({env:{EMPTY_SPACE_WORKERS:'4'}}),{tabletDefault:false,workers:4});
+  const declarations=source.match(/^const singleSizeCIDefault =[^]*?^const workers =[^]*?;/m);assert.ok(declarations);
+  const evaluate=new Function('arg','process','sizes','report',declarations[0]+';return {singleSizeCIDefault,workers};');
+  const run=({ci='true',selected=['phone-360'],args={},env={},report=false,argv=[]}={})=>evaluate(name=>args[name],{env:{GITHUB_ACTIONS:ci,...env},argv},selected.map(name=>({name})),report);
+  for(const size of SIZES)assert.deepEqual(run({selected:[size.name]}),{singleSizeCIDefault:true,workers:1},size.name);
+  for(const options of [{ci:'false'},{selected:['phone-360','tablet-768']},{args:{pages:'/'}},{args:{schemes:'light,dark'}},{report:true},{argv:['--controls']},{env:{EMPTY_SPACE_WORKERS:''}}])
+    assert.deepEqual(run(options),{singleSizeCIDefault:false,workers:3},JSON.stringify(options));
+  assert.deepEqual(run({args:{workers:'2'}}),{singleSizeCIDefault:false,workers:2});
+  assert.deepEqual(run({env:{EMPTY_SPACE_WORKERS:'4'}}),{singleSizeCIDefault:false,workers:4});
   const selection=source.match(/^  const pages = [^]*?;/m);assert.ok(selection);
-  const pageSelect=new Function('arg','process','tabletDefault','tabletPageOrder','all',selection[0]+';return pages;');
+  const pageSelect=new Function('arg','process','singleSizeCIDefault','fullCIPageOrder','all',selection[0]+';return pages;');
   const all=['/','/designer/progress.html','/designer/build.html','/designer/sim.html','/site/'];
   assert.deepEqual(pageSelect(name=>name==='pages'?'/site/,/':undefined,{argv:[]},false,()=>{throw Error('Explicit order must be untouched');},all),['/site/','/']);
   assert.deepEqual(pageSelect(()=>undefined,{argv:['--controls']},false,()=>{throw Error('Control-only mode must be untouched');},all),[]);
 });
 
-test('actual tablet permutation retains every dynamic route/theme tuple once and rejects malformed source closure',()=>{
-  const source=readFileSync(harness,'utf8'),definition=source.match(/^function tabletPageOrder\(all\) \{[^]*?^}/m);assert.ok(definition);
+test('actual CI permutation retains every dynamic route/theme tuple once and rejects malformed source closure',()=>{
+  const source=readFileSync(harness,'utf8'),definition=source.match(/^function fullCIPageOrder\(all\) \{[^]*?^}/m);assert.ok(definition);
   const order=new Function('return ('+definition[0]+');')();
-  for(const added of [0,1,7,152]){
+  for(const added of [0,1,7,152,203]){
     const all=['/','/designer/progress.html','/designer/build.html','/designer/sim.html','/site/',...Array.from({length:added},(_,i)=>'/site/pages/dynamic-'+i+'.html')];
     const original=[...all],ordered=order(all);assert.deepEqual(all,original,'Input closure is not mutated');
     assert.deepEqual(ordered.slice(0,2),['/','/designer/sim.html']);assert.equal(ordered.length,all.length);assert.equal(new Set(ordered).size,all.length);assert.deepEqual([...ordered].sort(),[...all].sort());
     assert.deepEqual(ordered.slice(2),all.filter(route=>route!=='/'&&route!=='/designer/sim.html'));
-    const tuples=ordered.flatMap(route=>SCHEMES.map(scheme=>({route,size:'tablet-768',scheme})));
-    assert.equal(tuples.length,2*all.length);assert.equal(new Set(tuples.map(row=>JSON.stringify(row))).size,tuples.length);
-    if(added===152)assert.equal(tuples.length,314);
+    for(const size of SIZES){
+      const tuples=ordered.flatMap(route=>SCHEMES.map(scheme=>({route,size:size.name,scheme})));
+      assert.equal(tuples.length,SCHEMES.length*all.length);assert.equal(new Set(tuples.map(row=>JSON.stringify(row))).size,tuples.length);
+      assert.deepEqual(tuples.filter(row=>row.scheme==='light').slice(0,2).map(row=>row.route),['/','/designer/sim.html']);
+      if(added===152)assert.equal(tuples.length,314);
+    }
   }
-  for(const bad of [['/','/'],['/','/site/'],['/designer/sim.html','/site/']])assert.throws(()=>order(bad),/Invalid full tablet page closure/);
-  assert.match(source,/if \(!report && !arg\('pages'\) \|\| process\.argv\.includes\('--controls'\)\)/,'Default tablet still executes the existing planted controls');
+  for(const bad of [['/','/'],['/','/site/'],['/designer/sim.html','/site/']])assert.throws(()=>order(bad),/Invalid full CI page closure/);
+  assert.match(source,/if \(!report && !arg\('pages'\) \|\| process\.argv\.includes\('--controls'\)\)/,'Default CI still executes the existing planted controls');
+});
+
+
+test('owned talk CSS receipts preserve request identities, bounded outcomes and sanitized errors',async()=>{
+  const source=readFileSync(new URL('../controls/test-robot-controls.mjs',import.meta.url),'utf8');
+  const definition=source.match(/^function observeTalkCss\(page,origin\) \{[^]*?^}/m);assert.ok(definition);
+  const observe=new Function('safeReadinessURL','safeReadinessText','return ('+definition[0]+');')(safeReadinessURL,safeReadinessText);
+  const page=new EventEmitter(),origin='https://site.fixture';page.url=()=>origin+'/designer/sim.html?token=secret';
+  const frame={url:page.url};page.mainFrame=()=>frame;
+  const observation=observe(page,origin);
+  const request=token=>({url:()=>origin+'/designer/character/talk.css?v='+token,timing:()=>({startTime:100,requestStart:2,responseStart:4,responseEnd:5,headers:'secret'}),failure:()=>({errorText:'failed at /tmp/private-session/key.json'})});
+  const first=request('secret'),second=request('hidden');
+  const handler=source.match(/await p.route\('\*\*\/character\/talk\.css\*',(async route=>\{[^]*?^ \})\);/m);assert.ok(handler);
+  const gates=[];function GatePromise(executor){return new Promise(resolve=>{gates.push(resolve);executor(resolve);});}
+  const fixture=new Function('evidence','Promise','let releaseCss,heldCss;return {route:'+handler[1]+',release:()=>releaseCss?.()};')(observation,GatePromise);
+  for(const req of [first,second])page.emit('request',req);
+  const firstHeld=fixture.route({request:()=>first,continue:async()=>{}});
+  const secondHeld=fixture.route({request:()=>second,continue:async()=>{throw Error('ws://private-host/stream?token=secret');}});
+  fixture.release();await assert.rejects(secondHeld,/private-host/);
+  // Quiesce the deliberately superseded synthetic gate without changing the producer.
+  gates[0]();await firstHeld;
+
+  page.emit('response',{request:()=>second,status:()=>200});page.emit('requestfailed',first);
+  const navigation={url:page.url,isNavigationRequest:()=>true,frame:()=>frame,timing:()=>({startTime:90,requestStart:1,responseStart:3,responseEnd:4})};
+  page.emit('request',navigation);page.emit('response',{request:()=>navigation,url:page.url,status:()=>200});
+  page.emit('framenavigated',frame);page.emit('domcontentloaded');page.emit('pageerror',Error('file:///tmp/private-session/key.json'));
+  page.emit('request',{url:()=> 'https://outside.fixture/designer/character/talk.css?token=secret'});
+  let value=observation.snapshot(Object.assign(Error('Original30s TimeoutError'),{name:'TimeoutError'}));
+  assert.equal(value.matchingRequests,2);assert.equal(value.counts.request,2);assert.equal(value.events.find(row=>row.event==='held-resolver-replaced').requestId,1);assert.equal(value.events.find(row=>row.event==='continue-failed').requestId,2);
+  assert.equal(value.error.name,'TimeoutError');assert.ok(value.events.some(row=>row.event==='navigation'));assert.equal(value.events.find(row=>row.event==='navigation-response').browserTiming.startTime,90);assert.ok(value.events.some(row=>row.event==='requestfailed'));assert.deepEqual(value.events.find(row=>row.event==='response').browserTiming,{startTime:100,requestStart:2,responseStart:4,responseEnd:5});
+  assert.doesNotMatch(JSON.stringify(value),/secret|hidden|private-session|private-host|outside\.fixture|headers/);
+  for(let i=0;i<100;i++)page.emit('request',request(String(i)));
+  value=observation.snapshot();assert.equal(value.events.length,64);assert.ok(value.dropped>0);assert.equal(value.matchingRequests,102);assert.equal(value.counts.request,102);
+  const clear=source.indexOf("localStorage.removeItem('gyropup-sfx')"),blank=source.indexOf("await page.goto('about:blank')"),fresh=source.indexOf('await checkFreshLayout();');assert.ok(clear<blank&&blank<fresh,'Saved state clears precede retiring the completed availability page');
+  assert.match(source,/catch\(error\)\{failure=error;throw error;}/);assert.match(source,/if\(!failure\)errors.push/,'Secondary evidence errors cannot replace the original failure');
+});
+
+test('talk CSS evidence writes retain original failures and have one finite write bound',async()=>{
+  const source=readFileSync(new URL('../controls/test-robot-controls.mjs',import.meta.url),'utf8');
+  const definition=source.match(/^async function retainTalkCssReport\(observation,error,write\) \{[^]*?^}/m);assert.ok(definition);
+  const retain=new Function('return ('+definition[0]+');')(),original=Error('Original30s timeout'),secondary=Error('write failed');
+  const observation={snapshot:error=>({error:error?.message??null})};let saved;
+  assert.equal(await retain(observation,null,async value=>{saved=value;}),null);assert.equal(saved.error,null);
+  await assert.rejects(async()=>{try{throw original;}finally{assert.equal(await retain(observation,original,async value=>{saved=value;throw secondary;}),secondary);}},error=>error===original);
+  assert.equal(saved.error,original.message);
+  assert.equal(await retain({snapshot:()=>{throw secondary;}},original,()=>{throw Error('must not write');}),secondary);
+  const bound=await retain(observation,original,()=>new Promise(()=>{}));assert.match(bound.message,/exceeded 2000 ms/);
+});
+
+
+test('actual robot fixture callbacks avoid opaque/foreign storage and retain intended-origin failures',()=>{
+  const source=readFileSync(new URL('../controls/test-robot-controls.mjs',import.meta.url),'utf8');
+  assert.match(source,/from '\.\.\/assembly\/build-prototype-session\.mjs'/);
+  for(const context of ['context','fresh']){
+    assert.ok(source.includes(`acknowledgePrototypeNotice(${context},base)`));
+    assert.ok(source.includes(`${context}.addInitScript(disableAutomaticProbe,new URL(base).origin)`));
+  }
+  const definition=source.match(/^function disableAutomaticProbe\(expectedOrigin\) \{[^]*?^}/m);assert.ok(definition);
+  const origin='https://site.fixture';let writes=0;
+  const run=(protocol,actual,denied=false)=>vm.runInNewContext('('+definition[0]+')(expectedOrigin)',{location:{protocol},origin:actual,expectedOrigin:origin,localStorage:{setItem(key,value){writes++;if(denied)throw Error('intended storage denied');assert.equal(key,'gyropup.probe');assert.equal(value,'off');}}});
+  run('about:','null',true);run('https:','https://other.fixture',true);assert.equal(writes,0);
+  run('https:',origin);assert.equal(writes,1);
+  assert.throws(()=>run('https:',origin,true),/intended storage denied/);assert.equal(writes,2);
 });

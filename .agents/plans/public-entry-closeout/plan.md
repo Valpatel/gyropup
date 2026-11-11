@@ -1,26 +1,35 @@
 # Public entrance and supported simulator closeout
 
-PR #315 normally composes the reviewed simulator and homepage histories from
-`dev`, without source rewriting. `composition.json` records both immutable
-parents, preserved trees and the preceding seven media identities.
+Status on 2026-11-11: PR #315 has adopted the accepted seven homepage/highlight
+files and the twelve genuinely captured guide PNGs with their full receipt.
+See [media adoption](media-adoption.json), [guide adoption](guide-adoption.json)
+and [actual CI diagnosis](source-ci-diagnosis.json). The twelve guide PNGs are
+byte-identical to their predecessors; fresh execution and provenance changed.
+Their actual receipt remains bound to visual source `84f8b9b9`, never restamped.
 
-The existing media remains bound to its accepted earlier source. The composed
-loader/policy changes require one new source-bound capture; the homepage and its
-build/parity changes must also be part of that frozen source before capture.
-Root accepted the four original homepage functional cases, the two-engine rendered-text follow-up and the separate resting captures after inspecting all eight actual PNGs. The typography follow-up is normally merged; prior functional and rejected visual evidence remain historical.
-The new media packet must use a fresh source/run/unit/output/intent namespace and
-the existing rendering provider read only. Never resubmit a previous operator.
+The composed simulator and homepage histories are preserved. [Composition](composition.json)
+and its old source/capture names are dated evidence, not instructions to start
+another capture. All accepted, failed and spent operator evidence stays intact;
+never resubmit those operators. Test/docs-only repairs do not require another
+capture while the complete visual and transitive source bindings remain equal
+to the accepted `18fad50b` contract and the seven media bindings remain valid.
 
-The final packet derives required inputs and the observed source closure from
-the actual checker contract; an earlier count is an observation, not a constant
-to preserve. Keep production page errors, source/asset identity, raw-frame,
-codec, original E1 labels and terminal failure checks. Preserve the actual
-worker exit even when byte collection succeeds. Historical failed-run audit
-controls must use their own sealed historical plan alongside the exact auditor
-code, rather than treating old bytes as the new composed source.
+The original `7cd24223` normal CI run finished with tablet and presentation
+checks passing; phone simulator readiness and the fresh delayed-stylesheet
+fixture still failed, alongside two snapshot tests that confused current
+poster metadata with immutable archival contents. The required aggregates also
+failed. Narrow nonvisual repairs preserve all routes, themes, planted controls,
+readiness deadlines and actual failures; independent review and new exact-head
+normal CI remain required. The diagnostic record preserves phases, artifacts
+and qualification limits rather than declaring an underlying GPU/CSS cause.
 
-No aggregate media capture has started. The earlier composed source review covered `46eb1104`; the normally merged typography follow-up and capture-scope documentation require current independent source review. Independent composed source review and a separate exact
-media action review precede root's explicit start. Artifact review and acceptance
-precede seven-file adoption; normal final CI and normal dev/main promotion remain
-required. Hardware, original current geometry, printed legs, historical sources
-and study inserts stay preserved.
+Next: finish independent review of those repairs, make the authorized normal
+push, and require its full ordinary CI. Then follow normal dev-to-main
+promotion, verify the actual public version and source bytes, and close the
+tracking issues/retire topic branches only after accepted publication. Root
+coordinates promotion and retirement. No new issue, branch, capture or source
+restamping is part of the remaining test/docs closeout.
+
+Hardware, all original current geometry, printed legs, historical sources and
+study inserts stay preserved. No physical fit, strength or manufacturing
+qualification follows from these website and capture checks.

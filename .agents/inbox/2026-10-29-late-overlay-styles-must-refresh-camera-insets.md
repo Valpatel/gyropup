@@ -13,3 +13,31 @@ The first corrected WebKit run passed the bounds and interaction assertions but 
 Final verification on 2026-10-29 UTC: `SITE_URL=http://127.0.0.1:8890 node tools/test-robot-controls.mjs` and `PLAYWRIGHT_BROWSERS_PATH=/tmp/gyropup-security-browsers PLAYWRIGHT_BROWSER=webkit SITE_URL=http://127.0.0.1:8890 node tools/test-robot-controls.mjs` both reported PASS for fresh delayed-CSS startup framing, stable stats overlay, v1/v2 controls, and six phone/tablet layouts, with the page/stage error checks enabled. The fresh manual screenshots showed the complete current robot above the dock in both engines.
 
 Rule: validate the first ready-state view with delayed optional UI styling, not only views after navigation, resize or model selection. See [Playground interactions](../domains/playground-interactions.md). This evidence covers the tested browser layouts; it does not certify every future overlay or physical device.
+
+
+## 2026-11-11 — Retain the held stylesheet's actual request lifecycle
+
+Normal CI run `43003806788`, source `7cd24223`, Playground job `130466178082`
+failed the original 30-second stylesheet response wait after ready/talk and
+held-CSS assertions passed. Artifact `13847059620` (SHA256
+`40821a20b63b836449ca98cdbf70f229476b32bbc46ddd764fe67972b2548936`)
+retained earlier availability evidence but no fresh-page request lifecycle.
+The fixture was unchanged from dev2011; this does not establish a stylesheet
+race, a GPU cause or why the response was absent.
+
+Retire the completed availability page to `about:blank` after its origin-bound
+saved-state clears, then run the unchanged fresh-context fixture. Reuse the
+existing guarded acknowledgement with explicit base in both contexts, and
+guard the harness probe init callback by intended HTTP origin. Actual VM
+controls reject opaque/foreign storage access while preserving intended-origin
+storage failures; keep the old unguarded historical helper bytes. Record only
+owned talk.css route entry, stable request identity/count, release, continuation
+outcome, response/failure and relevant navigation/errors. Expose replacement of
+a still-held resolver rather than silently losing that request in evidence;
+do not infer that multiple requests occurred in the original failure. Cap the
+receipt at 64 events with dropped/count fields, sanitize URLs/text with the
+existing diagnostic serializer, and write on pass/fail within two seconds.
+Preserve the original error if evidence or cleanup fails; retain actual CSS
+continuation, all geometry/overlay assertions and original response deadline.
+Pure controls cover identities, redaction, caps and stalled/failed writes.
+Actual new CI is still required; diagnostics are not a successful interaction.

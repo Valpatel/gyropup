@@ -25,7 +25,7 @@
         130330602150
       ],
       "kind": "unresolved simulator readiness",
-      "observation": "Original30s wait failed, but artifact retained no scene/error/network snapshot; simulator layout rows show no visual findings.",
+      "observation": "Original 30-second wait failed, but artifact retained no scene/error/network snapshot; simulator layout rows show no visual findings.",
       "next": "Prepare one bounded diagnostic preserving the original deadline and failure. Do not infer a cause or widen the timeout."
     },
     {
@@ -114,7 +114,7 @@
     "baseline_three": {
       "native_exit": 1,
       "scan_seconds": 335,
-      "readiness": "Original30s TimeoutError",
+      "readiness": "Original 30-second TimeoutError",
       "home_to_sim_observed": true,
       "native_webgl_context_seconds": 10.306,
       "heartbeat_gap_seconds": 38.03,
@@ -151,10 +151,10 @@
       "job": 130466178099,
       "artifact": 13846963719,
       "artifact_sha256": "b7d9d006b2729317fb86faf828dfc295200d0cdf9a28ee71fc432fc5490f0a74",
-      "result": "Same whole-index snapshot assertion failed after17current-motion controls passed."
+      "result": "Same whole-index snapshot assertion failed after 17 current-motion controls passed."
     },
     "reproduced_before_repair": "Both actual Python snapshot suites reproduced one failure each at unchanged7cd; original CI logs/artifacts retained.",
-    "repair": "Keep historical final-index and all316seals byte-for-byte. Restore only reviewed live poster visual scalars to their previous value for old byte-seal comparison. Validate actual accepted receipt/current visual contract and index actual-guide digest; compare every remaining index field/row and all remaining turret bytes exactly.",
+    "repair": "Keep historical final-index and all 316 seals byte-for-byte. Restore only reviewed live poster visual scalars to their previous value for old byte-seal comparison. Validate actual accepted receipt/current visual contract and index actual-guide digest; compare every remaining index field/row and all remaining turret bytes exactly.",
     "negative_controls": [
       "nonposter guide field",
       "poster frame digest",
@@ -187,6 +187,27 @@
       "artifact_sha256": "74ee5801d35a9d7cf0b8a96da1c1d730d2c8f1eabd734ccd15e3c2fd21786cfd",
       "failure": "Unchanged30s simulator readiness TimeoutError; retained complete sampled profile dominated by createStage/Three renderer initialization. No proven underlying mechanism or source correction."
     },
-    "acceptance_remaining": "Overall7cdCI still running when recorded; original failures retained, no cancellation/retry. Normal CI on any reviewed follow-up remains required."
+    "acceptance_remaining": "New exact-head ordinary CI remains required; no original failure was retried or waived.",
+    "terminal_result": "FAILURE: 27 successful jobs, 4 direct failures plus required layout/presentation aggregates. No cancellation or retries.",
+    "docking": {
+      "job": 130466178577,
+      "result": "SUCCESS",
+      "artifact": 13848027518,
+      "artifact_sha256": "fc323f11b77f10e61fe0f91aa08858358d4702fd94c2124c324fe693d92a8822"
+    },
+    "playground": {
+      "job": 130466178082,
+      "artifact": 13847059620,
+      "artifact_sha256": "40821a20b63b836449ca98cdbf70f229476b32bbc46ddd764fe67972b2548936",
+      "failure": "Original 30-second waitForResponse failed in checkFreshLayout after bodyReady/talk and held-CSS assertions passed. No fresh-page network/route receipt retained. Fixture block unchanged from dev2011; no late-listener race established.",
+      "repair": "Reuse the existing guarded acknowledgement with explicit base in both contexts and guard the own probe callback by intended HTTP origin, retaining intended-origin storage failures. Navigate completed availability page to about:blank only after its saved-state edits. Keep all fresh fixture predicates, actual stylesheet continue and deadlines; retain a 64-event owned request/route/release/continue/navigation/error receipt on pass/fail, with stable request identities and dropped/count fields. Bound report write at 2 seconds; preserve original error if diagnostics/cleanup fail."
+    }
+  },
+  "single_size_ci_policy": {
+    "scope": "All five ordinary full single-size GitHub CI layout partitions default to one worker; Home-to-Sim page permutation retains dynamically discovered complete pages, both themes and existing planted controls. Explicit workers/pages/schemes/report/controls and non-CI/multisize modes preserve original selection/default behavior.",
+    "evidence": "Tablet configuration comparison and original 7cd tablet CI PASS; phone 7cd still failed with 7.0005 s native WebGL context span and 35.776514 s complete sampled profile around createStage/Three initialization. Observational probes perturb execution and do not identify a driver/CPU/scheduler mechanism.",
+    "policy_rationale": "Playwright recommends one CI worker for reproducibility/stability and separate jobs for wider parallelism; retain all five existing matrix jobs. This is a harness scheduling policy, not proof that every failure has the same cause.",
+    "reference": "https://playwright.dev/docs/ci#workers",
+    "preserved": "All route/theme coverage, 30-second readiness predicate, 20-minute job bound, spatial thresholds, production code, visual/transitive dependencies and accepted receipts."
   }
 }

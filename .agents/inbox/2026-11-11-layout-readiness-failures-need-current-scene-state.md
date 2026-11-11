@@ -62,3 +62,29 @@ The actual d0 [phone artifact](https://github.com/Valpatel/gyropup/actions/runs/
 The same artifact recorded a generation0 about:blank sessionStorage error from the layout caller's unguarded acknowledgement helper and an optional ignored development-poll404. The caller now reuses the existing guarded assembly-session helper with an explicit base. Actual caller/callback controls prove no storage read on opaque/wrong origins, the exact matching-origin write, and preserved denied-current-origin errors. The old helper bytes and old error evidence remain unchanged. This fixes a demonstrated fixture defect, not a proven readiness cause.
 
 The bounded observer now separates Node navigation/DOMContent/core-wait clocks from numeric Playwright request.timing fields, retains relevant completed and pending resources, and records page/context identity, previous routes, document time origin/navigation timing, visibility and focus. It reads no headers/bodies and adds no production module instrumentation. Pure controls retain these clock semantics and privacy. The original30s predicate,2s snapshot bound and failure remain unchanged; actual new CI still determines the next evidence.
+
+
+## 2026-11-11 — Keep full CI coverage while scheduling one page loop per job
+
+At source `7cd24223`, normal run `43003806788` tablet job `130466178200`
+passed all 314 route/theme views with zero findings after the reviewed one-worker
+policy. Phone job `130466178170` still failed its original 30-second simulator
+readiness predicate, despite completing 314 views with zero layout findings.
+Its complete sampled profile spanned 35.776514 seconds; native WebGL2 context
+creation took 7.0005 seconds, followed by Three renderer setup. These wall and
+sample observations do not identify a GPU/CPU/scheduler mechanism. The earlier
+two-arm controller also remained FAILED after its post-comparison load check;
+neither arm nor later CI erases that outcome.
+
+Use one worker in each ordinary full single-size GitHub CI partition while
+retaining all five matrix jobs, the dynamic full page set, both themes, planted
+controls and original deadlines. Preserve explicit overrides and other modes.
+This follows [Playwright's CI worker recommendation](https://playwright.dev/docs/ci#workers)
+for reproducibility; it is a scheduling policy, not a waiver or a proven causal
+fix. The existing selection controls exercise all five sizes and larger future
+page sets, including exactly-once Home-to-Sim ordering.
+
+The exact jobs, artifact digests and remaining acceptance are retained in the
+[closeout diagnosis](../plans/public-entry-closeout/source-ci-diagnosis.json).
+New ordinary CI must still validate the final source; no browser retry or
+production instrumentation is implied by these pure controls.

@@ -47,17 +47,17 @@ const pick = (all, name) => {
   return selected;
 };
 const sizes = pick(SIZES, 'sizes'), schemes = pick(SCHEMES, 'schemes');
-// Only the routine full tablet CI partition changes its default. Explicit runs retain their selection/order.
-const tabletDefault = process.env.GITHUB_ACTIONS === 'true' && sizes.length === 1 && sizes[0].name === 'tablet-768' &&
+// Only ordinary full single-size CI partitions change their default. Explicit runs retain their selection/order.
+const singleSizeCIDefault = process.env.GITHUB_ACTIONS === 'true' && sizes.length === 1 &&
   arg('workers') === undefined && process.env.EMPTY_SPACE_WORKERS === undefined && arg('pages') === undefined &&
   arg('schemes') === undefined && !report && !process.argv.includes('--controls');
-const workers = Number(arg('workers') || process.env.EMPTY_SPACE_WORKERS || (tabletDefault ? 1 : 3));
-function tabletPageOrder(all) {
+const workers = Number(arg('workers') || process.env.EMPTY_SPACE_WORKERS || (singleSizeCIDefault ? 1 : 3));
+function fullCIPageOrder(all) {
   if (new Set(all).size !== all.length || !all.includes('/') || !all.includes('/designer/sim.html'))
-    throw new Error('Invalid full tablet page closure');
+    throw new Error('Invalid full CI page closure');
   const ordered = ['/', '/designer/sim.html', ...all.filter(route => route !== '/' && route !== '/designer/sim.html')];
   if (ordered.length !== all.length || new Set(ordered).size !== all.length || ordered.some(route => !all.includes(route)))
-    throw new Error('Incomplete full tablet page permutation');
+    throw new Error('Incomplete full CI page permutation');
   return ordered;
 }
 const problems = [], rows = [];
@@ -387,7 +387,7 @@ try {
   const files = (await readdir(dist, { recursive: true })).map(f => f.split(path.sep).join('/'));
   const all = sitePages(files);
   if (all.length < 60) throw new Error(`only ${all.length} pages found in dist/: run npm run build first`);
-  const pages = arg('pages') ? arg('pages').split(',') : process.argv.includes('--controls') ? [] : tabletDefault ? tabletPageOrder(all) : all;
+  const pages = arg('pages') ? arg('pages').split(',') : process.argv.includes('--controls') ? [] : singleSizeCIDefault ? fullCIPageOrder(all) : all;
   expectedViews=sizes.flatMap(size=>pages.flatMap(route=>schemes.map(scheme=>({route,size:size.name,scheme}))));
   if (!report && !arg('pages') || process.argv.includes('--controls')) {
     const failed = await controls();
