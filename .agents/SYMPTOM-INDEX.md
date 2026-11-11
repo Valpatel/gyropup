@@ -64,6 +64,7 @@
 | A page shows large blank stretches on a phone, or a full-page screenshot shows empty picture boxes | [Empty space is measured per screen](inbox/2026-11-03-empty-space-is-measured-per-screen.md) |
 | Motto or landing graphics feel cheesy despite passing layout checks | [Gyropup visual character](domains/brand-presentation.md) |
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
+| A simulated motion sample wait times out after the applied pose passes | [Retain animation state and frame progress at the failed wait](inbox/2026-11-11-simulated-samples-need-frame-evidence.md) |
 | Upper links move while output adapters or their screws remain fixed to the robot body | [Output-adapter ownership](inbox/2026-10-29-output-adapters-belong-to-upper-links.md) |
 | Static build succeeds but a new simulator module returns 404 or the page never initializes | [Static build module references](domains/static-build.md) |
 | A network-failure test passes but its fixture never intercepts a versioned module | [Versioned imports and verified fixtures](domains/static-build.md) |

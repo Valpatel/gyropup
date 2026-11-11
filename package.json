@@ -13,7 +13,7 @@
     "test:markdown": "node --test tests/site/content/test-markdown.mjs",
     "test:cache": "node --test tests/site/platform/test-site-ranges.mjs && node tests/site/platform/test-cache.mjs",
     "test:sim": "node tests/site/controls/test-sim-transitions.mjs",
-    "test:turret": "python3 tests/evidence/test-turret-frames.py && node tests/site/models/test-turret-motion.mjs",
+    "test:turret": "python3 tests/evidence/test-turret-frames.py && node --test tests/site/models/test-upper-hold-observation.mjs && node tests/site/models/test-turret-motion.mjs",
     "test:services": "node tests/site/platform/test-service-discovery.mjs",
     "test:camera": "node tests/site/controls/test-camera-controls.mjs",
     "test:interactions": "node --test tests/site/controls/test-turret-stops.mjs && node tests/site/controls/test-turret-interactions.mjs",

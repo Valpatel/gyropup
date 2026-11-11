@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { chromium, webkit } from '@playwright/test';
 import { createHash } from 'node:crypto';
+import { waitForUpperHold } from './upper-hold-observation.mjs';
 const fixture = JSON.parse(await readFile(new URL('../../fixtures/turret-motion-reference.json', import.meta.url)));
 assert.ok(fixture.source?.parts, 'Regenerate the independent reference from the reviewed current full scene');
 const base = (process.env.SITE_URL || 'http://127.0.0.1:8879').replace(/\/$/, '');
@@ -181,16 +182,40 @@ try {
   assert.ok(maxError(appliedUpper).error<.02,'The applied +12-degree servo pose matches independent CAD landmarks');
   await page.getByLabel('Show straight laser reference',{exact:true}).check();
   const heldBaseline=await page.evaluate(()=>{
-    const b=window.__sim.bench(),a=b.api;window.upperHoldSamples=[];
-    window.__sim.stage.onFrame(()=>{
-      const s=a.state;
+    const sim=window.__sim, b=sim.bench(), a=b.api, stage=sim.stage;
+    window.upperHoldSamples=[];
+    const startMs=performance.now(), startRenderFrame=stage.renderer.info.render.frame;
+    const trace={frames:0, stageSeconds:0, lastFrameMs:null, maxFrameGapMs:0};
+    const observeState=()=>({
+      renderFrame:stage.renderer.info.render.frame, active:b.active, currentBench:sim.bench()===b,
+      speedFraction:a.state.rpm/b.manifest.mechanics.flywheel.rpm,
+      requested:a.state.arm.has('api'), reloading:Boolean(a.state.reloading),
+      paused:Boolean(a.state.journey && !a.state.journey.auto),
+      timeScale:a.state.timeScale, samples:window.upperHoldSamples.length,
+      visibility:document.visibilityState, focused:document.hasFocus(),
+      openDialogs:document.querySelectorAll('dialog[open]').length,
+      stageError:document.body.dataset.stageError||null,
+    });
+    const off=stage.onFrame((_,dt)=>{
+      const now=performance.now(), s=a.state;
+      trace.frames++;
+      trace.stageSeconds+=dt;
+      trace.maxFrameGapMs=Math.max(trace.maxFrameGapMs,now-(trace.lastFrameMs??startMs));
+      trace.lastFrameMs=now;
       if(s.rpm>=.95*b.manifest.mechanics.flywheel.rpm && window.upperHoldSamples.length<15)
         window.upperHoldSamples.push({shots:s.shots,queue:s.queue,phi:s.phi,phiCmd:s.phiCmd,tiltDeg:s.tilt*180/Math.PI,
           laserOn:s.laserOn,beamVisible:a.prediction.laser.visible});
     });
-    a.arm(true);a.fire(2);return {shots:a.state.shots,queue:a.state.queue,phi:a.state.phi,phiCmd:a.state.phiCmd};
+    a.arm(true);a.fire(2);
+    const start=observeState();
+    window.finishUpperHoldTrace=()=>{off();return {startMs,startRenderFrame,start,...trace,end:observeState(),endMs:performance.now()};};
+    return {shots:a.state.shots,queue:a.state.queue,phi:a.state.phi,phiCmd:a.state.phiCmd};
   });
-  await page.waitForFunction(()=>window.upperHoldSamples.length>=15,{},{timeout:15000});
+  await waitForUpperHold(page, ({expected,error,trace})=>writeFile(
+    `${out}/${engine.name()}-upper-hold-failed.json`,JSON.stringify({
+      phase:'upper-stop-hold', engine:engine.name(), browser:browser.version(),
+      expected, error:{name:error.name,message:error.message}, pageErrors:errors,trace,
+    },null,2)+'\n'));
   const upperHold=await page.evaluate(()=>window.upperHoldSamples);
   assert.ok(upperHold.every(s=>s.shots===heldBaseline.shots && s.queue===heldBaseline.queue &&
     Math.abs(s.phi-heldBaseline.phi)<1e-12 && Math.abs(s.phiCmd-heldBaseline.phiCmd)<1e-12 && Math.abs(s.tiltDeg-12)<.01),
