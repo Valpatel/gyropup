@@ -1,0 +1,52 @@
+{
+  "schema": "gyropup.public-entry-source-ci-diagnosis/1",
+  "date": "2026-11-11",
+  "failed_source": "59f20f625fe1b8d0f321aa6231b64a0d810afaa0",
+  "adoption_base": "3a2291d3",
+  "run": 42961981559,
+  "failure_evidence_retained": true,
+  "causes": [
+    {
+      "job": 130330602015,
+      "kind": "stale test selection",
+      "cause": "Unscoped Design notes locator matches valid header and body links.",
+      "fix": "Scope exact label to landing header navigation."
+    },
+    {
+      "job": 130330602105,
+      "kind": "product Markdown omission",
+      "cause": "Generic converter removes all nav nodes, including authored main-content engineering entrances.",
+      "fix": "Preserve main-content nav; retain chrome/hidden cleanup and actual wrong/missing target controls."
+    },
+    {
+      "jobs": [
+        130330602124,
+        130330602176,
+        130330602150
+      ],
+      "kind": "unresolved simulator readiness",
+      "observation": "Original30s wait failed, but artifact retained no scene/error/network snapshot; simulator layout rows show no visual findings.",
+      "next": "Prepare one bounded diagnostic preserving the original deadline and failure. Do not infer a cause or widen the timeout."
+    },
+    {
+      "job": 130330602176,
+      "kind": "real Progress spacing",
+      "observation": "Both themes measured124px blank band after closed workshop fold:0.187 of664px, limit0.18.",
+      "fix": "Progress-only bottom padding60px to24px; threshold and planted controls unchanged; measured post-fix acceptance pending."
+    },
+    {
+      "job": 130330601756,
+      "kind": "genuinely stale guide-poster dependency closure",
+      "cause": "Only tools/site/build-site.mjs whole-file hash changed; other36dependencies,55mesh bytes,recipe/model and12PNGs unchanged.",
+      "next": "Genuine twelve-guide capture after final source repairs freeze; keep guard/dependency/old receipts intact. Seven adopted homepage/highlight files are separate."
+    }
+  ],
+  "accepted_media_preservation": {
+    "source_hashes_checked": 486,
+    "captured_input_rows_unchanged": 369,
+    "seven_file_bytes_unchanged": true,
+    "captured_dependency_exceptions": []
+  },
+  "browser_or_native_action_started": false,
+  "limits": "Pure converter controls prove content conversion; actual Progress layout and simulator diagnosis await separately bounded browser acceptance. No final CI or release claim."
+}

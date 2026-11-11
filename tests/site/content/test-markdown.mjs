@@ -65,6 +65,21 @@ test('every generated HTML page advertises a current Markdown counterpart', asyn
   assert.match(await read('_headers'), /\/\*\.md\n  Content-Type: text\/markdown; charset=utf-8/);
 });
 
+test('authored content navigation survives Markdown while site chrome stays removed', () => {
+  const fixture='<html><head><title>Routes</title></head><body><header><nav><a href="/designer/progress.html#board">Engineering updates ↗</a><a href="/">Global chrome</a></nav></header><main><h1>Explore</h1><nav aria-label="Behind the build"><a data-content href="/designer/progress.html#board">Engineering updates ↗</a><a href="/site/">Design notes ↗</a></nav><nav hidden><a href="/hidden">Hidden content</a></nav></main></body></html>';
+  const check=md=>{
+    assert.match(md,/\[Engineering updates ↗\]\(https:\/\/gyropup\.com\/designer\/progress\.html#board\)/);
+    assert.equal((md.match(/Engineering updates/g)||[]).length,1,'The authored destination occurs once, without header chrome');
+    assert.match(md,/\[Design notes ↗\]\(https:\/\/gyropup\.com\/site\/\)/);
+    assert.doesNotMatch(md,/Global chrome|Hidden content/);
+  };
+  check(htmlToMarkdown(fixture,'index.html'));
+  for(const mutation of [doc=>doc.querySelector('a[data-content]').setAttribute('href','#board'),doc=>doc.querySelector('a[data-content]').remove(),doc=>doc.querySelector('main').remove()]){
+    const {document}=parseHTML(fixture);mutation(document);
+    assert.throws(()=>check(htmlToMarkdown(document.toString(),'index.html')),'Wrong or missing authored routes must not be supplied by the header copy');
+  }
+});
+
 test('public entry guides and directory links resolve while unpublished sources stay excluded', async () => {
   const discovery = await read('llms.txt');
   // Simulated tracked candidates exercise the exact map used by copy, docs,

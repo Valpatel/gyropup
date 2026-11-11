@@ -85,7 +85,7 @@ try {
   await noScript.goto(base+'/',{waitUntil:'domcontentloaded'});
   for(const width of [320,390,759,760,761,899,900,901,1440]) {
    await noScript.setViewportSize({width,height:844});
-   assert.ok(await noScript.getByRole('link',{name:'Design notes'}).isVisible(),`No-script landing at ${width}: nav links hidden`);
+   assert.ok(await noScript.locator('.landing-nav').getByRole('link',{name:'Design notes',exact:true}).isVisible(),`No-script landing at ${width}: nav links hidden`);
    assert.ok(!(await noScript.getByRole('button',{name:'Menu'}).isVisible()),`No-script landing at ${width}: a Menu button that cannot work`);
    const scroll=await noScript.evaluate(()=>document.documentElement.scrollWidth);
    assert.ok(scroll<=width+1,`No-script landing overflows at ${width}: ${scroll}`);

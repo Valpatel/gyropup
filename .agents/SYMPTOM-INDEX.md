@@ -4,6 +4,7 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| HTML has a deep evidence link but generated Markdown drops it after a semantic nav change | [Content navigation conversion](domains/static-build.md) |
 | A capture packet pins the new source but a live phase still accepts an archived served revision | [Live phase source binding](domains/structural-media.md) |
 | A functional homepage check passes but a resting capture shows a displaced skip link, blank canvas or lazy offscreen picture | [Landing capture preconditions and claim limits](domains/landing-preview.md) |
 | A first-load failure route sees no request after a model round trip, and the selection never reverts | [Loading fixture cache ownership](domains/loading-readiness.md) |

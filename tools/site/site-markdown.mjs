@@ -96,7 +96,10 @@ export function htmlToMarkdown(html, file) {
   if (file === 'designer/build.html') {
     document.querySelectorAll('#build-details > [data-build-panel]').forEach(panel => panel.removeAttribute('hidden'));
   }
-  document.querySelectorAll('script, style, head, svg, canvas, template, nav, dialog, button, select, input, textarea, label.inc, [aria-hidden="true"], [hidden]').forEach(el => el.remove());
+  // Navigation inside main is authored content (for example Home's engineering
+  // entrances). Remove global navigation chrome without dropping those routes.
+  document.querySelectorAll('nav').forEach(nav => { if (!nav.closest('main')) nav.remove(); });
+  document.querySelectorAll('script, style, head, svg, canvas, template, dialog, button, select, input, textarea, label.inc, [aria-hidden="true"], [hidden]').forEach(el => el.remove());
   // CSS provides spacing and columns in the browser. Preserve that structure in text.
   for (const node of document.querySelectorAll('span, strong, b')) { node.before(' '); node.after(' '); }
   for (const grid of document.querySelectorAll('.glist, .olist, .plist')) {
