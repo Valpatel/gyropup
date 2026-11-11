@@ -48,6 +48,23 @@ try{
   for(const id of expected)assert.ok((await filtered.locator('tbody').textContent()).includes(id));await filtered.close();
   await tools.getByLabel(/Checklist scope/).selectOption('all');const allEvent=page.waitForEvent('popup');await tools.getByRole('button',{name:'Print checklist',exact:true}).click();const all=await allEvent;await all.waitForLoadState();assert.equal(await all.locator('tbody tr').count(),total);await all.close();
   observations.push({total,visible,filtered:expected.length,checkedKey:key});
+  // Exercise the actual product adapter with a durable one-part fixture: list size
+  // must suppress search/sort without making its printable checklist unreachable.
+  await page.evaluate(async()=>{
+   const {createPortalParts}=await import('/designer/portal-parts.js');
+   const host=document.createElement('section');host.id='single-part-checklist';
+   host.innerHTML='<div data-single-progress></div><table data-track="print" data-label="One-part print queue"><thead><tr><th>Part</th><th>Quantity</th></tr></thead><tbody><tr data-part-key="test/single-part" data-part-label="Single test part"><td>Single test part</td><td data-sort-value="1">1</td></tr></tbody></table>';
+   document.body.append(host);window.singlePartUI=createPortalParts(host.querySelector('[data-single-progress]'),{revision:'single-part-fixture'});window.singlePartUI.enhance(host);
+  });
+  const single=page.locator('#single-part-checklist');
+  assert.equal(await single.getByRole('searchbox').count(),0);
+  assert.equal(await single.getByLabel(/^Sort /).count(),0);
+  await single.getByRole('checkbox',{name:'Printed: Single test part',exact:true}).check();
+  const singleEvent=page.waitForEvent('popup');await single.getByRole('button',{name:'Print checklist',exact:true}).click();const singlePrint=await singleEvent;
+  await singlePrint.waitForLoadState();assert.equal(await singlePrint.locator('tbody tr').count(),1);
+  assert.match(await singlePrint.locator('tbody').textContent(),/test\/single-part/);assert.match(await singlePrint.locator('tbody').textContent(),/☑/);
+  await singlePrint.close();await page.evaluate(()=>{const host=document.getElementById('single-part-checklist');window.singlePartUI.dispose(host);host.remove();});
+  observations.push({case:'one-part printable product adapter',printedRows:1,checked:true,searchControls:0,sortControls:0});
  }
  assert.deepEqual(errors,[]);await page.screenshot({path:`${out}/planner.png`,fullPage:false});
  await writeFile(`${out}/report.json`,JSON.stringify({engine:engine.name(),errors,observations},null,2));console.log('PASS planner alignment, seeded misalignment rejection and printable checklist scope/state');

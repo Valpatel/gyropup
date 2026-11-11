@@ -28,7 +28,7 @@ export function createPortalParts(host, {revision = 'unavailable'} = {}) {
         const column=document.createElement('col');column.style.width=table.tHead.rows[0].cells[index].classList.contains('cad-status-heading')?'var(--build-status-column, 88px)':'100px';columns.append(column);
       }
       if(columns)table.style.setProperty('--build-columns-width','calc('+[...columns.children].map(column=>column.style.width).join(' + ')+')');
-      api.toolbar.hidden=!many;
+      api.toolbar.hidden=!many&&!table.dataset.track;
       if(many){const hint=document.createElement('span');hint.className='cad-table-hint';hint.textContent='Scroll the table sideways for more columns and status boxes.';api.toolbar.append(hint);}
       enhanced.set(table,api);
     }
