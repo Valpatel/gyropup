@@ -54,3 +54,50 @@ are in [the separate correction checkpoint](../plans/assembly-staging/ci-build-l
 Local Chrome remains different from CI's pinned Chromium, and this source fix
 still needs new final-head review/CI. Neither the original073 nor ba run is
 retroactively passing.
+
+
+## A fresh media capture must guard every context init before storage access
+
+On 2026-11-11 UTC, planning the archive-retry correction's required media refresh
+traced the accepted76cc envfix capture's22 retained initial-document errors:
+14from seven hero-parity contexts and8from four recorder contexts. Each context
+ran both unguarded local preferences and the old shared session acknowledgement.
+The [canonical adoption receipt](../plans/end-packs-highlights/adoption.json)
+preserves original messages/stacks, all9successful child commands and the actual
+exit1 `COMPLETE_CANDIDATES_WITH_OPAQUE_DIAGNOSTICS_REVIEW_REQUIRED` outcome.
+That qualified artifact review did not make the initialization fixtures correct.
+
+The new caller correction reuses the existing Build suite's HTTP-origin-aware
+acknowledgement. Hero preferences and recorder seeding check protocol, serialized
+security origin and the explicitly intended origin before touching storage,
+random state or live-mode hooks. On the intended HTTP origin, the same preference
+keys, deterministic random sequence and live hook remain. A denied matching store
+still throws. The old shared helper and all historical media receipts stay byte
+identical. The recorder and strict checker replace the now-unused old helper in
+their exact three-member location inventory with the actual guarded helper;
+missing/old inventories remain rejected. Changed renderer/recorder/checker inputs
+require new frames and encoding, not altered hashes on the old capture.
+
+The existing Node hero-output tests execute only the two named transported init
+functions and the reused acknowledgement callback against synthetic origins.
+They cover matching writes, deterministic seeding, no access on about:blank,
+opaque HTTP and wrong-origin documents, and matching-store failure propagation.
+The Python binding suite checks the exact new helper inventory and rejects the
+old identity substituted into a self-consistent synthetic capture. These pure
+controls establish fixture behavior, not a new rendered-media acceptance.
+
+During control preparation, an incorrect five-call-site expectation failed;
+the actual four call sites generate seven contexts through existing loops.
+Node VM also converts a throwing global getter into `ReferenceError`; controls
+therefore separately verify attempted accessor/failure escape and exact-error
+propagation from a throwing storage method. Neither diagnostic changes browser
+error handling or permits errors to be filtered.
+
+The private producer observer also needs complete direct `browser.newPage`
+coverage: its prior hook observed explicit `browser.newContext` pages, while the
+poster utility uses the direct-page API. Prior poster zero-error reporting means
+no errors recorded by that limited observer, not demonstrated complete coverage.
+A corrected, deduplicated observer and its controls need separate action review
+before capture. No new capture, runtime, zero-error or publication claim follows
+from this source correction. Preserve the original failed dependency attempt,
+qualified22-error candidate result and already-verified d694 public release.

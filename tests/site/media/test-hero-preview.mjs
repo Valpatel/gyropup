@@ -1,4 +1,4 @@
-import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../assembly/build-prototype-session.mjs';
 /** Exercise the visible poster-to-WebGL handoff, not merely matching CSS boxes. */
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
@@ -8,7 +8,11 @@ const engine=process.env.PLAYWRIGHT_BROWSER==='webkit'?webkit:chromium;
 const browser=await engine.launch(engine===chromium?{channel:process.env.PLAYWRIGHT_CHANNEL==='chromium'?undefined:'chrome',headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{headless:true});
 const out=process.env.TEST_OUTPUT||'/tmp/gyropup-hero-preview';await mkdir(out,{recursive:true});
 const errors=[],cases=[],handoffs=[];
-function prefs(){localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');}
+function prefs(expectedOrigin){
+ const actualOrigin=globalThis.origin;
+ if(!/^https?:$/.test(location.protocol)||!actualOrigin||actualOrigin==='null'||actualOrigin!==expectedOrigin)return;
+ localStorage.setItem('gyropup.probe','off');localStorage.setItem('gyropup-sfx','0');
+}
 function voiceStub(){
  window.voiceTest={spoken:[],cancelled:0};
  Object.defineProperty(window,'SpeechSynthesisUtterance',{configurable:true,value:class{constructor(text){this.text=text;}}});
@@ -51,8 +55,8 @@ async function visibleComposition(page,first=false){return page.evaluate(async f
 },first);}
 try{
  for(const dpr of [1,2]){
-  const context=await browser.newContext({viewport:dpr===1?{width:1440,height:1000}:{width:320,height:568},deviceScaleFactor:dpr,reducedMotion:'reduce'});await context.addInitScript(prefs);
-await acknowledgePrototypeNotice(context);
+  const context=await browser.newContext({viewport:dpr===1?{width:1440,height:1000}:{width:320,height:568},deviceScaleFactor:dpr,reducedMotion:'reduce'});await context.addInitScript(prefs,new URL(base).origin);
+await acknowledgePrototypeNotice(context,base);
   const page=await context.newPage();page.setDefaultTimeout(60000);page.on('pageerror',e=>errors.push(e.message));
   const handoff={dpr,delayedInter:dpr===2,phases:[]};
   let releaseInter,interRequested;
@@ -111,8 +115,8 @@ await acknowledgePrototypeNotice(context);
  }
  // Normal-motion pages must reveal the same first frame before beginning idle motion.
  {
-  const context=await browser.newContext({viewport:{width:1440,height:1000}});await context.addInitScript(prefs);
-await acknowledgePrototypeNotice(context);
+  const context=await browser.newContext({viewport:{width:1440,height:1000}});await context.addInitScript(prefs,new URL(base).origin);
+await acknowledgePrototypeNotice(context,base);
   await context.addInitScript(()=>new MutationObserver(()=>{const h=window.__heroPreview;if(h&&!window.firstHeroFrame){window.firstHeroFrame=h.captureFrame();window.firstHeroCamera=h.camera.position.toArray();}}).observe(document,{subtree:true,attributes:true,attributeFilter:['data-ready']}));
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'/',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.firstHeroFrame);
@@ -132,8 +136,8 @@ await acknowledgePrototypeNotice(context);
  }
  // Hold the image for actual renderer failures as well as slow network loading.
  for(const failure of ['module','webgl']){
-  const context=await browser.newContext({viewport:{width:320,height:568}});await context.addInitScript(prefs);
-await acknowledgePrototypeNotice(context);
+  const context=await browser.newContext({viewport:{width:320,height:568}});await context.addInitScript(prefs,new URL(base).origin);
+await acknowledgePrototypeNotice(context,base);
   if(failure==='webgl')await context.addInitScript(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...rest){return /webgl/.test(type)?null:get.call(this,type,...rest);};});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   if(failure==='module')await page.route('**/robot_v2.js*',route=>route.abort());
@@ -146,8 +150,8 @@ await acknowledgePrototypeNotice(context);
  // Native hover, keyboard and touch activation exercise the real presentation API.
  for(const touch of [false,true]){
   const context=await browser.newContext({viewport:touch?{width:390,height:844}:{width:1440,height:1000},hasTouch:touch,isMobile:touch,reducedMotion:'reduce'});
-await acknowledgePrototypeNotice(context);
-  await context.addInitScript(prefs);await context.addInitScript(voiceStub);
+await acknowledgePrototypeNotice(context,base);
+  await context.addInitScript(prefs,new URL(base).origin);await context.addInitScript(voiceStub);
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'/',{waitUntil:'networkidle'});await page.waitForFunction(()=>window.__heroPreview);
   assert.equal(await page.evaluate(()=>typeof window.__heroPreview.robot.setExplode),'function');
