@@ -52,3 +52,5 @@ action and disappears when unavailable. Preserve focus when that action vanishes
 and assert exactly one Replay after both natural ends. Decoding and recovery
 checks alone will not detect duplicated actions. See [the player-control incident](../inbox/2026-10-30-player-actions-need-distinct-state-ownership.md)
 and `tools/highlight-control-contract.mjs`.
+
+A copied capture packet must bind every live phase's served-version assertion to its sealed current source. Test the actual validator and producer callsite with current, archival, wrong and missing revisions before network probing; keep historical insert/fixture/geometry authorities separate. Repeat those pure controls in the existing bounded operator/worker path. Preserve blocked packets and seeded negative stderr; empty final/browser errors do not imply every stderr stream was empty. Source correctness, executable packet correctness, artifact acceptance and final CI are separate claims.

@@ -1,0 +1,173 @@
+{
+  "schema": "gyropup.public-entry-media-adoption/1",
+  "date": "2026-11-11",
+  "capture_source": "59f20f625fe1b8d0f321aa6231b64a0d810afaa0",
+  "adoption_base": "59f20f625fe1b8d0f321aa6231b64a0d810afaa0",
+  "invocation": "43497a1065004266b78e5aa53be93804",
+  "artifact_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5854346292",
+  "root_acceptance": "https://github.com/Valpatel/gyropup/pull/315#issuecomment-6788060610",
+  "adoption_approved": true,
+  "files": [
+    {
+      "source": "robot-poster.png",
+      "destination": "software/site/assets/robot-poster.png",
+      "bytes": 145432,
+      "sha256": "2598bb8c6f2debf566c5905c7f59f2976751edbe72d928538cca14e9f892f60e"
+    },
+    {
+      "source": "highlights/gyropup-highlights.mp4",
+      "destination": "software/site/assets/highlights/gyropup-highlights.mp4",
+      "bytes": 1953450,
+      "sha256": "dce90a8b07c664bcfdac6c3789f8fc2ca64cafea2e7e12c93092843f53dc3bb9"
+    },
+    {
+      "source": "highlights/gyropup-highlights.webm",
+      "destination": "software/site/assets/highlights/gyropup-highlights.webm",
+      "bytes": 1627962,
+      "sha256": "1d5143fdbe6d72d304d3e5f8f513c27752ae63cc1f21990488fc35586ebd0141"
+    },
+    {
+      "source": "highlights/gyropup-highlights.webp",
+      "destination": "software/site/assets/highlights/gyropup-highlights.webp",
+      "bytes": 33108,
+      "sha256": "6ceaaf78f35b842080b4fdf2c076949d71bf7d60000fc851d02a45aa812bc69d"
+    },
+    {
+      "source": "highlights/receipt.json",
+      "destination": "software/site/assets/highlights/receipt.json",
+      "bytes": 68287,
+      "sha256": "585ba6e36f4145e77621f1ec780c5d8585e0df9f271d4aee295f11eb5eaa8a7e"
+    },
+    {
+      "source": "highlights/capture-receipt.json",
+      "destination": "software/site/assets/highlights/capture-receipt.json",
+      "bytes": 259837,
+      "sha256": "a237409dbe49c6d233b3d7456bef7bfaf2131916862a415ca9cd9ade5da1857c"
+    },
+    {
+      "source": "highlights/capture-frames.json",
+      "destination": "software/site/assets/highlights/capture-frames.json",
+      "bytes": 100989,
+      "sha256": "1279db2957d7214821ee8168ef0bcd5814b951de2dcd6c851d98f321e0c6f783"
+    }
+  ],
+  "before_adoption": {
+    "software/site/assets/robot-poster.png": {
+      "sha256": "80d0d880f6425103da66c21d72f46d14065146fdf8caf1bd18d3830dfe3ba5c5",
+      "bytes": 145492
+    },
+    "software/site/assets/highlights/gyropup-highlights.mp4": {
+      "sha256": "bf3b269134b764bfe5882725a10cc86897d3d72a4804adc107fd1f8272c0fb7b",
+      "bytes": 1952337
+    },
+    "software/site/assets/highlights/gyropup-highlights.webm": {
+      "sha256": "d569ef1ad19ad2d63ca4c8a25981cb496d171ba9ecad04623442d1d6bfa60c84",
+      "bytes": 1621471
+    },
+    "software/site/assets/highlights/gyropup-highlights.webp": {
+      "sha256": "ed07ba42a3e8be3e488b81c7d723d3883465bcf2c9080ca3b7879be445b69c09",
+      "bytes": 33044
+    },
+    "software/site/assets/highlights/receipt.json": {
+      "sha256": "384c7001f5a03bf68508c2dd6ce6d67b96c0aa9e06537041be6d3c5c2915e22b",
+      "bytes": 68174
+    },
+    "software/site/assets/highlights/capture-receipt.json": {
+      "sha256": "0f108e70daa85af6fd29f99b5ffa1ac4a2791ec718b15262bd2dc4aff731f6e5",
+      "bytes": 259599
+    },
+    "software/site/assets/highlights/capture-frames.json": {
+      "sha256": "233cf7bc373afc38d0d6044f2f9e7882859200f0b6fc1c985135df96d96cc152",
+      "bytes": 100989
+    }
+  },
+  "collection": {
+    "files": 555,
+    "bytes": 185856992,
+    "output_members_sha256": "ae1f7a013a4d0f7ca31f8f05246dcdaf6c6213eb54f53612d1bd3266f3e5c6e9",
+    "all_source_guards": {
+      "runtime": true,
+      "source": true,
+      "dist": true,
+      "overlay": true,
+      "clean_source": true,
+      "originals": true
+    },
+    "encoding_inventory": {
+      "sources": 486,
+      "required_capture_inputs": 338,
+      "mandatory_policy_observed": true
+    },
+    "protected_printed_legs": 80
+  },
+  "final_worker_status": "COMPLETE_CANDIDATES_NOT_ADOPTED",
+  "final_worker_errors": [],
+  "browser": {
+    "poster": {
+      "pageerrors": [],
+      "livepoll_requests": 0,
+      "listener_refused": true,
+      "matched_response_assets": 243
+    },
+    "hero-parity": {
+      "pageerrors": [],
+      "livepoll_requests": 0,
+      "listener_refused": true
+    },
+    "reel-capture": {
+      "pageerrors": [],
+      "livepoll_requests": 0,
+      "listener_refused": true
+    }
+  },
+  "negative_control_stderr": {
+    "retained": true,
+    "nonempty_members": {
+      "binding-tests.stderr": {
+        "sha256": "f9090bfb584707cdcf0ac3145a979eae4865d3169ea81704ded42a5a5c54400e",
+        "bytes": 125
+      },
+      "encode.stderr": {
+        "sha256": "c41c86b23daf86361bcfe84e8d981c42b95a64582002b31446ee193ce259ebe0",
+        "bytes": 233
+      },
+      "source-fetch.stderr": {
+        "sha256": "c5e1313c7ea5f74aff657219bb59495eaa8b16b1b610012182494ed291425d59",
+        "bytes": 912
+      },
+      "strict-check.stderr": {
+        "sha256": "c41c86b23daf86361bcfe84e8d981c42b95a64582002b31446ee193ce259ebe0",
+        "bytes": 233
+      }
+    },
+    "limits": "Empty final/browser errors do not imply empty stderr; seeded historical-failure diagnostics remain in the original evidence."
+  },
+  "terminal": {
+    "exit": 0,
+    "owned_cgroup_tasks_before_collection": [],
+    "only_owned_unit_stopped": true,
+    "main_pid_after_stop": 0,
+    "state_after_stop": "inactive"
+  },
+  "root_visual_scope": [
+    "actual landing poster",
+    "fresh raw turret midpoint",
+    "fresh raw mechanism midpoint",
+    "fresh raw battle midpoint",
+    "fresh raw character midpoint"
+  ],
+  "packet": {
+    "schema": "gyropup.current-media-one-action/2",
+    "plan_sha256": "ab302eacffbf453f6bd281cf98da7104dcd4dcdc57359220ed4aa1d80b63815c",
+    "operator_sha256": "bb3b547529a31b70b88be3ad7f8bb7ea7bf4715ff41fffb903a3554a3da977b0",
+    "manifest_sha256": "d8555f59ecc8d20cda63f24d304850715e86e960551c16e06a3fa371bf89ce21",
+    "initial_block_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5854097249",
+    "corrected_action_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5854163598"
+  },
+  "limits": [
+    "Seven media files adopted byte-for-byte; receipts remain bound to actual capture59f20 source without editing.",
+    "Historical inserts and all geometry/printed legs unchanged; rendering does not qualify physical performance.",
+    "Actual six pre-adoption CI failures remain preserved and require separate diagnosis/fixes and final checks.",
+    "No new capture, dependency/provider change, protected merge or publication in this adoption."
+  ]
+}

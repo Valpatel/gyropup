@@ -8,7 +8,7 @@
     "seconds": 22,
     "audio": false
   },
-  "source_revision": "acd084a690d33957d047bd8bace7d03672aa7552",
+  "source_revision": "59f20f625fe1b8d0f321aa6231b64a0d810afaa0",
   "source_hashes": {
     "hardware/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
     "hardware/cad/__init__.py": "d6ddd9ce4ef273b82f43f315f09d11db1224f2b8298c9b0b3ea7dafb97280ba0",
@@ -469,7 +469,8 @@
     "software/site/designer/sfx.js": "90db82703cb9d32c106992c1d67610056a319048d4030db77490642ce8c4dc55",
     "software/site/designer/sim-layout.css": "e2b76ffb77863adea51210749efb4e27641b8d8adc08bdc74608ff3da7173970",
     "software/site/designer/sim.html": "a70ed754168974b085e9e09de6b8672ac7b0d97ee5498a60195ef40fad5aa8c8",
-    "software/site/designer/sim.js": "dca41548b7f42ac275fc0b5f2bbc29805770b750f0e75fc0224769e02cf4d5a1",
+    "software/site/designer/sim.js": "ebc4f5024004417dfd893d1611ee1a1e1224284d6fb7856d468cfd2648924432",
+    "software/site/designer/sim_designs.js": "f96809302f296ca84b821e79f9c5d2cab41dab5bfa409fe0d2cc640f81e63635",
     "software/site/designer/sim_gamepad.js": "6c4867ed61d50e17e8a1fab6ebc46529ff9849dcecfdaf6c7f49ebb41f27af9d",
     "software/site/designer/turret3d.js": "e44ccb972c7d370657c4464f4c596ef40d638b91c48b714f740ac6289d185bbb",
     "software/site/designer/turret_bench.css": "77d4ab36125c5df22db86fafdc10a6d21470cee86c5e4201e50a3df7d9e79dc8",
@@ -484,7 +485,7 @@
     "tools/engineering/robot/robot_view.py": "2008d1b935203110c5218bb1fa8e660a94c7100ee3ef4a20622d6fc23920e40f",
     "tools/evidence/manufacturing/retained_fit_history.py": "47b05f0211f49aadd244f4670157df8f2b01288968d2a6f0dd0eee4791e69709",
     "tools/evidence/media/capture-highlights.mjs": "21f072b03137649f4a1147ed378eac93d2bd3b0a562119f4dbbdf81a3726a7a0",
-    "tools/evidence/media/check-highlights.py": "0f1229d988383b27ce311f41df2d11090af13191aaee52d6e55330e1a4921bcc",
+    "tools/evidence/media/check-highlights.py": "e3cb4f98c98cd20a5c9ccf94388c692b23899e414338825e44f97772d2c39306",
     "tools/evidence/media/encode-highlights.py": "0ce8144b69740fe74759e7f320bb3d8d828c679112db2f1508e3d9215df50618",
     "tools/site/assembly/export_robot_guide.py": "cc9559130762af1f80feb656ac775126dc4760e6f5afc99daa237315abb37d6a",
     "tools/site/assembly/robot_current_print_acceptance.py": "d55f92494a1cd05bf6b1f1803de45a871a0486fb772aedce45c0f15438ac28ce",
@@ -739,23 +740,23 @@
   ],
   "outputs": {
     "gyropup-highlights.mp4": {
-      "sha256": "bf3b269134b764bfe5882725a10cc86897d3d72a4804adc107fd1f8272c0fb7b",
-      "bytes": 1952337
+      "sha256": "dce90a8b07c664bcfdac6c3789f8fc2ca64cafea2e7e12c93092843f53dc3bb9",
+      "bytes": 1953450
     },
     "gyropup-highlights.webm": {
-      "sha256": "d569ef1ad19ad2d63ca4c8a25981cb496d171ba9ecad04623442d1d6bfa60c84",
-      "bytes": 1621471
+      "sha256": "1d5143fdbe6d72d304d3e5f8f513c27752ae63cc1f21990488fc35586ebd0141",
+      "bytes": 1627962
     },
     "gyropup-highlights.webp": {
-      "sha256": "ed07ba42a3e8be3e488b81c7d723d3883465bcf2c9080ca3b7879be445b69c09",
-      "bytes": 33044
+      "sha256": "6ceaaf78f35b842080b4fdf2c076949d71bf7d60000fc851d02a45aa812bc69d",
+      "bytes": 33108
     },
     "capture-receipt.json": {
-      "sha256": "0f108e70daa85af6fd29f99b5ffa1ac4a2791ec718b15262bd2dc4aff731f6e5",
-      "bytes": 259599
+      "sha256": "a237409dbe49c6d233b3d7456bef7bfaf2131916862a415ca9cd9ade5da1857c",
+      "bytes": 259837
     },
     "capture-frames.json": {
-      "sha256": "233cf7bc373afc38d0d6044f2f9e7882859200f0b6fc1c985135df96d96cc152",
+      "sha256": "1279db2957d7214821ee8168ef0bcd5814b951de2dcd6c851d98f321e0c6f783",
       "bytes": 100989
     }
   }
