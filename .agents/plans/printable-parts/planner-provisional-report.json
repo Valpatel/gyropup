@@ -1,0 +1,206 @@
+{
+  "engine": "chromium",
+  "errors": [],
+  "observations": [
+    {
+      "label": "Print queue",
+      "width": 1280,
+      "bounds": [
+        {
+          "column": "Order↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Picture",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Material↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Grams↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Hours↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Print setup↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Printed",
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Find a part",
+      "width": 1280,
+      "bounds": [
+        {
+          "column": "Picture",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Design files↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Supplier↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Estimate↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Ordered",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "In hand",
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Print queue",
+      "width": 320,
+      "bounds": [
+        {
+          "column": "Order↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Picture",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Material↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Grams↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Hours↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Print setup↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Printed",
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "label": "Find a part",
+      "width": 320,
+      "bounds": [
+        {
+          "column": "Picture",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Part↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Design files↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Quantity↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Supplier↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Estimate↕",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "Ordered",
+          "left": 0,
+          "right": 0
+        },
+        {
+          "column": "In hand",
+          "left": 0,
+          "right": 0
+        }
+      ]
+    },
+    {
+      "total": 54,
+      "visible": 10,
+      "filtered": 3,
+      "checkedKey": "print/rig/pod"
+    }
+  ]
+}

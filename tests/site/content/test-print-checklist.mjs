@@ -21,9 +21,10 @@ try{
  await page.locator('#build-details').evaluate(el=>el.open=true);
  await page.locator('[data-build-tab=print]').click();
  const table=page.locator('#queue table').first(),tools=page.locator('#queue .cad-table-tools').first();
- const measure=(target=table)=>target.evaluate(table=>{const row=[...table.tBodies[0].rows].find(row=>!row.hidden);return [...table.tHead.rows[0].cells].map((head,index)=>{const h=head.getBoundingClientRect(),c=row.cells[index].getBoundingClientRect();return {column:head.textContent,left:h.left-c.left,right:h.right-c.right};});});
- const aligned=rows=>rows.every(row=>Math.abs(row.left)<1&&Math.abs(row.right)<1);
- for(const width of [1280,320]){await page.setViewportSize({width,height:900});for(const [label,target] of [['Print queue',table],['Find a part',page.locator('#made table').first()]]){const bounds=await measure(target);assert.ok(aligned(bounds),JSON.stringify(bounds));observations.push({label,width,bounds});}assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
+ const measure=(target=table)=>target.evaluate(table=>{const row=[...table.tBodies[0].rows].find(row=>!row.hidden);return [...table.tHead.rows[0].cells].map((head,index)=>{const h=head.getBoundingClientRect(),c=row.cells[index].getBoundingClientRect();return {column:head.textContent,headerWidth:h.width,cellWidth:c.width,left:h.left-c.left,right:h.right-c.right};});});
+ const aligned=rows=>rows.every(row=>row.headerWidth>0&&row.cellWidth>0&&Math.abs(row.left)<1&&Math.abs(row.right)<1);
+ for(const width of [1280,320]){await page.setViewportSize({width,height:900});for(const [label,target,panel] of [['Print queue',table,'print'],['Find a part',page.locator('#made table').first(),'buy']]){await page.locator(`[data-build-tab=${panel}]`).click();const bounds=await measure(target);assert.ok(aligned(bounds),JSON.stringify(bounds));observations.push({label,width,bounds});}assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
+ await page.locator('[data-build-tab=print]').click();
  // Prove that the same measurement rejects a real broken header/cell grid.
  await table.locator('th').first().evaluate(th=>th.style.transform='translateX(12px)');assert.equal(aligned(await measure()),false);
  await table.locator('th').first().evaluate(th=>th.style.removeProperty('transform'));
