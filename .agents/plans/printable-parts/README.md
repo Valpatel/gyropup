@@ -1,5 +1,7 @@
 # Printable planner checklist evidence
 
+> **Current status (2026-11-11): blocked by adapter source-fidelity review at20e3abd3.** Shared cad-agent#573 has a separate exact-head pass. Earlier PDFs retained IDs/layout but omitted Print setup and procurement/fabrication Part disclosures; their historical acceptance claims below do not establish complete source fidelity. This correction preserves those fields and adds an oracle from pre-enhancement DOM/raw planner inputs. Actual v0.36 provenance, new independent review/current CI and public Build proof remain pending. The root-owned private public packet is disabled/unbound; its expectations must be rebound from final source. Historical records below are retained verbatim.
+
 ```mermaid
 flowchart LR
     T[Shared table] --> P[A4 and Letter checklists]

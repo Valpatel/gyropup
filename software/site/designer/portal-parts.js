@@ -9,29 +9,33 @@ export function createPortalParts(host, {revision = 'unavailable'} = {}) {
   const enhance=host=>{
     for(const table of host.querySelectorAll('table')) {
       if(enhanced.has(table)||!table.tHead||!table.tBodies.length)continue;
+      // Keep the original disclosures in a real source column. A short identity
+      // stays in Part; the shared printer can group verbose detail beneath it.
+      const partIndex=[...table.tHead.rows[0].cells].findIndex(th=>/^part$/i.test(th.textContent.trim()));
+      if(table.dataset.track&&partIndex>=0&&[...table.tBodies[0].rows].some(row=>row.cells[partIndex]?.querySelector(':scope > details'))){
+        const index=table.tHead.rows[0].cells.length,heading=document.createElement('th');heading.textContent='Part details';table.tHead.rows[0].append(heading);
+        for(const row of table.tBodies[0].rows){const cell=document.createElement('td');cell.append(...row.cells[partIndex].querySelectorAll(':scope > details'));row.append(cell);}
+        const group=table.querySelector(':scope > colgroup');if(group){const column=document.createElement('col');column.style.width='200px';group.insertBefore(column,group.children[index]||null);}
+      }
       const many=[...table.tBodies[0].rows].filter(row=>!row.hasAttribute('data-fixed')).length>1;
       for(const [index,th] of [...table.tHead.rows[0].cells].entries()) {
         if(!many||!th.textContent.trim()||/^picture$/i.test(th.textContent.trim())){th.removeAttribute('data-sort');continue;}
         th.dataset.sort=[...table.tBodies[0].rows].some(row=>row.cells[index]?.hasAttribute('data-sort-value'))?'number':'text';
       }
       if(!table.parentElement.classList.contains('cad-table-scroll')){const wrap=document.createElement('div');wrap.className='cad-table-scroll';table.before(wrap);wrap.append(table);}
-      // Mobile-only labels repeat the printed headers. Preserve the actual value
-      // and every pack/cut/price note with explicit boundaries in the plain snapshot.
-      for(const cell of table.querySelectorAll('td[data-sort-value]'))if(cell.querySelector('.lbl')){
-        const plain=cell.cloneNode(true);plain.querySelectorAll('.lbl').forEach(label=>label.remove());plain.querySelectorAll('br').forEach(br=>br.replaceWith(document.createTextNode(' — ')));
-        cell.dataset.printValue=[...plain.childNodes].map(node=>node.textContent.trim()).filter(Boolean).join(' — ');
-      }
-      // Seller/availability notes are separate UI spans, often adjacent in HTML.
-      // Supply those boundaries explicitly instead of concatenating their words.
-      for(const cell of table.querySelectorAll('td'))if(!cell.hasAttribute('data-print-value')&&cell.querySelector('small,br,.avail,.tag,div,li,p,summary')){
-        const plain=cell.cloneNode(true);plain.querySelectorAll('[hidden],[aria-hidden="true"]').forEach(node=>node.remove());
-        for(const note of plain.querySelectorAll('small,br,.avail,.tag,div,li,p,summary')){note.before(document.createTextNode(' '));note.after(document.createTextNode(' '));}
+      // Preserve all source text, including collapsed instructions and sourcing
+      // disclosures. Only mobile labels duplicate the printed column headings.
+      for(const row of table.tBodies[0].rows)for(const [index,cell] of [...row.cells].entries()){
+        const plain=cell.cloneNode(true);plain.querySelectorAll('.lbl').forEach(label=>label.remove());
+        if(/^design files$/i.test(table.tHead.rows[0].cells[index]?.textContent.trim()))for(const link of plain.querySelectorAll('a[href]')){
+          const href=link.getAttribute('href');link.append(document.createTextNode(' ('+href+')'));
+        }
+        for(const note of plain.querySelectorAll('small,br,.avail,.tag,.key,div,li,p,summary')){note.before(document.createTextNode(' '));note.after(document.createTextNode(' '));}
         cell.dataset.printValue=plain.textContent.replace(/\s+/g,' ').trim();
       }
-      const identity=[...table.tHead.rows[0].cells].findIndex(th=>/^part$/i.test(th.textContent.trim()));
-      if(table.dataset.track&&identity>=0){table.tHead.rows[0].cells[identity].classList.add('cad-part-identity');for(const row of table.tBodies[0].rows){const cell=row.cells[identity];if(cell){cell.classList.add('cad-part-identity');const notes=[...cell.querySelectorAll('small,.tag.warn,.tag.fail'),...row.querySelectorAll('[data-print-note]')].map(note=>note.textContent.trim()).filter(Boolean);cell.dataset.printValue=[row.dataset.partLabel||cell.textContent.trim(),...new Set(notes)].join(' — ');}}}
+      if(partIndex>=0){table.tHead.rows[0].cells[partIndex].classList.add('cad-part-identity');for(const row of table.tBodies[0].rows){const cell=row.cells[partIndex];if(cell){cell.classList.add('cad-part-identity');const label=row.dataset.partLabel;if(label&&!cell.dataset.printValue.includes(label))cell.dataset.printValue=label+' — '+cell.dataset.printValue;}}}
       const statuses=table.dataset.track==='print'?[{id:'printed',label:'Printed'}]:table.dataset.track==='buy'?[{id:'ordered',label:'Ordered'},{id:'inHand',label:'In hand'}]:[];
-      for(const th of table.tHead.rows[0].cells)if(/^(picture|print setup)$/i.test(th.textContent.trim()))th.dataset.print='omit';
+      for(const th of table.tHead.rows[0].cells)if(/^picture$/i.test(th.textContent.trim()))th.dataset.print='omit';
       const api=enhancePartTable(table,{printable: table.dataset.track ? {project:'Gyropup retained prototype workstreams',revision,notice:'Original leg, rig, turret and earlier body planning lists. Current front/rear-pack robot manufacturing plan remains incomplete. Checklist marks track parts, not purchased quantities. This list does not qualify fit, strength or a complete robot.'} : undefined,label:table.dataset.label||table.caption?.textContent||'Parts',tracker,statuses,searchable:many,pageSize:Number(table.dataset.pageSize)||0});
       // Build assigns a column for each source header before the tracker appends its status headers.
       // Reconcile that product colgroup with the final enhanced table, so fixed layout does not
