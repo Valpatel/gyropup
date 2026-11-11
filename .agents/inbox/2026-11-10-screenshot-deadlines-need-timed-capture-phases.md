@@ -100,15 +100,16 @@ locates the pending operation; its internal cause remains unknown. A separate
 pinned141 prospective30s control completed in11.888s, inside the old window, so
 it did not reproduce or explain the slow attempts.
 
-The test-only candidate gives that one required screenshot a finite30s artifact
-budget, retaining15s as an explicit reference in its phase receipt. A returned
+The test-only candidate gives that one required Chromium screenshot a finite30s
+artifact budget, retaining15s as an explicit reference in its phase receipt. A returned
 image after15s is labeled `completed-after-reference-bound`; the original
 failures remain failed. Product readiness, interaction deadlines, pixels,
 fullscreen prehistory and required screenshots stay unchanged. There is one
 capture call, with no retry or fallback acceptance. This is an operational test
 budget decision, not a performance fix or a claim about physical hardware.
 
-Acceptance requires the full ordinary Chromium/WebKit campaign. At its end, an
+Acceptance requires the full ordinary Chromium/WebKit campaign. At the end of
+the Chromium campaign, an
 isolated empty page deliberately stalls font readiness and requests one native
 screenshot with a1s timeout. It must enter that wait, retain the identical
 Playwright timeout through the observer, make one attempt, produce no PNG and
@@ -124,3 +125,25 @@ the owned context. Playwright1.56.1 awaits fonts in its utility JavaScript world
 A main-world property override of `document.fonts.ready` is therefore unsuitable:
 it need not affect the wrapper in the other world. Independent source review
 caught that distinction before the candidate was pushed or run in a browser.
+
+### A demonstrated stall is engine-specific
+
+Aggregate `06658a29` run42948429261/job130286927238 exercised the real control.
+Artifact13824596197 (64 files, CRC verified; ZIP SHA256
+`0038265d9b9fd121a33a98757e822126c7bce7c4340449a52d7fe7a970e78a66`)
+retains the unsuccessful attempt. Chromium141 passed134 observations with no
+page errors: the required Robot image completed in11.549s and the held-font
+negative timed out in1001.71ms without producing its PNG. WebKit26 passed all133
+product observations with no page errors; its Robot image completed in656.03ms.
+However, its negative screenshot returned a PNG in82.65ms while the font set
+reported `loading` before and after. The required rejection assertion correctly
+failed. This is a control-fixture limitation, not evidence of a product defect
+or a working WebKit timeout control. The internal WebKit reason is unproven.
+
+Run the demonstrated native held-font timeout control only in Chromium, assert
+that engine in the control itself, and disclose the unexercised WebKit timeout
+path in the final report. WebKit keeps its full product suite and original15s
+screenshot limit; the explicit fresh Chromium diagnostic also stays15s. Pure
+observer error-propagation tests remain engine-independent. A future WebKit
+native timeout control needs its own demonstrated stall; do not weaken the
+rejection assertion or infer shared behavior from one browser's result.

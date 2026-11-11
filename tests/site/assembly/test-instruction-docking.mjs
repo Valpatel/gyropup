@@ -22,7 +22,7 @@ let browser,page,builtVersion,captureProtocol;
 const captureLifecycle=[];
 // Artifact production has its own finite budget; product readiness/action limits stay unchanged.
 // Keep the former bound visible in the phase receipt rather than calling a late image a 15s pass.
-const referenceCaptureBoundMs=15000,stoppedCaptureBudgetMs=scope==='all'?30000:referenceCaptureBoundMs;
+const referenceCaptureBoundMs=15000,stoppedCaptureBudgetMs=scope==='all'&&engine===chromium?30000:referenceCaptureBoundMs;
 const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
 async function clickState(selector,attribute,value){if(await page.locator(selector).getAttribute(attribute)!==String(value))await page.locator(selector).click();}
 async function inspect(label){
@@ -128,6 +128,7 @@ async function fullscreen(mode){
  await page.waitForFunction(({mode,nativeRequired})=>{const l=document.querySelector('.assembly-layout');return mode==='denied'?l.dataset.fullscreen==='expanded':nativeRequired?document.fullscreenElement===l&&l.dataset.fullscreen==='native':['native','expanded'].includes(l.dataset.fullscreen);},{mode,nativeRequired:engine===chromium});
 }
 async function stalledCaptureNegative(){
+ assert.equal(engine,chromium,'The held-font native timeout control is demonstrated only in Chromium');
  // Separate empty page, after the unchanged product campaign. Exercise Playwright's real
  // deadline without stalling a product page or relying on a naturally slow GPU capture.
  const context=await browser.newContext(),image=out+'/stalled-capture-must-not-exist.png';
@@ -218,8 +219,9 @@ try{
  } finally {
   await archiveContext.close();
  }
- await stalledCaptureNegative();
- assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
+ if(engine===chromium)await stalledCaptureNegative();
+ const captureDeadlineControl=engine===chromium?'native timeout observed':'not exercised: the held-font fixture does not stall WebKit screenshots';
+ assert.deepEqual(errors,[]);await writeFile(out+'/report.json',JSON.stringify({status:'passed',engine:engine.name(),browser:browser.version(),version,sources,captureDeadlineControl,observations,errors},null,2)+'\n');console.log('PASS',engine.name(),observations.length,'actual docking/control states');
  }
 }catch(error){await writeFile(out+'/failed.json',JSON.stringify({status:'failed',scope,completeCampaign:false,sources,observations,errors,error:error.stack},null,2));try{await page?.screenshot({path:out+'/failure.png',timeout:15000});}catch{}throw error;}
 finally{captureProtocol?.dispose();await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));console.log('Owned docking listener closed');}
