@@ -185,12 +185,12 @@ try {
     const sim=window.__sim, b=sim.bench(), a=b.api, stage=sim.stage;
     window.upperHoldSamples=[];
     const startMs=performance.now(), startRenderFrame=stage.renderer.info.render.frame;
-    const trace={frames:0, stageSeconds:0, lastFrameMs:null, maxFrameGapMs:0};
+    const trace={frames:0, stageSeconds:0, lastStageDt:null, lastFrameMs:null, maxFrameGapMs:0};
     const observeState=()=>({
       renderFrame:stage.renderer.info.render.frame, active:b.active, currentBench:sim.bench()===b,
       speedFraction:a.state.rpm/b.manifest.mechanics.flywheel.rpm,
-      requested:a.state.arm.has('api'), reloading:Boolean(a.state.reloading),
-      paused:Boolean(a.state.journey && !a.state.journey.auto),
+      requested:a.state.arm.has('api'), requestCount:a.state.arm.size, reloading:Boolean(a.state.reloading),
+      journey:Boolean(a.state.journey), paused:Boolean(a.state.journey && !a.state.journey.auto),
       timeScale:a.state.timeScale, samples:window.upperHoldSamples.length,
       visibility:document.visibilityState, focused:document.hasFocus(),
       openDialogs:document.querySelectorAll('dialog[open]').length,
@@ -200,6 +200,7 @@ try {
       const now=performance.now(), s=a.state;
       trace.frames++;
       trace.stageSeconds+=dt;
+      trace.lastStageDt=dt;
       trace.maxFrameGapMs=Math.max(trace.maxFrameGapMs,now-(trace.lastFrameMs??startMs));
       trace.lastFrameMs=now;
       if(s.rpm>=.95*b.manifest.mechanics.flywheel.rpm && window.upperHoldSamples.length<15)
