@@ -1,0 +1,39 @@
+{
+  "functional_source": "a781e8e1965101d5e2cd40e62bae6cb7040928f1",
+  "shared_source": "c9794848b6423cc13e285637c6711963d1b26f4c",
+  "shared_sha256": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+  "source_hashes": {
+    "software/site/designer/build.js": "2ff18334faa3515a33641167110ecd8cf2d17855d4966b2d6955142161186976",
+    "software/site/designer/portal-parts.js": "2de92dbea85b584d88b8f643712df64d1c9488e21511839a119755c211f7cc98",
+    "software/site/designer/kit/part-table.js": "a207cd6ed535d020fdcc9056055de0f92a0f0645863a2ce3064d6498acb985b4",
+    "tests/site/content/test-print-checklist.mjs": "edb1f294d7eb665d5c76a83f964d79a8ac9c58258d909cc1b514d17f4c9b6fd5"
+  },
+  "fixture_version": {
+    "revision": "a781e8e1965101d5e2cd40e62bae6cb7040928f1",
+    "assets": "a0fefaefa9c84205e076",
+    "history": true,
+    "built": "2026-11-11T17:26:57.471Z"
+  },
+  "cases": {
+    "orders": "CHECKLIST_CASE=orders",
+    "queue": "CHECKLIST_CASE=queue"
+  },
+  "command_bound_seconds": 150,
+  "assembly_module": "intentionally isolated; table fixture only",
+  "checks": {
+    "orders_chromium": true,
+    "queue_chromium": true,
+    "shared_chromium": true,
+    "privacy": 11,
+    "markdown": 7,
+    "tracker_unit": 5,
+    "poster_contract": "twelve existing posters current"
+  },
+  "remaining": [
+    "normal CI/WebKit",
+    "fresh exact-head independent GPT-6 review",
+    "actual toolkit release adoption",
+    "real public Build assembly/table acceptance"
+  ],
+  "gzip": "Large JSON receipts use deterministic gzip; decompression preserves their exact original bytes."
+}
