@@ -21,3 +21,7 @@ while the surrounding marketing copy retains the existing readable treatment.
 A font-ready browser check of source `1720961b` covered 320, 360, 390, 430, 760,
 1024 and 1440 px in both themes: all fourteen layouts kept the first group intact,
 mobile final line separate, and the page/card free of horizontal clipping.
+
+## Home is the invitation (2026-11-10)
+
+The owner wants a short, playful robot-centered entrance for kids: show the character, give a few evergreen reasons to explore, and make Play, Build and Progress easy to find. Keep the exact motto, established visual language, small cad-agent badge and concise prototype boundary. Engineering status, study numbers, mass/price targets, historical layouts and detailed build history belong one click away on the existing tabs. Do not create a second copy of changing design state on Home. Preserve the records and deep anchors when simplifying the entrance; see [the source/content incident](../inbox/2026-11-10-home-should-link-to-engineering-state.md).
