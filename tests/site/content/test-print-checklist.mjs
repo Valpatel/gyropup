@@ -39,7 +39,17 @@ try{
   assert.match(await printed.locator('body').textContent(),/Revision: [a-f0-9]{40}/);
   assert.equal(await table.locator('tbody').innerHTML(),before);
   const checkRow=printed.getByRole('cell',{name:key,exact:true}).locator('..');assert.match(await checkRow.textContent(),/☑/);
-  if(engine===chromium)for(const format of ['A4','Letter'])await printed.pdf({path:`${out}/gyropup-${format}.pdf`,format,printBackground:true});
+  await printed.emulateMedia({media:'print'});
+  for(const format of ['A4','Letter']){
+   const landscape=await printed.evaluate(()=>document.body.dataset.printOrientation==='landscape');
+   const paperWidth=(landscape?(format==='A4'?297:279.4):(format==='A4'?210:215.9))-24;
+   await printed.setViewportSize({width:Math.floor(paperWidth/25.4*96),height:900});
+   const compact=await printed.locator('th,td[data-print-kind=number],td[data-print-kind=status]').evaluateAll(cells=>cells.map(cell=>{const range=document.createRange();range.selectNodeContents(cell);const lines=[...range.getClientRects()],box=cell.getBoundingClientRect();return {text:cell.textContent,lines:lines.length,within:lines.every(line=>line.left>=box.left&&line.right<=box.right)};}));
+   assert.ok(compact.every(cell=>cell.lines===1&&cell.within),JSON.stringify(compact.filter(cell=>cell.lines!==1||!cell.within)));
+   assert.equal(await printed.getByRole('cell',{name:'72.56',exact:true}).count(),1);
+   assert.equal(await printed.getByRole('columnheader',{name:'Hours',exact:true}).count(),1);
+   if(engine===chromium)await printed.pdf({path:`${out}/gyropup-${format}.pdf`,format,landscape,printBackground:true});
+  }
   await printed.close();
   const term=await first.getAttribute('data-part-label');await tools.getByRole('searchbox').fill(term);
   const expected=await table.locator('tbody tr').evaluateAll((rows,term)=>rows.filter(row=>row.textContent.toLowerCase().includes(term.toLowerCase())).map(row=>row.dataset.partKey),term);
@@ -64,6 +74,14 @@ try{
   await singlePrint.waitForLoadState();assert.equal(await singlePrint.locator('tbody tr').count(),1);
   assert.match(await singlePrint.locator('tbody').textContent(),/test\/single-part/);assert.match(await singlePrint.locator('tbody').textContent(),/☑/);
   await singlePrint.close();await page.evaluate(()=>{const host=document.getElementById('single-part-checklist');window.singlePartUI.dispose(host);host.remove();});
+  const pending=await page.locator('#queue table').evaluateAll(tables=>tables.map((table,index)=>({index,count:[...table.tBodies[0].rows].filter(row=>row.textContent.includes('Model export pending')).length})).find(item=>item.count>0));
+  assert.ok(pending,'actual retained turret plan has pending model exports');
+  const pendingTools=page.locator('#queue .cad-table-tools').nth(pending.index);
+  await pendingTools.getByRole('searchbox').fill('');await pendingTools.getByLabel(/Checklist scope/).selectOption('all');
+  const pendingEvent=page.waitForEvent('popup');await pendingTools.getByRole('button',{name:'Print checklist',exact:true}).click();const pendingPrint=await pendingEvent;await pendingPrint.waitForLoadState();
+  assert.equal(await pendingPrint.locator('tbody tr').filter({hasText:'Model export pending'}).count(),pending.count);
+  if(engine===chromium)for(const format of ['A4','Letter'])await pendingPrint.pdf({path:`${out}/gyropup-pending-${format}.pdf`,format,landscape:await pendingPrint.evaluate(()=>document.body.dataset.printOrientation==='landscape'),printBackground:true});
+  await pendingPrint.close();observations.push({case:'actual turret pending exports retained',pendingRows:pending.count});
   observations.push({case:'one-part printable product adapter',printedRows:1,checked:true,searchControls:0,sortControls:0});
  }
  assert.deepEqual(errors,[]);await page.screenshot({path:`${out}/planner.png`,fullPage:false});

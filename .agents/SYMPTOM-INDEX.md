@@ -250,3 +250,4 @@
 
 - A shared table adoption loses pagination/filtering despite syntax checks: [compare consumer extensions before replacement](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md).
 - Header/cell alignment passes on a hidden table: [activate the actual panel and require positive box widths](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#compare-real-visible-boxes-not-equal-zero-size-deltas).
+- A PDF fits the page but splits numbers/short headers, or printable labels omit pending exports: [check actual token readability and retain row warnings](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md#staying-inside-pdf-bounds-does-not-establish-readable-numeric-cells).

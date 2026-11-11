@@ -13,3 +13,11 @@ Limits: this incident concerned table behavior, not CAD data, geometry or manufa
 On 2026-11-11 the provisional planner report recorded zero header/cell edge deltas for Find a part while the Print panel was selected. Source inspection (`build.html` places `#made` under `data-build-panel="buy" hidden`) showed that both compared boxes could be hidden and zero-sized. Queue was in the active Print panel and its shifted-header negative control did fail as intended; that did not establish visibility for a different table.
 
 Cause: the harness compared relative deltas without proving that each target was displayed. Corrective rule: activate the table’s actual native panel, require positive header and body-cell widths, then compare both column edges. Keep an actual shifted-header rejection control. The committed test now does this for both tables; the provisional hidden-table result remains explicitly unaccepted until the corrected test executes. Limits: this is layout evidence, not a manufacturing or full viewer acceptance claim.
+
+## Staying inside PDF bounds does not establish readable numeric cells
+
+On 2026-11-11 independent review of the real A4 queue PDF found `Hours` split into `Hou` / `rs`, and the hip-frame value `72.56` split into `72.5` / `6`. The prior page-bound audit still passed because every fragment remained inside the page. Character-count width weights and unrestricted word breaking had treated numeric/status columns like free-form descriptions.
+
+Corrective rule: preserve semantic numeric/status column types, reserve intrinsic widths and prohibit wrapping for compact data and short headers. Permit wrapping in IDs/descriptions and use landscape for dense lists while retaining the paper choice. Verify compact-cell line ranges at actual printable A4/Letter widths and inspect the actual PDFs for whole numeric/header tokens as well as complete IDs, repeated headers and page bounds. Retain the failed observations; a generic 75-row fixture alone does not prove the real product table readable.
+
+A related source audit found `Model export pending` on 21 real turret rows lost when a plain part label replaced the interactive cell text. Printable identity text now retains row-specific small notes and marked qualification warnings, including oversized-bed warnings from an omitted setup column. No missing STL is invented or enabled.
