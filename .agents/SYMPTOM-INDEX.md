@@ -247,3 +247,5 @@
 
 - A retired simulator option remains reachable through old queries or restored form state: [gate public availability at the actual loader and preserve historical fixtures](inbox/2026-11-11-public-retirement-needs-loader-enforcement.md).
 - A dynamically constructed probe regex passes syntax checking but fails before capture, or collection mistakes a retained worker error for a missing terminal marker: [exercise actual extraction and separate byte verification from worker success](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#compile-the-actual-extractor-and-keep-byte-collection-separate-from-worker-success).
+
+- A shared table adoption loses pagination/filtering despite syntax checks: [compare consumer extensions before replacement](inbox/2026-11-11-table-adoption-must-preserve-consumer-extensions.md).
