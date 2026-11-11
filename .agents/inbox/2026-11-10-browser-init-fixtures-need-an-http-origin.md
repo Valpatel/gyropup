@@ -93,11 +93,14 @@ therefore separately verify attempted accessor/failure escape and exact-error
 propagation from a throwing storage method. Neither diagnostic changes browser
 error handling or permits errors to be filtered.
 
-The private producer observer also needs complete direct `browser.newPage`
-coverage: its prior hook observed explicit `browser.newContext` pages, while the
-poster utility uses the direct-page API. Prior poster zero-error reporting means
-no errors recorded by that limited observer, not demonstrated complete coverage.
-A corrected, deduplicated observer and its controls need separate action review
-before capture. No new capture, runtime, zero-error or publication claim follows
-from this source correction. Preserve the original failed dependency attempt,
-qualified22-error candidate result and already-verified d694 public release.
+A first planning inference incorrectly claimed that the private observer missed
+`browser.newPage`. Inspection of the actual Playwright1.56.1 implementation
+(`playwright-core/lib/client/browser.js`, `newPage`) shows it calls the observed
+`this.newContext`; the retained producer audit confirms one poster context,
+243response matches and zero recorded poster page errors. Public API names alone
+do not establish an instrumentation gap. Any explicit direct-page wrapper is a
+defensive observation change requiring deduplication controls and separate action
+review, not a correction to a demonstrated missing prior page. No new capture,
+runtime, zero-error or publication claim follows from this fixture correction.
+Preserve the original failed dependency attempt, qualified22-error candidate
+result and already-verified d694 public release.
