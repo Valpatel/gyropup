@@ -1,7 +1,8 @@
 import {sourceForPublic} from '../../../tools/site/source-layout.mjs';
-/** The landing page's cad-agent loop section: its numbers against the committed records, its live line, and its layout.
+/** The dated Progress workshop stories (formerly on Home): its numbers against the committed records, its live line, and its layout.
  * Evidence checks read the repository. Browser checks use SITE_URL, or serve dist/ (run `npm run build` first) on a
  * test-owned listener that is closed in teardown. Requests to cad-agent.gyropup.com are always intercepted. */
+import {prepareStaticMotionDocument,isStaticMotionChangeRequest} from '../models/current-motion-static.mjs';
 import assert from 'node:assert/strict';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -9,24 +10,25 @@ import { after, before, test } from 'node:test';
 import { parseHTML } from 'linkedom';
 import { chromium, webkit } from '@playwright/test';
 import { createSiteServer } from '../../../tools/site/serve-site.mjs';
-import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../assembly/build-prototype-session.mjs';
 import { describe as describeLive, SOURCE } from '../../../software/site/assets/cad-agent-live.js';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const sourceFile=(...parts)=>path.join(root,sourceForPublic(path.join(...parts)));
 const read = file => readFile(sourceFile(file), 'utf8');
 const json = async file => JSON.parse(await read(file));
-const source = await read('designer/home.html');
+const source = await read('designer/progress.html');
 const { document } = parseHTML(source);
 const loop = document.querySelector('#loop');
 const text = el => el.textContent.replace(/\s+/g, ' ').trim();
 const card = tag => [...loop.querySelectorAll('.loop-card')].find(c => text(c.querySelector('.loop-tag')).startsWith(tag));
 const LIVE = { revision: '9eb33cff57ceb424e1628dc123da9cb9f7af7cb3', built: '2026-11-01T08:27:46-08:00', pages: 64, items: 179 };
 
-test('the section sits right after the hero and its ticker, and links to cad-agent without script', () => {
+test('dated workshop stories live in a closed Progress fold and link to cad-agent without script', () => {
   assert.ok(loop, '#loop exists');
-  assert.ok(loop.previousElementSibling.classList.contains('ticker'));
-  assert.equal(loop.previousElementSibling.previousElementSibling.className.split(' ')[0], 'hero');
+  assert.ok(loop.closest('#workshop-stories'));
+  assert.equal(loop.closest('details').hasAttribute('open'), false);
+  assert.match(text(loop.closest('.fold-body')), /earlier workshop stories.*original runs and versions/);
   const cta = loop.querySelector('a.loop-cta');
   assert.equal(cta.getAttribute('href'), 'https://cad-agent.gyropup.com');
   assert.match(text(cta), /^Explore cad-agent/);
@@ -46,7 +48,7 @@ test('FEA card: the v0.6.0 re-run counts and toolkit come from research/fea-v060
   assert.deepEqual(bars, [before, afterCount]);
   assert.deepEqual([...fea.querySelectorAll('.loop-bars b')].map(text), [String(before), String(afterCount)]);
   assert.match(text(fea.querySelector('.loop-bars small')), new RegExp(`^of ${studies} `));
-  assert.match(await read('web/landing.css'), new RegExp(`calc\\(var\\(--n\\) / ${studies} \\* 100%\\)`));
+  assert.match(await read('web/workshop-stories.css'), new RegExp(`calc\\(var\\(--n\\) / ${studies} \\* 100%\\)`));
   // The drawing is hidden from assistive technology and Markdown; one sentence carries the same numbers.
   assert.equal(fea.querySelector('.loop-bars').getAttribute('aria-hidden'), 'true');
   assert.equal(text(fea.querySelector('.loop-bars').previousElementSibling),
@@ -115,6 +117,7 @@ test('live line: only well-formed version.json fields are shown', () => {
 });
 
 let browser, server, base;
+const unsupportedLiveRequests=[];
 before(async () => {
   base = process.env.SITE_URL?.replace(/\/$/, '');
   if (!base) {
@@ -128,12 +131,15 @@ before(async () => {
 after(async () => {
   await browser?.close();
   if (server) await new Promise(resolve => server.close(resolve));
+  assert.deepEqual(unsupportedLiveRequests,[],'Static fixture never requests an unsupported development endpoint');
 });
 
 /** A page whose cad-agent requests are answered by `answer` once `release` resolves; nothing reaches the network. */
 async function open({ width = 1440, height = 1000, answer = 'live', javaScriptEnabled = true, reducedMotion = 'no-preference', near = true } = {}) {
   const context = await browser.newContext({ viewport: { width, height }, javaScriptEnabled, reducedMotion });
-  await acknowledgePrototypeNotice(context);
+  if (/^(127\.0\.0\.1|localhost|\[::1\])$/.test(new URL(base).hostname)) await context.addInitScript(prepareStaticMotionDocument,new URL(base).origin);
+  context.on('request',request=>{if(isStaticMotionChangeRequest(request.url(),new URL(base).origin))unsupportedLiveRequests.push(request.url());});
+  await acknowledgePrototypeNotice(context, base);
   let release;
   const gate = new Promise(resolve => { release = resolve; });
   const asked = [];
@@ -148,10 +154,11 @@ async function open({ width = 1440, height = 1000, answer = 'live', javaScriptEn
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+  await page.goto(base + '/designer/progress.html', { waitUntil: 'domcontentloaded' });
+  if (javaScriptEnabled) await page.waitForFunction(() => document.body.dataset.ready === '1');
   await page.evaluate(() => document.fonts.ready);
   // The live request starts only as the section comes near the viewport.
-  if (near) await page.locator('#loop').scrollIntoViewIfNeeded();
+  if (near) { await page.locator('#workshop-stories > summary').click(); await page.locator('#loop').scrollIntoViewIfNeeded(); }
   return { context, page, release, errors, asked };
 }
 const box = (page, selector) => page.locator(selector).evaluate(el => { const r = el.getBoundingClientRect(); return { top: r.top + scrollY, height: r.height, width: r.width }; });
@@ -213,6 +220,7 @@ test('without script the section and its link are complete', async () => {
 test('keyboard reaches and follows the link; reduced motion stops the pulses', async () => {
   const { context, page, release } = await open({ reducedMotion: 'reduce' });
   release();
+  await page.locator('#workshop-stories > summary').focus();
   let focused = '';
   for (let i = 0; i < 60 && !focused.includes('loop-cta'); i++) {
     await page.keyboard.press('Tab');
@@ -273,7 +281,7 @@ test('every link in the section resolves, including anchors, and llms.txt names 
   const llms = await (await fetch(base + '/llms.txt')).text();
   assert.match(llms, /\[cad-agent\]\(https:\/\/cad-agent\.gyropup\.com\)/);
   assert.match(llms, /general-purpose CAD toolkit/);
-  const overview = await (await fetch(base + '/index.md')).text();
+  const overview = await (await fetch(base + '/designer/progress.md')).text();
   const section = overview.slice(overview.indexOf('ALWAYS IMPROVING'), overview.indexOf('physical tests are still ahead'));
   assert.match(section, /\[Explore cad-agent\]\(https:\/\/cad-agent\.gyropup\.com\/?\) \[Source on GitHub/);
   assert.match(section, /Studies below their own target: 2 of 54 on cad-agent v0\.4\.2’s material data, 16 of 54 after the re-run on v0\.6\.0\./);

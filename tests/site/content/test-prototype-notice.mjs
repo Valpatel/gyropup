@@ -47,7 +47,7 @@ try{
  await page.waitForFunction(()=>!document.getElementById('prototype-notice-dialog').open);
  assert.equal(await page.evaluate(()=>sessionStorage.getItem('gyropup.prototype-notice')),'2026-10-29-v1');
  assert.ok(await page.evaluate(()=>window.keptHero===window.__heroPreview.robot));
- const targetCopy=await page.locator('.hero-description').textContent();assert.match(targetCopy,/100 lb/);assert.match(targetCopy,/\$10,000/);
+ const homeCopy=await page.locator('.hero-copy').textContent();assert.match(homeCopy,/browser/i);assert.doesNotMatch(homeCopy,/100 lb|\$10,000/);assert.match(await page.locator('.home-prototype').textContent(),/prototype.*hardware and build files are experimental/i);
  await page.locator('#prototype-notice-footer [data-prototype-notice-open]').click();await noticeOpen(page);await page.keyboard.press('Escape');
  await page.waitForFunction(()=>!document.getElementById('prototype-notice-dialog').open);
  assert.equal(await page.evaluate(()=>document.activeElement.hasAttribute('data-prototype-notice-open')),true,'Reopening restores focus');

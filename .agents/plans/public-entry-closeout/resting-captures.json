@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-11",
+  "source": "2066e779761cc43bebf66efa3ca2048a039f09c8",
+  "reports": {
+    "chromium": {
+      "source": "2066e779761cc43bebf66efa3ca2048a039f09c8",
+      "report_sha256": "4862b4ab60c5acdea908109bd7c188272313872f6ded43cd5d8ead637f91d7c5",
+      "invocation": "b04ab1520aa44cc0a5ff801060c9cc3b",
+      "unit_result": "success",
+      "exit": 0,
+      "main_pid": 0,
+      "cgroup_absent": true,
+      "tcp_connection_refused": true,
+      "rows": [
+        {
+          "width": 320,
+          "scroll_y": 0,
+          "focus": "BODY",
+          "skip_bottom": -32,
+          "frames": [
+            3,
+            4
+          ],
+          "triangles": 347051,
+          "opaque_pixels": 15429
+        },
+        {
+          "width": 1440,
+          "scroll_y": 0,
+          "focus": "BODY",
+          "skip_bottom": -32,
+          "frames": [
+            7,
+            8
+          ],
+          "triangles": 347051,
+          "opaque_pixels": 28424
+        }
+      ]
+    },
+    "webkit": {
+      "source": "2066e779761cc43bebf66efa3ca2048a039f09c8",
+      "report_sha256": "2a94b369bb8637c812e7367fd1d5c0bf2b7820db390fff7d6b37c790339925d9",
+      "invocation": "f6700e254c0f47b79804a0b7def18766",
+      "unit_result": "success",
+      "exit": 0,
+      "main_pid": 0,
+      "cgroup_absent": true,
+      "tcp_connection_refused": true,
+      "rows": [
+        {
+          "width": 320,
+          "scroll_y": 0,
+          "focus": "BODY",
+          "skip_bottom": -32,
+          "frames": [
+            2,
+            3
+          ],
+          "triangles": 347051,
+          "opaque_pixels": 15434
+        },
+        {
+          "width": 1440,
+          "scroll_y": 0,
+          "focus": "BODY",
+          "skip_bottom": -32,
+          "frames": [
+            5,
+            6
+          ],
+          "triangles": 347051,
+          "opaque_pixels": 28423
+        }
+      ]
+    }
+  },
+  "precondition_controls": "Positive state/frame plus retained-scroll, visible-skip, focus, blank/nonadvancing/empty-frame negatives PASS; no browser launched by controls.",
+  "limits": "Top-rest phone full-page screenshot leaves an offscreen lazy reel poster unhydrated; it does not establish reel visual acceptance. Existing functional reel/story evidence is separate."
+}

@@ -56,6 +56,9 @@ class HighlightLimits(unittest.TestCase):
     def test_actual_required_set_includes_runtime_firing_limits(self):
         self.assertIn(LIMIT, self.actual_required({'asset_hashes': {}}))
 
+    def test_actual_required_set_includes_public_design_policy(self):
+        self.assertIn('/designer/sim_designs.js', self.actual_required({'asset_hashes': {}}))
+
     def test_actual_guard_accepts_equal_served_limits(self):
         self.check()
 

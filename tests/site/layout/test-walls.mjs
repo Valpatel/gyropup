@@ -86,15 +86,16 @@ try {
       else if (wall.worst > backlog.pages[route] * GROWTH) problems.push(`walls ${route}: ${where}, more than ${Math.round((GROWTH - 1) * 100)}% over the ${backlog.pages[route]}px recorded in ${BACKLOG}; a page on the backlog may not grow`);
     } else if (wall.worst > WALL_LIMIT) problems.push(`walls ${route}: ${where}; the limit is ${WALL_LIMIT}px. Lead with a diagram, a render, a chart from the page's own table or a status strip, or fold long evidence into <details>`);
   }
-  // The change list on / and Progress, planted with this build's history but with the newest five changes text-only
-  // (a pull request that ends on receipt, fit-job or probe commits, as #181 did): the open list must still end on a
-  // picture, so neither page grows a wall whatever the git history looks like.
-  // It serves the two pages from the local dist/, so it runs against SITE_URL too, as in CI.
+  // Progress owns the change list. Plant its newest five changes as text-only
+  // (receipt, fit-job or probe commits, as #181 did); the open list must still
+  // end on a picture. Home remains in the normal all-page wall budget above
+  // and links to this history instead of embedding a timeline section.
+  // Serve the actual owner from local dist/ against SITE_URL too, as in CI.
   if (!report) {
     const { events } = JSON.parse(await readFile(path.join(dist, 'site/timeline.json'), 'utf8'));
     const quiet = events.map((e, i) => i < 5 ? { ...e, image: null } : e);
     const planted = await context.newPage();
-    for (const [route, file, options] of [['/', 'index.html', { compact: true, show: 4 }], ['/designer/progress.html', 'designer/progress.html', { show: 5, more: quiet.length }]]) {
+    for (const [route, file, options] of [['/designer/progress.html', 'designer/progress.html', { show: 5, more: quiet.length }]]) {
       const built = await readFile(path.join(dist, file), 'utf8'), changes = /<section id="changes"[\s\S]*?<\/section>/;
       if (!changes.test(built)) { problems.push(`walls ${file}: no <section id="changes"> to plant a text-only timeline into`); continue; }
       const html = built.replace(changes, renderTimeline(quiet, options));

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import {chromium,webkit} from '@playwright/test';
+import {observedSummaryClick} from '../diagnostic-probes.mjs';
 const base=(process.env.SITE_URL||'http://127.0.0.1:8899').replace(/\/$/,''),scope=process.env.WORKSPACE_CASE||'layout';
 if(!['layout','interactions','playback','print'].includes(scope))throw Error('Unknown workspace scope');
 if(process.env.WORKSPACE_WIDTH&&!['1440','1024','390','320'].includes(process.env.WORKSPACE_WIDTH))throw Error('Unknown workspace width');
@@ -51,7 +52,11 @@ async function pickList(p,name){await openTree(p);const button=p.locator('[data-
  // XPath's ancestor axis is nearest-first; select the outermost *closed*
  // ancestor afresh after each real summary click, without relying on nth order.
  const outerClosed=button.locator('xpath=ancestor::details[not(@open)][last()]'),levels=await button.locator('xpath=ancestor::details').count();
- for(let i=0;i<levels&&await outerClosed.count();i++)await outerClosed.locator(':scope > summary').click();
+ for(let i=0;i<levels&&await outerClosed.count();i++){
+  const summary=outerClosed.locator(':scope > summary');
+  if(scope==='print'&&process.env.PRINT_CASE==='current')await observedSummaryClick(p,summary,()=>summary.click(),observations,{part:name,ancestorStep:i});
+  else await summary.click();
+ }
  assert.equal(await outerClosed.count(),0,`All ancestors of ${name} must be open before selecting it`);
  await button.focus();await p.keyboard.press('Enter');await p.waitForFunction(name=>window.__buildGuide.active.selected===name,name);}
 async function surface(p,name){return p.evaluate(async name=>{const a=window.__buildGuide.active,v=a.viewer,part=v.parts.find(part=>part.name===name),T=await import('/designer/kit/vendor/three/three.module.min.js'),pos=part.mesh.geometry.attributes.position,r=v.stage.renderer.domElement.getBoundingClientRect();part.mesh.updateWorldMatrix(true,false);v.stage.camera.updateMatrixWorld(true);for(let i=0;i<pos.count-2;i+=Math.max(3,Math.floor(pos.count/500)*3)){const q=new T.Vector3();for(let k=0;k<3;k++)q.add(new T.Vector3().fromBufferAttribute(pos,i+k));q.divideScalar(3).applyMatrix4(part.mesh.matrixWorld).project(v.stage.camera);const x=r.x+(q.x+1)*r.width/2,y=r.y+(1-q.y)*r.height/2;if(Math.abs(q.z)<1&&document.elementFromPoint(x,y)===v.stage.renderer.domElement){const ray=new T.Raycaster();ray.setFromCamera(new T.Vector2(q.x,q.y),v.stage.camera);if(ray.intersectObjects(v.parts.filter(item=>item.mesh.visible).map(item=>item.mesh),false)[0]?.object===part.mesh)return{x,y};}}return null;},name);}

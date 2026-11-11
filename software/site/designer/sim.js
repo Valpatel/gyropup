@@ -8,6 +8,7 @@ import { section, slider, chips, readouts, toggle, collapsiblePanel, overlayInse
 import { buildRobot, kneeFor } from './robot3d.js';
 import { buildRobotV2 } from './robot_v2.js';
 import { robotIdentity } from './robot_identity.js';
+import { PUBLIC_DESIGNS, LEGACY_DESIGN, LEGACY_UNAVAILABLE, resolvePublicDesign } from './sim_designs.js';
 import { loadCadRig } from './cadrig.js';
 import { createEyes, eyesGlyph } from './character/eyes.js';
 import { INTRO, DEFAULT_INTRO } from './character/lines.js';   // spoken lines: one source with their voice clips
@@ -33,17 +34,13 @@ const index = await getJson('../catalog/index.json');
 const catalog = indexCatalog(await Promise.all(index.files.map((f) => getJson(`../catalog/${f}`))));
 const materials = await getJson('../catalog/materials.json');
 try { setTiltStops(await getJson('../exports/turret/limits.json')); } catch { /* the CAD's stops as built into turret3d.js */ }
-// one robot (D36): v2 with the five-bar legs (sim/robot_v2.py, an interim body until M5); the first, serial-leg robot
-// stays as a legacy view
-// the turret has its own group: on the Orin AGX compute box (the J501 enclosure), aimed and fired by hand, with its
-// mechanism laid open (turret_bench.js, from cad/build_turret_box.py)
-const designs = [{ group: 'Gyropup', name: 'Gyropup v2 (five-bar)', file: 'v2' }, { group: 'Gyropup', name: 'Gyropup v1 (serial legs, legacy)', file: 'designs/default.json' },
-                 { group: 'Turret', name: 'Turret on the Orin AGX box', file: 'turret-box' }];
+// Public choices are separate from the preserved historical loaders and design data.
+const designs = PUBLIC_DESIGNS;
 const fromDesigner = null;
 
 const sel = $('#design-select');
 sel.innerHTML = [...new Set(designs.map((d) => d.group))].map((g) => `<optgroup label="${g}">`
-  + designs.filter((d) => d.group === g).map((d) => `<option value="${d.file}">${d.name}</option>`).join('') + '</optgroup>').join('');
+  + designs.filter((d) => d.group === g).map((d) => `<option value="${d.file}"${d.available ? '' : ' disabled'}>${d.name}</option>`).join('') + '</optgroup>').join('');
 sel.value = q.get('design') && designs.some((d) => d.file === q.get('design')) ? q.get('design') : 'v2';
 const runSel = $('#run-select');
 
@@ -85,12 +82,13 @@ const react = (ev) => { try { talk?.react?.(ev); } catch { /* the voice is optio
 const hud = $('#hud');
 // A body-level overlay stays above speech bubbles without raising the whole HUD.
 const sceneLoading = createLoadingStatus(document.body, { overlay:true, id:'sim-loading' });
+const unavailableDesign = createLoadingStatus(document.body, { overlay:true, id:'sim-design-unavailable' });
 sceneLoading.element.style.position='fixed';
 function positionLoadStatus() {
   const area=$('#stage-overlay').getBoundingClientRect(), top=area.top+8;
   const actions=document.getElementById(state.bench?'tb-actions':'robot-actions');
   const actionBox=actions&&!actions.hidden&&actions.offsetParent?actions.getBoundingClientRect():null;
-  Object.assign(sceneLoading.element.style,{top:`${top}px`,left:`${area.left+area.width/2}px`,
+  for (const element of [sceneLoading.element, unavailableDesign.element]) Object.assign(element.style,{top:`${top}px`,left:`${area.left+area.width/2}px`,
     maxWidth:`${Math.max(0,area.width-16)}px`,maxHeight:`${Math.max(44,(actionBox?.top??area.bottom)-top-8)}px`,overflow:'auto'});
 }
 function beginLoad(message) {
@@ -255,10 +253,21 @@ function leaveBench() {
 }
 
 async function loadDesign(value) {
+  // Guard the loader as well as the menu: disabled options can be restored by
+  // browser form state or dispatched programmatically, and old links still exist.
+  const legacyRequested = value === LEGACY_DESIGN;
+  value = resolvePublicDesign(value);
+  sel.value = value;
+  unavailableDesign.dismiss();
+  const showUnavailable = () => {
+    if (!legacyRequested) return;
+    positionLoadStatus();
+    unavailableDesign.unavailable(LEGACY_UNAVAILABLE, { onCancel: () => {} });
+  };
   const request = ++designRequest;
   ++replayRequest; // An old model's recording must not arrive on the newly selected robot.
   state.robot?.setPresentation?.(state.replay ? 'recorded' : 'current');
-  if (value === state.modelKey && !state.bench) { sceneLoading.dismiss(); return; }
+  if (value === state.modelKey && !state.bench) { sceneLoading.dismiss(); showUnavailable(); return; }
   const name = designs.find(d=>d.file===value)?.name ?? 'robot';
   const token = beginLoad(value==='turret-box' ? 'Loading the turret and its parts…' : `Loading ${name}…`);
   if (value === 'turret-box') { await enterBench(request,token); return; }
@@ -319,6 +328,7 @@ async function loadDesign(value) {
   const runsReady = await listRuns(value, request, token);
   if (request === designRequest && demo.on) setDemo(true,false);
   if (runsReady) finishLoad(token,request);
+  if (request === designRequest) showUnavailable();
   paintRobotActions();
 }
 
@@ -1280,7 +1290,7 @@ if (q.get('fov') === '1') { gun.showFov = true; fovToggle.checked = true; if (st
 // Only explicit run links show historical physics. Fresh visits demonstrate the current robot live.
 const runName = q.get('run') ?? 'none';
 const runKey = `${sel.value.split('/').pop().replace(/\.json$/, '')}/${runName}`;
-if (runName !== 'none' && sel.value !== '@designer' && !state.bench && [...runSel.options].some((o) => o.value === runKey)) {
+if (q.get('design') !== LEGACY_DESIGN && runName !== 'none' && sel.value !== '@designer' && !state.bench && [...runSel.options].some((o) => o.value === runKey)) {
   const key = runKey;
   runSel.value = key;
   await startReplay(key);

@@ -4,6 +4,14 @@
 
 | Symptom | Canonical guidance |
 | --- | --- |
+| A container build stops at Git dubious ownership before browser arms start | [Mounted workspace Git identity](inbox/2026-11-11-mounted-workspaces-need-git-identity.md) |
+| Instructions are delivered to a completed worker but no new turn or progress follows | [Wake completed workers explicitly](inbox/2026-11-11-handoffs-must-wake-idle-workers.md) |
+| Diagnostic controls pass but temporary paths, WebSocket endpoints or about-query values survive serialization | [Diagnostic redaction formats](domains/loading-readiness.md) |
+| Layout completes its views but simulator readiness times out with no current scene or request evidence | [Readiness failure observations](domains/loading-readiness.md) |
+| HTML has a deep evidence link but generated Markdown drops it after a semantic nav change | [Content navigation conversion](domains/static-build.md) |
+| A capture packet pins the new source but a live phase still accepts an archived served revision | [Live phase source binding](domains/structural-media.md) |
+| A functional homepage check passes but a resting capture shows a displaced skip link, blank canvas or lazy offscreen picture | [Landing capture preconditions and claim limits](domains/landing-preview.md) |
+| A first-load failure route sees no request after a model round trip, and the selection never reverts | [Loading fixture cache ownership](domains/loading-readiness.md) |
 | A cached CAD illustration has new source headers but old body membership, or native and projection runtimes are conflated | [Bind original collection and new projection consumer separately](inbox/2026-11-10-cached-projections-need-separate-consumer-provenance.md) |
 | Small mode-switch doubles pass but recorded-only model construction fails or metadata remains on the previous body | [Exercise the real archived constructor and atomic holder](inbox/2026-11-10-atomic-model-switches-need-real-archive-construction.md) |
 | A collection differs from an isolated module default, or sampled bounds suggest a changed nominal radius | [Trace effective overrides and actual bound geometry first](inbox/2026-11-10-collection-geometry-needs-effective-runtime-parameters.md) |
@@ -64,6 +72,7 @@
 | Repeated exact relation queries stall without checkpoints, or a broad-phase bound is presented as measured clearance | [Batch relations with explicit distance bounds](inbox/2026-10-31-batch-relations-with-explicit-distance-bounds.md) |
 | Entry warning loses focus, hides controls, or changes saved audio/scene state | [Prototype notice](domains/prototype-notice.md) |
 | A page shows large blank stretches on a phone, or a full-page screenshot shows empty picture boxes | [Empty space is measured per screen](inbox/2026-11-03-empty-space-is-measured-per-screen.md) |
+| Home repeats stale CAD, mass or study status despite intact source records | [Keep the entrance evergreen and the engineering state on its evidence routes](inbox/2026-11-10-home-should-link-to-engineering-state.md) |
 | Motto or landing graphics feel cheesy despite passing layout checks | [Gyropup visual character](domains/brand-presentation.md) |
 | A motor, wheel, feed dial or flap orbits outside its assembly while animating; static bounds still pass | [Rendered mechanism frames](domains/rendered-mechanisms.md) |
 | A simulated motion sample wait times out after the applied pose passes | [Retain animation state and frame progress at the failed wait](inbox/2026-11-11-simulated-samples-need-frame-evidence.md) |
@@ -235,4 +244,5 @@
 - Highlight-media source validation rejects a newly edited shared test helper: [preserve recorded fixture bytes and narrow the caller fix](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#historical-capture-fixtures-can-require-a-narrower-caller-fix).
 - A poster utility overwrites its public PNG before artifact review, or pure import starts a browser: [reserve fresh candidate output and preserve the actual hero hook](inbox/2026-11-10-poster-captures-need-fresh-candidate-output.md).
 
+- A retired simulator option remains reachable through old queries or restored form state: [gate public availability at the actual loader and preserve historical fixtures](inbox/2026-11-11-public-retirement-needs-loader-enforcement.md).
 - A dynamically constructed probe regex passes syntax checking but fails before capture, or collection mistakes a retained worker error for a missing terminal marker: [exercise actual extraction and separate byte verification from worker success](inbox/2026-11-10-browser-init-fixtures-need-an-http-origin.md#compile-the-actual-extractor-and-keep-byte-collection-separate-from-worker-success).

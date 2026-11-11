@@ -18,3 +18,11 @@ gates in `finally`. A pre-fix control should fail for premature return while the
 fixed implementation leaves no owned work behind. Preserve behavioral guards.
 
 Evidence: [RS-04 test shutdown](../inbox/2026-11-06-test-close-must-finish-owned-threads.md).
+
+
+For full single-size CI layout jobs, use one owned page loop while retaining
+matrix partitions and complete route/theme coverage. Retire completed independent
+rendered pages before a fresh-context fixture; perform origin-bound storage edits
+before navigating away. Keep bounded request lifecycle evidence and original
+failure/deadline semantics. See [CI readiness scheduling and its limits](../inbox/2026-11-11-layout-readiness-failures-need-current-scene-state.md#2026-11-11--keep-full-ci-coverage-while-scheduling-one-page-loop-per-job)
+and [held stylesheet evidence](../inbox/2026-10-29-late-overlay-styles-must-refresh-camera-insets.md#2026-11-11--retain-the-held-stylesheets-actual-request-lifecycle).

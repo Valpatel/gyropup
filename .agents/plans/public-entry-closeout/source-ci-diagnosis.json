@@ -1,0 +1,221 @@
+{
+  "schema": "gyropup.public-entry-source-ci-diagnosis/1",
+  "date": "2026-11-11",
+  "failed_source": "59f20f625fe1b8d0f321aa6231b64a0d810afaa0",
+  "adoption_base": "3a2291d3",
+  "run": 42961981559,
+  "failure_evidence_retained": true,
+  "causes": [
+    {
+      "job": 130330602015,
+      "kind": "stale test selection",
+      "cause": "Unscoped Design notes locator matches valid header and body links.",
+      "fix": "Scope exact label to landing header navigation."
+    },
+    {
+      "job": 130330602105,
+      "kind": "product Markdown omission",
+      "cause": "Generic converter removes all nav nodes, including authored main-content engineering entrances.",
+      "fix": "Preserve main-content nav; retain chrome/hidden cleanup and actual wrong/missing target controls."
+    },
+    {
+      "jobs": [
+        130330602124,
+        130330602176,
+        130330602150
+      ],
+      "kind": "unresolved simulator readiness",
+      "observation": "Original 30-second wait failed, but artifact retained no scene/error/network snapshot; simulator layout rows show no visual findings.",
+      "next": "Prepare one bounded diagnostic preserving the original deadline and failure. Do not infer a cause or widen the timeout."
+    },
+    {
+      "job": 130330602176,
+      "kind": "real Progress spacing",
+      "observation": "Both themes measured124px blank band after closed workshop fold:0.187 of664px, limit0.18.",
+      "fix": "Progress-only bottom padding60px to24px; threshold and planted controls unchanged; measured post-fix acceptance pending."
+    },
+    {
+      "job": 130330601756,
+      "kind": "genuinely stale guide-poster dependency closure",
+      "cause": "Only tools/site/build-site.mjs whole-file hash changed; other36dependencies,55mesh bytes,recipe/model and12PNGs unchanged.",
+      "next": "Genuine twelve-guide capture after final source repairs freeze; keep guard/dependency/old receipts intact. Seven adopted homepage/highlight files are separate."
+    }
+  ],
+  "accepted_media_preservation": {
+    "source_hashes_checked": 486,
+    "captured_input_rows_unchanged": 369,
+    "seven_file_bytes_unchanged": true,
+    "captured_dependency_exceptions": []
+  },
+  "browser_or_native_action_started": false,
+  "limits": "Pure converter controls prove content conversion; actual Progress layout and simulator diagnosis await separately bounded browser acceptance. No final CI or release claim.",
+  "readiness_followup": {
+    "strategy": "Retain diagnostics in the existing empty-space harness and let normal CI exercise the actual failing environment.",
+    "original_predicate_unchanged": true,
+    "original_core_timeout_ms": 30000,
+    "failure_criterion_unchanged": true,
+    "new_browser_experiment": "Prepared only; never executed and superseded by actual CI telemetry.",
+    "observations": [
+      "body/startup/status/design",
+      "current scene/render/context state",
+      "page and console errors",
+      "failed/pending requests with privacy redaction",
+      "separate Node event and browser network clocks",
+      "route/page/context and previous-route identity",
+      "document navigation time origin, visibility/focus"
+    ],
+    "pure_control_home": "tests/site/layout/test-empty-space-selection.mjs",
+    "cause": "Unreproduced and unclassified until new actual CI evidence."
+  },
+  "subsequent_d0_ci": {
+    "run": 42969242638,
+    "source": "d0dfd096d07267af225417ee999cc872435609ff",
+    "iphone": "success",
+    "tablet": "success",
+    "phone": "30s readiness failure; zero layout findings",
+    "phone_artifact": {
+      "id": 13833176477,
+      "zip_sha256": "3eac6cff94cf0004a3cbe46fba1ca68b00b8eca6d44667cf77b429f23402cd44",
+      "zip_bytes": 324131
+    },
+    "phone_snapshot": {
+      "bodyReady": null,
+      "selectedDesign": "v2",
+      "robot": false,
+      "frame": 0,
+      "contextLost": false,
+      "pending": "Current manifest and nonawaited robot-actions CSS; old at fields are Node handler clocks, not network start."
+    },
+    "privacy_finding": "Review5854558025/thread4534565407; fixed09a08542, original evidence preserved, recheck pending.",
+    "new_content_failure": "Stale Home timeline-planting target; plant the adversarial timeline at actual Progress owner, retaining all-page/Home budgets and all thresholds.",
+    "readiness_cause": "Unclassified; neither pending assets nor initial opaque storage error establish the timeout cause.",
+    "privacy_recheck": "Independent combined source PASS5854773495 at3efdb47f; original review/thread retained and resolved after recheck."
+  },
+  "fixture_correction": {
+    "caller": "tests/site/layout/test-empty-space.mjs",
+    "reuse": "Existing tests/site/assembly/build-prototype-session.mjs with explicit base",
+    "old_helper_bytes_preserved": true,
+    "controls": "Actual caller opaque/wrong/current/denied-origin callback execution",
+    "limit": "Demonstrated fixture correction only; timeout cause remains unproven."
+  },
+  "initial_record_scope": "The original source-only observations above are historical; later executed evidence is recorded below.",
+  "tablet_configuration_followup": {
+    "source": "84f8b9b91c4af99203005e5d976c3f58d3c8c355",
+    "tree": "bc23795fd01eb1cc387f2a49b3c05ff4f558f53c",
+    "normal_ci_run": 42979492092,
+    "ci_synthetic_merge": "2ca46625979e2acc5fe8ad2a9948e782eccd6153",
+    "ci_tree_equal_to_source": true,
+    "normal_ci_result": "Only tablet simulator startup and stale guide closure failed; phone, presentation controls and Print Chrome/WebKit passed.",
+    "invocation": "5c2e57788e2a4449844688a8670cc3e0",
+    "archive_sha256": "a237aae9e93d691e03fd1cdd42176a3f650bb993a178297375e0e18805fa460e",
+    "artifact_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5856604280",
+    "same_runtime_and_build": "Node22.23.4, Playwright1.56.1, bundled Chromium141.0.7390.37; actual source/tree/build, selected headless-shell and three original ANGLE/SwiftShader launch flags verified in both arms.",
+    "coverage": "Each arm completed314 unique route/theme tuples and planted controls; zero spatial findings; original30s readiness and20minute arm caps retained.",
+    "baseline_three": {
+      "native_exit": 1,
+      "scan_seconds": 335,
+      "readiness": "Original 30-second TimeoutError",
+      "home_to_sim_observed": true,
+      "native_webgl_context_seconds": 10.306,
+      "heartbeat_gap_seconds": 38.03,
+      "setup_seconds_approx": 40.5
+    },
+    "comparison_one": {
+      "native_exit": 0,
+      "scan_seconds": 381,
+      "findings": [],
+      "profile_seconds": 5.393,
+      "setup_seconds_approx": 5.43,
+      "native_webgl_context_ms": 11.4,
+      "max_heartbeat_gap_ms": 301,
+      "home_to_sim": "Deterministic one-worker permutation; successful-route history receipt unavailable in unchanged producer."
+    },
+    "controller_outcome": "FAILED after both arms: post-comparison capacity CPU/load assertion failed before final measurement/append and global guard. Completed-arms list therefore contains baseline only; comparison arm receipts/logs/native result were already written. Discarded failed measurement cannot be reconstructed.",
+    "terminal_proof": "MainPID0, service failed/exit-code/status1, exact cgroup absent/empty, all three owned containers absent; no arm cap or OOM; failures retained, no retries.",
+    "interpretation": "Configuration-associated improvement only. Warmup, order and host load remain confounders; no native GPU/scheduler causal claim or CI waiver.",
+    "adopted_patch_sha256": "b53148750167c4d9cdf5837ed876c3835ae2f595186a0fa83bc7383d3d87fd90",
+    "patch_review": "https://github.com/Valpatel/gyropup/pull/315#pullrequestreview-5856857141",
+    "patch_scope": "Only default full tablet CI selects one worker and dynamic Home-to-Sim permutation; complete page set, both themes, controls, deadlines and other sizes/explicit selections preserved.",
+    "acceptance_remaining": "Normal CI on final pushed adoption head remains required."
+  },
+  "final_7cd_ci": {
+    "source": "7cd242236f9dddad9305a797af4dd55ab7e8f317",
+    "run": 43003806788,
+    "build_portal": {
+      "job": 130466178104,
+      "artifact": 13846938592,
+      "artifact_sha256": "a5dcb0986dd85902dcd8cf88b533440f76462373d74426689f23c106b560eee8",
+      "result": "Failure before browser phase: current index whole-file pin and historical-seal loop reject the genuinely refreshed live turret poster-binding metadata."
+    },
+    "mechanism": {
+      "job": 130466178099,
+      "artifact": 13846963719,
+      "artifact_sha256": "b7d9d006b2729317fb86faf828dfc295200d0cdf9a28ee71fc432fc5490f0a74",
+      "result": "Same whole-index snapshot assertion failed after 17 current-motion controls passed."
+    },
+    "reproduced_before_repair": "Both actual Python snapshot suites reproduced one failure each at unchanged7cd; original CI logs/artifacts retained.",
+    "repair": "Keep historical final-index and all 316 seals byte-for-byte. Restore only reviewed live poster visual scalars to their previous value for old byte-seal comparison. Validate actual accepted receipt/current visual contract and index actual-guide digest; compare every remaining index field/row and all remaining turret bytes exactly.",
+    "negative_controls": [
+      "nonposter guide field",
+      "poster frame digest",
+      "wrong guide/poster visual",
+      "receipt source",
+      "mesh bytes",
+      "non-turret index row",
+      "turret row title",
+      "wrong guide digest",
+      "index row omission/duplication"
+    ],
+    "ownership_lesson": ".agents/inbox/2026-11-10-archival-integrity-needs-explicit-input-ownership.md",
+    "tablet": {
+      "job": 130466178200,
+      "result": "SUCCESS",
+      "views": 314,
+      "spatial_findings": 0,
+      "scan_seconds": 355,
+      "artifact": 13848300501,
+      "artifact_sha256": "46fa091b79e1f107e7e63a2a483b14f72e6c00c4316ed55702a4de7e801592cb",
+      "limit": "Normal CI evidence for tablet-only scheduling; does not establish readiness on other partitions."
+    },
+    "phone": {
+      "job": 130466178170,
+      "result": "FAILURE",
+      "views": 314,
+      "spatial_findings": 0,
+      "scan_seconds": 224,
+      "artifact": 13847083775,
+      "artifact_sha256": "74ee5801d35a9d7cf0b8a96da1c1d730d2c8f1eabd734ccd15e3c2fd21786cfd",
+      "failure": "Unchanged30s simulator readiness TimeoutError; retained complete sampled profile dominated by createStage/Three renderer initialization. No proven underlying mechanism or source correction."
+    },
+    "acceptance_remaining": "New exact-head ordinary CI remains required; no original failure was retried or waived.",
+    "terminal_result": "FAILURE: 27 successful jobs, 4 direct failures plus required layout/presentation aggregates. No cancellation or retries.",
+    "docking": {
+      "job": 130466178577,
+      "result": "SUCCESS",
+      "artifact": 13848027518,
+      "artifact_sha256": "fc323f11b77f10e61fe0f91aa08858358d4702fd94c2124c324fe693d92a8822"
+    },
+    "playground": {
+      "job": 130466178082,
+      "artifact": 13847059620,
+      "artifact_sha256": "40821a20b63b836449ca98cdbf70f229476b32bbc46ddd764fe67972b2548936",
+      "failure": "Original 30-second waitForResponse failed in checkFreshLayout after bodyReady/talk and held-CSS assertions passed. No fresh-page network/route receipt retained. Fixture block unchanged from dev2011; no late-listener race established.",
+      "repair": "Reuse the existing guarded acknowledgement with explicit base in both contexts and guard the own probe callback by intended HTTP origin, retaining intended-origin storage failures. Navigate completed availability page to about:blank only after its saved-state edits. Keep all fresh fixture predicates, actual stylesheet continue and deadlines; retain a 64-event owned request/route/release/continue/navigation/error receipt on pass/fail, with stable request identities and dropped/count fields. Bound report write at 2 seconds; preserve original error if diagnostics/cleanup fail."
+    }
+  },
+  "single_size_ci_policy": {
+    "scope": "All five ordinary full single-size GitHub CI layout partitions default to one worker; Home-to-Sim page permutation retains dynamically discovered complete pages, both themes and existing planted controls. Explicit workers/pages/schemes/report/controls and non-CI/multisize modes preserve original selection/default behavior.",
+    "evidence": "Tablet configuration comparison and original 7cd tablet CI PASS; phone 7cd still failed with 7.0005 s native WebGL context span and 35.776514 s complete sampled profile around createStage/Three initialization. Observational probes perturb execution and do not identify a driver/CPU/scheduler mechanism.",
+    "policy_rationale": "Playwright recommends one CI worker for reproducibility/stability and separate jobs for wider parallelism; retain all five existing matrix jobs. This is a harness scheduling policy, not proof that every failure has the same cause.",
+    "reference": "https://playwright.dev/docs/ci#workers",
+    "preserved": "All route/theme coverage, 30-second readiness predicate, 20-minute job bound, spatial thresholds, production code, visual/transitive dependencies and accepted receipts."
+  },
+  "owned_css_cleanup_review": {
+    "blocked_source": "648b9a91033b86ce55d9e17ec20e6645d20b0c25",
+    "finding": "https://github.com/Valpatel/gyropup/pull/315#issuecomment-6793958443",
+    "actual_reproducer": "Two owned routes in actual checkFreshLayout; original timeout and context close retained but only newest route continued. Older JS gate stayed pending. Earlier control hid this with an external resolver.",
+    "correction": "Retain every releaser in an owned Set, keep ordinary primary release, drain actual finally, and bound allSettled/context close under one 2-second cleanup fence before the separately bounded report write. Routes entering during cleanup release immediately.",
+    "controls": "Actual caller success/failure with two routes, continuation rejection/stall, original error plus continuation/close failures, failed/stalled close, late route and report failure. No external gate access.",
+    "limits": "No claim of multiple CSS requests in original CI; pending native commands or context close are reported incomplete and cannot pass. Original 30-second predicates/response wait and all CSS/layout assertions remain."
+  }
+}

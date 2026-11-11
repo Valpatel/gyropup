@@ -20,8 +20,10 @@ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, devices } from '@playwright/test';
 import { createSiteServer } from '../../../tools/site/serve-site.mjs';
-import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
+import { acknowledgePrototypeNotice } from '../assembly/build-prototype-session.mjs';
 import { installRenderedReadiness, waitForRenderedText } from './test-rendered-readiness.mjs';
+import { observeReadiness, readReadinessState, retainReadinessFailure } from './readiness-diagnostics.mjs';
+import {installSetupProbe, setupDiagnosticScope, startSetupDiagnostic} from '../diagnostic-probes.mjs';
 import { sitePages } from '../../../tools/site/site-walls.mjs';
 import {
   BUSY_EDGES, EDGE_STEP, FLAT_SHARE, RULE_RUN, FLAT_TOLERANCE, MEDIA_MIN, MIN_THICKNESS, NARROW_SHARE, SCHEMES, SIZES, WORDS_PER_LINE,
@@ -45,7 +47,19 @@ const pick = (all, name) => {
   return selected;
 };
 const sizes = pick(SIZES, 'sizes'), schemes = pick(SCHEMES, 'schemes');
-const workers = Number(arg('workers') || process.env.EMPTY_SPACE_WORKERS || 3);
+// Only ordinary full single-size CI partitions change their default. Explicit runs retain their selection/order.
+const singleSizeCIDefault = process.env.GITHUB_ACTIONS === 'true' && sizes.length === 1 &&
+  arg('workers') === undefined && process.env.EMPTY_SPACE_WORKERS === undefined && arg('pages') === undefined &&
+  arg('schemes') === undefined && !report && !process.argv.includes('--controls');
+const workers = Number(arg('workers') || process.env.EMPTY_SPACE_WORKERS || (singleSizeCIDefault ? 1 : 3));
+function fullCIPageOrder(all) {
+  if (new Set(all).size !== all.length || !all.includes('/') || !all.includes('/designer/sim.html'))
+    throw new Error('Invalid full CI page closure');
+  const ordered = ['/', '/designer/sim.html', ...all.filter(route => route !== '/' && route !== '/designer/sim.html')];
+  if (ordered.length !== all.length || new Set(ordered).size !== all.length || ordered.some(route => !all.includes(route)))
+    throw new Error('Incomplete full CI page permutation');
+  return ordered;
+}
 const problems = [], rows = [];
 let expectedViews=[];
 const started = Date.now();
@@ -66,20 +80,51 @@ const browser = await chromium.launch({
 async function contextFor(size) {
   const { defaultBrowserType, ...device } = size.device ? devices[size.device] : {};
   const context = await browser.newContext({ ...device, ...size.context, colorScheme: 'light', reducedMotion: 'reduce' });
-  await acknowledgePrototypeNotice(context);
+  await acknowledgePrototypeNotice(context,base);
   await installRenderedReadiness(context);
+  if (setupDiagnosticScope(process.env.GITHUB_ACTIONS, sizes.length === 1 ? size.name : '', '/designer/sim.html')) {
+    try { await context.addInitScript(installSetupProbe, true); }
+    catch { console.error('sim setup diagnostic: probe registration unavailable'); }
+  }
+  context.on('page',page=>observeReadiness(page,new URL(base).origin));
   await context.route('https://cad-agent.gyropup.com/**', route => route.abort());
   return context;
 }
 
 /** Open a page and wait for what draws itself: diagrams, the portal reports, fonts. */
+let readinessFailure=0;
 async function load(page, route) {
+  const observation=observeReadiness(page,new URL(base).origin);observation.begin(route);
+  const setup=setupDiagnosticScope(process.env.GITHUB_ACTIONS,sizes.length===1?sizes[0].name:'',route)
+    ?await startSetupDiagnostic(page,new URL(base).origin):null;
+  try {
   await page.goto(base + route, { waitUntil: 'domcontentloaded' });
+  observation.mark('domcontentloaded-return');observation.mark('core-wait-start');
   await page.waitForFunction(() => !document.querySelector('pre.mermaid, pre > code.language-mermaid') &&
     [...document.querySelectorAll('.cad-diagram')].every(f => f.dataset.state === 'ready' || f.dataset.state === 'error')
     && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1')
     && (location.pathname !== '/designer/build.html' || !document.querySelector('#assembly') || document.querySelector('#assembly').dataset.ready === '1'), null, { timeout: 30000 })
-    .catch(() => problems.push(`empty-space ${route}: diagrams or reports did not finish loading`));
+    .then(()=>observation.mark('core-wait-accepted'))
+    .catch(async error => {
+      // Record the original failure first: diagnostic read/write failures cannot clear it.
+      problems.push(`empty-space ${route}: diagrams or reports did not finish loading`);
+      observation.mark('core-wait-rejected');
+      const viewport=page.viewportSize(),file=`readiness-${slug(route)}-${viewport?.width}x${viewport?.height}-${++readinessFailure}.json`;
+      const diagnostic=setup?.finish();
+      const report=await retainReadinessFailure({error,observer:observation,readState:async()=>{
+        const [state,setupDiagnostics]=await Promise.all([page.evaluate(readReadinessState),diagnostic]);
+        return setup?{...state,setupDiagnostics}:state;
+      },ownedOrigin:new URL(base).origin,
+        write:report=>writeFile(path.join(out,file),JSON.stringify(report,null,2),{flag:'wx'})});
+      console.error(`empty-space readiness evidence ${file}: ${report.error.name}; diagnostic errors ${report.diagnosticErrors.length}`);
+    });
+  } finally {
+    if(setup){
+      const diagnostic=await setup.finish();
+      // Also retain the aggregate if the shared state read or report write failed.
+      console.log('sim setup diagnostic '+JSON.stringify(diagnostic));
+    }
+  }
   await waitForRenderedText(page);
 }
 
@@ -342,7 +387,7 @@ try {
   const files = (await readdir(dist, { recursive: true })).map(f => f.split(path.sep).join('/'));
   const all = sitePages(files);
   if (all.length < 60) throw new Error(`only ${all.length} pages found in dist/: run npm run build first`);
-  const pages = arg('pages') ? arg('pages').split(',') : process.argv.includes('--controls') ? [] : all;
+  const pages = arg('pages') ? arg('pages').split(',') : process.argv.includes('--controls') ? [] : singleSizeCIDefault ? fullCIPageOrder(all) : all;
   expectedViews=sizes.flatMap(size=>pages.flatMap(route=>schemes.map(scheme=>({route,size:size.name,scheme}))));
   if (!report && !arg('pages') || process.argv.includes('--controls')) {
     const failed = await controls();
