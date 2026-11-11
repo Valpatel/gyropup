@@ -1,6 +1,7 @@
 # Public entrance and supported simulator closeout
 
-Status on 2026-11-11: PR #315 has adopted the accepted seven homepage/highlight
+Status on 2026-11-11: PR #315 merged into dev at `3b9934e6` after all 37 ordinary
+checks passed. It adopted the accepted seven homepage/highlight
 files and the twelve genuinely captured guide PNGs with their full receipt.
 See [media adoption](media-adoption.json), [guide adoption](guide-adoption.json)
 and [actual CI diagnosis](source-ci-diagnosis.json). The twelve guide PNGs are
@@ -23,12 +24,20 @@ readiness deadlines and actual failures; independent review and new exact-head
 normal CI remain required. The diagnostic record preserves phases, artifacts
 and qualification limits rather than declaring an underlying GPU/CSS cause.
 
-Next: finish independent review of those repairs, make the authorized normal
-push, and require its full ordinary CI. Then follow normal dev-to-main
-promotion, verify the actual public version and source bytes, and close the
-tracking issues/retire topic branches only after accepted publication. Root
-coordinates promotion and retirement. No new issue, branch, capture or source
-restamping is part of the remaining test/docs closeout.
+Promotion PR #316 then encountered a distinct current Print native-actionability
+failure. Its actual synthetic merge retains the same accepted source tree; the
+[diagnosis](source-ci-diagnosis.json) preserves the artifact, partial-case limits
+and unknown cause. A follow-up on the reused topic explicitly diversifies
+redundant pointer/keyboard disclosure coverage while retaining every Print
+campaign, assertion and original deadline. This is test policy, not a product
+cause claim or retry of the failed job.
+
+Next: independently review that frozen follow-up, authorize its normal push and
+one PR into dev, require full ordinary CI, then continue normal dev-to-main
+promotion through #316. Verify the actual public version and source bytes before
+closing tracking issues or retiring incorporated topic refs. Root coordinates
+promotion and retirement. No new issue, branch, capture or source restamping is
+part of this test/docs closeout.
 
 Hardware, all original current geometry, printed legs, historical sources and
 study inserts stay preserved. No physical fit, strength or manufacturing

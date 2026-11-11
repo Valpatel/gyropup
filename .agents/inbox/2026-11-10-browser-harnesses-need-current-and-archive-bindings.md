@@ -88,3 +88,47 @@ step/chapter without an assembly or snapshot takes the Turret path. The existing
 claiming a default; preserving index order alone proves neither initial UI nor
 user-visible selection. The PR description was corrected. No runtime, guide,
 mesh or historical receipt was changed by this clarification.
+
+
+## 2026-11-11 — Diversify redundant Print disclosure input coverage
+
+After PR #315 passed all 37 ordinary checks and merged into dev at `3b9934e6`,
+promotion PR #316 run `43012402891`, Print job `130495039157`, failed another
+original 30-second native summary click. Artifact `13852100096` is 1,901,462 bytes,
+SHA256 `743f346b211e1f850d4a985b520706492ff3cf9092058cb324f7a1d4b780848f`.
+The actual served synthetic merge `39c1cc00` has the same accepted tree
+`bb601d5e`. Historical Chromium Print passed four groups; both current hip
+original/geometry-only downloads passed, but the R iteration's subsequent
+pending `L.upper_link_front` disclosure stalled before the current corrupt-byte
+negative and later WebKit commands. Keep this partial execution failed.
+
+The exact Modeled context summary stayed connected, visible, enabled and
+stationary in 120 timer samples; its document stayed focused and unchanged.
+Playwright's native actionability did not complete the RAF-based stability
+check. These samples and the unobstructed screenshot do not establish a RAF,
+GPU, scheduler or product cause. The preceding L iteration already exercised
+native pointer activation of the same Left-leg disclosure path successfully.
+
+Choose the input coverage explicitly before action: retain pointer activation
+for both initial hip selections and the L iteration's pending-part selection;
+use real keyboard disclosure for the R iteration's redundant pending-part path.
+Capture the exact summary and parent before activation, verify native visibility,
+enabled/connected state and same-summary focus, send Enter, then require that
+same parent to change closed-to-open. A live closed-ancestor locator changes
+its match after a toggle and cannot certify the original target afterward.
+Preserve actual pending-part selection/no-Print, both STL/3MF readbacks, corrupt
+project rejection, historical/current campaigns, both engines and deadlines.
+Never switch modality after a failure, force clicks, write the open property or
+claim this policy explains the original timeout. Pure failure controls and new
+normal CI are separate gates; no manual rerun or new renderer capture follows.
+
+
+The first local policy candidate `038c8f83` passed the new Print helper controls,
+but [independent review](https://github.com/Valpatel/gyropup/pull/316#issuecomment-6795132926)
+found a stale assertion in the existing diagnostic owner: Print plus diagnostic
+controls returned 25 passed and one failed because it required the old inline
+click callback. Keep this failure. Update the existing owner to execute the
+actual preselected pointer/keyboard delegation and still require the observed
+action wrapper, original scope/deadlines, native part Enter and no-force checks.
+Run the complete related pure groups when changing a shared harness callback;
+new helper controls alone do not certify its existing owners.

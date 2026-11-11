@@ -48,7 +48,7 @@ test('missing native descriptor remains unmodified and reports unavailable wrapp
   const f = browserFixture(); delete f.prototype.getContext; f.install(true);
   assert.equal(f.prototype.getContext, undefined); assert.equal(f.window.__gy315SetupProbe.stop().wrapped, false);
 });
-test('scope and actual producers keep exact CI partitions, native actions and original deadlines', () => {
+test('scope and actual producers keep exact CI partitions, native actions and original deadlines', async () => {
   for (const size of ['phone-360', 'tablet-768']) assert.equal(setupDiagnosticScope('true', size, '/designer/sim.html'), true);
   for (const args of [['false', 'phone-360', '/designer/sim.html'], ['true', 'iphone-13', '/designer/sim.html'], ['true', 'phone-360,tablet-768', '/designer/sim.html'], ['true', 'phone-360', '/designer/build.html']]) assert.equal(setupDiagnosticScope(...args), false);
   const load = readFileSync(new URL('./layout/test-empty-space.mjs', import.meta.url), 'utf8');
@@ -56,7 +56,13 @@ test('scope and actual producers keep exact CI partitions, native actions and or
   assert.match(load, /timeout: 30000/); assert.match(load, /Promise\.all\(\[page\.evaluate\(readReadinessState\),diagnostic\]\)/);
   const print = readFileSync(new URL('./assembly/test-build-workspace.mjs', import.meta.url), 'utf8');
   assert.match(print, /scope==='print'&&process\.env\.PRINT_CASE==='current'/);
-  assert.match(print, /observedSummaryClick\(p,summary,\(\)=>summary\.click\(\),observations,\{part:name,ancestorStep:i\}\)/);
+  assert.match(print, /observedSummaryClick\(p,summary,activate,observations,\{part:name,ancestorStep:i\}\)/);
+  const routing=print.match(/const activate=([^;]+);/);assert.ok(routing,'The input is selected before invoking the observed action');
+  const choose=new Function('input','openSummaryWithKeyboard','p','summary','return ('+routing[1]+');'),calls=[],page={};
+  const summary={click:(...args)=>{assert.deepEqual(args,[]);calls.push('pointer');}};
+  const keyboard=(actualPage,actualSummary)=>{assert.equal(actualPage,page);assert.equal(actualSummary,summary);calls.push('keyboard');};
+  for(const input of ['pointer','keyboard'])await choose(input,keyboard,page,summary)();
+  assert.deepEqual(calls,['pointer','keyboard'],'Both preselected modes delegate to their actual native-action path');
   assert.match(print, /p\.setDefaultTimeout\(30000\)/); assert.match(print, /await button\.focus\(\);await p\.keyboard\.press\('Enter'\)/);
   assert.doesNotMatch(print, /force:\s*true/);
 });
