@@ -22,6 +22,7 @@ import { chromium, devices } from '@playwright/test';
 import { createSiteServer } from '../../../tools/site/serve-site.mjs';
 import { acknowledgePrototypeNotice } from '../content/test-prototype-session.mjs';
 import { installRenderedReadiness, waitForRenderedText } from './test-rendered-readiness.mjs';
+import { observeReadiness, readReadinessState, retainReadinessFailure } from './readiness-diagnostics.mjs';
 import { sitePages } from '../../../tools/site/site-walls.mjs';
 import {
   BUSY_EDGES, EDGE_STEP, FLAT_SHARE, RULE_RUN, FLAT_TOLERANCE, MEDIA_MIN, MIN_THICKNESS, NARROW_SHARE, SCHEMES, SIZES, WORDS_PER_LINE,
@@ -68,18 +69,28 @@ async function contextFor(size) {
   const context = await browser.newContext({ ...device, ...size.context, colorScheme: 'light', reducedMotion: 'reduce' });
   await acknowledgePrototypeNotice(context);
   await installRenderedReadiness(context);
+  context.on('page',page=>observeReadiness(page,new URL(base).origin));
   await context.route('https://cad-agent.gyropup.com/**', route => route.abort());
   return context;
 }
 
 /** Open a page and wait for what draws itself: diagrams, the portal reports, fonts. */
+let readinessFailure=0;
 async function load(page, route) {
+  const observation=observeReadiness(page,new URL(base).origin);observation.begin(route);
   await page.goto(base + route, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !document.querySelector('pre.mermaid, pre > code.language-mermaid') &&
     [...document.querySelectorAll('.cad-diagram')].every(f => f.dataset.state === 'ready' || f.dataset.state === 'error')
     && (!/^\/designer\/(progress|build|sim)\.html$/.test(location.pathname) || document.body.dataset.ready === '1')
     && (location.pathname !== '/designer/build.html' || !document.querySelector('#assembly') || document.querySelector('#assembly').dataset.ready === '1'), null, { timeout: 30000 })
-    .catch(() => problems.push(`empty-space ${route}: diagrams or reports did not finish loading`));
+    .catch(async error => {
+      // Record the original failure first: diagnostic read/write failures cannot clear it.
+      problems.push(`empty-space ${route}: diagrams or reports did not finish loading`);
+      const viewport=page.viewportSize(),file=`readiness-${slug(route)}-${viewport?.width}x${viewport?.height}-${++readinessFailure}.json`;
+      const report=await retainReadinessFailure({error,observer:observation,readState:()=>page.evaluate(readReadinessState),ownedOrigin:new URL(base).origin,
+        write:report=>writeFile(path.join(out,file),JSON.stringify(report,null,2),{flag:'wx'})});
+      console.error(`empty-space readiness evidence ${file}: ${report.error.name}; diagnostic errors ${report.diagnosticErrors.length}`);
+    });
   await waitForRenderedText(page);
 }
 

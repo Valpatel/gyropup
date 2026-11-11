@@ -4,6 +4,9 @@ import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
+import {EventEmitter} from 'node:events';
+import vm from 'node:vm';
+import {observeReadiness,readReadinessState,retainReadinessFailure,safeReadinessText} from './readiness-diagnostics.mjs';
 import {SIZES,SCHEMES} from '../../../tools/site/site-empty-space.mjs';
 
 const root=new URL('../../../',import.meta.url),harness=fileURLToPath(new URL('tests/site/layout/test-empty-space.mjs',root));
@@ -47,4 +50,46 @@ test('the browser image is immutable and matches the locked Playwright release',
   const prefix='image: mcr.microsoft.com/playwright:v'+version+'-noble@sha256:';
   assert.ok(workflow.includes(prefix));assert.match(workflow.slice(workflow.indexOf(prefix)+prefix.length),/^[a-f0-9]{64}\n/);
   assert.doesNotMatch(workflow,/^\s+- run: npx playwright install/m);
+});
+
+
+test('timeout state serializes actual current design and partial scene without inventing readiness',()=>{
+  const elements={'#app canvas':{width:360,height:780},'#sim-startup':{innerText:'Loading current robot'},'#design-select':{value:'v2'}};
+  const fixture={
+    location:{pathname:'/designer/sim.html'},getComputedStyle:()=>({opacity:'0'}),
+    document:{readyState:'complete',body:{dataset:{}},querySelector:selector=>elements[selector]??null,querySelectorAll:()=>[]},
+    window:{__sim:{
+      state:{modelKey:'v2',robot:{presentation:{mode:'current',robotId:'collection266'}},bench:false},
+      stage:{renderer:{info:{render:{frame:7,triangles:100}},getContext:()=>({isContextLost:()=>false})}},
+    }},
+  };
+  const read=()=>vm.runInNewContext('('+readReadinessState.toString()+')()',fixture);
+  const value=read();assert.equal(value.bodyReady,null);assert.equal(value.selectedDesign,'v2');assert.equal(value.startupText,'Loading current robot');assert.equal(value.scene.frame,7);assert.equal(value.scene.presentation,'current');
+  fixture.window.__sim=undefined;assert.equal(read().scene,null,'A startup failure can precede scene construction');
+});
+
+test('readiness observer retains relevant errors and pending/failed requests without headers, queries or private endpoints',()=>{
+  const page=new EventEmitter();page.url=()=> 'https://site.fixture/designer/sim.html';
+  const observer=observeReadiness(page,'https://site.fixture');observer.begin('/designer/sim.html');
+  const request=url=>({url:()=>url,method:()=> 'GET',resourceType:()=> 'fetch',failure:()=>({errorText:'net::ERR_TIMED_OUT'})});
+  const mesh=request('https://site.fixture/mesh.stl?token=secret');page.emit('request',mesh);
+  const external=request('http://'+['10','4','5','6'].join('.')+'/health?token=secret');page.emit('request',external);page.emit('requestfailed',external);
+  page.emit('response',{url:()=> 'https://site.fixture/manifest.json?secret=hidden',status:()=>503});
+  page.emit('pageerror',Error('Failed '+external.url()));page.emit('console',{type:()=> 'error',text:()=> 'Failure '+mesh.url()});
+  const value=observer.snapshot();assert.equal(value.pending[0].url,'/mesh.stl');assert.equal(value.failed[0].url,'<external-url>');assert.equal(value.responses[0].status,503);assert.equal(value.errors.length,1);assert.equal(value.consoleErrors.length,1);
+  assert.doesNotMatch(JSON.stringify(value),/secret|hidden/);assert.ok(!JSON.stringify(value).includes(['10','4','5','6'].join('.')));
+  const privatePath='/'+['home','private-user','file'].join('/');assert.equal(safeReadinessText(privatePath,'https://site.fixture'),'<private-path>');
+  page.emit('requestfinished',mesh);assert.equal(observer.snapshot().pendingCount,0);
+});
+
+test('state read and write failures retain the original timeout evidence',async()=>{
+  const error=Object.assign(Error('Original 30000ms timeout'),{name:'TimeoutError'});let saved,reads=0,writes=0;
+  const report=await retainReadinessFailure({error,observer:{snapshot:()=>({route:'/designer/sim.html'})},readState:async()=>{reads++;throw Error('state failed');},write:async value=>{writes++;saved=structuredClone(value);throw Error('write failed');},ownedOrigin:'https://site.fixture'});
+  assert.equal(report.error.name,'TimeoutError');assert.equal(report.error.message,error.message);assert.deepEqual(report.diagnosticErrors.map(row=>row.phase),['state','write']);assert.equal(saved.error.message,error.message);assert.equal(report.coreDeadline,30000);assert.equal(reads,1);assert.equal(writes,1);
+});
+
+test('a stalled diagnostic state read is bounded and does not replace the original failure',async()=>{
+  let written;
+  const report=await retainReadinessFailure({error:Error('original core failure'),observer:{snapshot:()=>({route:'/designer/sim.html'})},readState:()=>new Promise(()=>{}),write:async value=>{written=value;},ownedOrigin:'https://site.fixture',boundMs:1});
+  assert.equal(report.error.message,'original core failure');assert.equal(report.diagnosticErrors[0].phase,'state');assert.match(report.diagnosticErrors[0].message,/exceeded/);assert.equal(written.error.message,report.error.message);
 });

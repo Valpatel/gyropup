@@ -48,5 +48,20 @@
     "captured_dependency_exceptions": []
   },
   "browser_or_native_action_started": false,
-  "limits": "Pure converter controls prove content conversion; actual Progress layout and simulator diagnosis await separately bounded browser acceptance. No final CI or release claim."
+  "limits": "Pure converter controls prove content conversion; actual Progress layout and simulator diagnosis await separately bounded browser acceptance. No final CI or release claim.",
+  "readiness_followup": {
+    "strategy": "Retain diagnostics in the existing empty-space harness and let normal CI exercise the actual failing environment.",
+    "original_predicate_unchanged": true,
+    "original_core_timeout_ms": 30000,
+    "failure_criterion_unchanged": true,
+    "new_browser_experiment": "Prepared only; never executed and superseded by actual CI telemetry.",
+    "observations": [
+      "body/startup/status/design",
+      "current scene/render/context state",
+      "page and console errors",
+      "failed/pending requests with privacy redaction"
+    ],
+    "pure_control_home": "tests/site/layout/test-empty-space-selection.mjs",
+    "cause": "Unreproduced and unclassified until new actual CI evidence."
+  }
 }
